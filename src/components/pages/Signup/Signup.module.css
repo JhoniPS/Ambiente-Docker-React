@@ -1,0 +1,10 @@
+.signup {
+    display: flex;
+    background-color: #1BA5C4;
+    min-height: 100vh;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 20px;
+    font-size: 10px;
+}

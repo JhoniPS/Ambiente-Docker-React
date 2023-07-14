@@ -1,0 +1,22 @@
+.section_form {
+    display: flex;
+    background-color: #ADD0E7;
+    flex-direction: column;
+    gap: 5px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 4px;
+    padding: 10px 40px 10px 40px;
+}
+
+.section_form form {
+    display: flex;
+    flex-direction:column;
+    justify-content: center;
+    align-items: center;
+}
+
+.section_form p {
+    display:flex;
+    margin-top: 5px;
+}
