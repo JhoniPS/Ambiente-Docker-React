@@ -1,6 +1,5 @@
 .login {
     display: flex;
-    background-color: #1BA5C4;
     min-height: 100vh;
     flex-direction: column;
     gap: 10px;
@@ -9,14 +8,7 @@
 }
 
 .login section {
-    display: flex;
-    padding: 20px 50px;
-    flex-direction: column;
-    background-color: #ADD0E7;
-    border-radius: 5px;
-    max-height: 600px;
-    max-width: 400px;
-    gap: 10px;
-    justify-content: center;
-    align-items: center;
+    background-color: #1BA5C4;
+    padding: 2rem;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }

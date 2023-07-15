@@ -1,5 +1,5 @@
 .btn {
-    background-color: #1BA5C4;
+    background-color: #68c5db;
     color: #222;
     border: none;
     padding: .7em 4.8em;
@@ -8,4 +8,8 @@
     transition: .5s;
     cursor: pointer;
     width: 100%;
+}
+
+.btn:hover {
+    background-color: #7cd4e7;
 }

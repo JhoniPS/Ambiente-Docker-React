@@ -11,7 +11,7 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const recoveredUser = localStorage.getItem('user');
 
-    if(recoveredUser) {
+    if (recoveredUser) {
       setUser(JSON.parse(recoveredUser));
     }
 
@@ -29,25 +29,27 @@ export const AuthProvider = ({ children }) => {
 
     localStorage.setItem("user", JSON.stringify(loggedUser));
 
-    if (password === "secret") {
-      setUser({loggedUser}) // Substituir pelo banco
+    if (password === "secret" && email === "jhonisilva500@gmail.com") {
+      setUser({ loggedUser }) // Substituir pelo banco
       navigate("/");
+    } else {
+      alert("Senha ou E-mail está incorreto");
     }
   };
 
   const signup = (name, email, authEmail, password, office) => {
     const registeredUser = {
-        name, 
-        email, 
-        authEmail, 
-        password, 
-        office
+      name,
+      email,
+      authEmail,
+      password,
+      office
     };
 
-    if(email !== authEmail) 
+    if (email !== authEmail)
       alert("Erro de confirmação do e-mail");
     else
-      console.log("Signup auth: ", {registeredUser});
+      console.log("Signup auth: ", { registeredUser });
   }
 
   const logout = () => {

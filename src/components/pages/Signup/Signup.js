@@ -4,7 +4,7 @@ import styles from './Signup.module.css'
 const Signup = () => {
     return (
         <div className={styles.signup}>
-            <h1>Cadastro de Usuarios</h1>
+            <h2>Cadastro de Usuarios</h2>
             <Form />
         </div>
     );

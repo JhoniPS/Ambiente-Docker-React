@@ -8,7 +8,7 @@ import React, { useState, useContext } from 'react';
 import { AuthContext } from '../contexts/Auth';
 
 const Form = () => {
-    const { authenticated, login } = useContext(AuthContext);
+    const { login } = useContext(AuthContext);
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -17,6 +17,7 @@ const Form = () => {
         e.preventDefault();
 
         console.log("submit", { email, password });
+    
         login(email, password);
     };
 
@@ -25,24 +26,25 @@ const Form = () => {
             <Input
                 type="e-mail"
                 text="E-mail"
-                name="name"
+                name="email"
                 placeholder="Digite no e-mail"
                 value={email}
                 OnChange={(e) => setEmail(e.target.value)}
             />
+
             <Input
                 type="password"
                 text="Senha"
+                name="pass"
                 placeholder="Digite a senha"
                 value={password}
                 OnChange={(e) => setPassword(e.target.value)}
             />
+
             <SubmitButton
                 text="Login"
                 to="/home"
             />
-
-            <p>{String(authenticated)}</p>
         </form>
     );
 };

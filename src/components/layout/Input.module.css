@@ -7,7 +7,6 @@
 .input_control label {
    display: block;
    margin-bottom: .6em;
-   font-weight: bold;
 }
 
 .input_control input {
