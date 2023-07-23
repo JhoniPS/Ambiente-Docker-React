@@ -6,7 +6,10 @@ import {
 } from "react-router-dom";
 
 import Login from "../components/pages/Login/Login";
-import Home from "../components/pages/Home/Home"
+import Admin from "../components/pages/Home/Admin";
+import Manager from "../components/pages/Home/Manager";
+import Representative from "../components/pages/Home/Representative"
+import Viewer from "../components/pages/Home/Viewer"
 import Signup from "../components/pages/Signup/Signup";
 
 import React, { useContext } from "react";
@@ -32,9 +35,21 @@ const RoutesApp = () => {
                         exect path="/"
                         element={
                             <Private>
-                                <Home />
+                                <Admin />
                             </Private>
                         }
+                    />
+                    <Route
+                        exect path="/manager"
+                        element={<Manager />}
+                    />
+                    <Route
+                        exect path="/representative"
+                        element={<Representative />}
+                    />
+                    <Route
+                        exect path="/viewer"
+                        element={<Viewer />}
                     />
                     <Route
                         exect path="/login"

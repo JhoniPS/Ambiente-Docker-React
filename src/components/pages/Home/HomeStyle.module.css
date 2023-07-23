@@ -1,0 +1,16 @@
+.admin {
+  display: flex;
+  flex-direction:column;
+  padding: 50px 0px 0px 100px;
+  gap: 50px;
+}
+
+
+.admin > div {
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+  justify-content: start;
+  column-gap: 1.5em;
+  row-gap: 1.5em;
+}
+
