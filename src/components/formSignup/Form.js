@@ -1,7 +1,7 @@
 import styles from './Form.module.css'
-import Input from '../layout/Input'
-import SubmitButton from '../layout/SubmitButton'
-import LinkButton from '../layout/LinkButton'
+import Input from '../layout/input/Input'
+import SubmitButton from '../layout/submitbuttun/SubmitButton'
+import LinkButton from '../layout/linkbutton/LinkButton'
 import { useContext, useState } from 'react'
 import { AuthContext } from '../contexts/Auth'
 

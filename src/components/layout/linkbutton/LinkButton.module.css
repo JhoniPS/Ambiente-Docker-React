@@ -5,8 +5,13 @@
     font-weight: bold;
     transition: 0.5s;
     padding-left: 2px;
+    text-decoration: none;
 }
 
 .btn:hover {
     color: #FFF;
+}
+
+.color_button {
+    color: #2C74AC;
 }
