@@ -3,8 +3,10 @@ import MenuAppBar from '../../layout/AppBar/MenuAppBar';
 
 import styles from './HomeStyle.module.css'
 import Card from '../../card/Card';
+
 import img from '../../../img/icon _group.svg'
 import img2 from '../../../img/icon _work.svg'
+import img3 from '../../../img/verificacao-de-lista.svg'
 
 const Home = () => {
     return (
@@ -24,7 +26,7 @@ const Home = () => {
                         description="Gerenciar grupos do sistema"
                     />
                     <Card
-                        icon={img}
+                        icon={img3}
                         title="TAREFAS"
                         description="Gerencie suas tarefas"
                     />

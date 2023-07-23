@@ -5,6 +5,10 @@ import styles from './HomeStyle.module.css'
 import Card from '../../card/Card';
 import img from '../../../img/icon _group.svg'
 import img2 from '../../../img/icon _work.svg'
+import img3 from '../../../img/verificacao-de-lista.svg'
+import img4 from '../../../img/historico-reuniao.svg'
+import img5 from '../../../img/atividades.svg'
+import img6 from '../../../img/notas.svg'
 
 const Home = () => {
     return (
@@ -24,22 +28,22 @@ const Home = () => {
                         description="Gerenciar grupos do sistema"
                     />
                     <Card
-                        icon={img}
+                        icon={img3}
                         title="TAREFAS"
                         description="Gerencie suas tarefas"
                     />
                     <Card
-                        icon={img}
+                        icon={img4}
                         title="HISTÓRICO DAS REUNIÕES"
                         description="Registre das reuniões realizadas"
                     />
                     <Card
-                        icon={img}
+                        icon={img5}
                         title="ATIVIDADES"
                         description="Registro de atividades"
                     />
                     <Card
-                        icon={img}
+                        icon={img6}
                         title="NOTAS"
                         description="Gerencie suas notas"
                     />
