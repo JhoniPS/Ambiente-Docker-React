@@ -1,11 +1,11 @@
 import styles from './LinkButton.module.css'
-import { Link } from 'react-router-dom';
+import { NavLink} from 'react-router-dom';
 
-const LinkButton = ({ to, text, customClass}) => {
+const LinkButton = ({ to, text, customClass }) => {
     return (
-        <Link className={`${styles.btn} ${styles[customClass]}`} to={to}>
+        <NavLink className={`${styles.btn} ${styles[customClass]}`} to={to}>
             {text}
-        </Link>
+        </NavLink>
     );
 };
 
