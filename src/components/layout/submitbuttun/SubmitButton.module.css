@@ -12,6 +12,17 @@
     width: 100%;
 }
 
+.button_editar_perfil {
+    width: 146px;
+    height: 38px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    border: 1px solid #2C74AC; 
+    gap: 8px;
+    color: #FFF;
+}
+
 .btn:hover {
     background-color: #1f9db9;
 }
