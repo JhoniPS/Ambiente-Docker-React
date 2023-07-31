@@ -43,7 +43,7 @@ const MenuAppBar = () => {
             color="inherit"
             onClick={handleLogout} // Botão de barra lateral
             aria-label="menu"
-            sx={{ mr: 2 }}
+            sx={{ mr: 4 }}
           >
             <MenuIcon color='primary' />
           </IconButton>

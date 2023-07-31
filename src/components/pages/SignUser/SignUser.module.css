@@ -1,12 +1,13 @@
-.Editor_profile {
+.sign_user{
   display: flex;
-  min-height: 100vh;
-  background-color: #2C74AC;
+  flex-direction: column;
+  height: 91vh;
+  background-color: inherit;
   justify-content: center;
   align-items: center;
 }
 
-.Editor_profile section {
+.sign_user section {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -15,13 +16,13 @@
   gap: 20px;
   background-color: #FFF;
   width: 500px;
-  height: 600px;
+  height: 500px;
   padding: 2rem;
   border-radius: 3px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
-.Editor_profile > section > h4 {
+.sign_user  > section > h4 {
   color: #2C74AC;
   text-align: center;
   font-feature-settings: 'clig' off, 'liga' off;
@@ -31,9 +32,4 @@
   padding: 20px;
   font-weight: 500;
   line-height: 36px;
-}
-
-.table {
-  overflow-y: hidden;
-  overflow-x: hidden;
 }
