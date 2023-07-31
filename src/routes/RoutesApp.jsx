@@ -11,9 +11,17 @@ import Manager from "../components/pages/Home/Manager";
 import Representative from "../components/pages/Home/Representative"
 import Viewer from "../components/pages/Home/Viewer"
 import Signup from "../components/pages/Signup/Signup";
+import Profile from "../components/pages/Profile/Profile"
+import EditorProfile from "../components/pages/EditorProfile/EditorProfile";
+import EditorPassword from "../components/pages/EditorPassword/EditorPassword";
+import Users from "../components/pages/Users/Users";
+import SignUser from "../components/pages/SignUser/SignUser"
+import EditUser from "../components/pages/EditUser/EditUser"
 
 import React, { useContext } from "react";
 import { AuthProvider, AuthContext } from "../components/contexts/Auth";
+
+
 
 const RoutesApp = () => {
 
@@ -58,6 +66,30 @@ const RoutesApp = () => {
                     <Route
                         exect path="/signup"
                         element={<Signup />}
+                    />
+                    <Route
+                        exect path="/profile"
+                        element={<Profile />}
+                    />
+                    <Route
+                        exect path="/editorProfile"
+                        element={<EditorProfile />}
+                    />
+                    <Route
+                        exect path="/updatePassword"
+                        element={<EditorPassword />}
+                    />
+                    <Route
+                        exect path="/users"
+                        element={<Users />}
+                    />
+                    <Route
+                        exect path="/signUser"
+                        element={<SignUser />}
+                    />
+                    <Route
+                        exect path="/editUser"
+                        element={<EditUser />}
                     />
                 </Routes>
             </AuthProvider>

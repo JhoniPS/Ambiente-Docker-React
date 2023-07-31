@@ -12,6 +12,58 @@
     width: 100%;
 }
 
-.btn:hover {
-    background-color: #1f9db9;
+.button_editar_perfil {
+    width: 146px;
+    height: 38px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    border: 1px solid #2C74AC;
+    gap: 8px;
+    color: #FFF;
+}
+
+.button_filter {
+    display: flex;
+    width: 168px;
+    height: 48px;
+    padding: 10px 24px 10px 16px;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    border-radius: 8px;
+    border: 1px solid #2C74AC;
+    color: #2C74AC;
+    background: #FFF;
+}
+
+
+.aplicar_filter {
+    display: flex;
+    width: 168px;
+    height: 48px;
+    padding: 10px 24px 10px 16px;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    border-radius: 8px;
+    border: 1px solid #2C74AC;
+    color: #FFF;
+    background: #2C74AC;
+}
+
+.button_filtes_bar {
+    display: flex;
+    padding: 8px 16px;
+    align-items: center;
+    gap: 10px;
+    border-radius: 8px;
+    font-weight: normal;
+    border: 1px solid rgba(33, 33, 33, 0.10);
+    color: #000;
+    background-color: #FFF;
+}
+
+.button_filtes_bar:hover {
+    background-color: #FFE08B;
 }

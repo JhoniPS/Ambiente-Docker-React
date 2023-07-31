@@ -15,6 +15,7 @@ import { AuthContext } from '../../contexts/Auth'
 import Settings from '../../../img/settings.svg'
 import Logout from '../../../img/log-out.svg';
 import styles from '../../layout/AppBar/style.module.css';
+import LinkButton from '../linkbutton/LinkButton';
 
 const MenuAppBar = () => {
   const { logout } = useContext(AuthContext);
@@ -42,7 +43,7 @@ const MenuAppBar = () => {
             color="inherit"
             onClick={handleLogout} // Botão de barra lateral
             aria-label="menu"
-            sx={{ mr: 2 }}
+            sx={{ mr: 4 }}
           >
             <MenuIcon color='primary' />
           </IconButton>
@@ -83,14 +84,14 @@ const MenuAppBar = () => {
               onClose={handleClose}
             >
               <MenuItem
-                onClick={handleClose}
+                onClick={handleClose}  
               >
                 <img
                   src={Settings}
                   alt='Cofigurações'
                   className={styles}
                 />
-                Configurações
+                <LinkButton text="Configurações" to="/profile" />
               </MenuItem>
               <MenuItem
                 onClick={handleLogout}
