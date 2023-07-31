@@ -17,6 +17,7 @@ const Home = () => {
                         icon={img}
                         title="USUÁRIOS"
                         description="Gerenciar usuários do sistema"
+                        to="/users"
                     />
                     <Card 
                         icon={img2} 

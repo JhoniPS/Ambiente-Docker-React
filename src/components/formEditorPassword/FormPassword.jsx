@@ -16,6 +16,7 @@ const FormPassword = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
+        //Substituir pela autenticação do Backend
         if (password !== "123")
             setErrorPassword(true);
         else
