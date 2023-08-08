@@ -14,13 +14,19 @@ const handleChange = (value) => {
   console.log(`selected ${value}`);
 };
 
-const Select = () => (
+const Select = ({ placeholder }) => (
   <select
     name="select"
     className={`${style.select} ${style.select_seta}`}
     onChange={handleChange}
   >
-    <option>Selecione o Tipo de usuario</option>
+    <option
+      className={style.select_placeholder}
+      disabled selected
+    >
+      {placeholder}
+    </option>
+
     {
       options.map((option) => (
         <option value={option.label} key={option.label}>
