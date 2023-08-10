@@ -9,11 +9,25 @@ import SubmitButton from '../layout/submitbuttun/SubmitButton';
 
 const FormSignGroup = () => {
     const [name, setName] = useState("");
+    const [email, setEmail] = useState("");
+    const [entity, setEntity] = useState("");
+    const [organ, setOrgan] = useState("");
+    const [council, setCouncil] = useState("");
+    const [concierge, setConcierge] = useState("");
+    const [sigla, setSigla] = useState("");
+    const [equip, setEquip] = useState("");
+    const [unit, setUnit] = useState("")
+    const [comments, setComments] = useState("");
+    const [OfficeRequested, setOfficeRequested] = useState("")
+    const [AppointedOffice, setAppointedOffice] = useState("")
 
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        console.log("Amostra:", { name })
+        console.log("Amostra:", { 
+            name, entity, organ, council, concierge, sigla, equip,
+            email, comments, unit, OfficeRequested, AppointedOffice
+        });
 
     }
 
@@ -38,10 +52,10 @@ const FormSignGroup = () => {
                         <TextField
                             type='text'
                             label="Entidade"
-                            name='name'
+                            name='entity'
                             placeholder='Jhonicley P. Silva'
-                            value={name}
-                            onChange={(e) => setName(e.target.value)}
+                            value={entity}
+                            onChange={(e) => setEntity(e.target.value)}
                             focused
                             margin='normal'
                             sx={{
@@ -51,10 +65,10 @@ const FormSignGroup = () => {
                         <TextField
                             type='text'
                             label="Orgão"
-                            name='name'
+                            name='organ'
                             placeholder='Jhonicley P. Silva'
-                            value={name}
-                            onChange={(e) => setName(e.target.value)}
+                            value={organ}
+                            onChange={(e) => setOrgan(e.target.value)}
                             focused
                             margin='normal'
                             sx={{
@@ -67,10 +81,10 @@ const FormSignGroup = () => {
                         <TextField
                             type='text'
                             label="Conselho"
-                            name='name'
+                            name='council'
                             placeholder='Jhonicley P. Silva'
-                            value={name}
-                            onChange={(e) => setName(e.target.value)}
+                            value={council}
+                            onChange={(e) => setCouncil(e.target.value)}
                             focused
                             margin='normal'
                             sx={{
@@ -80,10 +94,10 @@ const FormSignGroup = () => {
                         <TextField
                             type='text'
                             label="Portaria"
-                            name='name'
+                            name='concierge'
                             placeholder='Jhonicley P. Silva'
-                            value={name}
-                            onChange={(e) => setName(e.target.value)}
+                            value={concierge}
+                            onChange={(e) => setConcierge(e.target.value)}
                             focused
                             margin='normal'
                             sx={{
@@ -93,10 +107,10 @@ const FormSignGroup = () => {
                         <TextField
                             type='text'
                             label="Sigla"
-                            name='name'
+                            name='sigla'
                             placeholder='Jhonicley P. Silva'
-                            value={name}
-                            onChange={(e) => setName(e.target.value)}
+                            value={sigla}
+                            onChange={(e) => setSigla(e.target.value)}
                             focused
                             margin='normal'
                             sx={{
@@ -106,10 +120,10 @@ const FormSignGroup = () => {
                         <TextField
                             type='text'
                             label="Equipe"
-                            name='name'
+                            name='equip'
                             placeholder='Jhonicley P. Silva'
-                            value={name}
-                            onChange={(e) => setName(e.target.value)}
+                            value={equip}
+                            onChange={(e) => setEquip(e.target.value)}
                             focused
                             margin='normal'
                             sx={{
@@ -123,10 +137,10 @@ const FormSignGroup = () => {
                             <TextField
                                 type='text'
                                 label="E-mail"
-                                name='name'
+                                name='email'
                                 placeholder='Jhonicley P. Silva'
-                                value={name}
-                                onChange={(e) => setName(e.target.value)}
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
                                 focused
                                 margin='normal'
                                 sx={{
@@ -136,10 +150,10 @@ const FormSignGroup = () => {
                             <TextField
                                 type='text'
                                 label="Observações"
-                                name='name'
+                                name='comments'
                                 placeholder='Jhonicley P. Silva'
-                                value={name}
-                                onChange={(e) => setName(e.target.value)}
+                                value={comments}
+                                onChange={(e) => setComments(e.target.value)}
                                 focused
                                 margin='normal'
                                 multiline
@@ -154,10 +168,10 @@ const FormSignGroup = () => {
                             <TextField
                                 type='text'
                                 label="Unidade"
-                                name='name'
+                                name='unit'
                                 placeholder='Jhonicley P. Silva'
-                                value={name}
-                                onChange={(e) => setName(e.target.value)}
+                                value={unit}
+                                onChange={(e) => setUnit(e.target.value)}
                                 focused
                                 margin='normal'
                                 sx={{
@@ -167,10 +181,10 @@ const FormSignGroup = () => {
                             <TextField
                                 type='text'
                                 label="Oficio que solicitou"
-                                name='name'
+                                name='OfficeRequested'
                                 placeholder='Jhonicley P. Silva'
-                                value={name}
-                                onChange={(e) => setName(e.target.value)}
+                                value={OfficeRequested}
+                                onChange={(e) => setOfficeRequested(e.target.value)}
                                 focused
                                 margin='normal'
                                 sx={{
@@ -180,10 +194,10 @@ const FormSignGroup = () => {
                             <TextField
                                 type='text'
                                 label="Oficio que indicou"
-                                name='name'
+                                name='AppointedOffice'
                                 placeholder='Jhonicley P. Silva'
-                                value={name}
-                                onChange={(e) => setName(e.target.value)}
+                                value={AppointedOffice}
+                                onChange={(e) => setAppointedOffice(e.target.value)}
                                 focused
                                 margin='normal'
                                 sx={{
