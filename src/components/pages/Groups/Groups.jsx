@@ -26,7 +26,7 @@ const Groups = () => {
                     <LinkButton
                         text="Adicionar Grupo"
                         customClass="add"
-                        to=""
+                        to="/signGroups"
                         icon={
                             <IconContext.Provider value={{ size: 30 }}>
                                 <IoMdAdd />

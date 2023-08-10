@@ -38,7 +38,7 @@ const Users = () => {
           <LinkButton
             text="Adicionar Usuário"
             customClass="add"
-            to="/SignUser"
+            to="/signUser"
             icon={
               <IconContext.Provider value={{ size: 30 }}>
                 <IoMdAdd />

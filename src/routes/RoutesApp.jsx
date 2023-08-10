@@ -18,6 +18,7 @@ import Users from "../components/pages/Users/Users";
 import SignUser from "../components/pages/SignUser/SignUser"
 import EditUser from "../components/pages/EditUser/EditUser"
 import Groups from "../components/pages/Groups/Groups";
+import SignGroups from "../components/pages/SignGroups/SignGroups"
 
 import React, { useContext } from "react";
 import { AuthProvider, AuthContext } from "../components/contexts/Auth";
@@ -96,6 +97,10 @@ const RoutesApp = () => {
                     <Route
                         exect path="/groups"
                         element={<Groups />}
+                    />
+                    <Route
+                        exect path="/signGroups"
+                        element={<SignGroups />}
                     />
                 </Routes>
             </AuthProvider>

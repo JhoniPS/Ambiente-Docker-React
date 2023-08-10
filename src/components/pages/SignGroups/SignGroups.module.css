@@ -1,0 +1,34 @@
+.sign_groups {
+  display: flex;
+  flex-direction: column;
+  height: 91vh;
+  background-color: inherit;
+  justify-content: center;
+  align-items: center;
+}
+
+.sign_groups section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: justify;
+  gap: 20px;
+  background-color: #FFF;
+  max-width: 945px;
+  min-height: 500px;
+  padding: 2rem;
+  border-radius: 3px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.sign_groups > section > h3 {
+  color: #2C74AC;
+  text-align: center;
+  font-family: Roboto;
+  font-size: 34px;
+  font-style: normal;
+  padding: 20px;
+  font-weight: 500;
+  line-height: 3px;
+}
