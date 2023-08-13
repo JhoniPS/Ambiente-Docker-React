@@ -11,7 +11,7 @@ import { IoMdAdd } from "react-icons/io";
 
 import style from "./Users.module.css"
 
-import TableUser from "../../TableUser/TableUser";
+import Table from "../../TableUser/Table";
 import Modal from "../../modal_filter_user/Modal";
 import { IconContext } from "react-icons";
 import LinkButton from "../../layout/linkbutton/LinkButton";
@@ -57,7 +57,7 @@ const Users = () => {
           <SubmitButton text="Descrecente" customClass="button_filtes_bar" />
         </section>
 
-        <TableUser />
+        <Table />
 
       </div>
     </Fragment>

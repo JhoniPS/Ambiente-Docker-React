@@ -9,7 +9,7 @@ import { Fragment } from 'react';
 const EditorProfile = () => {
   return (
     <Fragment>
-      <HeaderBar text="PAINEL DE CONTROLE" backPageIcon={<ImArrowLeft2 size={25} />} backPage="/" />
+      <HeaderBar text="PAINEL DE CONTROLE" backPageIcon={<ImArrowLeft2 size={25} />} backPage="/users" />
       <div className={styles.sign_user}>
         <section>
           <h4>Cadastrar Usuário</h4>

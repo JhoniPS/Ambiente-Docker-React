@@ -1,7 +1,7 @@
 .sign_groups {
   display: flex;
   flex-direction: column;
-  height: 91vh;
+  height: 100vh;
   background-color: inherit;
   justify-content: center;
   align-items: center;

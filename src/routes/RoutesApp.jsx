@@ -19,6 +19,8 @@ import SignUser from "../components/pages/SignUser/SignUser"
 import EditUser from "../components/pages/EditUser/EditUser"
 import Groups from "../components/pages/Groups/Groups";
 import SignGroups from "../components/pages/SignGroups/SignGroups"
+import EditGroup from "../components/pages/EditGroup/EditGroup"
+import Representatives from "../components/pages/Representatives/Representatives"
 
 import React, { useContext } from "react";
 import { AuthProvider, AuthContext } from "../components/contexts/Auth";
@@ -61,6 +63,7 @@ const RoutesApp = () => {
                         exect path="/viewer"
                         element={<Viewer />}
                     />
+
                     <Route
                         exect path="/login"
                         element={<Login />}
@@ -101,6 +104,15 @@ const RoutesApp = () => {
                     <Route
                         exect path="/signGroups"
                         element={<SignGroups />}
+                    />
+                    <Route
+                        exect path="/editGroup"
+                        element={<EditGroup />}
+                    />
+
+                    <Route
+                        exect path="/representantes"
+                        element={<Representatives />}
                     />
                 </Routes>
             </AuthProvider>

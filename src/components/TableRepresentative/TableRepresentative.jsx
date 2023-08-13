@@ -3,13 +3,12 @@ import { NavLink } from 'react-router-dom';
 import { Table } from 'antd';
 import { IoTrash, IoPencilSharp } from "react-icons/io5";
 
-import style from './Table.module.css'
+import style from './TableRepresentative.module.css'
 import { IconContext } from 'react-icons';
 
 const handlDelete = () => {
   alert("Delete");
 };
-
 
 const columns = [
   {
@@ -54,7 +53,7 @@ const columns = [
 ];
 
 
-const App = () => {
+const TableRepresentative = () => {
 
   const data = [];
 
@@ -80,4 +79,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default TableRepresentative;

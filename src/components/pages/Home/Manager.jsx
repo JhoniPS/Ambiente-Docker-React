@@ -19,6 +19,7 @@ const Home = () => {
                         icon={img}
                         title="REPRESENTANTES"
                         description="Gerenciar presentante do sistema"
+                        to="/representantes"
                     />
                     <Card
                         icon={img2}

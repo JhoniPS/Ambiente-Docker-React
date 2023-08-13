@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom';
 import { Table } from 'antd';
 import { IoTrash, IoPencilSharp } from "react-icons/io5";
 
-import style from './Table.module.css'
+import style from './TableGroups.module.css'
 import { IconContext } from 'react-icons';
 
 const handlDelete = () => {
@@ -56,7 +56,7 @@ const columns = [
                 </IconContext.Provider>
 
                 <IconContext.Provider value={{ color: "#2C74AC", size: 20 }}>
-                    <NavLink to='/editUser'>
+                    <NavLink to='/editGroup'>
                         <IoPencilSharp />
                     </NavLink>
                 </IconContext.Provider>
@@ -82,7 +82,7 @@ const DrawerTable = ({ data }) => (
 );
 
 
-const App = () => {
+const TableGroups = () => {
 
     const expandedRowRender = (data) => {
         return <DrawerTable data={data.description} />;
@@ -127,4 +127,4 @@ const App = () => {
     );
 };
 
-export default App;
+export default TableGroups;

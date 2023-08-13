@@ -9,7 +9,7 @@ import styles from './EditUser.module.css'
 const EditorProfile = () => {
     return (
       <Fragment>
-        <HeaderBar text="PAINEL DE CONTROLE" backPageIcon={<ImArrowLeft2 size={25} />} backPage="/" />
+        <HeaderBar text="PAINEL DE CONTROLE" backPageIcon={<ImArrowLeft2 size={25} />} backPage="/users" />
         <div className={styles.edit_user}>
           <section>
             <h4>Editar Usuário</h4>

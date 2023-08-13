@@ -12,7 +12,7 @@ import { IoMdAdd } from "react-icons/io";
 import style from './Groups.module.css'
 
 import Modal from '../../modal_filter_groups/Modal';
-import Table from '../../TableGroups/Table'
+import TableGroups from '../../TableGroups/TableGroups'
 
 const Groups = () => {
     const [openModal, setOpenModal] = useState(false);
@@ -28,7 +28,7 @@ const Groups = () => {
                         customClass="add"
                         to="/signGroups"
                         icon={
-                            <IconContext.Provider value={{ size: 30 }}>
+                            <IconContext.Provider value={{ size: 25 }}>
                                 <IoMdAdd />
                             </IconContext.Provider>
                         }
@@ -60,7 +60,7 @@ const Groups = () => {
                 </section>
 
 
-                <Table />
+                <TableGroups />
             </div>
         </Fragment>
     );
