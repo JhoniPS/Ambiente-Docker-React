@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import { DatePicker, Input } from 'antd';
 import Select from '../layout/Select/Select'
 
@@ -20,55 +20,67 @@ const DataPickerStyle = {
   marginRight: 20,
 };
 
+
 const Data = () => (
-  <section className={style.data_filter}>
-    <DatePicker
-      size='large'
-      placeholder='Selecione um data'
-      style={DataPickerStyle}
-    />
-    <DatePicker
-      placeholder='Selecione um data'
-      size='large'
-      style={DataPickerStyle}
-    />
-  </section>
-);
-
-const User = () => (
-  <section className={style.data_filter}>
-    <Input
-      placeholder='Digite o nome do Usuário'
-      size='large'
-      type='text'
-      style={{
-        height: '70px',
-      }}
-    />
-  </section>
-);
-
-const Email = () => (
-  <section className={style.email_typeUser}>
-    <div>
-      <p>Email</p>
-      <Input
-        placeholder='Digite o email'
+  <Fragment>
+    <p>Data de Criação</p>
+    <section className={style.data_filter}>
+      <DatePicker
         size='large'
-        type='e-mail'
+        placeholder='Selecione um data'
+        style={DataPickerStyle}
+      />
+      <DatePicker
+        placeholder='Selecione um data'
+        size='large'
+        style={DataPickerStyle}
+      />
+    </section>
+  </Fragment>
+);
+
+
+const Representative = () => (
+  <Fragment>
+    <p>Representante</p>
+    <section className={style.data_filter}>
+      <Input
+        placeholder='Digite o nome do Usuário'
+        size='large'
+        type='text'
         style={{
-          width: '100%',
           height: '70px',
         }}
       />
+    </section>
+  </Fragment>
+);
+
+
+const ContainerSelect = () => (
+  <section className={style.container_select}>
+    <div>
+      <p>Equipe</p>
+      <Select placeholder="Selecione uma Equipe"/>
     </div>
 
     <div>
-      <p>Tipo de Usuário</p>
-      <Select />
+      <p>Unidade</p>
+      <Select placeholder="Selecione uma Unidade" />
+    </div>
+
+    <div>
+      <p>Conselho</p>
+      <Select placeholder="Selecione um Conselho"/>
+    </div>
+
+    <div>
+      <p>Orgão</p>
+      <Select placeholder="Selecione um Orgão" />
     </div>
   </section>
 );
+
 
 const Buttons = () => (
   <section className={style.buttons}>
@@ -87,27 +99,26 @@ const Buttons = () => (
   </section>
 )
 
+
 const Form = ({ closeModal }) => (
   <form onSubmit={handlSubmit}>
     <div className={style.container_modal}>
       <nav>
         <h1>Filtrar</h1>
-        <IconContext.Provider value={{size: 30}}>
-          <HiXMark  onClick={closeModal} />
+        <IconContext.Provider value={{ size: 30 }}>
+          <HiXMark onClick={closeModal} />
         </IconContext.Provider>
       </nav>
       <div>
-        <p>Data de Criação</p>
         <Data />
-        <p>Usuário</p>
-        <User />
-        <Email />
+        <Representative />
+
+        <ContainerSelect />
         <Buttons />
       </div>
     </div>
   </form>
 );
-
 
 
 const Modal = ({ openModal, setOpenModal }) => {

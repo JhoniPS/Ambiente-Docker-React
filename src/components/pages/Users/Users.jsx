@@ -11,8 +11,8 @@ import { IoMdAdd } from "react-icons/io";
 
 import style from "./Users.module.css"
 
-import Table from "../../Table/Table";
-import Modal from "../../modal_filter/Modal";
+import Table from "../../TableUser/Table";
+import Modal from "../../modal_filter_user/Modal";
 import { IconContext } from "react-icons";
 import LinkButton from "../../layout/linkbutton/LinkButton";
 
@@ -37,7 +37,7 @@ const Users = () => {
           />
           <LinkButton
             text="Adicionar Usuário"
-            customClass="add_user"
+            customClass="add"
             to="/SignUser"
             icon={
               <IconContext.Provider value={{ size: 30 }}>
