@@ -1,0 +1,35 @@
+.sign_representative{
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background-color: inherit;
+  justify-content: center;
+  align-items: center;
+}
+
+.sign_representative section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: justify;
+  gap: 20px;
+  background-color: #FFF;
+  width: 500px;
+  height: 500px;
+  padding: 2rem;
+  border-radius: 3px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.sign_representative  > section > h3 {
+  color: #2C74AC;
+  text-align: center;
+  font-feature-settings: 'clig' off, 'liga' off;
+  font-family: Roboto;
+  font-size: 34px;
+  font-style: normal;
+  padding: 20px;
+  font-weight: 500;
+  line-height: 36px;
+}

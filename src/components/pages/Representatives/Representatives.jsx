@@ -9,7 +9,7 @@ import { IoMdAdd } from "react-icons/io";
 import style from "./Representatives.module.css"
 
 import Table from "../../TableRepresentative/TableRepresentative";
-import Modal from "../../modal_filter_user/Modal";
+import Modal from "../../modal_filter_representative/Modal";
 import { IconContext } from "react-icons";
 import LinkButton from "../../layout/linkbutton/LinkButton";
 
@@ -35,7 +35,7 @@ const Representative = () => {
           <LinkButton
             text="Add Representante"
             customClass="add"
-            to="#"
+            to="/SignRepresentantes"
             icon={
               <IconContext.Provider value={{ size: 25 }}>
                 <IoMdAdd />

@@ -43,7 +43,7 @@ const columns = [
         </IconContext.Provider>
 
         <IconContext.Provider value={{ color: "#2C74AC", size: 20 }}>
-          <NavLink to='/editUser'>
+          <NavLink to='/editRepresentante'>
             <IoPencilSharp />
           </NavLink>
         </IconContext.Provider>
@@ -60,7 +60,7 @@ const TableRepresentative = () => {
   for (let i = 0; i < 100; i++) {
     data.push({
       key: i,
-      name: `Edward King ${i}`,
+      name: `Nome Exemplo ${i}`,
       type: `type ${i}`,
       email: `teste@teste.com`,
     });
