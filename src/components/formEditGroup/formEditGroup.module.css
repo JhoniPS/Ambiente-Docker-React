@@ -1,0 +1,28 @@
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    justify-content: center;
+    align-items: center;
+}
+
+.container_form {
+  display: flex;
+  flex-direction: column;
+}
+
+.container_text1, .container_text2, .container_text3 {
+  display: flex;
+  gap: 20px;
+}
+
+.error {
+  color: red;
+  font-size: 12px;
+}
+
+.button {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}

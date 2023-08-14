@@ -5,7 +5,6 @@ const LinkButton = ({ to, text, customClass, icon }) => {
     return (
         <NavLink
             className={`${styles.btn} ${styles[customClass]}`}
-            icon={icon}
             to={to}
         >
             {icon}{text}

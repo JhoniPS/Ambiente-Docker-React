@@ -1,4 +1,4 @@
-.sign_user{
+.sign_representative{
   display: flex;
   flex-direction: column;
   height: 100vh;
@@ -7,7 +7,7 @@
   align-items: center;
 }
 
-.sign_user section {
+.sign_representative section {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -22,7 +22,7 @@
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
-.sign_user  > section > h4 {
+.sign_representative  > section > h3 {
   color: #2C74AC;
   text-align: center;
   font-feature-settings: 'clig' off, 'liga' off;

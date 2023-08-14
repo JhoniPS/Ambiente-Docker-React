@@ -1,45 +1,37 @@
-.edit_user {
+.edit_group {
     display: flex;
-    height: 100vh;
-    justify-content: center;
-    align-items: center;
     flex-direction: column;
+    min-height: 100vh;
+    padding: 3em;
     font-size: 15px;
-}
-
-.edit_user {
-    display: flex;
-    flex-direction: column;
-    max-height: 100vh;
-    padding: 1em;
     background-color: inherit;
     justify-content: center;
     align-items: center;
 }
 
-.edit_user section {
+.edit_group section {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     text-align: justify;
-    gap: 20px;
+    gap: 15px;
     background-color: #FFF;
-    width: 500px;
-    height: 500px;
+    max-width: 945px;
+    min-height: 500px;
     padding: 2rem;
     border-radius: 3px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
-.edit_user > section > h4 {
+.edit_group>section>h4 {
     color: #2C74AC;
     text-align: center;
     font-feature-settings: 'clig' off, 'liga' off;
     font-family: Roboto;
     font-size: 34px;
     font-style: normal;
-    padding: 20px;
+    padding: 10px;
     font-weight: 500;
     line-height: 36px;
 }

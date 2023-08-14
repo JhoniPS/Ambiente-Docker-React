@@ -3,13 +3,12 @@ import { NavLink } from 'react-router-dom';
 import { Table } from 'antd';
 import { IoTrash, IoPencilSharp } from "react-icons/io5";
 
-import style from './Table.module.css'
+import style from './TableRepresentative.module.css'
 import { IconContext } from 'react-icons';
 
 const handlDelete = () => {
   alert("Delete");
 };
-
 
 const columns = [
   {
@@ -44,7 +43,7 @@ const columns = [
         </IconContext.Provider>
 
         <IconContext.Provider value={{ color: "#2C74AC", size: 20 }}>
-          <NavLink to='/editUser'>
+          <NavLink to='/editRepresentante'>
             <IoPencilSharp />
           </NavLink>
         </IconContext.Provider>
@@ -54,14 +53,14 @@ const columns = [
 ];
 
 
-const App = () => {
+const TableRepresentative = () => {
 
   const data = [];
 
   for (let i = 0; i < 100; i++) {
     data.push({
       key: i,
-      name: `Edward King ${i}`,
+      name: `Nome Exemplo ${i}`,
       type: `type ${i}`,
       email: `teste@teste.com`,
     });
@@ -80,4 +79,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default TableRepresentative;

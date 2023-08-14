@@ -6,24 +6,21 @@ import { ImArrowLeft2 } from "react-icons/im";
 import { IoIosFunnel } from "react-icons/io";
 import { IoMdAdd } from "react-icons/io";
 
+import style from "./Representatives.module.css"
 
-
-
-import style from "./Users.module.css"
-
-import TableUser from "../../TableUser/TableUser";
-import Modal from "../../modal_filter_user/Modal";
+import Table from "../../TableRepresentative/TableRepresentative";
+import Modal from "../../modal_filter_representative/Modal";
 import { IconContext } from "react-icons";
 import LinkButton from "../../layout/linkbutton/LinkButton";
 
-const Users = () => {
+const Representative = () => {
   const [openModal, setOpenModal] = useState(false);
 
   return (
     <Fragment>
-      <HeaderBar text="PAINEL DE CONTROLE" backPageIcon={<ImArrowLeft2 size={25} />} backPage="/" />
-      <div className={style.users}>
-        <h2>Usuarios</h2>
+      <HeaderBar text="PAINEL DE CONTROLE" backPageIcon={<ImArrowLeft2 size={25} />} backPage="/manager" />
+      <div className={style.representatives}>
+        <h2>Representantes</h2>
         <section className={style.section_search}>
           <SubmitButton
             text="Filtro"
@@ -36,9 +33,9 @@ const Users = () => {
             }
           />
           <LinkButton
-            text="Adicionar Usuário"
+            text="Add Representante"
             customClass="add"
-            to="/signUser"
+            to="/SignRepresentantes"
             icon={
               <IconContext.Provider value={{ size: 25 }}>
                 <IoMdAdd />
@@ -47,7 +44,10 @@ const Users = () => {
           />
         </section>
 
-        <Modal openModal={openModal} setOpenModal={() => setOpenModal(!openModal)} />
+        <Modal
+          openModal={openModal}
+          setOpenModal={() => setOpenModal(!openModal)}
+        />
 
         <h4>FILTROS RÁPIDOS</h4>
         <section className={style.button_filters}>
@@ -57,11 +57,11 @@ const Users = () => {
           <SubmitButton text="Descrecente" customClass="button_filtes_bar" />
         </section>
 
-        <TableUser />
+        <Table />
 
       </div>
     </Fragment>
   );
 };
 
-export default Users;
+export default Representative;
