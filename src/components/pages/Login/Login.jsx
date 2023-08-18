@@ -1,6 +1,6 @@
 
 import styles from './Login.module.css'
-import Form from '../../formLogin/Form';
+import Form from '../../Forms/formLogin/Form';
 import img from '../../../img/BrasãoUfopa.png'
 
 const Login = () => {

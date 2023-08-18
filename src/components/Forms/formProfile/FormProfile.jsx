@@ -4,9 +4,9 @@ import { TextField } from '@mui/material';
 
 import React, { useState } from 'react';
 
-import Upload from '../Upload/Upload';
-import LinkButton from '../layout/linkbutton/LinkButton';
-import SubmitButton from '../layout/submitbuttun/SubmitButton';
+import Upload from '../../Upload/Upload';
+import LinkButton from '../../layout/linkbutton/LinkButton';
+import SubmitButton from '../../layout/submitbuttun/SubmitButton';
 
 const FormProfile = () => {
     const [email, setEmail] = useState("");
