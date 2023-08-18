@@ -1,4 +1,4 @@
-import Form from '../../formSignup/Form';
+import Form from '../../Forms/formSignup/Form';
 import styles from './Signup.module.css'
 
 const Signup = () => {
