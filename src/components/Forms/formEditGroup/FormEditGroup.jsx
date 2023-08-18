@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 
 import { TextField } from '@mui/material';
 
-import styles from './formSignGroup.module.css'
+import styles from './formEditGroup.module.css'
 
-import LinkButton from '../layout/linkbutton/LinkButton';
-import SubmitButton from '../layout/submitbuttun/SubmitButton';
+import LinkButton from '../../layout/linkbutton/LinkButton';
+import SubmitButton from '../../layout/submitbuttun/SubmitButton';
 
 const FormSignGroup = () => {
     const [name, setName] = useState("");

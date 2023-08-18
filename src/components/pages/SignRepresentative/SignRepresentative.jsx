@@ -2,7 +2,7 @@
 
 import styles from './SignRepresentative.module.css'
 
-import FormSignRepresentative from '../../formSignRepresentative/FormSignRepresentative';
+import FormSignRepresentative from '../../Forms/formSignRepresentative/FormSignRepresentative';
 import HeaderBar from '../../layout/header/HeaderBar';
 import { ImArrowLeft2 } from "react-icons/im";
 import { Fragment } from 'react';

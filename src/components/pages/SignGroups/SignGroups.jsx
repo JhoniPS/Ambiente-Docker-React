@@ -4,7 +4,7 @@ import styles from './SignGroups.module.css';
 import HeaderBar from '../../layout/header/HeaderBar';
 import { ImArrowLeft2 } from "react-icons/im";
 import { Fragment } from 'react';
-import FormSignGroup from '../../formSignGroup/FormSignGroup';
+import FormSignGroup from '../../Forms/formSignGroup/FormSignGroup';
 
 const EditorProfile = () => {
   return (

@@ -1,6 +1,6 @@
 
 import React, {Fragment} from 'react';
-import FormEditUser from '../../formEditUser/FormEditUser'
+import FormEditUser from '../../Forms/formEditUser/FormEditUser'
 import HeaderBar from '../../layout/header/HeaderBar';
 
 import { ImArrowLeft2 } from "react-icons/im";

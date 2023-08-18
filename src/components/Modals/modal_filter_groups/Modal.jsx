@@ -1,9 +1,9 @@
 import React, { Fragment } from 'react'
 import { DatePicker, Input } from 'antd';
-import Select from '../layout/Select/Select'
+import Select from '../../layout/Select/Select'
 
 import style from './Modal.module.css'
-import SubmitButton from '../layout/submitbuttun/SubmitButton';
+import SubmitButton from '../../layout/submitbuttun/SubmitButton';
 
 import { HiXMark } from "react-icons/hi2";
 import { IconContext } from 'react-icons';

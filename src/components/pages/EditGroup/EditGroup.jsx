@@ -1,7 +1,7 @@
 
 import React, { Fragment } from 'react';
 
-import FormEditGroup from "../../formEditGroup/FormEditGroup"
+import FormEditGroup from "../../Forms/formEditGroup/FormEditGroup"
 import HeaderBar from '../../layout/header/HeaderBar';
 
 import { ImArrowLeft2 } from "react-icons/im";
