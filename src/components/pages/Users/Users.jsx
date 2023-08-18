@@ -12,7 +12,7 @@ import { IoMdAdd } from "react-icons/io";
 import style from "./Users.module.css"
 
 import TableUser from "../../TableUser/TableUser";
-import Modal from "../../modal_filter_user/Modal";
+import Modal from "../../Modals/modal_filter_user/Modal";
 import { IconContext } from "react-icons";
 import LinkButton from "../../layout/linkbutton/LinkButton";
 

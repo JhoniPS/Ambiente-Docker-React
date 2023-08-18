@@ -11,7 +11,7 @@ import { IoMdAdd } from "react-icons/io";
 
 import style from './Groups.module.css'
 
-import Modal from '../../modal_filter_groups/Modal';
+import Modal from '../../Modals/modal_filter_groups/Modal';
 import TableGroups from '../../TableGroups/TableGroups'
 
 const Groups = () => {

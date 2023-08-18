@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 
 import { TextField } from '@mui/material';
 
-import styles from './formEditRepresentative.module.css'
+import styles from './formEditUser.module.css'
 
-import LinkButton from '../layout/linkbutton/LinkButton';
-import SubmitButton from '../layout/submitbuttun/SubmitButton';
-import { ConfigProvider } from 'antd';
+import LinkButton from '../../layout/linkbutton/LinkButton';
+import SubmitButton from '../../layout/submitbuttun/SubmitButton';
+import { Select, ConfigProvider } from 'antd';
 
 const options = [];
 
@@ -24,8 +24,16 @@ const FormSignUser = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        console.log("Amostra:", { name, email })
+        console.log("Amostra:", {name, email})
 
+    }
+
+    const onChange = (value) => {
+        console.log(`select: ${value}`)
+    }
+
+    const onSearch = (value) => {
+        console.log(`search: ${value}`)
     }
 
     return (
@@ -48,8 +56,8 @@ const FormSignUser = () => {
                 <TextField
                     type='e-mail'
                     label="E-mail"
-                    name='email'
-                    placeholder='Digite um novo email'
+                    name='new password'
+                    placeholder='Digite uma nova senha'
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     focused
@@ -67,11 +75,31 @@ const FormSignUser = () => {
                         },
                     }}
                 >
+                    <Select
+                        showSearch
+                        getPopupContainer={(trigger) => {
+                            return trigger;
+                        }}
+                        style={{
+                            width: '100%',
+
+                        }}
+                        size='large'
+                        label="Tipo de Usuário"
+                        placeholder="Selecione um tipo de usuário"
+                        onChange={onChange}
+                        optionFilterProp='children'
+                        onSearch={onSearch}
+                        filterOption={(input, option) =>
+                            (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
+                        }
+                        options={options}
+                    />
                 </ConfigProvider>
 
                 <div>
-                    <LinkButton text="Voltar" to="/representantes" customClass="button_back" />
-                    <SubmitButton text="Editar" customClass="button_editar_perfil" />
+                    <LinkButton text="Voltar" to="/users" customClass="button_back" />
+                    <SubmitButton text="Cadastrar" customClass="button_editar_perfil" />
                 </div>
             </form>
         </div >

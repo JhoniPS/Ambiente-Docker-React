@@ -1,7 +1,5 @@
-
-
 import styles from './SignUser.module.css'
-import FormSignUser from '../../formSignUser/FormSignUser';
+import FormSignUser from '../../Forms/formSignUser/FormSignUser';
 import HeaderBar from '../../layout/header/HeaderBar';
 import { ImArrowLeft2 } from "react-icons/im";
 import { Fragment } from 'react';

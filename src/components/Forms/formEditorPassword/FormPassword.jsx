@@ -4,8 +4,8 @@ import { TextField } from '@mui/material';
 
 import React, { useState } from 'react';
 
-import LinkButton from '../layout/linkbutton/LinkButton';
-import SubmitButton from '../layout/submitbuttun/SubmitButton';
+import LinkButton from '../../layout/linkbutton/LinkButton';
+import SubmitButton from '../../layout/submitbuttun/SubmitButton';
 
 const FormPassword = () => {
     const [password, setPassword] = useState("");

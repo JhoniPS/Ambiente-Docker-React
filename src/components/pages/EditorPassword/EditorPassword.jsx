@@ -1,5 +1,5 @@
 
-import FormPassword from '../../formEditorPassword/FormPassword';
+import FormPassword from '../../Forms/formEditorPassword/FormPassword';
 import styles from './EditorPassword.module.css'
 
 const EditorProfile = () => {

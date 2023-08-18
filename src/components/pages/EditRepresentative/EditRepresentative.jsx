@@ -1,6 +1,6 @@
 
 import React, { Fragment } from 'react';
-import FormEditRepresentative from "../../formEditRepresentative/FormEditReprensetative"
+import FormEditRepresentative from "../../Forms/formEditRepresentative/FormEditReprensetative"
 import HeaderBar from '../../layout/header/HeaderBar';
 
 import { ImArrowLeft2 } from "react-icons/im";

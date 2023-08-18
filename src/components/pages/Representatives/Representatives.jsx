@@ -9,7 +9,7 @@ import { IoMdAdd } from "react-icons/io";
 import style from "./Representatives.module.css"
 
 import Table from "../../TableRepresentative/TableRepresentative";
-import Modal from "../../modal_filter_representative/Modal";
+import Modal from "../../Modals/modal_filter_representative/Modal";
 import { IconContext } from "react-icons";
 import LinkButton from "../../layout/linkbutton/LinkButton";
 

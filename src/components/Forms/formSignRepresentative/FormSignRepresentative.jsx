@@ -4,8 +4,8 @@ import { TextField } from '@mui/material';
 
 import styles from './formSignRepresentative.module.css'
 
-import LinkButton from '../layout/linkbutton/LinkButton';
-import SubmitButton from '../layout/submitbuttun/SubmitButton';
+import LinkButton from '../../layout/linkbutton/LinkButton';
+import SubmitButton from '../../layout/submitbuttun/SubmitButton';
 
 const options = [];
 
