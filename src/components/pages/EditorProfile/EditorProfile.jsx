@@ -1,4 +1,4 @@
-import FormProfile from '../../Forms/formProfile/FormProfile'
+import FormProfile from '../../formProfile/FormProfile'
 import styles from './EditorProfile.module.css'
 
 const EditorProfile = () => {
