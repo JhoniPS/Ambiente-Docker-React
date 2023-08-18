@@ -1,7 +1,7 @@
 .login {
     display: flex;
     min-height: 100vh;
-    background-color: #2C74AC;
+    background-color: inherit;
     justify-content: center;
     align-items: center;
 }
