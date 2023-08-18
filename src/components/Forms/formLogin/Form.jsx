@@ -2,11 +2,11 @@
 import styles from './Form.module.css'
 
 import { TextField} from '@mui/material';
-import SubmitButton from '../../layout/submitbuttun/SubmitButton';
+import SubmitButton from '../layout/submitbuttun/SubmitButton';
 
 import React, { useState, useContext } from 'react';
 
-import { AuthContext } from '../../contexts/Auth';
+import { AuthContext } from '../contexts/Auth';
 
 const Form = () => {
     const { login, errorLogin } = useContext(AuthContext);
