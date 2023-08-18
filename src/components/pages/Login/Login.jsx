@@ -10,7 +10,7 @@ const Login = () => {
                 <img src={img} alt='Logo da UFOPA'/>
                 <h4>Documentos e Comissões</h4>
                 <h5>Seja bem vindo(a)!</h5>
-                <p>Digite seu e-mail institucional e a senha para realizar o login.</p>
+                <p>Digite seu e-mail institucional e a senha para efetuar o login.</p>
                 <Form />
             </section>
         </div>
