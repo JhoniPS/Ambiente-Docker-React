@@ -1,0 +1,18 @@
+.table {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding-left: 40px;
+  padding-right: 40px;
+}
+
+.operation {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.operation > button {
+  border: none;
+  background-color: #FFF;
+}
+
