@@ -23,6 +23,7 @@ const Home = () => {
                         icon={img2} 
                         title="TIPOS USUÁRIOS"
                         description="Gerenciar tipos de usuário do sistema"
+                        to="/Tipos-de-Usuarios"
                     />
                 </div>
             </div>

@@ -23,6 +23,7 @@ import EditGroup from "../components/pages/EditGroup/EditGroup"
 import Representatives from "../components/pages/Representatives/Representatives"
 import SignRepresentatives from "../components/pages/SignRepresentative/SignRepresentative"
 import EditRepresentative from "../components/pages/EditRepresentative/EditRepresentative"
+import TypeUsers from "../components/pages/TypeUsers/TypeUsers";
 
 import React, { useContext } from "react";
 import { AuthProvider, AuthContext } from "../components/contexts/Auth";
@@ -117,12 +118,17 @@ const RoutesApp = () => {
                         element={<Representatives />}
                     />
                     <Route
-                        exect path="/SignRepresentantes"
+                        exect path="/signRepresentantes"
                         element={<SignRepresentatives />}
                     />
                     <Route
-                        exect path="/Editrepresentante"
+                        exect path="/editRepresentante"
                         element={<EditRepresentative />}
+                    />
+
+                    <Route
+                        exect path="/Tipos-de-Usuarios"
+                        element={<TypeUsers/>}
                     />
                 </Routes>
             </AuthProvider>
