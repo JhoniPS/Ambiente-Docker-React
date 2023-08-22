@@ -9,6 +9,7 @@ import img3 from '../../../img/verificacao-de-lista.svg'
 import img4 from '../../../img/historico-reuniao.svg'
 import img5 from '../../../img/atividades.svg'
 import img6 from '../../../img/notas.svg'
+import Container from '../../layout/container/Container';
 
 const Home = () => {
     return (
@@ -16,7 +17,7 @@ const Home = () => {
             <MenuAppBar />
             <div className={styles.admin}>
                 <h2>OLÁ, REPRESENTANTE!</h2>
-                <div>
+                <Container customClass='start'>
                     <Card
                         icon={img}
                         title="MEMBROS"
@@ -47,7 +48,7 @@ const Home = () => {
                         title="NOTAS"
                         description="Gerencie suas notas"
                     />
-                </div>
+                </Container>
             </div>
         </Fragment>
     );

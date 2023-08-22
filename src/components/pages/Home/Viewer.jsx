@@ -8,13 +8,15 @@ import img2 from '../../../img/icon _work.svg'
 import img3 from '../../../img/historico-reuniao.svg'
 import img4 from '../../../img/notas.svg'
 
+import Container from '../../layout/container/Container';
+
 const Home = () => {
     return (
         <Fragment>
             <MenuAppBar />
             <div className={styles.admin}>
                 <h2>OLÁ, VISUALIZADOR!</h2>
-                <div>
+                <Container customClass='start'>
                     <Card
                         icon={img}
                         title="TAREFAS"
@@ -35,7 +37,7 @@ const Home = () => {
                         title="NOTAS E REGISTROS"
                         description="Gerencie suas notas"
                     />
-                </div>
+                </Container>
             </div>
         </Fragment>
     );

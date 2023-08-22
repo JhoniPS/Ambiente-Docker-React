@@ -1,10 +1,10 @@
 .container {
-  width: 1200px;
+  width: 1177px;
   display: flex;
   justify-content: space-between;
-  margin: 0 auto;
+  gap: 40px;
   flex-wrap: wrap;
-  background-color: #d9d9dd;
+  background-color:inherit;
 }
 
 .start {

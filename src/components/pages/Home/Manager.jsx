@@ -7,6 +7,7 @@ import Card from '../../card/Card';
 import img from '../../../img/icon _group.svg'
 import img2 from '../../../img/icon _work.svg'
 import img3 from '../../../img/verificacao-de-lista.svg'
+import Container from '../../layout/container/Container';
 
 const Home = () => {
     return (
@@ -14,7 +15,7 @@ const Home = () => {
             <MenuAppBar />
             <div className={styles.admin}>
                 <h2>OLÁ, GERENTE!</h2>
-                <div>
+                <Container customClass='start'>
                     <Card
                         icon={img}
                         title="REPRESENTANTES"
@@ -32,7 +33,7 @@ const Home = () => {
                         title="TAREFAS"
                         description="Gerencie suas tarefas"
                     />
-                </div>
+                </Container>
             </div>
         </Fragment>
     );
