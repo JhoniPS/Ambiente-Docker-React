@@ -8,10 +8,3 @@
   background-color: inherit;
 }
 
-.admin > div {
-  display: grid;
-  grid-template-columns: repeat(3, auto);
-  justify-content: start;
-  column-gap: 1.5em;
-  row-gap: 1.5em;
-}

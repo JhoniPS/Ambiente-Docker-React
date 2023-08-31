@@ -5,6 +5,7 @@ import styles from './HomeStyle.module.css'
 import Card from '../../card/Card';
 import img from '../../../img/icon _group.svg'
 import img2 from '../../../img/icon _work.svg'
+import Container from '../../layout/container/Container';
 
 const Home = () => {
     return (
@@ -12,7 +13,7 @@ const Home = () => {
             <MenuAppBar />
             <div className={styles.admin}>
                 <h2>OLÁ, ADMINISTRADOR!</h2>
-                <div>
+                <Container customClass='start'>
                     <Card
                         icon={img}
                         title="USUÁRIOS"
@@ -25,7 +26,7 @@ const Home = () => {
                         description="Gerenciar tipos de usuário do sistema"
                         to="/Tipos-de-Usuarios"
                     />
-                </div>
+                </Container>
             </div>
         </Fragment>
     );

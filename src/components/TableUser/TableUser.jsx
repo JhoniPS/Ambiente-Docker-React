@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { Table } from 'antd';
 import { IoTrash, IoPencilSharp } from "react-icons/io5";
@@ -15,25 +15,19 @@ const columns = [
   {
     title: 'Nome',
     dataIndex: 'name',
-    width: 150,
-    align: 'center',
+    render: (name) => `${name.first} ${name.last}`,
   },
   {
     title: 'Tipo de usuario',
     dataIndex: 'type',
-    width: 150,
-    align: 'center',
   },
   {
     title: 'E-mail',
     dataIndex: 'email',
-    width: 150,
-    align: 'center',
   },
   {
     title: 'Operações',
     dataIndex: 'operation',
-    width: 60,
     align: 'center',
     render: () => (
       <div className={style.operation}>
@@ -53,29 +47,57 @@ const columns = [
   },
 ];
 
-
 const TableUser = () => {
+  const [data, setData] = useState();
+  const [loading, setLoading] = useState(false);
+  const [tableParams, setTableParams] = useState({
+    pagination: {
+      current: 1,
+      pageSize: 10,
+    },
+  });
 
-  const data = [];
+  const fetchData = () => {
+    setLoading(true);
+    fetch(`https://randomuser.me/api/?results=100`)
+      .then((res) => res.json())
+      .then(({ results }) => {
+        setData(results);
+        setLoading(false);
+        setTableParams(state => ({
+          ...state,
+          pagination: {
+            ...state.pagination,
+          },
+        }));
+      });
+  };
 
-  for (let i = 0; i < 100; i++) {
-    data.push({
-      key: i,
-      name: `Edward King ${i}`,
-      type: `type ${i}`,
-      email: `teste@teste.com`,
+  useEffect(() => {
+    fetchData();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [JSON.stringify(tableParams)]);
+  const handleTableChange = (pagination) => {
+    setTableParams({
+      pagination,
     });
-  }
+
+    // `dataSource` is useless since `pageSize` changed
+    if (pagination.pageSize !== tableParams.pagination?.pageSize) {
+      setData([]);
+    }
+  };
 
   return (
     <Table
       className={style.table}
+      rowKey={(record) => record.login.uuid}
       columns={columns}
       dataSource={data}
       responsive
-      pagination={{
-        defaultPageSize: 10,
-      }}
+      pagination={tableParams.pagination}
+      loading={loading}
+      onChange={handleTableChange}
     />
   );
 };
