@@ -8,32 +8,38 @@ import LinkButton from '../../layout/linkbutton/LinkButton';
 import SubmitButton from '../../layout/submitbuttun/SubmitButton';
 
 const FormSignGroup = () => {
-    const [name, setName] = useState("");
-    const [email, setEmail] = useState("");
-    const [entity, setEntity] = useState("");
-    const [organ, setOrgan] = useState("");
-    const [council, setCouncil] = useState("");
-    const [concierge, setConcierge] = useState("");
-    const [sigla, setSigla] = useState("");
-    const [equip, setEquip] = useState("");
-    const [unit, setUnit] = useState("")
-    const [comments, setComments] = useState("");
-    const [OfficeRequested, setOfficeRequested] = useState("")
-    const [AppointedOffice, setAppointedOffice] = useState("")
+    const [form, setForm] = useState({
+        name: "",
+        entity: "",
+        organ: "",
+        council: "",
+        concierge: "",
+        sigla: "",
+        equip: "",
+        email: "",
+        comments: "",
+        unit: "",
+        OfficeRequested: "",
+        AppointedOffice: "",
+    });
 
-    const handleSubmit = (e) => {
+
+    const Submit = (e) => {
         e.preventDefault();
 
-        console.log("Amostra:", { 
-            name, entity, organ, council, concierge, sigla, equip,
-            email, comments, unit, OfficeRequested, AppointedOffice
-        });
+        console.log(form);
+    };
 
-    }
+    const handleSubmit = (e) => {
+        setForm(prev => ({
+            ...prev,
+            [e.target.name]: e.target.value,
+        }));
+    };
 
     return (
         <div>
-            <form className={styles.form} onSubmit={handleSubmit}>
+            <form className={styles.form} onSubmit={Submit}>
                 <div className={styles.container_form}>
                     <div className={styles.container_text1}>
                         <TextField
@@ -41,8 +47,8 @@ const FormSignGroup = () => {
                             label="Nome do Representante"
                             name='name'
                             placeholder='Jhonicley P. Silva'
-                            value={name}
-                            onChange={(e) => setName(e.target.value)}
+                            value={form.name}
+                            onChange={handleSubmit}
                             focused
                             margin='normal'
                             sx={{
@@ -54,8 +60,8 @@ const FormSignGroup = () => {
                             label="Entidade"
                             name='entity'
                             placeholder='Jhonicley P. Silva'
-                            value={entity}
-                            onChange={(e) => setEntity(e.target.value)}
+                            value={form.entity}
+                            onChange={handleSubmit}
                             focused
                             margin='normal'
                             sx={{
@@ -67,8 +73,8 @@ const FormSignGroup = () => {
                             label="Orgão"
                             name='organ'
                             placeholder='Jhonicley P. Silva'
-                            value={organ}
-                            onChange={(e) => setOrgan(e.target.value)}
+                            value={form.organ}
+                            onChange={handleSubmit}
                             focused
                             margin='normal'
                             sx={{
@@ -83,8 +89,8 @@ const FormSignGroup = () => {
                             label="Conselho"
                             name='council'
                             placeholder='Jhonicley P. Silva'
-                            value={council}
-                            onChange={(e) => setCouncil(e.target.value)}
+                            value={form.council}
+                            onChange={handleSubmit}
                             focused
                             margin='normal'
                             sx={{
@@ -96,8 +102,8 @@ const FormSignGroup = () => {
                             label="Portaria"
                             name='concierge'
                             placeholder='Jhonicley P. Silva'
-                            value={concierge}
-                            onChange={(e) => setConcierge(e.target.value)}
+                            value={form.concierge}
+                            onChange={handleSubmit}
                             focused
                             margin='normal'
                             sx={{
@@ -109,8 +115,8 @@ const FormSignGroup = () => {
                             label="Sigla"
                             name='sigla'
                             placeholder='Jhonicley P. Silva'
-                            value={sigla}
-                            onChange={(e) => setSigla(e.target.value)}
+                            value={form.sigla}
+                            onChange={handleSubmit}
                             focused
                             margin='normal'
                             sx={{
@@ -122,8 +128,8 @@ const FormSignGroup = () => {
                             label="Equipe"
                             name='equip'
                             placeholder='Jhonicley P. Silva'
-                            value={equip}
-                            onChange={(e) => setEquip(e.target.value)}
+                            value={form.equip}
+                            onChange={handleSubmit}
                             focused
                             margin='normal'
                             sx={{
@@ -139,8 +145,8 @@ const FormSignGroup = () => {
                                 label="E-mail"
                                 name='email'
                                 placeholder='Jhonicley P. Silva'
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
+                                value={form.email}
+                                onChange={handleSubmit}
                                 focused
                                 margin='normal'
                                 sx={{
@@ -152,8 +158,8 @@ const FormSignGroup = () => {
                                 label="Observações"
                                 name='comments'
                                 placeholder='Jhonicley P. Silva'
-                                value={comments}
-                                onChange={(e) => setComments(e.target.value)}
+                                value={form.comments}
+                                onChange={handleSubmit}
                                 focused
                                 margin='normal'
                                 multiline
@@ -170,8 +176,8 @@ const FormSignGroup = () => {
                                 label="Unidade"
                                 name='unit'
                                 placeholder='Jhonicley P. Silva'
-                                value={unit}
-                                onChange={(e) => setUnit(e.target.value)}
+                                value={form.unit}
+                                onChange={handleSubmit}
                                 focused
                                 margin='normal'
                                 sx={{
@@ -183,8 +189,8 @@ const FormSignGroup = () => {
                                 label="Oficio que solicitou"
                                 name='OfficeRequested'
                                 placeholder='Jhonicley P. Silva'
-                                value={OfficeRequested}
-                                onChange={(e) => setOfficeRequested(e.target.value)}
+                                value={form.OfficeRequested}
+                                onChange={handleSubmit}
                                 focused
                                 margin='normal'
                                 sx={{
@@ -196,8 +202,8 @@ const FormSignGroup = () => {
                                 label="Oficio que indicou"
                                 name='AppointedOffice'
                                 placeholder='Jhonicley P. Silva'
-                                value={AppointedOffice}
-                                onChange={(e) => setAppointedOffice(e.target.value)}
+                                value={form.AppointedOffice}
+                                onChange={handleSubmit}
                                 focused
                                 margin='normal'
                                 sx={{
