@@ -1,4 +1,4 @@
-import React, { Fragment} from "react";
+import React, { Fragment } from "react";
 
 import HeaderBar from "../../layout/header/HeaderBar";
 import { ImArrowLeft2 } from "react-icons/im";
@@ -12,7 +12,7 @@ const TypeUsers = () => {
             <HeaderBar text="PAINEL DE CONTROLE" backPageIcon={<ImArrowLeft2 size={25} />} backPage="/" />
             <div className={style.typeUsers}>
                 <h2>Tipos de Usuários</h2>
-                <TableTypeUser/>
+                <TableTypeUser />
             </div>
         </Fragment>
     );

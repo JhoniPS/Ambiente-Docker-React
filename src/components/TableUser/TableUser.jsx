@@ -2,9 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { Table } from 'antd';
 import { IoTrash, IoPencilSharp } from "react-icons/io5";
+import { IconContext } from 'react-icons';
+import api from '../../services/api'
 
 import style from './TableUser.module.css'
-import { IconContext } from 'react-icons';
+
 
 const handlDelete = () => {
   alert("Delete");
@@ -15,11 +17,11 @@ const columns = [
   {
     title: 'Nome',
     dataIndex: 'name',
-    render: (name) => `${name.first} ${name.last}`,
+    render: (name) => `${name}`,
   },
   {
     title: 'Tipo de usuario',
-    dataIndex: 'type',
+    dataIndex: 'type_user_id',
   },
   {
     title: 'E-mail',
@@ -57,26 +59,35 @@ const TableUser = () => {
     },
   });
 
-  const fetchData = () => {
-    setLoading(true);
-    fetch(`https://randomuser.me/api/?results=100`)
-      .then((res) => res.json())
-      .then(({ results }) => {
-        setData(results);
-        setLoading(false);
-        setTableParams(state => ({
-          ...state,
-          pagination: {
-            ...state.pagination,
-          },
-        }));
-      });
-  };
+  const getUsers = async () => {
+    try {
+      setLoading(true);
+      const response = await api.get(
+        '/users/'
+      );
+
+      const users = response.data.map((user) => ({
+        ...user,
+        key: user.id,
+      }));
+
+      setData(users);
+      setLoading(false);
+      setTableParams(state => ({
+        ...state,
+        pagination: {
+          ...state.pagination,
+        },
+      }));
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   useEffect(() => {
-    fetchData();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [JSON.stringify(tableParams)]);
+    getUsers();
+  }, []);
+
   const handleTableChange = (pagination) => {
     setTableParams({
       pagination,
@@ -91,7 +102,7 @@ const TableUser = () => {
   return (
     <Table
       className={style.table}
-      rowKey={(record) => record.login.uuid}
+      rowKey={(record) => (record.login && record.login.uuid) || record.key}
       columns={columns}
       dataSource={data}
       responsive

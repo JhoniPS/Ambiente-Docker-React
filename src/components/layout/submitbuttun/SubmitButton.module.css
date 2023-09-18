@@ -12,6 +12,11 @@
     width: 100%;
 }
 
+.salvar {
+    width: 358px;
+    justify-content: center;
+}
+
 .button_editar_perfil {
     width: 146px;
     height: 38px;

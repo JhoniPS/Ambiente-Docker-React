@@ -25,13 +25,11 @@ import SignRepresentatives from "../components/pages/SignRepresentative/SignRepr
 import EditRepresentative from "../components/pages/EditRepresentative/EditRepresentative"
 import TypeUsers from "../components/pages/TypeUsers/TypeUsers";
 
+
 import React, { useContext } from "react";
 import { AuthProvider, AuthContext } from "../components/contexts/Auth";
 
-
-
 const RoutesApp = () => {
-
     const Private = ({ children }) => {
         const { authenticated, loading } = useContext(AuthContext)
 
@@ -128,7 +126,7 @@ const RoutesApp = () => {
 
                     <Route
                         exect path="/Tipos-de-Usuarios"
-                        element={<TypeUsers/>}
+                        element={<TypeUsers />}
                     />
                 </Routes>
             </AuthProvider>

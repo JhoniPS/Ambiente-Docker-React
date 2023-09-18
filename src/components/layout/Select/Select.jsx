@@ -14,10 +14,10 @@ const handleChange = (value) => {
   console.log(`selected ${value}`);
 };
 
-const Select = ({ placeholder }) => (
+const Select = ({ placeholder , customClass}) => (
   <select
     name="select"
-    className={`${style.select} ${style.select_seta}`}
+    className={`${style.select} ${style.select_seta} ${style[customClass]}`}
     onChange={handleChange}
   >
     <option

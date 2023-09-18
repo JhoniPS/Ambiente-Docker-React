@@ -1,55 +1,80 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Table } from 'antd';
 import { IoTrash } from "react-icons/io5";
+import { IconContext } from 'react-icons';
+import api from '../../services/api'
 
 import style from './TableTypeUser.module.css'
-import { IconContext } from 'react-icons';
-
-const handlDelete = () => {
-  alert("Delete");
-};
-
-const columns = [
-  {
-    title: 'Tipos de usuario',
-    dataIndex: 'type',
-    width: 150,
-    align: 'center',
-    render: (type) => `${type}`,
-  },
-
-  {
-    title: 'Operação',
-    dataIndex: 'operation',
-    width: '10%',
-    align: 'center',
-    render: () => (
-      <div className={style.operation}>
-        <IconContext.Provider value={{ color: "#93000A", size: 20 }}>
-          <button onClick={handlDelete}>
-            <IoTrash />
-          </button>
-        </IconContext.Provider>
-      </div>
-    ),
-  },
-];
 
 const TableTypeUser = () => {
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(false);
 
-  const data = [];
+  const getTypeUsers = async () => {
+    try {
+      setLoading(true);
+      const response = await api.get(
+        '/group/type-user'
+      );
 
-  for (let i = 0; i < 3; i++) {
-    data.push({
-      key: i,
-      type: `type ${i}`,
-    });
-  }
+      const types = response.data.map((type) => ({
+        ...type,
+        key: type.id,
+      }));
+
+      setData(types);
+      setLoading(false);
+
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const deleteType = async(id) => {
+    try {
+      await api.delete(`/group/type-user/${id}`);
+      const updateDate = data.filter((type) => type.id !== id);
+      setData(updateDate);
+    } catch (error) {
+      console.error('Error ao excluir o tipo de usário:', error);
+    }
+  };
+
+  useEffect(() => {
+    getTypeUsers();
+  }, [])
+
+  const columns = [
+    {
+      title: 'Tipos de usuario',
+      dataIndex: 'name',
+      width: 150,
+      align: 'center',
+      render: (name) => `${name}`,
+    },
+
+    {
+      title: 'Operação',
+      dataIndex: 'operation',
+      width: '10%',
+      align: 'center',
+      render: (_, record) => (
+        <div className={style.operation}>
+          <IconContext.Provider value={{ color: "#93000A", size: 20 }}>
+            <button onClick={() => deleteType(record.id)}>
+              <IoTrash />
+            </button>
+          </IconContext.Provider>
+        </div>
+      ),
+    },
+  ];
 
   return (
     <Table
       columns={columns}
       dataSource={data}
+      loading={loading}
       pagination={{
         defaultPageSize: 10,
       }}

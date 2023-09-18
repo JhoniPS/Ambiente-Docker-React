@@ -4,6 +4,7 @@
     padding: 20px 100px 0px 100px;
     gap: 20px;
     height: 100%;
+    min-height: 100vh; 
     background: #ffffffcc;
   }
   

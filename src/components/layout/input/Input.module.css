@@ -1,7 +1,7 @@
 .input_control {
    display: flex;
    flex-direction: column;
-   margin-bottom: 1em;
+   margin-bottom: .5em;
    align-items: center;
    justify-content: center;
 }
@@ -23,7 +23,7 @@
 .input_control input {
    display: flex;
    width: 358px;
-   background-color: #ededed;
+   font-size: 18px;
    flex-direction: column;
    align-items: center;
    padding: .7em;

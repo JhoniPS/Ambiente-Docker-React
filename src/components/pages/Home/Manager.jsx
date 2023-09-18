@@ -32,6 +32,7 @@ const Home = () => {
                         icon={img3}
                         title="TAREFAS"
                         description="Gerencie suas tarefas"
+                        to="/Listas"
                     />
                 </Container>
             </div>
