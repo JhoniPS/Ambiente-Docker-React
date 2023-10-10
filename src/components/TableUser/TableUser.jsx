@@ -5,6 +5,7 @@ import { IoTrash, IoPencilSharp } from "react-icons/io5";
 
 import style from './TableUser.module.css'
 import { IconContext } from 'react-icons';
+import api from '../../services/api';
 
 const handlDelete = () => {
   alert("Delete");
@@ -15,11 +16,12 @@ const columns = [
   {
     title: 'Nome',
     dataIndex: 'name',
-    render: (name) => `${name.first} ${name.last}`,
+    render: (name) => `${name}`,
   },
   {
     title: 'Tipo de usuario',
-    dataIndex: 'type',
+    dataIndex: 'type_user',
+    render: (type) => `${type.name}`
   },
   {
     title: 'E-mail',
@@ -57,12 +59,11 @@ const TableUser = () => {
     },
   });
 
-  const fetchData = () => {
-    setLoading(true);
-    fetch(`https://randomuser.me/api/?results=100`)
-      .then((res) => res.json())
-      .then(({ results }) => {
-        setData(results);
+  const fetchData = async () => {
+    try {
+      setLoading(true);
+      await api.get('users').then(resp => {
+        setData(resp.data);
         setLoading(false);
         setTableParams(state => ({
           ...state,
@@ -70,12 +71,16 @@ const TableUser = () => {
             ...state.pagination,
           },
         }));
-      });
+      })
+
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   useEffect(() => {
     fetchData();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [JSON.stringify(tableParams)]);
   const handleTableChange = (pagination) => {
     setTableParams({
@@ -91,7 +96,7 @@ const TableUser = () => {
   return (
     <Table
       className={style.table}
-      rowKey={(record) => record.login.uuid}
+      rowKey={(record) => record.id}
       columns={columns}
       dataSource={data}
       responsive

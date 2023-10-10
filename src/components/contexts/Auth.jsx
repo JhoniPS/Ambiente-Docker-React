@@ -1,64 +1,52 @@
-import React, { useState, useEffect, createContext } from "react";
+import React, { useState, createContext, useContext } from "react";
+import api from "../../services/api";
 import { useNavigate } from "react-router-dom";
+//import Cookies from 'js-cookie'
 
-export const AuthContext = createContext();
+export const AuthContext = createContext({});
 
 export const AuthProvider = ({ children }) => {
-  const navigate = useNavigate();
   const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [errorLogin, setErrorLogin] = useState(false);
+  const [error, setError] = useState(false)
+  const [messageErrors, setMessageErrors] = useState([]);
+  const navigate = useNavigate();
 
-  useEffect(() => {
-    const recoveredUser = localStorage.getItem('user');
+  const login = async ({ ...data }) => {
+    try {
+      const response = await api.post('/login', data)
 
-    if (recoveredUser) {
-      setUser(JSON.parse(recoveredUser));
+      const { token, type_user } = response.data;
+
+      //Cookies.set('Bearer token', token);
+      api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+      
+      switch (type_user.name) {
+        case 'administrador':
+          navigate('/');
+          break;
+        case 'gerente':
+          navigate('/manager');
+          break;
+        case 'representative':
+          navigate('/representative');
+          break;
+        case 'viewer':
+          navigate('/viewer');
+          break;
+        default:
+          navigate('/login'); // Redirecionamento padrão para a login
+      }
+
+    } catch (e) {
+      if (e.response.status === 422) {
+        setError(true);
+        setMessageErrors(e.response.data.errors)
+      }
     }
-
-    setLoading(false);
-  }, []);
-
-  const login = (email, password) => {
-    console.log("login auth: ", { email, password });
-
-    //Substituir pela API
-    const loggedUser = {
-      id: '123',
-      email,
-    };
-
-    localStorage.setItem("user", JSON.stringify(loggedUser));
-
-    if (password === "123" && email === "teste@teste.com") {
-      setErrorLogin(false);
-      setUser({ loggedUser }); // Substituir pelo banco
-      navigate("/");
-    } else {
-      setErrorLogin(true);
-    }
-
-  };
-
-  //Add error de cadastro
-  const signup = (name, email, authEmail, password, office) => {
-    const registeredUser = {
-      name,
-      email,
-      authEmail,
-      password,
-      office
-    };
-
-    if (email !== authEmail)
-      alert("Erro de confirmação do e-mail");
-    else
-      console.log("Signup auth: ", { registeredUser });
   }
 
   const logout = () => {
-    console.log("logout")
-    localStorage.removeItem('user');
+    //Cookies.remove('Bearer token');
     setUser(null);
     navigate("/login");
   };
@@ -67,13 +55,11 @@ export const AuthProvider = ({ children }) => {
     <AuthContext.Provider
       value={
         {
-          authenticated: !!user,
           user,
-          loading,
+          error,
+          messageErrors,
           login,
           logout,
-          signup,
-          errorLogin
         }
       }
     >
@@ -81,3 +67,8 @@ export const AuthProvider = ({ children }) => {
     </AuthContext.Provider>
   );
 };
+
+
+export default function useAuthContext() {
+  return useContext(AuthContext);
+}
