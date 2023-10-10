@@ -1,29 +1,22 @@
+import React, { useState } from 'react';
+import useAuthContext from '../../contexts/Auth';
 
+import { TextField } from '@mui/material';
+import SubmitButton from '../../layout/submitbuttun/SubmitButton';
 import styles from './Form.module.css'
 
-import { TextField} from '@mui/material';
-import SubmitButton from '../../layout/submitbuttun/SubmitButton';
-
-import React, { useState, useContext } from 'react';
-
-import { AuthContext } from '../../contexts/Auth';
-
-//novo form do login da home
-
 const Form = () => {
-    const { login, errorLogin } = useContext(AuthContext);
-
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const { login, error, messageErrors } = useAuthContext();
 
-    const handleSubmit = (e) => {
+    const handleLogin = async (e) => {
         e.preventDefault();
-
-        login(email, password);
+        login({ email, password });
     };
 
     return (
-        <form className={styles.Form} onSubmit={handleSubmit}>
+        <form className={styles.Form} onSubmit={handleLogin}>
             <TextField
                 type='e-mail'
                 label="E-mail"
@@ -32,28 +25,25 @@ const Form = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 focused
-                sx={{
-                    width:350,
-                }}
-                error={errorLogin}
-                helperText ={errorLogin && "Digite o e-mail correto"}
+                sx={{ width: 350 }}
+                error={error}
+                helperText={messageErrors.email}
             />
+
             <TextField
                 type='password'
                 label="Senha"
-                name='email'
+                name='password'
                 placeholder='Digite sua senha'
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 focused
                 margin='normal'
-                sx={{
-                    width:350,
-                }}
-                error={errorLogin}
-                helperText ={errorLogin && "Digite a senha correta"}
+                sx={{ width: 350 }}
+                error={error}
+                helperText={messageErrors.password}
             />
-            
+
             <SubmitButton
                 text="Entrar na conta"
                 to="/home"
