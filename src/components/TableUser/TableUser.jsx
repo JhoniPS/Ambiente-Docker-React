@@ -2,11 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { Table } from 'antd';
 import { IoTrash, IoPencilSharp } from "react-icons/io5";
-import { IconContext } from 'react-icons';
-import api from '../../services/api'
 
 import style from './TableUser.module.css'
-
+import { IconContext } from 'react-icons';
+import api from '../../services/api';
 
 const handlDelete = () => {
   alert("Delete");
@@ -21,7 +20,8 @@ const columns = [
   },
   {
     title: 'Tipo de usuario',
-    dataIndex: 'type_user_id',
+    dataIndex: 'type_user',
+    render: (type) => `${type.name}`
   },
   {
     title: 'E-mail',
@@ -59,35 +59,29 @@ const TableUser = () => {
     },
   });
 
-  const getUsers = async () => {
+  const fetchData = async () => {
     try {
       setLoading(true);
-      const response = await api.get(
-        '/users/'
-      );
+      await api.get('users').then(resp => {
+        setData(resp.data);
+        setLoading(false);
+        setTableParams(state => ({
+          ...state,
+          pagination: {
+            ...state.pagination,
+          },
+        }));
+      })
 
-      const users = response.data.map((user) => ({
-        ...user,
-        key: user.id,
-      }));
-
-      setData(users);
-      setLoading(false);
-      setTableParams(state => ({
-        ...state,
-        pagination: {
-          ...state.pagination,
-        },
-      }));
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
   useEffect(() => {
-    getUsers();
-  }, []);
-
+    fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [JSON.stringify(tableParams)]);
   const handleTableChange = (pagination) => {
     setTableParams({
       pagination,
@@ -102,7 +96,7 @@ const TableUser = () => {
   return (
     <Table
       className={style.table}
-      rowKey={(record) => (record.login && record.login.uuid) || record.key}
+      rowKey={(record) => record.id}
       columns={columns}
       dataSource={data}
       responsive
