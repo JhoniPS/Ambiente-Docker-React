@@ -17,7 +17,6 @@ export const AuthProvider = ({ children }) => {
 
       const { token, type_user } = response.data;
 
-      //Cookies.set('Bearer token', token);
       api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
       
       switch (type_user.name) {
@@ -45,9 +44,9 @@ export const AuthProvider = ({ children }) => {
     }
   }
 
-  const logout = () => {
-    //Cookies.remove('Bearer token');
+  const logout = async() => {
     setUser(null);
+    await api.post('users/logout');
     navigate("/login");
   };
 
