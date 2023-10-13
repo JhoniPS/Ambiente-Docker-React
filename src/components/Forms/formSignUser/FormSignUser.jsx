@@ -1,30 +1,22 @@
-import React, { useState } from 'react';
-
-import { TextField } from '@mui/material';
+import React, { useEffect, useState } from 'react';
+import api from '../../../services/api';
 
 import styles from './formSignUser.module.css'
-
 import LinkButton from '../../layout/linkbutton/LinkButton';
 import SubmitButton from '../../layout/submitbuttun/SubmitButton';
 import { Select, ConfigProvider } from 'antd';
+import { TextField } from '@mui/material';
 
-const options = [];
-
-for (let i = 1; i < 36; i++) {
-    options.push({
-        value: 'Type' + i,
-        label: 'Type' + i,
-    });
-}
 
 const FormSignUser = () => {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
+    const [option, setOption] = useState([]);
 
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        console.log("Amostra:", {name, email})
+        console.log("Amostra:", { name, email })
 
     }
 
@@ -35,6 +27,19 @@ const FormSignUser = () => {
     const onSearch = (value) => {
         console.log(`search: ${value}`)
     }
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const apiResponse = await api.get('type-user');
+            const options = apiResponse.data.map(type => ({
+                label: type.name,
+                value: type.id
+            }));
+            setOption(options);
+        }
+
+        fetchData();
+    }, []);
 
     return (
         <div>
@@ -93,7 +98,7 @@ const FormSignUser = () => {
                         filterOption={(input, option) =>
                             (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
                         }
-                        options={options}
+                        options={option}
                     />
                 </ConfigProvider>
 
