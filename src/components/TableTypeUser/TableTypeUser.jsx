@@ -1,5 +1,6 @@
-import React from 'react';
-import { Table } from 'antd';
+import React, { useEffect, useState } from 'react';
+import api from '../../services/api';
+import { Table, ConfigProvider } from 'antd';
 import { IoTrash } from "react-icons/io5";
 
 import style from './TableTypeUser.module.css'
@@ -12,10 +13,10 @@ const handlDelete = () => {
 const columns = [
   {
     title: 'Tipos de usuario',
-    dataIndex: 'type',
+    dataIndex: 'name',
     width: 150,
     align: 'center',
-    render: (type) => `${type}`,
+    render: (name) => `${name}`
   },
 
   {
@@ -36,24 +37,51 @@ const columns = [
 ];
 
 const TableTypeUser = () => {
+  const [data, setData] = useState();
+  const [loading, setLoading] = useState(false);
+  const [page, setPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
 
-  const data = [];
-
-  for (let i = 0; i < 3; i++) {
-    data.push({
-      key: i,
-      type: `type ${i}`,
-    });
+  const fetchData = async () => {
+    try {
+      setLoading(true);
+      await api.get('type-user').then(resp => {
+        setData(resp.data);
+        setLoading(false);
+      })
+    } catch (error) {
+      console.log(error);
+    }
   }
 
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   return (
-    <Table
-      columns={columns}
-      dataSource={data}
-      pagination={{
-        defaultPageSize: 10,
+    <ConfigProvider
+      theme={{
+        token: {
+          colorIconHover:"#000"
+        },
       }}
-    />
+    >
+      <Table
+        columns={columns}
+        rowKey={(record) => record.id}
+        dataSource={data}
+        reponsive={true}
+        loading={loading}
+        pagination={{
+          current: page,
+          pageSize: pageSize,
+          onChange: (page, pageSize) => {
+            setPage(page);
+            setPageSize(pageSize)
+          },
+        }}
+      />
+    </ConfigProvider>
   );
 };
 

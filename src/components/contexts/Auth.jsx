@@ -26,10 +26,10 @@ export const AuthProvider = ({ children }) => {
         case 'gerente':
           navigate('/manager');
           break;
-        case 'representative':
+        case 'representante':
           navigate('/representative');
           break;
-        case 'viewer':
+        case 'visualizador':
           navigate('/viewer');
           break;
         default:

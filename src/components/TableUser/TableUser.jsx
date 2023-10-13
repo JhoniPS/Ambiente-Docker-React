@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import { Table } from 'antd';
+import { Table, ConfigProvider } from 'antd';
 import { IoTrash, IoPencilSharp } from "react-icons/io5";
 
 import style from './TableUser.module.css'
@@ -52,12 +52,9 @@ const columns = [
 const TableUser = () => {
   const [data, setData] = useState();
   const [loading, setLoading] = useState(false);
-  const [tableParams, setTableParams] = useState({
-    pagination: {
-      current: 1,
-      pageSize: 10,
-    },
-  });
+  const [page, setPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
+
 
   const fetchData = async () => {
     try {
@@ -65,12 +62,7 @@ const TableUser = () => {
       await api.get('users').then(resp => {
         setData(resp.data);
         setLoading(false);
-        setTableParams(state => ({
-          ...state,
-          pagination: {
-            ...state.pagination,
-          },
-        }));
+
       })
 
     } catch (error) {
@@ -80,18 +72,7 @@ const TableUser = () => {
 
   useEffect(() => {
     fetchData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [JSON.stringify(tableParams)]);
-  const handleTableChange = (pagination) => {
-    setTableParams({
-      pagination,
-    });
-
-    // `dataSource` is useless since `pageSize` changed
-    if (pagination.pageSize !== tableParams.pagination?.pageSize) {
-      setData([]);
-    }
-  };
+  }, []);
 
   return (
     <Table
@@ -99,10 +80,16 @@ const TableUser = () => {
       rowKey={(record) => record.id}
       columns={columns}
       dataSource={data}
-      responsive
-      pagination={tableParams.pagination}
+      responsive={true}
       loading={loading}
-      onChange={handleTableChange}
+      pagination={{
+        current: page,
+        pageSize: pageSize,
+        onChange: (page, pageSize) => {
+          setPage(page);
+          setPageSize(pageSize)
+        }
+      }}
     />
   );
 };
