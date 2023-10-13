@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import { Table, ConfigProvider } from 'antd';
+import { Table } from 'antd';
 import { IoTrash, IoPencilSharp } from "react-icons/io5";
+import useAuthContext from '../contexts/Auth';
 
 import style from './TableUser.module.css'
 import { IconContext } from 'react-icons';
@@ -50,29 +51,32 @@ const columns = [
 ];
 
 const TableUser = () => {
+  const { user } = useAuthContext();
+
   const [data, setData] = useState();
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
 
-
-  const fetchData = async () => {
-    try {
-      setLoading(true);
-      await api.get('users').then(resp => {
-        setData(resp.data);
-        setLoading(false);
-
-      })
-
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   useEffect(() => {
+    const fetchData = async () => {
+      if (user) {
+        try {
+          setLoading(true);
+          await api.get('users').then(resp => {
+            setData(resp.data);
+            setLoading(false);
+
+          })
+
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    };
+
     fetchData();
-  }, []);
+  }, [user]);
 
   return (
     <Table

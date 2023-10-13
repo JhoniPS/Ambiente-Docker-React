@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import api from '../../../services/api';
+import useAuthContext from '../../contexts/Auth';
 
 import styles from './formSignUser.module.css'
 import LinkButton from '../../layout/linkbutton/LinkButton';
@@ -9,19 +10,27 @@ import { TextField } from '@mui/material';
 
 
 const FormSignUser = () => {
+    const { user } = useAuthContext();
+
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [option, setOption] = useState([]);
+    const [type_user, setType_user] = useState({});
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
-        console.log("Amostra:", { name, email })
+        const user = {
+            name,
+            email,
+            type_user,
+        }
 
+        console.log("Amostra:", user)
     }
 
     const onChange = (value) => {
-        console.log(`select: ${value}`)
+
     }
 
     const onSearch = (value) => {
@@ -30,16 +39,24 @@ const FormSignUser = () => {
 
     useEffect(() => {
         const fetchData = async () => {
-            const apiResponse = await api.get('type-user');
-            const options = apiResponse.data.map(type => ({
-                label: type.name,
-                value: type.id
-            }));
-            setOption(options);
+            if (user) {
+                try {
+                    const apiResponse = await api.get('type-user');
+                    const options = apiResponse.data.map(type => ({
+                        value: type.id,
+                        label: type.name,
+                    }));
+                    setOption(options);
+                } catch (error) {
+                    if (error.response.status === 401) {
+                        // Trate o erro 401 aqui, por exemplo, redirecionando o usuário para a página de login.
+                    }
+                }
+            }
         }
 
         fetchData();
-    }, []);
+    }, [user]);
 
     return (
         <div>

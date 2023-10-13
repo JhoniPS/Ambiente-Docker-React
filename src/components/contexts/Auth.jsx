@@ -1,7 +1,7 @@
-import React, { useState, createContext, useContext } from "react";
+import React, { useState, createContext, useContext, useEffect } from "react";
 import api from "../../services/api";
+import Cookies from 'js-cookie'
 import { useNavigate } from "react-router-dom";
-//import Cookies from 'js-cookie'
 
 export const AuthContext = createContext({});
 
@@ -11,6 +11,15 @@ export const AuthProvider = ({ children }) => {
   const [messageErrors, setMessageErrors] = useState([]);
   const navigate = useNavigate();
 
+  useEffect(() => {
+    const authToken = Cookies.get('authToken');
+    if (authToken) {
+      api.defaults.headers.common['Authorization'] = `Bearer ${authToken}`;
+      // Você pode fazer uma chamada à API aqui para obter as informações do usuário, se necessário.
+      setUser(authToken);
+    }
+  }, []);
+
   const login = async ({ ...data }) => {
     try {
       const response = await api.post('/login', data)
@@ -18,6 +27,7 @@ export const AuthProvider = ({ children }) => {
       const { token, type_user } = response.data;
 
       api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+      Cookies.set('authToken', token); // Armazene o token nos cookies
       
       switch (type_user.name) {
         case 'administrador':
@@ -45,6 +55,7 @@ export const AuthProvider = ({ children }) => {
   }
 
   const logout = async() => {
+    Cookies.remove('authToken'); // Remova o token dos cookies
     setUser(null);
     await api.post('users/logout');
     navigate("/login");
