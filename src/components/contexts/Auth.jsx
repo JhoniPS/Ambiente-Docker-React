@@ -1,36 +1,50 @@
-import React, { useState, createContext, useContext } from "react";
+import React, { useState, createContext, useContext, useEffect } from "react";
 import api from "../../services/api";
+import Cookies from 'js-cookie'
 import { useNavigate } from "react-router-dom";
-//import Cookies from 'js-cookie'
 
 export const AuthContext = createContext({});
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  const [typeUser, setTypeUser] = useState("")
   const [error, setError] = useState(false)
   const [messageErrors, setMessageErrors] = useState([]);
+
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const authToken = Cookies.get('authToken');
+    if (authToken) {
+      api.defaults.headers.common['Authorization'] = `Bearer ${authToken}`;
+      // Você pode fazer uma chamada à API aqui para obter as informações do usuário, se necessário.
+      setUser(authToken);
+    }
+  }, []);
 
   const login = async ({ ...data }) => {
     try {
       const response = await api.post('/login', data)
-
       const { token, type_user } = response.data;
 
-      //Cookies.set('Bearer token', token);
       api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-      
+      Cookies.set('authToken', token); // Armazene o token nos cookies
+
       switch (type_user.name) {
         case 'administrador':
+          setTypeUser(type_user.name)
           navigate('/');
           break;
         case 'gerente':
+          setTypeUser(type_user.name)
           navigate('/manager');
           break;
-        case 'representative':
+        case 'representante':
+          setTypeUser(type_user.name)
           navigate('/representative');
           break;
-        case 'viewer':
+        case 'visualizador':
+          setTypeUser(type_user.name)
           navigate('/viewer');
           break;
         default:
@@ -45,9 +59,11 @@ export const AuthProvider = ({ children }) => {
     }
   }
 
-  const logout = () => {
-    //Cookies.remove('Bearer token');
+  const logout = async () => {
+    Cookies.remove('authToken'); // Remova o token dos cookies
     setUser(null);
+    setTypeUser("");
+    await api.post('users/logout');
     navigate("/login");
   };
 
@@ -56,6 +72,7 @@ export const AuthProvider = ({ children }) => {
       value={
         {
           user,
+          typeUser,
           error,
           messageErrors,
           login,

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { Table } from 'antd';
 import { IoTrash, IoPencilSharp } from "react-icons/io5";
+import useAuthContext from '../contexts/Auth';
 
 import style from './TableUser.module.css'
 import { IconContext } from 'react-icons';
@@ -50,48 +51,32 @@ const columns = [
 ];
 
 const TableUser = () => {
+  const { user } = useAuthContext();
+
   const [data, setData] = useState();
   const [loading, setLoading] = useState(false);
-  const [tableParams, setTableParams] = useState({
-    pagination: {
-      current: 1,
-      pageSize: 10,
-    },
-  });
-
-  const fetchData = async () => {
-    try {
-      setLoading(true);
-      await api.get('users').then(resp => {
-        setData(resp.data);
-        setLoading(false);
-        setTableParams(state => ({
-          ...state,
-          pagination: {
-            ...state.pagination,
-          },
-        }));
-      })
-
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  const [page, setPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
 
   useEffect(() => {
-    fetchData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [JSON.stringify(tableParams)]);
-  const handleTableChange = (pagination) => {
-    setTableParams({
-      pagination,
-    });
+    const fetchData = async () => {
+      if (user) {
+        try {
+          setLoading(true);
+          await api.get('users').then(resp => {
+            setData(resp.data);
+            setLoading(false);
 
-    // `dataSource` is useless since `pageSize` changed
-    if (pagination.pageSize !== tableParams.pagination?.pageSize) {
-      setData([]);
-    }
-  };
+          })
+
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    };
+
+    fetchData();
+  }, [user]);
 
   return (
     <Table
@@ -99,10 +84,16 @@ const TableUser = () => {
       rowKey={(record) => record.id}
       columns={columns}
       dataSource={data}
-      responsive
-      pagination={tableParams.pagination}
+      responsive={true}
       loading={loading}
-      onChange={handleTableChange}
+      pagination={{
+        current: page,
+        pageSize: pageSize,
+        onChange: (page, pageSize) => {
+          setPage(page);
+          setPageSize(pageSize)
+        }
+      }}
     />
   );
 };
