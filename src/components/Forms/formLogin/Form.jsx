@@ -21,6 +21,7 @@ const Form = () => {
                 type='e-mail'
                 label="E-mail"
                 name='email'
+                autoComplete="On"
                 placeholder='Digite seu e-mail'
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -34,6 +35,7 @@ const Form = () => {
                 type='password'
                 label="Senha"
                 name='password'
+                autoComplete="On"
                 placeholder='Digite sua senha'
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
