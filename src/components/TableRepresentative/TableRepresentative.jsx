@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { Table } from 'antd';
 import { IoTrash, IoPencilSharp } from "react-icons/io5";
-
-import style from './TableRepresentative.module.css'
 import { IconContext } from 'react-icons';
+import style from './TableRepresentative.module.css'
+
+import useAuthContext from '../contexts/Auth';
+import api from '../../services/api';
 
 const handlDelete = () => {
   alert("Delete");
@@ -19,9 +21,10 @@ const columns = [
   },
   {
     title: 'Tipo de usuario',
-    dataIndex: 'type',
+    dataIndex: 'type_user',
     width: 150,
     align: 'center',
+    render: (type) => `${type.name}`
   },
   {
     title: 'E-mail',
@@ -55,25 +58,48 @@ const columns = [
 
 const TableRepresentative = () => {
 
-  const data = [];
+  const { user } = useAuthContext();
 
-  for (let i = 0; i < 100; i++) {
-    data.push({
-      key: i,
-      name: `Nome Exemplo ${i}`,
-      type: `type ${i}`,
-      email: `teste@teste.com`,
-    });
-  }
+  const [data, setData] = useState();
+  const [loading, setLoading] = useState(false);
+  const [page, setPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      if (user) {
+        try {
+          setLoading(true);
+          const response = await api.get('users');
+          const representanteUsers = response.data.filter(user => user.type_user.name === 'representante');
+
+          setData(representanteUsers);
+          setLoading(false);
+
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    };
+
+    fetchData();
+  }, [user]);
 
   return (
     <Table
       className={style.table}
+      rowKey={(record) => record.id}
       columns={columns}
       dataSource={data}
-      responsive
+      responsive={true}
+      loading={loading}
       pagination={{
-        defaultPageSize: 10,
+        current: page,
+        pageSize: pageSize,
+        onChange: (page, pageSize) => {
+          setPage(page);
+          setPageSize(pageSize)
+        }
       }}
     />
   );
