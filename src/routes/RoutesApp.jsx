@@ -19,7 +19,8 @@ import EditRepresentative from "../components/pages/EditRepresentative/EditRepre
 import TypeUsers from "../components/pages/TypeUsers/TypeUsers";
 import Cookies from 'js-cookie'
 
-import React, { useContext, useEffect } from "react";
+import React from "react";
+
 import {
     BrowserRouter as Router,
     Routes,
@@ -27,16 +28,12 @@ import {
     Navigate,
 } from "react-router-dom";
 
-import { AuthProvider, AuthContext } from "../components/contexts/Auth";
+import { AuthProvider } from "../components/contexts/Auth";
 
 const PrivateRoute = ({ children, requiredUserType }) => {
-    //const { userType } = useContext(AuthContext);
     const isAuthenticated = Cookies.get('authToken');
     const userType = Cookies.get('userType');
-
-    //tenho que achar um jeito de persistir o tipo do usuario.
-    console.log(userType);
-
+    
     return (isAuthenticated && userType === requiredUserType) ? children : <Navigate to="/login" />;
 };
 

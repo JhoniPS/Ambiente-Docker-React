@@ -61,6 +61,9 @@ export const AuthProvider = ({ children }) => {
       if (e.response.status === 422) {
         setError(true);
         setMessageErrors(e.response.data.errors)
+      } else if(e.response.status === 401) {
+        setError(true);
+        setMessageErrors("E-mail ou senha incorretos!!!");
       }
     }
   }
