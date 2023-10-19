@@ -8,11 +8,9 @@ import MenuIcon from '@mui/icons-material/Menu';
 import { Avatar } from '@mui/material';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
-
 import { useContext, useState } from 'react';
-import { AuthContext } from '../../contexts/Auth'
-
-import Settings from '../../../img/settings.svg'
+import { AuthContext } from '../../contexts/Auth';
+import Settings from '../../../img/settings.svg';
 import Logout from '../../../img/log-out.svg';
 import styles from '../../layout/AppBar/style.module.css';
 import LinkButton from '../linkbutton/LinkButton';
@@ -35,21 +33,33 @@ const MenuAppBar = () => {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static" color='transparent'>
+      <AppBar position="static" color="transparent">
         <Toolbar>
+          {/* Ícone de menu lateral */}
           <IconButton
             size="large"
             edge="start"
             color="inherit"
-            onClick={handleLogout} // Botão de barra lateral
+            onClick={handleLogout}
             aria-label="menu"
-            sx={{ mr: 4 }}
+            sx={{ mr: 2, display: { sm: 'block', md: 'none' } }} // Ocultar em telas maiores
           >
-            <MenuIcon color='primary' />
+            <MenuIcon color="primary" />
           </IconButton>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }} color='primary' fontWeight='bold'>
+
+          <Typography
+            variant="h6"
+            component="div"
+            sx={{
+              flexGrow: 1,
+            }}
+            color="primary"
+            fontWeight="bold"
+          >
             PAINEL DE CONTROLE
           </Typography>
+
+          {/* Avatar e Menu de perfil */}
           <div>
             <IconButton
               size="large"
@@ -62,7 +72,7 @@ const MenuAppBar = () => {
               <Avatar
                 alt="Remy Sharp"
                 src="/static/images/avatar/1.jpg"
-                sx={{ width: 50, height: 50 }}
+                sx={{ width: { xs: 40, sm: 50 }, height: { xs: 40, sm: 50 } }} // Redimensionar Avatar
               />
             </IconButton>
 
@@ -73,42 +83,28 @@ const MenuAppBar = () => {
                 vertical: 'top',
                 horizontal: 'right',
               }}
-
               keepMounted
               transformOrigin={{
                 vertical: 'top',
                 horizontal: 'right',
               }}
-
               open={Boolean(anchorEl)}
               onClose={handleClose}
             >
-              <MenuItem
-                onClick={handleClose}  
-              >
-                <img
-                  src={Settings}
-                  alt='Cofigurações'
-                  className={styles}
-                />
+              <MenuItem onClick={handleClose}>
+                <img src={Settings} alt="Configurações" className={styles} />
                 <LinkButton text="Configurações" to="/profile" />
               </MenuItem>
-              <MenuItem
-                onClick={handleLogout}
-              >
-                <img
-                  src={Logout}
-                  alt='Logout'
-                  className={styles}
-                />
+              <MenuItem onClick={handleLogout}>
+                <img src={Logout} alt="Logout" className={styles} />
                 Sair
               </MenuItem>
             </Menu>
           </div>
         </Toolbar>
       </AppBar>
-    </Box >
+    </Box>
   );
 }
 
-export default MenuAppBar
+export default MenuAppBar;

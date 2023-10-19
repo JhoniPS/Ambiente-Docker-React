@@ -17,42 +17,70 @@ import Representatives from "../components/pages/Representatives/Representatives
 import SignRepresentatives from "../components/pages/SignRepresentative/SignRepresentative"
 import EditRepresentative from "../components/pages/EditRepresentative/EditRepresentative"
 import TypeUsers from "../components/pages/TypeUsers/TypeUsers";
+import Cookies from 'js-cookie'
 
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import {
     BrowserRouter as Router,
     Routes,
     Route,
+    Navigate,
 } from "react-router-dom";
 
-import { AuthProvider } from "../components/contexts/Auth";
+import { AuthProvider, AuthContext } from "../components/contexts/Auth";
+
+const PrivateRoute = ({ children, requiredUserType }) => {
+    //const { userType } = useContext(AuthContext);
+    const isAuthenticated = Cookies.get('authToken');
+    const userType = Cookies.get('userType');
+
+    //tenho que achar um jeito de persistir o tipo do usuario.
+    console.log(userType);
+
+    return (isAuthenticated && userType === requiredUserType) ? children : <Navigate to="/login" />;
+};
+
 
 const RoutesApp = () => {
+
     return (
         <Router>
             <AuthProvider>
                 <Routes>
-                    <Route
-                        exect path="/login"
-                        element={<Login />}
-                    />
+                    <Route exect path="/login" element={<Login />} />
 
                     <Route
                         exect path="/"
-                        element={<Admin />}
+                        element={
+                            <PrivateRoute requiredUserType="administrador">
+                                <Admin />
+                            </PrivateRoute>
+                        }
                     />
 
                     <Route
                         exect path="/manager"
-                        element={<Manager />}
+                        element={
+                            <PrivateRoute requiredUserType="gerente">
+                                <Manager />
+                            </PrivateRoute>
+                        }
                     />
                     <Route
                         exect path="/representative"
-                        element={<Representative />}
+                        element={
+                            <PrivateRoute requiredUserType="representante">
+                                <Representative />
+                            </PrivateRoute>
+                        }
                     />
                     <Route
                         exect path="/viewer"
-                        element={<Viewer />}
+                        element={
+                            <PrivateRoute requiredUserType="visualizador">
+                                <Viewer />
+                            </PrivateRoute>
+                        }
                     />
 
                     <Route

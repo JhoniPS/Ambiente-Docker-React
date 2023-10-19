@@ -7,7 +7,7 @@ export const AuthContext = createContext({});
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const [typeUser, setTypeUser] = useState("")
+  const [userType, setUserType] = useState("")
   const [error, setError] = useState(false)
   const [messageErrors, setMessageErrors] = useState([]);
 
@@ -15,10 +15,13 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     const authToken = Cookies.get('authToken');
+    const storedUserType = Cookies.get('userType');
+
     if (authToken) {
       api.defaults.headers.common['Authorization'] = `Bearer ${authToken}`;
       // Você pode fazer uma chamada à API aqui para obter as informações do usuário, se necessário.
       setUser(authToken);
+      setUserType(storedUserType);
     }
   }, []);
 
@@ -26,29 +29,32 @@ export const AuthProvider = ({ children }) => {
     try {
       const response = await api.post('/login', data)
       const { token, type_user } = response.data;
-
       api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
       Cookies.set('authToken', token); // Armazene o token nos cookies
 
       switch (type_user.name) {
         case 'administrador':
-          setTypeUser(type_user.name)
           navigate('/');
+          setUserType(type_user.name)
+          Cookies.set('userType', type_user.name);
           break;
         case 'gerente':
-          setTypeUser(type_user.name)
           navigate('/manager');
+          setUserType(type_user.name)
+          Cookies.set('userType', type_user.name);
           break;
         case 'representante':
-          setTypeUser(type_user.name)
           navigate('/representative');
+          setUserType(type_user.name)
+          Cookies.set('userType', type_user.name);
           break;
         case 'visualizador':
-          setTypeUser(type_user.name)
           navigate('/viewer');
+          setUserType(type_user.name);
+          Cookies.set('userType', type_user.name);
           break;
         default:
-          navigate('/login'); // Redirecionamento padrão para a login
+          logout();
       }
 
     } catch (e) {
@@ -60,10 +66,11 @@ export const AuthProvider = ({ children }) => {
   }
 
   const logout = async () => {
-    Cookies.remove('authToken'); // Remova o token dos cookies
-    setUser(null);
-    setTypeUser("");
     await api.post('users/logout');
+    Cookies.remove('authToken');
+    Cookies.remove('userType');
+    setUser(null);
+    setUserType("");
     navigate("/login");
   };
 
@@ -72,7 +79,8 @@ export const AuthProvider = ({ children }) => {
       value={
         {
           user,
-          typeUser,
+          userType,
+          setUserType,
           error,
           messageErrors,
           login,
