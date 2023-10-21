@@ -12,7 +12,13 @@ const Form = () => {
 
     const handleLogin = async (e) => {
         e.preventDefault();
-        login({ email, password });
+        await login({ email, password });
+    };
+
+    const handleKeyDown = (e) => {
+        if (e.key === 'Enter') {
+            handleLogin(e);
+        }
     };
 
     return (
@@ -28,7 +34,8 @@ const Form = () => {
                 focused
                 sx={{ width: 350 }}
                 error={error}
-                helperText={messageErrors.email}
+                helperText={messageErrors.email || messageErrors}
+                onKeyDown={handleKeyDown}
             />
 
             <TextField
@@ -43,7 +50,8 @@ const Form = () => {
                 margin='normal'
                 sx={{ width: 350 }}
                 error={error}
-                helperText={messageErrors.password}
+                helperText={messageErrors.password || messageErrors}
+                onKeyDown={handleKeyDown}
             />
 
             <SubmitButton

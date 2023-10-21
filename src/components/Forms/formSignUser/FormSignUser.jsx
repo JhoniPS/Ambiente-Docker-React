@@ -29,12 +29,11 @@ const FormSignUser = () => {
         console.log("Amostra:", user)
     }
 
-    const onChange = (value) => {
-
-    }
-
-    const onSearch = (value) => {
-        console.log(`search: ${value}`)
+    const onChange = (value, option) => {
+        setType_user({
+            id: value,
+            name: option?.label
+        });
     }
 
     useEffect(() => {
@@ -104,14 +103,12 @@ const FormSignUser = () => {
                         }}
                         style={{
                             width: '100%',
-
                         }}
                         size='large'
                         label="Tipo de Usuário"
                         placeholder="Selecione um tipo de usuário"
                         onChange={onChange}
                         optionFilterProp='children'
-                        onSearch={onSearch}
                         filterOption={(input, option) =>
                             (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
                         }
