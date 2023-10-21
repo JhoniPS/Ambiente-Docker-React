@@ -35,22 +35,18 @@ export const AuthProvider = ({ children }) => {
       switch (type_user.name) {
         case 'administrador':
           navigate('/');
-          setUserType(type_user.name)
           Cookies.set('userType', type_user.name);
           break;
         case 'gerente':
           navigate('/manager');
-          setUserType(type_user.name)
           Cookies.set('userType', type_user.name);
           break;
         case 'representante':
           navigate('/representative');
-          setUserType(type_user.name)
           Cookies.set('userType', type_user.name);
           break;
         case 'visualizador':
           navigate('/viewer');
-          setUserType(type_user.name);
           Cookies.set('userType', type_user.name);
           break;
         default:
@@ -93,6 +89,14 @@ export const AuthProvider = ({ children }) => {
     }
   }
 
+  const deleteUser = async ({ id }) => {
+    try {
+      await api.delete(`users/${id}`);
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
   return (
     <AuthContext.Provider
       value={
@@ -105,7 +109,8 @@ export const AuthProvider = ({ children }) => {
           login,
           logout,
           newTypeUser,
-          deleteTypeUser
+          deleteTypeUser,
+          deleteUser,
         }
       }
     >
