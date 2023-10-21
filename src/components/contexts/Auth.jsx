@@ -61,7 +61,7 @@ export const AuthProvider = ({ children }) => {
       if (e.response.status === 422) {
         setError(true);
         setMessageErrors(e.response.data.errors)
-      } else if(e.response.status === 401) {
+      } else if (e.response.status === 401) {
         setError(true);
         setMessageErrors("E-mail ou senha incorretos!!!");
       }
@@ -77,6 +77,22 @@ export const AuthProvider = ({ children }) => {
     navigate("/login");
   };
 
+  const newTypeUser = async ({ ...name }) => {
+    try {
+      await api.post('/type-user', name);
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  const deleteTypeUser = async ({ id }) => {
+    try {
+      await api.delete(`/type-user/${id}`);
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
   return (
     <AuthContext.Provider
       value={
@@ -88,6 +104,8 @@ export const AuthProvider = ({ children }) => {
           messageErrors,
           login,
           logout,
+          newTypeUser,
+          deleteTypeUser
         }
       }
     >

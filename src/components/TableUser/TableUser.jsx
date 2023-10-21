@@ -1,16 +1,13 @@
 import React, { useEffect, useState } from 'react';
+import useAuthContext from '../contexts/Auth';
+import api from '../../services/api';
+
 import { NavLink } from 'react-router-dom';
 import { Table } from 'antd';
 import { IoTrash, IoPencilSharp } from "react-icons/io5";
-import useAuthContext from '../contexts/Auth';
-
 import style from './TableUser.module.css'
 import { IconContext } from 'react-icons';
-import api from '../../services/api';
 
-const handlDelete = () => {
-  alert("Delete");
-};
 
 
 const columns = [
@@ -30,12 +27,13 @@ const columns = [
   },
   {
     title: 'Operações',
-    dataIndex: 'operation',
+    dataIndex: 'id',
     align: 'center',
-    render: () => (
+
+    render: (id) => (
       <div className={style.operation}>
         <IconContext.Provider value={{ color: "#93000A", size: 20 }}>
-          <button onClick={handlDelete}>
+          <button onClick={() => handlDelete(id)}>
             <IoTrash />
           </button>
         </IconContext.Provider>
@@ -49,6 +47,15 @@ const columns = [
     ),
   },
 ];
+
+
+const handlDelete = async (id) => {
+  try {
+    await api.delete(`users/${id}`);
+  } catch (error) {
+    console.error(error);
+  }
+};
 
 const TableUser = () => {
   const { user } = useAuthContext();
@@ -66,9 +73,7 @@ const TableUser = () => {
           await api.get('users').then(resp => {
             setData(resp.data);
             setLoading(false);
-
           })
-
         } catch (error) {
           console.log(error);
         }

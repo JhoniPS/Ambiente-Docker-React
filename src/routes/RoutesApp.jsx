@@ -16,7 +16,9 @@ import EditGroup from "../components/pages/EditGroup/EditGroup"
 import Representatives from "../components/pages/Representatives/Representatives"
 import SignRepresentatives from "../components/pages/SignRepresentative/SignRepresentative"
 import EditRepresentative from "../components/pages/EditRepresentative/EditRepresentative"
+import SignTypeUser from "../components/pages/SignTypeUser/SignTypeUser"
 import TypeUsers from "../components/pages/TypeUsers/TypeUsers";
+
 import Cookies from 'js-cookie'
 
 import React from "react";
@@ -33,7 +35,7 @@ import { AuthProvider } from "../components/contexts/Auth";
 const PrivateRoute = ({ children, requiredUserType }) => {
     const isAuthenticated = Cookies.get('authToken');
     const userType = Cookies.get('userType');
-    
+
     return (isAuthenticated && userType === requiredUserType) ? children : <Navigate to="/login" />;
 };
 
@@ -138,6 +140,11 @@ const RoutesApp = () => {
                     <Route
                         exect path="/Tipos-de-Usuarios"
                         element={<TypeUsers />}
+                    />
+
+                    <Route
+                        exect path="/Novo-tipo"
+                        element={<SignTypeUser />}
                     />
                 </Routes>
             </AuthProvider>

@@ -12,7 +12,7 @@ const Form = () => {
 
     const handleLogin = async (e) => {
         e.preventDefault();
-        login({ email, password });
+        await login({ email, password });
     };
 
     const handleKeyDown = (e) => {
