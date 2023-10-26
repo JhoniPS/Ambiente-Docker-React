@@ -37,10 +37,10 @@ const RoutesApp = () => {
         <Router>
             <AuthProvider>
                 <Routes>
-                    <Route exact path="/login" element={<Login />} />
+                    <Route exact path="/" element={<Login />} />
 
                     <Route
-                        exact path="/"
+                        exact path="/administrador"
                         element={
                             <PrivateRoute requiredUserType={["administrador"]}>
                                 <Admin />

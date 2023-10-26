@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import api from '../../services/api';
 import useAuthContext from '../contexts/Auth';
 
-import { Table, ConfigProvider } from 'antd';
+import { Table } from 'antd';
 import { IoTrash } from "react-icons/io5";
-import style from './TableTypeUser.module.css'
 import { IconContext } from 'react-icons';
+import style from './TableTypeUser.module.css'
+import EditTypeUser from '../Modals/modal_edit_type_user/EditTypeUser';
 
 
 const TableTypeUser = () => {
@@ -68,19 +69,19 @@ const TableTypeUser = () => {
               <IoTrash />
             </button>
           </IconContext.Provider>
+
+          <IconContext.Provider value={{ color: "#2C74AC", size: 20 }}>
+            <EditTypeUser />
+          </IconContext.Provider>
         </div>
       ),
     },
   ];
 
   return (
-    <ConfigProvider
-      theme={{
-        token: {
-          colorIconHover: "#000"
-        },
-      }}
-    >
+    <Fragment>
+
+
       <Table
         columns={columns}
         rowKey={(record) => record.id}
@@ -96,7 +97,7 @@ const TableTypeUser = () => {
           },
         }}
       />
-    </ConfigProvider>
+    </Fragment>
   );
 };
 

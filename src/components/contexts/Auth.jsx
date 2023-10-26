@@ -34,7 +34,7 @@ export const AuthProvider = ({ children }) => {
 
       switch (type_user.name) {
         case 'administrador':
-          navigate('/');
+          navigate('/administrador');
           Cookies.set('userType', type_user.name);
           break;
         case 'gerente':
