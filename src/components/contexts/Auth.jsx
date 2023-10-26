@@ -89,6 +89,14 @@ export const AuthProvider = ({ children }) => {
     }
   }
 
+  const editTypeUser = async ({ id, name }) => {
+    try {
+      await api.put(`type-user/${id}`, { name });
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
   const deleteUser = async ({ id }) => {
     try {
       await api.delete(`users/${id}`);
@@ -110,6 +118,7 @@ export const AuthProvider = ({ children }) => {
           logout,
           newTypeUser,
           deleteTypeUser,
+          editTypeUser,
           deleteUser,
         }
       }

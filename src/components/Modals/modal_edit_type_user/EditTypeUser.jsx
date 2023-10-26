@@ -1,12 +1,15 @@
-import * as React from 'react';
-import FormEditTypeUser from '../../Forms/formEditTypeUser/FormEditTypeUser'
+import React, { useState, useEffect } from 'react';
+import useAuthContext from '../../contexts/Auth';
+import api from '../../../services/api';
 
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
+import SubmitButton from '../../layout/submitbuttun/SubmitButton';
+import styles from './formEditTypeUser.module.css'
 import { IconContext } from 'react-icons';
 import { IoPencilSharp } from "react-icons/io5";
-import { Typography } from '@mui/material';
+import { Typography, TextField } from '@mui/material';
 
 const style = {
     display: 'flex',
@@ -37,11 +40,43 @@ const styleTitle = {
     lineHeight: '36px',
 };
 
+export default function EditTypeUser({ id, data, setData }) {
+    const { editTypeUser, error, messageErrors } = useAuthContext();
 
-export default function EditTypeUser() {
-    const [open, setOpen] = React.useState(false);
+    const [name, setName] = useState("");
+    const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
+
+    const handlEdit = async (e) => {
+        e.preventDefault()
+        try {
+            await editTypeUser({ id, name });
+
+            const updatedData = data.map(item => {
+                if (item.id === id) {
+                    return { ...item, name };
+                }
+                return item;
+            });
+            setData(updatedData);
+            handleClose();
+        } catch (error) {
+            console.log(e)
+        }
+    }
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await api.get(`/type-user/${id}`);
+                setName(response.data.name);
+            } catch (error) {
+                console.error(error);
+            }
+        };
+        fetchData();
+    }, [id]);
 
     return (
         <div>
@@ -58,7 +93,30 @@ export default function EditTypeUser() {
             >
                 <Box sx={style}>
                     <Typography sx={styleTitle}>Editar tipo de usuário</Typography>
-                    <FormEditTypeUser />
+                    <div>
+                        <form className={styles.Form} onSubmit={handlEdit}>
+                            <TextField
+                                type='text'
+                                label="Nome"
+                                name='name'
+                                placeholder='Editar tipo de usuário'
+                                value={name}
+                                onChange={(e) => setName(e.target.value)}
+                                focused
+                                error={error}
+                                helperText={messageErrors.name}
+                                margin='normal'
+                                sx={{
+                                    width: 350,
+                                }}
+                            />
+
+                            <div>
+                                <SubmitButton text="Voltar" customClass="button_back" onClick={handleClose} />
+                                <SubmitButton text="Editar" customClass="button_editar_perfil" />
+                            </div>
+                        </form>
+                    </div >
                 </Box>
             </Modal>
         </div>

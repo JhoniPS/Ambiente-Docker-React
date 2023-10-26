@@ -23,6 +23,18 @@
     color: #FFF;
 }
 
+.button_back {
+    width: 146px;
+    height: 38px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    border: 1px solid #2C74AC; 
+    gap: 8px;
+    color: #2C74AC;
+    background-color: #FFF;
+}
+
 .button_filter {
     display: flex;
     width: 168px;

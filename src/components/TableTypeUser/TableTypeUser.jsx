@@ -71,7 +71,11 @@ const TableTypeUser = () => {
           </IconContext.Provider>
 
           <IconContext.Provider value={{ color: "#2C74AC", size: 20 }}>
-            <EditTypeUser />
+            <EditTypeUser
+              id={id}
+              data={data}
+              setData={setData}
+            />
           </IconContext.Provider>
         </div>
       ),
