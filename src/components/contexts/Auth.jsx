@@ -60,6 +60,7 @@ export const AuthProvider = ({ children }) => {
       } else if (e.response.status === 401) {
         setError(true);
         setMessageErrors("E-mail ou senha incorretos!!!");
+        logout();
       }
     }
   }
@@ -70,7 +71,7 @@ export const AuthProvider = ({ children }) => {
     Cookies.remove('userType');
     setUser(null);
     setUserType("");
-    navigate("/login");
+    navigate("/");
   };
 
   const newTypeUser = async ({ ...name }) => {

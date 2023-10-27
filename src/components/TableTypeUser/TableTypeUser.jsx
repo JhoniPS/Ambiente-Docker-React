@@ -7,10 +7,11 @@ import { IoTrash } from "react-icons/io5";
 import { IconContext } from 'react-icons';
 import style from './TableTypeUser.module.css'
 import EditTypeUser from '../Modals/modal_edit_type_user/EditTypeUser';
+import Cookies from 'js-cookie'
 
 
 const TableTypeUser = () => {
-  const { user, deleteTypeUser } = useAuthContext();
+  const { deleteTypeUser } = useAuthContext();
 
   const [data, setData] = useState();
   const [loading, setLoading] = useState(false);
@@ -29,7 +30,8 @@ const TableTypeUser = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      if (user) {
+      const token = Cookies.get('authToken')
+      if (token) {
         try {
           setLoading(true);
           await api.get('type-user').then(resp => {
@@ -44,7 +46,7 @@ const TableTypeUser = () => {
     };
 
     fetchData();
-  }, [user]);
+  }, []);
 
 
   const columns = [
