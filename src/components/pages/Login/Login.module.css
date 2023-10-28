@@ -43,3 +43,16 @@
     line-height: 24px;
     letter-spacing: 0.5px;
 }
+
+.Form {
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
+    justify-content: center;
+    align-items: center;
+}
+
+.error {
+  color: red;
+  font-size: 12px;
+}
