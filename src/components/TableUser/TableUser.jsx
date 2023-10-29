@@ -1,34 +1,22 @@
 import React, { useEffect, useState } from 'react';
-import useAuthContext from '../contexts/Auth';
 import api from '../../services/api';
-
-import { NavLink } from 'react-router-dom';
+import Cookies from 'js-cookie'
 import { Table } from 'antd';
-import { IoTrash, IoPencilSharp } from "react-icons/io5";
 import style from './TableUser.module.css'
-import { IconContext } from 'react-icons';
+
+import ModalDeleteUser from '../Modals/modal_delete_user/ModalDeleteUser';
+import ModalEditUser from '../Modals/modal_edit_user/ModalEditUser'
 
 const TableUser = () => {
-  const { user, deleteUser } = useAuthContext();
-
   const [data, setData] = useState();
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
 
-  const handlDelete = async (id) => {
-    try {
-      await deleteUser({ id })
-      const updatedData = data.filter(item => item.id !== id);
-      setData(updatedData);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
   useEffect(() => {
     const fetchData = async () => {
-      if (user) {
+      const token = Cookies.get('authToken');
+      if (token) {
         try {
           setLoading(true);
           await api.get('users').then(resp => {
@@ -42,7 +30,7 @@ const TableUser = () => {
     };
 
     fetchData();
-  }, [user]);
+  }, []);
 
   const columns = [
     {
@@ -66,17 +54,8 @@ const TableUser = () => {
 
       render: (id) => (
         <div className={style.operation}>
-          <IconContext.Provider value={{ color: "#93000A", size: 20 }}>
-            <button onClick={() => handlDelete(id)}>
-              <IoTrash />
-            </button>
-          </IconContext.Provider>
-
-          <IconContext.Provider value={{ color: "#2C74AC", size: 20 }}>
-            <NavLink to='/editUser'>
-              <IoPencilSharp />
-            </NavLink>
-          </IconContext.Provider>
+          <ModalDeleteUser id={id} data={data} setData={setData} />
+          <ModalEditUser id={id} data={data} setData={setData} />
         </div>
       ),
     },

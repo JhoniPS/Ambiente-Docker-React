@@ -1,32 +1,18 @@
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import api from '../../services/api';
-import useAuthContext from '../contexts/Auth';
 
 import { Table } from 'antd';
-import { IoTrash } from "react-icons/io5";
 import { IconContext } from 'react-icons';
 import style from './TableTypeUser.module.css'
-import EditTypeUser from '../Modals/modal_edit_type_user/EditTypeUser';
+import ModalEditTypeUser from '../Modals/modal_edit_type_user/ModalEditTypeUser';
 import Cookies from 'js-cookie'
-
+import ModalDeleteUser from '../Modals/modal_delete_type-user/ModalDeleteTypeUser';
 
 const TableTypeUser = () => {
-  const { deleteTypeUser } = useAuthContext();
-
   const [data, setData] = useState();
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
-
-  const handlDelete = async (id) => {
-    try {
-      await deleteTypeUser({ id })
-      const updatedData = data.filter(item => item.id !== id);
-      setData(updatedData);
-    } catch (error) {
-      console.error(error);
-    }
-  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -66,14 +52,10 @@ const TableTypeUser = () => {
 
       render: (id) => (
         <div className={style.operation}>
-          <IconContext.Provider value={{ color: "#93000A", size: 20 }}>
-            <button onClick={() => handlDelete(id)}>
-              <IoTrash />
-            </button>
-          </IconContext.Provider>
+          <ModalDeleteUser id={id} data={data} setData={setData} />
 
           <IconContext.Provider value={{ color: "#2C74AC", size: 20 }}>
-            <EditTypeUser
+            <ModalEditTypeUser
               id={id}
               data={data}
               setData={setData}
@@ -85,25 +67,21 @@ const TableTypeUser = () => {
   ];
 
   return (
-    <Fragment>
-
-
-      <Table
-        columns={columns}
-        rowKey={(record) => record.id}
-        dataSource={data}
-        reponsive={true}
-        loading={loading}
-        pagination={{
-          current: page,
-          pageSize: pageSize,
-          onChange: (page, pageSize) => {
-            setPage(page);
-            setPageSize(pageSize)
-          },
-        }}
-      />
-    </Fragment>
+    <Table
+      columns={columns}
+      rowKey={(record) => record.id}
+      dataSource={data}
+      reponsive={true}
+      loading={loading}
+      pagination={{
+        current: page,
+        pageSize: pageSize,
+        onChange: (page, pageSize) => {
+          setPage(page);
+          setPageSize(pageSize)
+        },
+      }}
+    />
   );
 };
 
