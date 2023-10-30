@@ -6,8 +6,13 @@ import { IoTrash, IoPencilSharp } from "react-icons/io5";
 import style from './TableGroups.module.css'
 import { IconContext } from 'react-icons';
 
-const handlDelete = () => {
+const handlDelete = (e) => {
+    e.stopPropagation();
     alert("Delete");
+};
+
+const handleEdit = (event) => {
+    event.stopPropagation(); 
 };
 
 
@@ -51,7 +56,7 @@ const columns = [
                 </IconContext.Provider>
 
                 <IconContext.Provider value={{ color: "#2C74AC", size: 20 }}>
-                    <NavLink to='/editGroup'>
+                    <NavLink to='/editGroup' onClick={handleEdit}>
                         <IoPencilSharp />
                     </NavLink>
                 </IconContext.Provider>
