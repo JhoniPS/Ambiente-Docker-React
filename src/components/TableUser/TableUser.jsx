@@ -64,10 +64,11 @@ const TableUser = () => {
   return (
     <Table
       className={style.table}
+      bordered
       rowKey={(record) => record.id}
       columns={columns}
       dataSource={data}
-      responsive={true}
+      responsive
       loading={loading}
       pagination={{
         current: page,

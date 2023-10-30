@@ -1,13 +1,14 @@
-import React, { Fragment, useState } from 'react';
-import styles from './EditUser.module.css'
+import React, { Fragment, useState, useEffect } from 'react';
+import SubmitButton from '../../layout/submitbuttun/SubmitButton';
+import api from '../../../services/api';
+
 import Modal from '@mui/material/Modal';
 import Button from '@mui/material/Button';
 import { IconContext } from 'react-icons';
 import { TextField } from '@mui/material';
 import { IoPencilSharp } from "react-icons/io5";
 import { Select, ConfigProvider } from 'antd';
-import SubmitButton from '../../layout/submitbuttun/SubmitButton';
-
+import styles from './EditUser.module.css'
 
 const options = [];
 
@@ -39,6 +40,19 @@ const EditUser = ({ id, data, setData }) => {
         console.log(`search: ${value}`)
     }
 
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await api.get(`/users/${id}`);
+                setName(response.data.name);
+                setEmail(response.data.email);
+            } catch (error) {
+                console.error(error);
+            }
+        };
+        fetchData();
+    }, [id]);
+
     return (
         <Fragment>
             <IconContext.Provider value={{ color: "#2C74AC", size: 20 }}>
@@ -53,75 +67,75 @@ const EditUser = ({ id, data, setData }) => {
                 aria-describedby="modal-modal-description"
                 className={styles.edit_user}
             >
-                    <section>
-                        <h4>Editar Usuário</h4>
-                        <div>
-                            <form className={styles.form} onSubmit={handleSubmit}>
-                                <TextField
-                                    type='text'
-                                    label="Nome"
-                                    name='name'
-                                    placeholder='Jhonicley P. Silva'
-                                    value={name}
-                                    onChange={(e) => setName(e.target.value)}
-                                    focused
-                                    margin='normal'
-                                    sx={{
+                <section>
+                    <h4>Editar Usuário</h4>
+                    <div>
+                        <form className={styles.form} onSubmit={handleSubmit}>
+                            <TextField
+                                type='text'
+                                label="Nome"
+                                name='name'
+                                placeholder='Jhonicley P. Silva'
+                                value={name}
+                                onChange={(e) => setName(e.target.value)}
+                                focused
+                                margin='normal'
+                                sx={{
+                                    width: 350,
+                                }}
+
+                            />
+                            <TextField
+                                type='e-mail'
+                                label="E-mail"
+                                name='new password'
+                                placeholder='Digite uma nova senha'
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                focused
+                                sx={{
+                                    width: 350,
+                                }}
+                            />
+
+                            <ConfigProvider
+                                theme={{
+                                    token: {
+                                        colorBorder: '#2C74AC',
+                                        lineWidth: 2,
+                                        controlHeight: 45,
+                                    },
+                                }}
+                            >
+                                <Select
+                                    showSearch
+                                    getPopupContainer={(trigger) => {
+                                        return trigger;
+                                    }}
+                                    style={{
                                         width: 350,
-                                    }}
 
+                                    }}
+                                    size='large'
+                                    label="Tipo de Usuário"
+                                    placeholder="Selecione um tipo de usuário"
+                                    onChange={onChange}
+                                    optionFilterProp='children'
+                                    onSearch={onSearch}
+                                    filterOption={(input, option) =>
+                                        (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
+                                    }
+                                    options={options}
                                 />
-                                <TextField
-                                    type='e-mail'
-                                    label="E-mail"
-                                    name='new password'
-                                    placeholder='Digite uma nova senha'
-                                    value={email}
-                                    onChange={(e) => setEmail(e.target.value)}
-                                    focused
-                                    sx={{
-                                        width: 350,
-                                    }}
-                                />
+                            </ConfigProvider>
 
-                                <ConfigProvider
-                                    theme={{
-                                        token: {
-                                            colorBorder: '#2C74AC',
-                                            lineWidth: 2,
-                                            controlHeight: 45,
-                                        },
-                                    }}
-                                >
-                                    <Select
-                                        showSearch
-                                        getPopupContainer={(trigger) => {
-                                            return trigger;
-                                        }}
-                                        style={{
-                                            width: 350,
-
-                                        }}
-                                        size='large'
-                                        label="Tipo de Usuário"
-                                        placeholder="Selecione um tipo de usuário"
-                                        onChange={onChange}
-                                        optionFilterProp='children'
-                                        onSearch={onSearch}
-                                        filterOption={(input, option) =>
-                                            (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
-                                        }
-                                        options={options}
-                                    />
-                                </ConfigProvider>
-
-                                <div>
-                                    <SubmitButton text="Voltar" customClass="button_back" onClick={handleClose} />
-                                    <SubmitButton text="Editar" customClass="button_editar_perfil" />
-                                </div>
-                            </form>
-                        </div >
-                    </section>
+                            <div>
+                                <SubmitButton text="Voltar" customClass="button_back" onClick={handleClose} />
+                                <SubmitButton text="Editar" customClass="button_editar_perfil" />
+                            </div>
+                        </form>
+                    </div >
+                </section>
             </Modal>
         </Fragment>
     )

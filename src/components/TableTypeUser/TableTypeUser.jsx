@@ -39,8 +39,6 @@ const TableTypeUser = () => {
     {
       title: 'Tipos de usuario',
       dataIndex: 'name',
-      width: 150,
-      align: 'center',
       render: (name) => `${name}`
     },
 
@@ -69,6 +67,7 @@ const TableTypeUser = () => {
   return (
     <Table
       columns={columns}
+      bordered
       rowKey={(record) => record.id}
       dataSource={data}
       reponsive={true}
