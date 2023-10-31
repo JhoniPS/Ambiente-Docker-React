@@ -8,7 +8,7 @@ import ModalDeleteUser from '../Modals/modal_delete_user/ModalDeleteUser';
 import ModalEditUser from '../Modals/modal_edit_user/ModalEditUser'
 
 const TableUser = () => {
-  const [data, setData] = useState();
+  const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
@@ -19,10 +19,14 @@ const TableUser = () => {
       if (token) {
         try {
           setLoading(true);
-          await api.get('users').then(resp => {
-            setData(resp.data);
-            setLoading(false);
-          })
+          const response = await api.get('users', {
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
+          });
+          const users = response.data.data;
+          setData(users);
+          setLoading(false);
         } catch (error) {
           console.log(error);
         }
@@ -36,12 +40,10 @@ const TableUser = () => {
     {
       title: 'Nome',
       dataIndex: 'name',
-      render: (name) => `${name}`,
     },
     {
       title: 'Tipo de usuario',
       dataIndex: 'type_user',
-      render: (type) => `${type.name}`
     },
     {
       title: 'E-mail',
@@ -51,7 +53,7 @@ const TableUser = () => {
       title: 'Operações',
       dataIndex: 'id',
       align: 'center',
-
+      width: '10%',
       render: (id) => (
         <div className={style.operation}>
           <ModalDeleteUser id={id} data={data} setData={setData} />

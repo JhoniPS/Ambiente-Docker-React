@@ -72,10 +72,8 @@ const TableRepresentative = () => {
           setLoading(true);
           const response = await api.get('users');
           const representanteUsers = response.data.filter(user => user.type_user.name === 'representante');
-
           setData(representanteUsers);
           setLoading(false);
-
         } catch (error) {
           console.log(error);
         }

@@ -9,7 +9,7 @@ import Cookies from 'js-cookie'
 import ModalDeleteUser from '../Modals/modal_delete_type-user/ModalDeleteTypeUser';
 
 const TableTypeUser = () => {
-  const [data, setData] = useState();
+  const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
@@ -20,15 +20,17 @@ const TableTypeUser = () => {
       if (token) {
         try {
           setLoading(true);
-          await api.get('type-user').then(resp => {
-            setData(resp.data);
-            setLoading(false);
+          const response = await api.get('type-user', {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            }
           });
+          setData(response.data);
+          setLoading(false);
         } catch (error) {
           console.log(error);
         }
       }
-
     };
 
     fetchData();

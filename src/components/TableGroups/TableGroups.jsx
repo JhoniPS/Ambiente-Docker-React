@@ -12,29 +12,34 @@ const handlDelete = (e) => {
 };
 
 const handleEdit = (event) => {
-    event.stopPropagation(); 
+    event.stopPropagation();
 };
 
 
 const columns = [
     {
-        title: 'Nome do representante',
+        title: 'Tipo do grupo',
         dataIndex: 'name',
         width: '20%',
     },
     {
-        title: 'Equipe',
+        title: 'Nome',
         dataIndex: 'equip',
         width: '20%',
     },
     {
-        title: 'Orgão',
+        title: 'Equipe',
         dataIndex: 'organ',
         width: '20%',
     },
     {
-        title: 'Conselho',
+        title: 'Orgão',
         dataIndex: 'council',
+        width: '20%',
+    },
+    {
+        title: 'Conselho',
+        dataIndex: 'email',
         width: '20%',
     },
     {

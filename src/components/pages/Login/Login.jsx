@@ -55,7 +55,6 @@ const Login = () => {
                             placeholder='Digite seu e-mail'
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
-
                             onKeyDown={handleKeyDown}
                         />
                         <FormHelperText error={error}>
@@ -86,7 +85,7 @@ const Login = () => {
                                 </InputAdornment>
                             }
                             autoFocus
-                            margin='normal'
+                            margin='dense'
                             onKeyDown={handleKeyDown}
                         />
                         <FormHelperText error={error}>
