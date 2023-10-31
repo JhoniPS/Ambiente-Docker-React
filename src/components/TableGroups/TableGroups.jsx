@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { Table } from 'antd';
 import { IoTrash, IoPencilSharp } from "react-icons/io5";
@@ -6,41 +6,46 @@ import { IoTrash, IoPencilSharp } from "react-icons/io5";
 import style from './TableGroups.module.css'
 import { IconContext } from 'react-icons';
 
-const handlDelete = () => {
+const handlDelete = (e) => {
+    e.stopPropagation();
     alert("Delete");
+};
+
+const handleEdit = (event) => {
+    event.stopPropagation();
 };
 
 
 const columns = [
     {
-        title: 'Nome do representante',
+        title: 'Tipo do grupo',
         dataIndex: 'name',
-        width: 150,
-        align: 'center',
+        width: '20%',
+    },
+    {
+        title: 'Nome',
+        dataIndex: 'equip',
+        width: '20%',
     },
     {
         title: 'Equipe',
-        dataIndex: 'equip',
-        width: 150,
-        align: 'center',
+        dataIndex: 'organ',
+        width: '20%',
     },
     {
         title: 'Orgão',
-        dataIndex: 'organ',
-        width: 150,
-        align: 'center',
+        dataIndex: 'council',
+        width: '20%',
     },
     {
         title: 'Conselho',
-        dataIndex: 'council',
-        width: 150,
-        align: 'center',
+        dataIndex: 'email',
+        width: '20%',
     },
     {
         title: 'E-mail',
         dataIndex: 'email',
-        width: 150,
-        align: 'center',
+        width: '20%',
     },
     {
         title: 'Operações',
@@ -56,7 +61,7 @@ const columns = [
                 </IconContext.Provider>
 
                 <IconContext.Provider value={{ color: "#2C74AC", size: 20 }}>
-                    <NavLink to='/editGroup'>
+                    <NavLink to='/editGroup' onClick={handleEdit}>
                         <IoPencilSharp />
                     </NavLink>
                 </IconContext.Provider>
@@ -65,28 +70,7 @@ const columns = [
     },
 ];
 
-
-const DrawerTable = ({ data }) => (
-    <Fragment>
-        {data.map(item => (
-            <div key={item.key} className={style.drawerTable} >
-                <p><h3>Sigla:</h3> {item.sigla}</p>
-                <p><h3>Unidade:</h3> {item.unidade}</p>
-                <p><h3>Ofício que solicitou:</h3> {item.requestedOffice}</p>
-                <p><h3>Ofício que indicou:</h3> {item.designatedOffice}</p>
-                <p><h3>Portaria interna:</h3> {item.internalConcierge}</p>
-                <p><h3>Observações:</h3> {item.comments}</p>
-            </div>
-        ))}
-    </Fragment>
-);
-
-
 const TableGroups = () => {
-
-    const expandedRowRender = (data) => {
-        return <DrawerTable data={data.description} />;
-    };
 
     const data = [];
 
@@ -98,30 +82,28 @@ const TableGroups = () => {
             organ: 'Teste',
             council: 'Teste',
             email: `teste@teste.com`,
-            description: [{
-                key: i,
-                sigla: 'SIGLA',
-                unidade: '000000',
-                requestedOffice: 'xxxxxx',
-                designatedOffice: 'xxxxxx',
-                internalConcierge: 'xxxxx',
-                comments: 'xxxxxx'
-            }]
         });
     }
 
+    const handleRowClick = (record) => {
+        alert(record.key);
+    };
+
     return (
         <Table
+            bordered
             className={style.table}
+            rowKey={(record) => record.key}
             columns={columns}
             dataSource={data}
             responsive
             pagination={{
                 defaultPageSize: 10,
             }}
-            expandable={{
-                expandedRowRender,
-                rowExpandable: (record) => record.name !== 'Not Expandable',
+            onRow={(record) => {
+                return {
+                    onClick: () => handleRowClick(record),
+                };
             }}
         />
     );

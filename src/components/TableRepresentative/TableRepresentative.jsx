@@ -58,7 +58,7 @@ const columns = [
 
 const TableRepresentative = () => {
 
-  const { user } = useAuthContext();
+  const { token } = useAuthContext();
 
   const [data, setData] = useState();
   const [loading, setLoading] = useState(false);
@@ -67,15 +67,13 @@ const TableRepresentative = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      if (user) {
+      if (token) {
         try {
           setLoading(true);
           const response = await api.get('users');
           const representanteUsers = response.data.filter(user => user.type_user.name === 'representante');
-
           setData(representanteUsers);
           setLoading(false);
-
         } catch (error) {
           console.log(error);
         }
@@ -83,7 +81,7 @@ const TableRepresentative = () => {
     };
 
     fetchData();
-  }, [user]);
+  }, [token]);
 
   return (
     <Table

@@ -1,6 +1,6 @@
 
 import styles from './SubmitButton.module.css'
-  
+
 const SubmitButton = ({ text, customClass, onClick, value, onChange, icon }) => {
     return (
         <div>

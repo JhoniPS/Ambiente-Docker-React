@@ -13,7 +13,7 @@ import { IconContext } from "react-icons";
 const TypeUsers = () => {
     return (
         <Fragment>
-            <HeaderBar text="PAINEL DE CONTROLE" backPageIcon={<ImArrowLeft2 size={25} />} backPage="/" />
+            <HeaderBar text="PAINEL DE CONTROLE" backPageIcon={<ImArrowLeft2 size={25} />} backPage="/administrador" />
             <div className={style.typeUsers}>
                 <h2>Tipos de Usuários</h2>
                 <section className={style.section_search}>

@@ -21,7 +21,7 @@ const Users = () => {
 
   return (
     <Fragment>
-      <HeaderBar text="PAINEL DE CONTROLE" backPageIcon={<ImArrowLeft2 size={25} />} backPage="/" />
+      <HeaderBar text="PAINEL DE CONTROLE" backPageIcon={<ImArrowLeft2 size={25} />} backPage="/administrador" />
       <div className={style.users}>
         <h2>Usuarios</h2>
         <section className={style.section_search}>

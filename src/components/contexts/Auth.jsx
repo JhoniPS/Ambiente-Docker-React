@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 export const AuthContext = createContext({});
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
+  const [token, setToken] = useState(null);
   const [userType, setUserType] = useState("")
   const [error, setError] = useState(false)
   const [messageErrors, setMessageErrors] = useState([]);
@@ -14,15 +14,19 @@ export const AuthProvider = ({ children }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const authToken = Cookies.get('authToken');
-    const storedUserType = Cookies.get('userType');
+    const checkAuthentication = async () => {
+      const authToken = Cookies.get('authToken');
+      const storedUserType = Cookies.get('userType');
 
-    if (authToken) {
-      api.defaults.headers.common['Authorization'] = `Bearer ${authToken}`;
-      // Você pode fazer uma chamada à API aqui para obter as informações do usuário, se necessário.
-      setUser(authToken);
-      setUserType(storedUserType);
-    }
+      if (authToken) {
+        api.defaults.headers.common['Authorization'] = `Bearer ${authToken}`;
+        // Você pode fazer uma chamada à API aqui para obter as informações do usuário, se necessário.
+        setToken(authToken);
+        setUserType(storedUserType);
+      }
+    };
+
+    checkAuthentication();
   }, []);
 
   const login = async ({ ...data }) => {
@@ -34,7 +38,7 @@ export const AuthProvider = ({ children }) => {
 
       switch (type_user.name) {
         case 'administrador':
-          navigate('/');
+          navigate('/administrador');
           Cookies.set('userType', type_user.name);
           break;
         case 'gerente':
@@ -60,6 +64,7 @@ export const AuthProvider = ({ children }) => {
       } else if (e.response.status === 401) {
         setError(true);
         setMessageErrors("E-mail ou senha incorretos!!!");
+        logout();
       }
     }
   }
@@ -68,9 +73,9 @@ export const AuthProvider = ({ children }) => {
     await api.post('users/logout');
     Cookies.remove('authToken');
     Cookies.remove('userType');
-    setUser(null);
+    setToken(null);
     setUserType("");
-    navigate("/login");
+    navigate("/");
   };
 
   const newTypeUser = async ({ ...name }) => {
@@ -89,6 +94,14 @@ export const AuthProvider = ({ children }) => {
     }
   }
 
+  const editTypeUser = async ({ id, name }) => {
+    try {
+      await api.put(`type-user/${id}`, { name });
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
   const deleteUser = async ({ id }) => {
     try {
       await api.delete(`users/${id}`);
@@ -101,7 +114,7 @@ export const AuthProvider = ({ children }) => {
     <AuthContext.Provider
       value={
         {
-          user,
+          token,
           userType,
           setUserType,
           error,
@@ -110,6 +123,7 @@ export const AuthProvider = ({ children }) => {
           logout,
           newTypeUser,
           deleteTypeUser,
+          editTypeUser,
           deleteUser,
         }
       }

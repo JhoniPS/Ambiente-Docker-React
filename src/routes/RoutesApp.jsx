@@ -15,7 +15,6 @@ import EditorProfile from "../components/pages/EditorProfile/EditorProfile";
 import EditorPassword from "../components/pages/EditorPassword/EditorPassword";
 import Users from "../components/pages/Users/Users";
 import SignUser from "../components/pages/SignUser/SignUser";
-import EditUser from "../components/pages/EditUser/EditUser";
 import Groups from "../components/pages/Groups/Groups";
 import SignGroups from "../components/pages/SignGroups/SignGroups";
 import EditGroup from "../components/pages/EditGroup/EditGroup";
@@ -37,10 +36,10 @@ const RoutesApp = () => {
         <Router>
             <AuthProvider>
                 <Routes>
-                    <Route exact path="/login" element={<Login />} />
+                    <Route exact path="/" element={<Login />} />
 
                     <Route
-                        exact path="/"
+                        exact path="/administrador"
                         element={
                             <PrivateRoute requiredUserType={["administrador"]}>
                                 <Admin />
@@ -114,14 +113,6 @@ const RoutesApp = () => {
                         element={
                             <PrivateRoute requiredUserType={["administrador"]}>
                                 <SignUser />
-                            </PrivateRoute>
-                        }
-                    />
-                    <Route
-                        exact path="/editUser"
-                        element={
-                            <PrivateRoute requiredUserType={["administrador"]}>
-                                <EditUser />
                             </PrivateRoute>
                         }
                     />

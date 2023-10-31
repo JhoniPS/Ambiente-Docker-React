@@ -7,16 +7,6 @@
     font-size: 15px;
 }
 
-.edit_user {
-    display: flex;
-    flex-direction: column;
-    max-height: 100vh;
-    padding: 1em;
-    background-color: inherit;
-    justify-content: center;
-    align-items: center;
-}
-
 .edit_user section {
     display: flex;
     flex-direction: column;
@@ -25,9 +15,8 @@
     text-align: justify;
     gap: 20px;
     background-color: #FFF;
-    width: 500px;
-    height: 500px;
-    padding: 2rem;
+    width: 400px;
+    height: 400px;
     border-radius: 3px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
@@ -39,7 +28,25 @@
     font-family: Roboto;
     font-size: 34px;
     font-style: normal;
-    padding: 20px;
+    padding: 10px;
     font-weight: 500;
     line-height: 36px;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    row-gap: 20px;
+    justify-content: center;
+    align-items: center;
+}
+
+.error {
+    color: red;
+    font-size: 12px;
+}
+
+.form > div {
+    display: flex;
+    gap: 50px;
 }

@@ -14,6 +14,7 @@ import Settings from '../../../img/settings.svg';
 import Logout from '../../../img/log-out.svg';
 import styles from '../../layout/AppBar/style.module.css';
 import LinkButton from '../linkbutton/LinkButton';
+import Hidden from '@mui/material/Hidden';
 
 const MenuAppBar = () => {
   const { logout } = useContext(AuthContext);
@@ -32,20 +33,22 @@ const MenuAppBar = () => {
   };
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <Box sx={{ flexGrow: 1}}>
       <AppBar position="static" color="transparent">
         <Toolbar>
           {/* Ícone de menu lateral */}
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            onClick={handleLogout}
-            aria-label="menu"
-            sx={{ mr: 2, display: { sm: 'block', md: 'none' } }} // Ocultar em telas maiores
-          >
-            <MenuIcon color="primary" />
-          </IconButton>
+          <Hidden mdUp>
+            <IconButton
+              size="large"
+              edge="start"
+              color="inherit"
+              onClick={handleLogout}
+              aria-label="menu"
+              sx={{ mr: 2 }}
+            >
+              <MenuIcon color="primary" />
+            </IconButton>
+          </Hidden>
 
           <Typography
             variant="h6"
@@ -72,7 +75,7 @@ const MenuAppBar = () => {
               <Avatar
                 alt="Remy Sharp"
                 src="/static/images/avatar/1.jpg"
-                sx={{ width: { xs: 40, sm: 50 }, height: { xs: 40, sm: 50 } }} // Redimensionar Avatar
+                sx={{ width: { xs: 40, sm: 50 }, height: { xs: 40, sm: 50 } }}
               />
             </IconButton>
 

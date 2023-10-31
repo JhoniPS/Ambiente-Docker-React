@@ -1,23 +1,26 @@
+/* Estilos padrão do cartão */
 .card {
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  width: 365px;
-  height: 186px;
-  padding: 12px 16px;
+  gap: 10px;
+  width: 100%; /* O cartão ocupará a largura total do contêiner pai */
+  max-width: 420px; /* Largura máxima para evitar que o cartão se estenda muito */
+  height: 186px; /* Altura fixa do cartão */
+  padding: 10px 20px; /* Mantém o espaçamento interno original */
   border-radius: 12px;
   flex-shrink: 0;
   background: #E2F4FC;
   box-shadow: 0px 2px 6px 2px rgba(0, 0, 0, 0.15), 0px 1px 2px 0px rgba(0, 0, 0, 0.30);
+  overflow: hidden; /* Impede que o conteúdo vaze do cartão */
 }
 
 .card > img {
-  width: 35.939px;
-  height: 35.939px;
+  width: 36px; /* Largura fixa da imagem */
+  height: 36px; /* Altura fixa da imagem */
 }
 
 .card > h6 {
-  font-size: 14px;
+  font-size: 14px; /* Tamanho de fonte fixo */
   font-style: normal;
   font-weight: 500;
   line-height: 20px;
@@ -25,7 +28,7 @@
 }
 
 .card > p {
-  font-size: 14px;
+  font-size: 14px; /* Tamanho de fonte fixo */
   font-style: normal;
   font-weight: 400;
   line-height: 20px;
@@ -33,13 +36,5 @@
 }
 
 .card > div {
-  margin-top: 30px;
+  margin-top: 30px; /* Mantém a margem superior original */
 }
-
-@media screen and (max-width: 320px) {
-  /* For mobile phones: */
-  .card {
-    width: 100%;
-  }
-}
-
