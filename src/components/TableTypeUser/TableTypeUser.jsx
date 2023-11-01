@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import useAuthContext from '../contexts/Auth';
 import api from '../../services/api';
 
 import { Table } from 'antd';
@@ -9,6 +10,8 @@ import Cookies from 'js-cookie'
 import ModalDeleteUser from '../Modals/modal_delete_type-user/ModalDeleteTypeUser';
 
 const TableTypeUser = () => {
+  const { token } = useAuthContext();
+
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
@@ -16,7 +19,6 @@ const TableTypeUser = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const token = Cookies.get('authToken')
       if (token) {
         try {
           setLoading(true);

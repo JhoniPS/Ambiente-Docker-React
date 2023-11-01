@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import api from '../../services/api';
-import Cookies from 'js-cookie'
 import { Table } from 'antd';
 import style from './TableUser.module.css'
+import useAuthContext from '../contexts/Auth';
 
 import ModalDeleteUser from '../Modals/modal_delete_user/ModalDeleteUser';
 import ModalEditUser from '../Modals/modal_edit_user/ModalEditUser'
 
 const TableUser = () => {
+  const { token } = useAuthContext();
+
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
@@ -15,16 +17,15 @@ const TableUser = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const token = Cookies.get('authToken');
       if (token) {
         try {
           setLoading(true);
-          const response = await api.get('users', {
+          const { data } = await api.get('users', {
             headers: {
               Authorization: `Bearer ${token}`
             }
           });
-          const users = response.data.data;
+          const users = data.data;
           setData(users);
           setLoading(false);
         } catch (error) {
@@ -34,7 +35,7 @@ const TableUser = () => {
     };
 
     fetchData();
-  }, []);
+  }, [token]);
 
   const columns = [
     {

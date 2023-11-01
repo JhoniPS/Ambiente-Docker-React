@@ -16,20 +16,15 @@ const columns = [
   {
     title: 'Nome',
     dataIndex: 'name',
-    width: 150,
-    align: 'center',
   },
   {
     title: 'Tipo de usuario',
     dataIndex: 'type_user',
-    width: 150,
     align: 'center',
-    render: (type) => `${type.name}`
   },
   {
     title: 'E-mail',
     dataIndex: 'email',
-    width: 150,
     align: 'center',
   },
   {
@@ -57,10 +52,9 @@ const columns = [
 
 
 const TableRepresentative = () => {
-
   const { token } = useAuthContext();
 
-  const [data, setData] = useState();
+  const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
@@ -70,8 +64,13 @@ const TableRepresentative = () => {
       if (token) {
         try {
           setLoading(true);
-          const response = await api.get('users');
-          const representanteUsers = response.data.filter(user => user.type_user.name === 'representante');
+          const response = await api.get('users', {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            }
+          });
+          const users = response.data.data;
+          const representanteUsers = users.filter(user => user.type_user === 'representante');
           setData(representanteUsers);
           setLoading(false);
         } catch (error) {
@@ -87,6 +86,7 @@ const TableRepresentative = () => {
     <Table
       className={style.table}
       rowKey={(record) => record.id}
+      bordered
       columns={columns}
       dataSource={data}
       responsive={true}

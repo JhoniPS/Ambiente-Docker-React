@@ -1,64 +1,55 @@
-import { Fragment, useState } from "react";
+import React, { Fragment } from "react";
 import HeaderBar from "../../layout/header/HeaderBar";
-import SubmitButton from "../../layout/submitbuttun/SubmitButton"
+import TableRepresentative from "../../TableRepresentative/TableRepresentative";
 
 import { ImArrowLeft2 } from "react-icons/im";
-import { IoIosFunnel } from "react-icons/io";
-import { IoMdAdd } from "react-icons/io";
-
 import style from "./Representatives.module.css"
+import Container from "../../layout/container/Container";
+import Card from "../../card/Card";
+import { Divider } from 'antd';
 
-import Table from "../../TableRepresentative/TableRepresentative";
-import Modal from "../../Modals/modal_filter_representative/Modal";
-import { IconContext } from "react-icons";
-import LinkButton from "../../layout/linkbutton/LinkButton";
+import img from '../../../img/icon _group.svg'
+import img2 from '../../../img/icon _work.svg'
+import img3 from '../../../img/verificacao-de-lista.svg'
+import TableGroupsDescription from "../../TableGroupsDescription/TableGroupsDescrition";
 
 const Representative = () => {
-  const [openModal, setOpenModal] = useState(false);
 
   return (
     <Fragment>
       <HeaderBar text="PAINEL DE CONTROLE" backPageIcon={<ImArrowLeft2 size={25} />} backPage="/manager" />
       <div className={style.representatives}>
+        <h2>Overview</h2>
+        <Container customClass='start'>
+          <Card
+            icon={img}
+            customClass={'overViewCard'}
+            title="Notas"
+            description="Gerenciar presentante do sistema"
+          />
+          <Card
+            icon={img2}
+            customClass={'overViewCard'}
+            title="Atividades"
+            description="Gerenciar grupos do sistema"
+          />
+          <Card
+            icon={img3}
+            customClass={'overViewCard'}
+            title="Histórico de reuniões"
+            description="Gerencie suas tarefas"
+          />
+          <Card
+            icon={img3}
+            customClass={'overViewCard'}
+            title="Documentos"
+            description="Gerencie suas tarefas"
+          />
+        </Container>
+        <TableGroupsDescription />
+        <Divider />
         <h2>Representantes</h2>
-        <section className={style.section_search}>
-          <SubmitButton
-            text="Filtro"
-            customClass="button_filter"
-            onClick={() => setOpenModal(true)}
-            icon={
-              <IconContext.Provider value={{ size: 20 }}>
-                <IoIosFunnel />
-              </IconContext.Provider>
-            }
-          />
-          <LinkButton
-            text="Add Representante"
-            customClass="add"
-            to="/SignRepresentantes"
-            icon={
-              <IconContext.Provider value={{ size: 25 }}>
-                <IoMdAdd />
-              </IconContext.Provider>
-            }
-          />
-        </section>
-
-        <Modal
-          openModal={openModal}
-          setOpenModal={() => setOpenModal(!openModal)}
-        />
-
-        <h4>FILTROS RÁPIDOS</h4>
-        <section className={style.button_filters}>
-          <SubmitButton text="Mais Recentes" customClass="button_filtes_bar" />
-          <SubmitButton text="Mais Antigos" customClass="button_filtes_bar" />
-          <SubmitButton text="Crescente" customClass="button_filtes_bar" />
-          <SubmitButton text="Descrecente" customClass="button_filtes_bar" />
-        </section>
-
-        <Table />
-
+        <TableRepresentative />
       </div>
     </Fragment>
   );

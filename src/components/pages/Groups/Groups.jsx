@@ -58,8 +58,6 @@ const Groups = () => {
                     <SubmitButton text="Crescente" customClass="button_filtes_bar" />
                     <SubmitButton text="Descrecente" customClass="button_filtes_bar" />
                 </section>
-
-
                 <TableGroups />
             </div>
         </Fragment>
