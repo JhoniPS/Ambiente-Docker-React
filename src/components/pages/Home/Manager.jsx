@@ -4,7 +4,7 @@ import MenuAppBar from '../../layout/AppBar/MenuAppBar';
 import styles from './HomeStyle.module.css'
 import Card from '../../card/Card';
 
-import img from '../../../img/icon _group.svg'
+//import img from '../../../img/icon _group.svg'
 import img2 from '../../../img/icon _work.svg'
 import img3 from '../../../img/verificacao-de-lista.svg'
 import Container from '../../layout/container/Container';
@@ -16,12 +16,12 @@ const Home = () => {
             <div className={styles.admin}>
                 <h2>OLÁ, GERENTE!</h2>
                 <Container customClass='start'>
-                    <Card
+                    {/* <Card
                         icon={img}
                         title="REPRESENTANTES"
                         description="Gerenciar presentante do sistema"
-                        to="/representantes"
-                    />
+                        to="/detalhes-de-grupos"
+                    /> */}
                     <Card
                         icon={img2}
                         title="GRUPOS"

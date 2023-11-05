@@ -16,21 +16,17 @@ const columns = [
   {
     title: 'Nome',
     dataIndex: 'name',
-  },
-  {
-    title: 'Tipo de usuario',
-    dataIndex: 'type_user',
-    align: 'center',
+    width:'20%',
   },
   {
     title: 'E-mail',
     dataIndex: 'email',
-    align: 'center',
+    width:'20%',
   },
   {
     title: 'Operações',
     dataIndex: 'operation',
-    width: 60,
+    width: '1%',
     align: 'center',
     render: () => (
       <div className={style.operation}>

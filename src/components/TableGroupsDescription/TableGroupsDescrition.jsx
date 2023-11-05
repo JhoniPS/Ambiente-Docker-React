@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useParams} from "react-router-dom";
 import api from '../../services/api';
 import useAuthContext from '../contexts/Auth';
 import { Table } from 'antd';
@@ -6,22 +7,19 @@ import { Table } from 'antd';
 const TableGroupsDescription = () => {
     const { token } = useAuthContext();
     const [data, setData] = useState([]);
-    // const [members, setMembers] = useState([]);
-    // const [representatives, setRepresentatives] = useState([]);
+    const { id } = useParams();
 
     useEffect(() => {
         const fetchData = async () => {
             if (token) {
                 try {
-                    const { data } = await api.get('group', {
+                    const response = await api.get(`group/${id}`, {
                         headers: {
                             Authorization: `Bearer ${token}`
                         }
                     });
-                    const groups = data.data;
-                    setData(groups);
-                    // setMembers(data.data.members)
-                    // setRepresentatives(data.data.representatives)
+                    const group = response.data.data;
+                    setData([group]);
                 } catch (error) {
                     console.log(error);
                 }
@@ -29,12 +27,12 @@ const TableGroupsDescription = () => {
         };
 
         fetchData();
-    }, [token]);
+    }, [token, id]);
 
     const getMembersCount = (members) => {
         return members ? members.length : null;
     };
-    
+
     // Função para mostrar a quantidade de representantes
     const getRepresentativesCount = (representatives) => {
         return representatives ? representatives.length : null;
@@ -77,7 +75,7 @@ const TableGroupsDescription = () => {
                             fontFamily: 'Roboto',
                             fontSize: '20px',
                             fontWeight: '700',
-                            lineHeight: '36px',
+                            lineHeight: '30px',
                             letterSpacing: '0px',
                             textAlign: 'left',
                         }}>
@@ -93,8 +91,7 @@ const TableGroupsDescription = () => {
                             fontFamily: 'Roboto',
                             fontSize: '30px',
                             fontWeight: '700',
-                            lineHeight: '36px',
-                            letterSpacing: '0px',
+                            lineHeight: '20px',
                             textAlign: 'left',
                         }}>{props.children}</td>
                     ),

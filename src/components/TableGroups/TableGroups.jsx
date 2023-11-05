@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import api from '../../services/api';
 import useAuthContext from '../contexts/Auth';
 
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { Table } from 'antd';
 import { IoTrash, IoPencilSharp } from "react-icons/io5";
 import style from './TableGroups.module.css'
@@ -20,6 +20,7 @@ const handleEdit = (event) => {
 
 const TableGroups = () => {
     const { token } = useAuthContext();
+    const navigate = useNavigate();
 
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(false);
@@ -105,7 +106,7 @@ const TableGroups = () => {
     ];
 
     const handleRowClick = (record) => {
-        alert(`ID do grupo: ${record.id}`);
+        navigate(`/detalhes-de-grupos/${record.id}`);
     };
 
     return (
