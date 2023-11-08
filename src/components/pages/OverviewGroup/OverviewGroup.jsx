@@ -1,7 +1,5 @@
 import React, { Fragment } from "react";
 import HeaderBar from "../../layout/header/HeaderBar";
-import TableRepresentative from "../../TableRepresentative/TableRepresentative";
-
 import { ImArrowLeft2 } from "react-icons/im";
 import style from "./OverviewGroup.module.css"
 import Container from "../../layout/container/Container";
@@ -13,6 +11,8 @@ import img2 from '../../../img/icon _work.svg'
 import img3 from '../../../img/verificacao-de-lista.svg'
 import TableGroupsDescription from "../../TableGroupsDescription/TableGroupsDescrition";
 import TableDetalhe from "../../TableDetalhes/TableDetalhe";
+import TableRepresentativeGroup from "../../TableRepresentativeGroup/TableRepresentativeGroup";
+import TableMemberGroup from "../../TableMemberGroup/TableMemberGroup";
 
 const OverviewGroup = () => {
   return (
@@ -55,11 +55,10 @@ const OverviewGroup = () => {
         <TableDetalhe />
 
         <h2>Membros</h2>
-        <TableRepresentative />
+        <TableMemberGroup/>
 
         <h2>Representantes</h2>
-        <TableRepresentative />
-
+        <TableRepresentativeGroup />
       </div>
     </Fragment>
   );
