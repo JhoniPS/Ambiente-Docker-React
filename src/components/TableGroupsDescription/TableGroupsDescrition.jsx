@@ -6,8 +6,8 @@ import { Table } from 'antd';
 
 const TableGroupsDescription = () => {
     const { token } = useAuthContext();
-    const [data, setData] = useState([]);
     const { id } = useParams();
+    const [data, setData] = useState([]);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -33,7 +33,6 @@ const TableGroupsDescription = () => {
         return members ? members.length : null;
     };
 
-    // Função para mostrar a quantidade de representantes
     const getRepresentativesCount = (representatives) => {
         return representatives ? representatives.length : null;
     };

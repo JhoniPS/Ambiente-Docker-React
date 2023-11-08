@@ -46,16 +46,20 @@ const OverviewGroup = () => {
             description="Gerencie suas tarefas"
           />
         </Container>
+
         <TableGroupsDescription />
+
         <Divider />
+
         <h2>Detalhes</h2>
-        <div className={style.detalhes}>
-          <TableDetalhe />
-        </div>
+        <TableDetalhe />
+
         <h2>Membros</h2>
         <TableRepresentative />
+
         <h2>Representantes</h2>
         <TableRepresentative />
+
       </div>
     </Fragment>
   );

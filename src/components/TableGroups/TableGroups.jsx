@@ -4,19 +4,14 @@ import useAuthContext from '../contexts/Auth';
 
 import { NavLink, useNavigate } from 'react-router-dom';
 import { Table } from 'antd';
-import { IoTrash, IoPencilSharp } from "react-icons/io5";
+import { IoPencilSharp } from "react-icons/io5";
 import style from './TableGroups.module.css'
 import { IconContext } from 'react-icons';
-
-const handlDelete = (e) => {
-    e.stopPropagation();
-    alert("Delete");
-};
+import ModalDeleteGroup from '../Modals/modal_delete_group/ModalDeleteGroup';
 
 const handleEdit = (event) => {
     event.stopPropagation();
 };
-
 
 const TableGroups = () => {
     const { token } = useAuthContext();
@@ -89,12 +84,8 @@ const TableGroups = () => {
             align: 'center',
             render: (id) => (
                 <div className={style.operation}>
-                    <IconContext.Provider value={{ color: "#93000A", size: 20 }}>
-                        <button onClick={handlDelete}>
-                            <IoTrash />
-                        </button>
-                    </IconContext.Provider>
-
+                    <ModalDeleteGroup id={id} data={data} setData={setData} />
+                    
                     <IconContext.Provider value={{ color: "#2C74AC", size: 20 }}>
                         <NavLink to='/editGroup' onClick={handleEdit}>
                             <IoPencilSharp />

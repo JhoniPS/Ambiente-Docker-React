@@ -20,7 +20,6 @@ export const AuthProvider = ({ children }) => {
 
       if (authToken) {
         api.defaults.headers.common['Authorization'] = `Bearer ${authToken}`;
-        // Você pode fazer uma chamada à API aqui para obter as informações do usuário, se necessário.
         setToken(authToken);
         setUserType(storedUserType);
       }

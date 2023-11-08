@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import useAuthContext from '../contexts/Auth';
 import api from '../../services/api';
-
 import { Table } from 'antd';
 import { IconContext } from 'react-icons';
 import style from './TableTypeUser.module.css'
 import ModalEditTypeUser from '../Modals/modal_edit_type_user/ModalEditTypeUser';
-import Cookies from 'js-cookie'
 import ModalDeleteUser from '../Modals/modal_delete_type-user/ModalDeleteTypeUser';
 
 const TableTypeUser = () => {
@@ -36,7 +34,7 @@ const TableTypeUser = () => {
     };
 
     fetchData();
-  }, []);
+  }, [token]);
 
 
   const columns = [
