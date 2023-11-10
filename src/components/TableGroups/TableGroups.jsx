@@ -2,12 +2,11 @@ import React, { useState, useEffect } from 'react';
 import api from '../../services/api';
 import useAuthContext from '../contexts/Auth';
 
-import { NavLink, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Table } from 'antd';
-import { IoPencilSharp } from "react-icons/io5";
 import style from './TableGroups.module.css'
-import { IconContext } from 'react-icons';
 import ModalDeleteGroup from '../Modals/modal_delete_group/ModalDeleteGroup';
+import ModalEditGroup from '../Modals/modal_edit_group/ModalEditGroup';
 
 const handleEdit = (event) => {
     event.stopPropagation();
@@ -85,12 +84,7 @@ const TableGroups = () => {
             render: (id) => (
                 <div className={style.operation}>
                     <ModalDeleteGroup id={id} data={data} setData={setData} />
-                    
-                    <IconContext.Provider value={{ color: "#2C74AC", size: 20 }}>
-                        <NavLink to='/editGroup' onClick={handleEdit}>
-                            <IoPencilSharp />
-                        </NavLink>
-                    </IconContext.Provider>
+                    <ModalEditGroup id={id} data={data} setData={setData} />
                 </div>
             ),
         },

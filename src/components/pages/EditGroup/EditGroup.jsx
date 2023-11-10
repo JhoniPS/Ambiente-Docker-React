@@ -1,7 +1,5 @@
 
 import React, { Fragment } from 'react';
-
-import FormEditGroup from "../../Forms/formEditGroup/FormEditGroup"
 import HeaderBar from '../../layout/header/HeaderBar';
 
 import { ImArrowLeft2 } from "react-icons/im";
@@ -14,7 +12,7 @@ const EditGroup = () => {
       <div className={styles.edit_group}>
         <section>
           <h4>Editar Grupo</h4>
-          <FormEditGroup />
+          
         </section>
       </div>
     </Fragment>

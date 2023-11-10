@@ -22,3 +22,9 @@
     width: 100%;
     gap: 20px;
 }
+
+.observacoes {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}

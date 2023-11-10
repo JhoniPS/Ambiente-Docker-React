@@ -46,9 +46,9 @@ const FormSignGroup = ({ form, setForm }) => {
                     type='text'
                     label="Time"
                     variant="standard"
-                    name='equip'
+                    name='team'
                     placeholder='Digite a equipe'
-                    value={form.equip}
+                    value={form.team}
                     onChange={handleSubmit}
                     focused
                     margin='normal'
@@ -74,9 +74,9 @@ const FormSignGroup = ({ form, setForm }) => {
                     type='text'
                     label="Oficio que indicou"
                     variant="standard"
-                    name='AppointedOffice'
+                    name='office_indicated'
                     placeholder='Digite o oficio indicado'
-                    value={form.AppointedOffice}
+                    value={form.office_indicated}
                     onChange={handleSubmit}
                     focused
                     margin='normal'
@@ -105,9 +105,9 @@ const FormSignGroup = ({ form, setForm }) => {
                     type='text'
                     label="Sigla"
                     variant="standard"
-                    name='sigla'
+                    name='acronym'
                     placeholder='Digite a sigla'
-                    value={form.sigla}
+                    value={form.acronym}
                     onChange={handleSubmit}
                     focused
                     margin='normal'
@@ -135,9 +135,9 @@ const FormSignGroup = ({ form, setForm }) => {
                     type='text'
                     label="Portaria Interna"
                     variant="standard"
-                    name='concierge'
+                    name='internal_concierge'
                     placeholder='Digite a portaria'
-                    value={form.concierge}
+                    value={form.internal_concierge}
                     onChange={handleSubmit}
                     focused
                     margin='normal'
@@ -150,9 +150,9 @@ const FormSignGroup = ({ form, setForm }) => {
                     type='text'
                     label="Oficio Solicitado"
                     variant="standard"
-                    name='OfficeRequested'
+                    name='office_requested'
                     placeholder='Digite o oficio solicitado'
-                    value={form.OfficeRequested}
+                    value={form.office_requested}
                     onChange={handleSubmit}
                     focused
                     margin='normal'

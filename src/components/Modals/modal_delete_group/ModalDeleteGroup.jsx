@@ -10,9 +10,12 @@ import { IoTrash } from "react-icons/io5";
 import { Typography } from '@mui/material';
 
 const style = {
+    position: 'fixed',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
     display: 'flex',
     flexDirection: 'column',
-    transform: 'translate(110%, 90%)',
     justifyContent: 'center',
     alignItems: 'center',
     textAlign: 'justify',
@@ -50,7 +53,7 @@ const styleTitle = {
     letterSpacing: '0.25px'
 };
 
-export default function ModalDeleteGroup({ id, data, setData }) {
+export default function ModalEditGroup({ id, data, setData }) {
     const [open, setOpen] = useState(false);
 
     const handleOpen = (event) => {
@@ -62,7 +65,8 @@ export default function ModalDeleteGroup({ id, data, setData }) {
         setOpen(false);
     }
 
-    const handlDelete = async () => {
+    const handlDelete = async (event) => {
+        event.stopPropagation();
         try {
             await api.delete(`/group/${id}`);
             const updatedData = data.filter(item => item.id !== id);
@@ -86,7 +90,7 @@ export default function ModalDeleteGroup({ id, data, setData }) {
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
             >
-                <Box sx={style}>
+                <Box sx={style} onClick={(event) => event.stopPropagation()}>
                     <Typography sx={styleTitle}>Deletar grupo</Typography>
                     <Typography sx={styleDescrition}>Você tem certeza que deseja excluir este grupo?</Typography>
                     <div className={styleButton.button_container}>
