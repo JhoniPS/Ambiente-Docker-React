@@ -40,7 +40,7 @@ const styleTitle = {
 };
 
 export default function EditTypeUser({ id, data, setData }) {
-    const { editTypeUser, error, messageErrors } = useAuthContext();
+    const { error, messageErrors } = useAuthContext();
 
     const [name, setName] = useState("");
     const [open, setOpen] = useState(false);
@@ -50,7 +50,7 @@ export default function EditTypeUser({ id, data, setData }) {
     const handlEdit = async (e) => {
         e.preventDefault()
         try {
-            await editTypeUser({ id, name });
+            await api.put(`/type-user/${id}`, { name });
 
             const updatedData = data.map(item => {
                 if (item.id === id) {
@@ -61,7 +61,7 @@ export default function EditTypeUser({ id, data, setData }) {
             setData(updatedData);
             handleClose();
         } catch (error) {
-            console.log(e)
+            console.log(error)
         }
     }
 

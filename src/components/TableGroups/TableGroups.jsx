@@ -8,10 +8,6 @@ import style from './TableGroups.module.css'
 import ModalDeleteGroup from '../Modals/modal_delete_group/ModalDeleteGroup';
 import ModalEditGroup from '../Modals/modal_edit_group/ModalEditGroup';
 
-const handleEdit = (event) => {
-    event.stopPropagation();
-};
-
 const TableGroups = () => {
     const { token } = useAuthContext();
     const navigate = useNavigate();
@@ -58,7 +54,7 @@ const TableGroups = () => {
         },
         {
             title: 'Equipe',
-            dataIndex: 'organ',
+            dataIndex: 'team',
             width: '20%',
         },
         {

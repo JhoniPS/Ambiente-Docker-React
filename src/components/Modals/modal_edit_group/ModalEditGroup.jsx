@@ -35,25 +35,38 @@ export default function ModalEditGroup({ id, data, setData }) {
     const [open, setOpen] = useState(false);
 
     const [form, setForm] = useState({
-        name: "",
         entity: "",
         organ: "",
         council: "",
-        concierge: "",
-        sigla: "",
-        equip: "",
+        internal_concierge: "",
+        acronym: "",
+        team: "",
         email: "",
-        comments: "",
+        observations: "",
         unit: "",
-        OfficeRequested: "",
-        AppointedOffice: "",
+        office_requested: "",
+        office_indicated: "",
     });
 
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const response = await api.get(`/group/${id}`);
-                setForm(response.data);
+                const groupData = response.data.data;
+
+                setForm({
+                    entity: groupData.entity || "",
+                    organ: groupData.organ || "",
+                    council: groupData.council || "",
+                    internal_concierge: groupData.internal_concierge || "",
+                    acronym: groupData.acronym || "",
+                    team: groupData.team || "",
+                    email: groupData.email || "",
+                    observations: groupData.observations || "",
+                    unit: groupData.unit || "",
+                    office_requested: groupData.office_requested || "",
+                    office_indicated: groupData.office_indicated || "",
+                });
             } catch (error) {
                 console.error(error);
             }
@@ -61,26 +74,40 @@ export default function ModalEditGroup({ id, data, setData }) {
         fetchData();
     }, [id]);
 
+
     const handleOpen = (event) => {
         event.stopPropagation();
         setOpen(true);
     }
-    const handleClose = (event) => {
-        event.stopPropagation();
+    const handleClose = () => {
         setOpen(false);
     }
 
     const handlEdit = async (event) => {
-        event.stopPropagation();
-
+        const { name, value } = event.target;
+        setForm({
+            ...form,
+            [name]: value,
+        });
     };
 
     const Submit = async (event) => {
-        event.stopPropagation();
-        setForm({
-            ...form,
-            [event.target.name]: [event.target.value]
-        });
+        event.preventDefault();
+        try {
+            await api.put(`/group/${id}`, form)
+
+            const updatedData = data.map(item => {
+                if (item.id === id) {
+                    return { ...item, ...form };
+                }
+                return item;
+            });
+
+            setData(updatedData);
+            handleClose();
+        } catch (error) {
+            console.log(error)
+        }
     };
 
     return (
@@ -102,18 +129,6 @@ export default function ModalEditGroup({ id, data, setData }) {
                         <form className={styles.form} onSubmit={Submit}>
                             <div className={styles.container_form}>
                                 <div className={styles.container_text1}>
-                                    <TextField
-                                        type='text'
-                                        label="Nome do Representante"
-                                        name='name'
-                                        value={form.name}
-                                        onChange={handlEdit}
-                                        focused
-                                        margin='normal'
-                                        sx={{
-                                            width: '100%',
-                                        }}
-                                    />
                                     <TextField
                                         type='text'
                                         label="Entidade"
@@ -138,9 +153,6 @@ export default function ModalEditGroup({ id, data, setData }) {
                                             width: '100%',
                                         }}
                                     />
-                                </div>
-
-                                <div className={styles.container_text2}>
                                     <TextField
                                         type='text'
                                         label="Conselho"
@@ -153,11 +165,14 @@ export default function ModalEditGroup({ id, data, setData }) {
                                             width: '100%',
                                         }}
                                     />
+                                </div>
+
+                                <div className={styles.container_text2}>
                                     <TextField
                                         type='text'
                                         label="Portaria"
-                                        name='concierge'
-                                        value={form.concierge}
+                                        name='internal_concierge'
+                                        value={form.internal_concierge}
                                         onChange={handlEdit}
                                         focused
                                         margin='normal'
@@ -168,8 +183,8 @@ export default function ModalEditGroup({ id, data, setData }) {
                                     <TextField
                                         type='text'
                                         label="Sigla"
-                                        name='sigla'
-                                        value={form.sigla}
+                                        name='acronym'
+                                        value={form.acronym}
                                         onChange={handlEdit}
                                         focused
                                         margin='normal'
@@ -180,8 +195,8 @@ export default function ModalEditGroup({ id, data, setData }) {
                                     <TextField
                                         type='text'
                                         label="Equipe"
-                                        name='equip'
-                                        value={form.equip}
+                                        name='team'
+                                        value={form.team}
                                         onChange={handlEdit}
                                         focused
                                         margin='normal'
@@ -197,7 +212,6 @@ export default function ModalEditGroup({ id, data, setData }) {
                                             type='text'
                                             label="E-mail"
                                             name='email'
-
                                             value={form.email}
                                             onChange={handlEdit}
                                             focused
@@ -211,7 +225,7 @@ export default function ModalEditGroup({ id, data, setData }) {
                                             label="Observações"
                                             name='comments'
 
-                                            value={form.comments}
+                                            value={form.observations}
                                             onChange={handlEdit}
                                             focused
                                             margin='normal'
@@ -240,9 +254,9 @@ export default function ModalEditGroup({ id, data, setData }) {
                                         <TextField
                                             type='text'
                                             label="Oficio que solicitou"
-                                            name='OfficeRequested'
+                                            name='office_requested'
 
-                                            value={form.OfficeRequested}
+                                            value={form.office_requested}
                                             onChange={handlEdit}
                                             focused
                                             margin='normal'
@@ -253,9 +267,9 @@ export default function ModalEditGroup({ id, data, setData }) {
                                         <TextField
                                             type='text'
                                             label="Oficio que indicou"
-                                            name='AppointedOffice'
+                                            name='office_indicated'
 
-                                            value={form.AppointedOffice}
+                                            value={form.office_indicated}
                                             onChange={handlEdit}
                                             focused
                                             margin='normal'
