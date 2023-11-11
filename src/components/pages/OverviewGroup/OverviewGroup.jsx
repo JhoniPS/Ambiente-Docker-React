@@ -13,6 +13,7 @@ import TableGroupsDescription from "../../TableGroupsDescription/TableGroupsDesc
 import TableDetalhe from "../../TableDetalhes/TableDetalhe";
 import TableRepresentativeGroup from "../../TableRepresentativeGroup/TableRepresentativeGroup";
 import TableMemberGroup from "../../TableMemberGroup/TableMemberGroup";
+import Observations from "../../layout/Obsavetions/Observations";
 
 const OverviewGroup = () => {
   return (
@@ -55,10 +56,18 @@ const OverviewGroup = () => {
         <TableDetalhe />
 
         <h2>Membros</h2>
-        <TableMemberGroup/>
+        <TableMemberGroup />
 
-        <h2>Representantes</h2>
-        <TableRepresentativeGroup />
+        <div className={style.container_representantes_observacoes}>
+          <section>
+            <h2>Representantes</h2>
+            <TableRepresentativeGroup />
+          </section>
+          <section className={style.observacoes}>
+            <h2>Observações</h2>
+            <Observations />
+          </section>
+        </div>
       </div>
     </Fragment>
   );

@@ -29,3 +29,22 @@ h4 {
   letter-spacing: 1.5px;
   text-transform: uppercase;
 }
+
+.container_representantes_observacoes {
+  display: flex;
+  width: 100%;
+  column-gap: 30px;
+  justify-content: space-between;
+}
+
+.container_representantes_observacoes section {
+  display: flex;
+  width: 100%;
+  min-width: 80vh;
+  flex-direction: column;
+  gap: 20px;
+}
+
+section {
+  margin-bottom: 20px;
+}

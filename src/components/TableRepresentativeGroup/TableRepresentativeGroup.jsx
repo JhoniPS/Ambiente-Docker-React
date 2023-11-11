@@ -1,52 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { NavLink, useParams } from 'react-router-dom';
-import { Table } from 'antd';
-import { IoTrash, IoPencilSharp } from "react-icons/io5";
-import { IconContext } from 'react-icons';
-import style from './TableRepresentativeGroup.module.css'
-
 import useAuthContext from '../contexts/Auth';
 import api from '../../services/api';
+import style from './TableRepresentativeGroup.module.css'
+import { useParams } from 'react-router-dom';
+import { Table } from 'antd';
 
-const handlDelete = () => {
-  alert("Delete");
-};
+import ModalDeleteRepresentiveGroup from '../Modals/modal_delete_representive_group/ModalDeleteRepresentiveGroup';
+import ModalEditRepresentativeGroup from '../Modals/modal_edit_representante_group/ModalEditRepresentativeGroup';
 
-const columns = [
-  {
-    title: 'Nome',
-    dataIndex: 'name',
-    width:'20%',
-  },
-  {
-    title: 'E-mail',
-    dataIndex: 'email',
-    width:'20%',
-  },
-  {
-    title: 'Operações',
-    dataIndex: 'operation',
-    width: '1%',
-    align: 'center',
-    render: () => (
-      <div className={style.operation}>
-        <IconContext.Provider value={{ color: "#93000A", size: 20 }}>
-          <button onClick={handlDelete}>
-            <IoTrash />
-          </button>
-        </IconContext.Provider>
-
-        <IconContext.Provider value={{ color: "#2C74AC", size: 20 }}>
-          <NavLink to='/editRepresentante'>
-            <IoPencilSharp />
-          </NavLink>
-        </IconContext.Provider>
-      </div>
-    ),
-  },
-];
-
-
+//Problemas com o edit representantes
 const TableRepresentativeGroup = () => {
   const { token } = useAuthContext();
   const { id } = useParams();
@@ -77,6 +39,43 @@ const TableRepresentativeGroup = () => {
 
     fetchData();
   }, [token, id]);
+
+
+  const columns = [
+    {
+      title: 'Nome',
+      dataIndex: 'name',
+      width: '20%',
+    },
+    {
+      title: 'E-mail',
+      dataIndex: 'email',
+      width: '20%',
+    },
+    {
+      title: 'Operações',
+      dataIndex: 'id',
+      width: '1%',
+      align: 'center',
+      render: (representativeId) => (
+        <div className={style.operation}>
+          <ModalDeleteRepresentiveGroup
+            GroupId={id}
+            RepresentativeId={representativeId}
+            data={data}
+            setData={setData}
+          />
+
+          <ModalEditRepresentativeGroup
+            GroupId={id}
+            RepresentativeId={representativeId}
+            data={data}
+            setData={setData}
+          />
+        </div>
+      ),
+    },
+  ];
 
   return (
     <Table

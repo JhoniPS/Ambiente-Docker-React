@@ -20,7 +20,6 @@ import SignGroups from "../components/pages/SignGroups/SignGroups";
 import EditGroup from "../components/pages/EditGroup/EditGroup";
 import OverviewGroup from "../components/pages/OverviewGroup/OverviewGroup";
 import SignRepresentatives from "../components/pages/SignRepresentative/SignRepresentative";
-import EditRepresentative from "../components/pages/EditRepresentative/EditRepresentative";
 import SignTypeUser from "../components/pages/SignTypeUser/SignTypeUser";
 import TypeUsers from "../components/pages/TypeUsers/TypeUsers";
 
@@ -155,14 +154,6 @@ const RoutesApp = () => {
                         element={
                             <PrivateRoute requiredUserType={["gerente"]}>
                                 <SignRepresentatives />
-                            </PrivateRoute>
-                        }
-                    />
-                    <Route
-                        exact path="/editRepresentante"
-                        element={
-                            <PrivateRoute requiredUserType={["gerente"]}>
-                                <EditRepresentative />
                             </PrivateRoute>
                         }
                     />
