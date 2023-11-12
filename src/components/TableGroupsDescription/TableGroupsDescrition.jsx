@@ -15,7 +15,7 @@ const TableGroupsDescription = () => {
                 try {
                     const response = await api.get(`group/${id}`, {
                         headers: {
-                            Authorization: `Bearer ${token}`
+                            Authorization: `Bearer ${token}`,
                         }
                     });
                     const group = response.data.data;

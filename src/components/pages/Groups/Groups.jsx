@@ -19,7 +19,7 @@ const Groups = () => {
 
     return (
         <Fragment>
-            <HeaderBar text="PAINEL DE CONTROLE" backPageIcon={<ImArrowLeft2 size={25} />} backPage="/manager" />
+            <HeaderBar text="PAINEL DE CONTROLE" backPageIcon={<ImArrowLeft2 size={25} />} backPage="/gerente" />
             <div className={style.groups}>
                 <h2>Grupos</h2>
                 <section className={style.section_search}>

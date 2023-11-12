@@ -33,7 +33,7 @@ export const AuthProvider = ({ children }) => {
       const response = await api.post('/login', data)
       const { token, type_user } = response.data;
       api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-      Cookies.set('authToken', token); // Armazene o token nos cookies
+      Cookies.set('authToken', token, { expires: 7 }); // Armazene o token nos cookies
 
       switch (type_user.name) {
         case 'administrador':
@@ -41,15 +41,15 @@ export const AuthProvider = ({ children }) => {
           Cookies.set('userType', type_user.name);
           break;
         case 'gerente':
-          navigate('/manager');
+          navigate('/gerente');
           Cookies.set('userType', type_user.name);
           break;
         case 'representante':
-          navigate('/representative');
+          navigate('/representante');
           Cookies.set('userType', type_user.name);
           break;
         case 'visualizador':
-          navigate('/viewer');
+          navigate('/visualizador');
           Cookies.set('userType', type_user.name);
           break;
         default:

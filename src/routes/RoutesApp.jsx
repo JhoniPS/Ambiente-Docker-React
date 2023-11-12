@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 import Cookies from 'js-cookie';
 
 import { AuthProvider } from "../components/contexts/Auth";
@@ -17,15 +17,25 @@ import Users from "../components/pages/Users/Users";
 import SignUser from "../components/pages/SignUser/SignUser";
 import Groups from "../components/pages/Groups/Groups";
 import SignGroups from "../components/pages/SignGroups/SignGroups";
-import EditGroup from "../components/pages/EditGroup/EditGroup";
 import OverviewGroup from "../components/pages/OverviewGroup/OverviewGroup";
 import SignRepresentatives from "../components/pages/SignRepresentative/SignRepresentative";
 import SignTypeUser from "../components/pages/SignTypeUser/SignTypeUser";
 import TypeUsers from "../components/pages/TypeUsers/TypeUsers";
 
+// const PrivateRoute = ({ children, requiredUserType }) => {
+//     const isAuthenticated = Cookies.get('authToken');
+//     const userType = Cookies.get('userType');
+//     return (isAuthenticated && userType.includes(requiredUserType)) ? children : <Error404 isPermissionDenied={userType} />;
+// };
+
 const PrivateRoute = ({ children, requiredUserType }) => {
     const isAuthenticated = Cookies.get('authToken');
     const userType = Cookies.get('userType');
+    const { pathname } = useLocation();
+
+    if (pathname === '/profile') {
+        return isAuthenticated ? children : <Error404 isPermissionDenied={userType} />;
+    }
 
     return (isAuthenticated && userType.includes(requiredUserType)) ? children : <Error404 isPermissionDenied={userType} />;
 };
@@ -47,7 +57,7 @@ const RoutesApp = () => {
                     />
 
                     <Route
-                        exact path="/manager"
+                        exact path="/gerente"
                         element={
                             <PrivateRoute requiredUserType={["gerente"]}>
                                 <Manager />
@@ -55,7 +65,7 @@ const RoutesApp = () => {
                         }
                     />
                     <Route
-                        exact path="/representative"
+                        exact path="/representante"
                         element={
                             <PrivateRoute requiredUserType={["representante"]}>
                                 <Representative />
@@ -63,7 +73,7 @@ const RoutesApp = () => {
                         }
                     />
                     <Route
-                        exact path="/viewer"
+                        exact path="/visualizador"
                         element={
                             <PrivateRoute requiredUserType={["visualizador"]}>
                                 <Viewer />
@@ -78,7 +88,7 @@ const RoutesApp = () => {
                     <Route
                         exact path="/profile"
                         element={
-                            <PrivateRoute requiredUserType={["administrador", "gerente", "representante", "visualizador"]}>
+                            <PrivateRoute requiredUserType={["administrador"]}>
                                 <Profile />
                             </PrivateRoute>
                         }
@@ -86,7 +96,7 @@ const RoutesApp = () => {
                     <Route
                         exact path="/editorProfile"
                         element={
-                            <PrivateRoute requiredUserType={["administrador", "gerente", "representante", "visualizador"]}>
+                            <PrivateRoute requiredUserType={["administrador"]}>
                                 <EditorProfile />
                             </PrivateRoute>
                         }
@@ -94,7 +104,7 @@ const RoutesApp = () => {
                     <Route
                         exact path="/updatePassword"
                         element={
-                            <PrivateRoute requiredUserType={["administrador", "gerente", "representante", "visualizador"]}>
+                            <PrivateRoute requiredUserType={["administrador"]}>
                                 <EditorPassword />
                             </PrivateRoute>
                         }
@@ -129,14 +139,6 @@ const RoutesApp = () => {
                         element={
                             <PrivateRoute requiredUserType={["gerente"]}>
                                 <SignGroups />
-                            </PrivateRoute>
-                        }
-                    />
-                    <Route
-                        exact path="/editGroup"
-                        element={
-                            <PrivateRoute requiredUserType={["gerente"]}>
-                                <EditGroup />
                             </PrivateRoute>
                         }
                     />

@@ -6,7 +6,7 @@ import styles from './modal_edit_group.module.css'
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
-import { TextField } from '@mui/material';
+import { TextField, Typography } from '@mui/material';
 import { IconContext } from 'react-icons';
 import { IoPencilSharp } from "react-icons/io5";
 
@@ -30,6 +30,17 @@ const style = {
     boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)',
 };
 
+const styleTitle = {
+    color: '#2C74AC',
+    textAlign: 'center',
+    fontFeatureSettings: "'clig' off, 'liga' off",
+    fontFamily: 'Roboto',
+    fontSize: '30px',
+    fontStyle: 'normal',
+    padding: '2px',
+    fontWeight: 500,
+    lineHeight: '36px',
+};
 
 export default function ModalEditGroup({ id, data, setData }) {
     const [open, setOpen] = useState(false);
@@ -126,6 +137,7 @@ export default function ModalEditGroup({ id, data, setData }) {
                 aria-describedby="modal-modal-description"
             >
                 <Box sx={style} onClick={(event) => event.stopPropagation()}>
+                    <Typography sx={styleTitle}>Editar tipo de usuário</Typography>
                     <div>
                         <form className={styles.form} onSubmit={Submit}>
                             <div className={styles.container_form}>
