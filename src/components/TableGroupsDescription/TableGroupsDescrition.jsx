@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams} from "react-router-dom";
+import { useParams } from "react-router-dom";
 import api from '../../services/api';
 import useAuthContext from '../contexts/Auth';
 import { Table } from 'antd';
@@ -13,11 +13,7 @@ const TableGroupsDescription = () => {
         const fetchData = async () => {
             if (token) {
                 try {
-                    const response = await api.get(`group/${id}`, {
-                        headers: {
-                            Authorization: `Bearer ${token}`,
-                        }
-                    });
+                    const response = await api.get(`group/${id}`);
                     const group = response.data.data;
                     setData([group]);
                 } catch (error) {

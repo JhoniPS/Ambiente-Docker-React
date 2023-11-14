@@ -16,12 +16,12 @@ const columns = [
   {
     title: 'Nome',
     dataIndex: 'name',
-    width:'20%',
+    width: '20%',
   },
   {
     title: 'E-mail',
     dataIndex: 'email',
-    width:'20%',
+    width: '20%',
   },
   {
     title: 'Operações',
@@ -60,11 +60,7 @@ const TableRepresentative = () => {
       if (token) {
         try {
           setLoading(true);
-          const response = await api.get('users', {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            }
-          });
+          const response = await api.get('users');
           const users = response.data.data;
           const representanteUsers = users.filter(user => user.type_user === 'representante');
           setData(representanteUsers);

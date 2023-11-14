@@ -15,18 +15,13 @@ import EditorProfile from "../components/pages/EditorProfile/EditorProfile";
 import EditorPassword from "../components/pages/EditorPassword/EditorPassword";
 import Users from "../components/pages/Users/Users";
 import SignUser from "../components/pages/SignUser/SignUser";
-import Groups from "../components/pages/Groups/Groups";
+import GroupsGerente from "../components/pages/GroupsGerente/GroupsGerente";
+import GroupsRepresentante from '../components/pages/GroupsRepresentante/GroupsRepresentante'
 import SignGroups from "../components/pages/SignGroups/SignGroups";
 import OverviewGroup from "../components/pages/OverviewGroup/OverviewGroup";
 import SignRepresentatives from "../components/pages/SignRepresentative/SignRepresentative";
 import SignTypeUser from "../components/pages/SignTypeUser/SignTypeUser";
 import TypeUsers from "../components/pages/TypeUsers/TypeUsers";
-
-// const PrivateRoute = ({ children, requiredUserType }) => {
-//     const isAuthenticated = Cookies.get('authToken');
-//     const userType = Cookies.get('userType');
-//     return (isAuthenticated && userType.includes(requiredUserType)) ? children : <Error404 isPermissionDenied={userType} />;
-// };
 
 const PrivateRoute = ({ children, requiredUserType }) => {
     const isAuthenticated = Cookies.get('authToken');
@@ -127,10 +122,10 @@ const RoutesApp = () => {
                     />
 
                     <Route
-                        exact path="/groups"
+                        exact path="/groups-gerente"
                         element={
                             <PrivateRoute requiredUserType={["gerente"]}>
-                                <Groups />
+                                <GroupsGerente />
                             </PrivateRoute>
                         }
                     />
@@ -148,6 +143,15 @@ const RoutesApp = () => {
                         element={
                             <PrivateRoute requiredUserType={["gerente"]}>
                                 <OverviewGroup />
+                            </PrivateRoute>
+                        }
+                    />
+
+                    <Route
+                        exact path="/groups-representante"
+                        element={
+                            <PrivateRoute requiredUserType={["representante"]}>
+                                <GroupsRepresentante />
                             </PrivateRoute>
                         }
                     />

@@ -20,11 +20,7 @@ const TableUser = () => {
       if (token) {
         try {
           setLoading(true);
-          const { data } = await api.get('users', {
-            headers: {
-              Authorization: `Bearer ${token}`
-            }
-          });
+          const { data } = await api.get('users');
           const users = data.data;
           setData(users);
           setLoading(false);

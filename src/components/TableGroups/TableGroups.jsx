@@ -10,23 +10,18 @@ import ModalEditGroup from '../Modals/modal_edit_group/ModalEditGroup';
 
 const TableGroups = () => {
     const { token } = useAuthContext();
-    const navigate = useNavigate();
-
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(false);
     const [page, setPage] = useState(1);
     const [pageSize, setPageSize] = useState(10);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchData = async () => {
             if (token) {
                 try {
                     setLoading(true);
-                    const { data } = await api.get('group', {
-                        headers: {
-                            Authorization: `Bearer ${token}`
-                        }
-                    });
+                    const { data } = await api.get('group');
                     const groups = data.data;
                     setData(groups);
                     setLoading(false);

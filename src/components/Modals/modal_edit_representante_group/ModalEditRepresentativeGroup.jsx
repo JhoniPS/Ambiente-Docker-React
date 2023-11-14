@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import useAuthContext from '../../contexts/Auth';
 import api from '../../../services/api';
 
 import Box from '@mui/material/Box';
@@ -13,18 +12,22 @@ import { Typography, TextField } from '@mui/material';
 import { ConfigProvider } from 'antd';
 
 const style = {
+    position: 'fixed',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
     display: 'flex',
     flexDirection: 'column',
-    transform: 'translate(80%, 50%)',
     justifyContent: 'center',
     alignItems: 'center',
     textAlign: 'justify',
-    gap: '20px',
+    gap: '2em',
     backgroundColor: '#FFF',
-    width: '500px',
-    height: '300px',
+    minwidth: '700px',
+    minheight: '700px',
+    padding: '2.5rem',
     outline: 'none',
-    borderRadius: '3px',
+    borderRadius: '15px',
     boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)',
 };
 
@@ -53,7 +56,7 @@ export default function ModalEditRepresentativeGroup({ GroupId, RepresentativeId
             const updatedData = data.map(item =>
                 item.id === RepresentativeId ? { ...item, name, email } : item
             );
-            
+
             setData(updatedData);
 
             await api.put(`users/${RepresentativeId}`, { name, email });
@@ -66,7 +69,6 @@ export default function ModalEditRepresentativeGroup({ GroupId, RepresentativeId
 
     useEffect(() => {
         const representativeData = data.find(item => item.id === RepresentativeId);
-
         if (representativeData) {
             setName(representativeData.name);
             setEmail(representativeData.email);

@@ -8,18 +8,13 @@ import style from './TableDetalhes.module.css';
 const TableDetalhe = () => {
     const { token } = useAuthContext();
     const { id } = useParams();
-
     const [data, setData] = useState({});
 
     useEffect(() => {
         const fetchData = async () => {
             if (token) {
                 try {
-                    const response = await api.get(`group/${id}`, {
-                        headers: {
-                            Authorization: `Bearer ${token}`
-                        }
-                    });
+                    const response = await api.get(`group/${id}`);
                     const group = response.data.data;
                     setData(group);
                 } catch (error) {

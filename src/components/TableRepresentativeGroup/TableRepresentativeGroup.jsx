@@ -23,11 +23,7 @@ const TableRepresentativeGroup = () => {
       if (token) {
         try {
           setLoading(true);
-          const response = await api.get(`group/${id}`, {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            }
-          });
+          const response = await api.get(`group/${id}`);
           const users = response.data.data.representatives;
           setData(users);
           setLoading(false);

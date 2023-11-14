@@ -20,11 +20,7 @@ const TableMemberGroup = () => {
       if (token) {
         try {
           setLoading(true);
-          const response = await api.get(`group/${id}/`, {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            }
-          });
+          const response = await api.get(`group/${id}/`);
           const users = response.data.data.members;
           console.log(users)
           setData(users);

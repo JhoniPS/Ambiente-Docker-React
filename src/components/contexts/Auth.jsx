@@ -32,8 +32,7 @@ export const AuthProvider = ({ children }) => {
     try {
       const response = await api.post('/login', data)
       const { token, type_user } = response.data;
-      api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-      Cookies.set('authToken', token, { expires: 7 }); // Armazene o token nos cookies
+      Cookies.set('authToken', token, { expires: 7, secure: true, sameSite: 'Strict' }); // Armazene o token nos cookies
 
       switch (type_user.name) {
         case 'administrador':
@@ -70,7 +69,7 @@ export const AuthProvider = ({ children }) => {
 
   const logout = async () => {
     await api.post('users/logout');
-    Cookies.remove('authToken');
+    Cookies.remove('authToken', { secure: true, sameSite: 'Strict' });
     Cookies.remove('userType');
     setToken(null);
     setUserType("");

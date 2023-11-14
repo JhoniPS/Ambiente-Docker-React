@@ -19,14 +19,14 @@ const Home = () => {
                     {/* <Card
                         icon={img}
                         title="REPRESENTANTES"
-                        description="Gerenciar presentante do sistema"
+                        description="Gerenciar resentantes do sistema"
                         to="/detalhes-de-grupos"
                     /> */}
                     <Card
                         icon={img2}
                         title="GRUPOS"
                         description="Gerenciar grupos do sistema"
-                        to="/groups"
+                        to="/groups-gerente"
                     />
                     <Card
                         icon={img3}

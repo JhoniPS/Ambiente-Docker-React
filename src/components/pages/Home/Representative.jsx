@@ -18,6 +18,7 @@ const Home = () => {
                         icon={img}
                         title="MEMBROS"
                         description="Gerenciar membros dos grupos"
+                        to="/groups-representante"
                     />
                     <Card
                         icon={img2}

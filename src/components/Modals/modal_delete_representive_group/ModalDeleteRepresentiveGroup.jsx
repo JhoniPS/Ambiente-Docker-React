@@ -10,9 +10,12 @@ import { Typography } from '@mui/material';
 import api from '../../../services/api';
 
 const style = {
+    position: 'fixed',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
     display: 'flex',
     flexDirection: 'column',
-    transform: 'translate(110%, 90%)',
     justifyContent: 'center',
     alignItems: 'center',
     textAlign: 'justify',

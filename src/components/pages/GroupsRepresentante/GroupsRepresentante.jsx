@@ -14,12 +14,12 @@ import style from './Groups.module.css'
 import Modal from '../../Modals/modal_filter_groups/Modal';
 import TableGroups from '../../TableGroups/TableGroups'
 
-const Groups = () => {
+const GroupsRepresentante = () => {
     const [openModal, setOpenModal] = useState(false);
 
     return (
         <Fragment>
-            <HeaderBar text="PAINEL DE CONTROLE" backPageIcon={<ImArrowLeft2 size={25} />} backPage="/gerente" />
+            <HeaderBar text="PAINEL DE CONTROLE" backPageIcon={<ImArrowLeft2 size={25} />} backPage="/representante" />
             <div className={style.groups}>
                 <h2>Grupos</h2>
                 <section className={style.section_search}>
@@ -64,4 +64,4 @@ const Groups = () => {
     );
 }
 
-export default Groups
+export default GroupsRepresentante;
