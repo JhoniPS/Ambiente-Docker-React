@@ -16,13 +16,13 @@ const Home = () => {
                 <Container customClass='start'>
                     <Card
                         icon={img}
-                        title="MEMBROS"
+                        title="MEUS GRUPOS"
                         description="Gerenciar membros dos grupos"
                         to="/groups-representante"
                     />
                     <Card
                         icon={img2}
-                        title="MEUS GRUPOS"
+                        title="TAREFAS"
                         description="Gerenciar grupos do sistema"
                     />
                 </Container>

@@ -2,7 +2,6 @@ import React, { Fragment, useEffect, useState } from 'react';
 import api from '../../services/api';
 
 import { Button, Steps, Divider, Select, Radio } from 'antd';
-import { TextField } from '@mui/material';
 import FormSignGroup from '../Forms/formSignGroup/FormSignGroup';
 import styles from './StepGroupRegister.module.css';
 import TextArea from 'antd/es/input/TextArea';
@@ -102,6 +101,7 @@ const Observations = ({ observations, setObservations, setType_group_id }) => {
             <TextArea
                 placeholder='Digite aqui as observações'
                 value={observations}
+                rows={5}
                 onChange={handleObservations}
             />
             <h1>Tipo de grupo</h1>

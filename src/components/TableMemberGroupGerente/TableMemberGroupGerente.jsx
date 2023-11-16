@@ -2,11 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Table } from 'antd';
 
-import style from './TableMemberGroup.module.css'
+import style from './TableMemberGroupGerente.module.css'
 import useAuthContext from '../contexts/Auth';
 import api from '../../services/api';
 
-const TableMemberGroup = () => {
+const TableMemberGroupGerente = () => {
   const { token } = useAuthContext();
   const { id } = useParams();
   const [data, setData] = useState([]);
@@ -100,4 +100,4 @@ const TableMemberGroup = () => {
   );
 };
 
-export default TableMemberGroup;
+export default TableMemberGroupGerente;

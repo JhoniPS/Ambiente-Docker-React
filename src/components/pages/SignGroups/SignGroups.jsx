@@ -6,10 +6,10 @@ import { ImArrowLeft2 } from "react-icons/im";
 import { Fragment } from 'react';
 import StepGroupRegister from '../../steps/StepGroupRegister'
 
-const EditorProfile = () => {
+const SignGroups = () => {
   return (
     <Fragment>
-      <HeaderBar text="PAINEL DE CONTROLE" backPageIcon={<ImArrowLeft2 size={25} />} backPage="/groups" />
+      <HeaderBar text="PAINEL DE CONTROLE" backPageIcon={<ImArrowLeft2 size={25} />} backPage="/groups-gerente" />
       <div className={styles.sign_groups}>
         <section className={styles.section_group}>
           <StepGroupRegister />
@@ -19,4 +19,4 @@ const EditorProfile = () => {
   )
 }
 
-export default EditorProfile;
+export default SignGroups;

@@ -50,7 +50,7 @@ const TableUser = () => {
       title: 'Operações',
       dataIndex: 'id',
       align: 'center',
-      width: '10%',
+      width: '5%',
       render: (id) => (
         <div className={style.operation}>
           <ModalDeleteUser id={id} data={data} setData={setData} />

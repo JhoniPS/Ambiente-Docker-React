@@ -1,7 +1,7 @@
 import React, { Fragment } from "react";
 import HeaderBar from "../../layout/header/HeaderBar";
 import { ImArrowLeft2 } from "react-icons/im";
-import style from "./OverviewGroup.module.css"
+import style from "./OverviewGroupGerente.module.css"
 import Container from "../../layout/container/Container";
 import Card from "../../card/Card";
 import { Divider } from 'antd';
@@ -12,13 +12,13 @@ import img3 from '../../../img/verificacao-de-lista.svg'
 import TableGroupsDescription from "../../TableGroupsDescription/TableGroupsDescrition";
 import TableDetalhe from "../../TableDetalhes/TableDetalhe";
 import TableRepresentativeGroup from "../../TableRepresentativeGroup/TableRepresentativeGroup";
-import TableMemberGroup from "../../TableMemberGroup/TableMemberGroup";
+import TableMemberGroupGerente from "../../TableMemberGroupGerente/TableMemberGroupGerente";
 import Observations from "../../layout/Obsavetions/Observations";
 
-const OverviewGroup = () => {
+const OverviewGroupGerente = () => {
   return (
     <Fragment>
-      <HeaderBar text="PAINEL DE CONTROLE" backPageIcon={<ImArrowLeft2 size={25} />} backPage="/groups" />
+      <HeaderBar text="PAINEL DE CONTROLE" backPageIcon={<ImArrowLeft2 size={25} />} backPage="/groups-gerente" />
       <div className={style.representatives}>
         <h2>Overview</h2>
         <Container customClass='start'>
@@ -56,7 +56,7 @@ const OverviewGroup = () => {
         <TableDetalhe />
 
         <h2>Membros</h2>
-        <TableMemberGroup />
+        <TableMemberGroupGerente />
 
         <div className={style.container_representantes_observacoes}>
           <section>
@@ -73,4 +73,4 @@ const OverviewGroup = () => {
   );
 };
 
-export default OverviewGroup;
+export default OverviewGroupGerente;

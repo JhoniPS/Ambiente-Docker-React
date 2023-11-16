@@ -3,25 +3,34 @@ import { BrowserRouter as Router, Routes, Route, useLocation } from "react-route
 import Cookies from 'js-cookie';
 
 import { AuthProvider } from "../components/contexts/Auth";
+
 import Error404 from "../components/pages/Erro404/Error404";
 import Login from "../components/pages/Login/Login";
+import TypeUsers from "../components/pages/TypeUsers/TypeUsers";
+
 import Admin from "../components/pages/Home/Admin";
 import Manager from "../components/pages/Home/Manager";
 import Representative from "../components/pages/Home/Representative";
 import Viewer from "../components/pages/Home/Viewer";
-import Signup from "../components/pages/Signup/Signup";
+
 import Profile from "../components/pages/Profile/Profile";
 import EditorProfile from "../components/pages/EditorProfile/EditorProfile";
 import EditorPassword from "../components/pages/EditorPassword/EditorPassword";
 import Users from "../components/pages/Users/Users";
-import SignUser from "../components/pages/SignUser/SignUser";
+
 import GroupsGerente from "../components/pages/GroupsGerente/GroupsGerente";
 import GroupsRepresentante from '../components/pages/GroupsRepresentante/GroupsRepresentante'
+
+import Signup from "../components/pages/Signup/Signup";
+import SignUser from "../components/pages/SignUser/SignUser";
 import SignGroups from "../components/pages/SignGroups/SignGroups";
-import OverviewGroup from "../components/pages/OverviewGroup/OverviewGroup";
+import SignMember from "../components/pages/SignMember/SignMember";
 import SignRepresentatives from "../components/pages/SignRepresentative/SignRepresentative";
 import SignTypeUser from "../components/pages/SignTypeUser/SignTypeUser";
-import TypeUsers from "../components/pages/TypeUsers/TypeUsers";
+
+import OverviewGroupGerente from "../components/pages/OverviewGroupGerente/OverviewGroupGerente";
+import OverviewGroupRepresentante from "../components/pages/OverviewGroupRepresentante/OverviewGroupRepresentante"
+
 
 const PrivateRoute = ({ children, requiredUserType }) => {
     const isAuthenticated = Cookies.get('authToken');
@@ -139,10 +148,28 @@ const RoutesApp = () => {
                     />
 
                     <Route
-                        exact path="/detalhes-de-grupos/:id"
+                        exact path="/detalhes-de-grupos-representante/:id/adicionar-membro"
+                        element={
+                            <PrivateRoute requiredUserType={["representante"]}>
+                                <SignMember />
+                            </PrivateRoute>
+                        }
+                    />
+
+                    <Route
+                        exact path="/detalhes-de-grupos-gerente/:id"
                         element={
                             <PrivateRoute requiredUserType={["gerente"]}>
-                                <OverviewGroup />
+                                <OverviewGroupGerente />
+                            </PrivateRoute>
+                        }
+                    />
+
+                    <Route
+                        exact path="/detalhes-de-grupos-representante/:id"
+                        element={
+                            <PrivateRoute requiredUserType={["representante"]}>
+                                <OverviewGroupRepresentante />
                             </PrivateRoute>
                         }
                     />

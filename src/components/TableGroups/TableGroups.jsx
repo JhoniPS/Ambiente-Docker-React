@@ -8,7 +8,7 @@ import style from './TableGroups.module.css'
 import ModalDeleteGroup from '../Modals/modal_delete_group/ModalDeleteGroup';
 import ModalEditGroup from '../Modals/modal_edit_group/ModalEditGroup';
 
-const TableGroups = () => {
+const TableGroups = ({ rota }) => {
     const { token } = useAuthContext();
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(false);
@@ -38,40 +38,40 @@ const TableGroups = () => {
         {
             title: 'Tipo do grupo',
             dataIndex: 'type_group',
-            width: '20%',
+            width: '9%',
             render: (type_group) => type_group.type
         },
         {
             title: 'Nome',
             dataIndex: 'type_group',
-            width: '20%',
+            width: '9%',
             render: (type_group) => type_group.name
         },
         {
             title: 'Equipe',
             dataIndex: 'team',
-            width: '20%',
+            width: '9%',
         },
         {
             title: 'Orgão',
             dataIndex: 'organ',
-            width: '20%',
+            width: '9%',
         },
         {
             title: 'Conselho',
             dataIndex: 'council',
-            width: '20%',
+            width: '9%',
         },
         {
             title: 'E-mail',
             dataIndex: 'email',
-            width: '20%',
+            width: '9%',
         },
         {
             title: 'Operações',
             dataIndex: 'id',
-            width: 60,
             align: 'center',
+            width: '0.1%',
             render: (id) => (
                 <div className={style.operation}>
                     <ModalDeleteGroup id={id} data={data} setData={setData} />
@@ -82,7 +82,7 @@ const TableGroups = () => {
     ];
 
     const handleRowClick = (record) => {
-        navigate(`/detalhes-de-grupos/${record.id}`);
+        navigate(`/${rota}/${record.id}`);
     };
 
     return (

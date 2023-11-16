@@ -37,13 +37,14 @@ const TableTypeUser = () => {
     {
       title: 'Tipos de usuario',
       dataIndex: 'name',
+      width: '100%',
       render: (name) => `${name}`
     },
 
     {
       title: 'Operação',
       dataIndex: 'id',
-      width: '10%',
+      width: '5%',
       align: 'center',
 
       render: (id) => (
