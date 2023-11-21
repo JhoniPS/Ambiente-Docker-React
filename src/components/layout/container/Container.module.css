@@ -4,11 +4,15 @@
   justify-content: space-between;
   gap: 1em;
   flex-wrap: wrap;
-  background-color:inherit;
+  background-color: inherit;
 }
 
 .start {
   justify-content: flex-start;
+}
+
+.between {
+  justify-content: space-between;
 }
 
 .column {

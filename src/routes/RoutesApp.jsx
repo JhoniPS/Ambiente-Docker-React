@@ -21,7 +21,6 @@ import Users from "../components/pages/Users/Users";
 import GroupsGerente from "../components/pages/GroupsGerente/GroupsGerente";
 import GroupsRepresentante from '../components/pages/GroupsRepresentante/GroupsRepresentante'
 
-import Signup from "../components/pages/Signup/Signup";
 import SignUser from "../components/pages/SignUser/SignUser";
 import SignGroups from "../components/pages/SignGroups/SignGroups";
 import SignMember from "../components/pages/SignMember/SignMember";
@@ -85,10 +84,6 @@ const RoutesApp = () => {
                         }
                     />
 
-                    <Route
-                        exact path="/signup"
-                        element={<Signup />}
-                    />
                     <Route
                         exact path="/profile"
                         element={

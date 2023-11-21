@@ -2,6 +2,7 @@ import React, { Fragment, useEffect, useState } from 'react';
 import api from '../../services/api';
 
 import { Button, Steps, Divider, Select, Radio } from 'antd';
+import { TextField } from '@mui/material';
 import FormSignGroup from '../Forms/formSignGroup/FormSignGroup';
 import styles from './StepGroupRegister.module.css';
 import TextArea from 'antd/es/input/TextArea';
@@ -56,70 +57,50 @@ const RepresentanteGroup = ({ setRepresentatives }) => {
     );
 };
 
-const Observations = ({ observations, setObservations, setType_group_id }) => {
-    const [option, setOption] = useState([]);
+const Observations = ({ observations, setObservations, name, setName, type_group, setType_group }) => {
 
     const handleObservations = (e) => {
         setObservations(e.target.value)
     }
 
-    const handleChange = (selectedValues) => {
-        setType_group_id(selectedValues)
+    const handleChange = (e) => {
+        setName(e.target.value);
     };
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await api.get('type-group');
-
-                const representantesFiltrados = response.data
-
-                setOption(
-                    representantesFiltrados.map((rep) => ({
-                        id: rep.id,
-                        name: rep.name,
-                    }))
-                );
-            } catch (error) {
-                console.error('Erro ao buscar os representantes:', error);
-            }
-        };
-
-        fetchData();
-    }, []);
-
-    // const handleRadioChange = (e) => {
-    //     setType_group(prev => ({
-    //         ...prev,
-    //         type_group: e.target.value,
-    //     }));
-    // };
+    const handleRadioChange = (e) => {
+        setType_group(e.target.value);
+    };
 
     return (
         <section className={styles.observacoes}>
-            <h1>Observações</h1>
+            <TextField
+                type='text'
+                label="Nome do Grupo"
+                variant="standard"
+                name='name'
+                placeholder='Ex: Comissão'
+                value={name}
+                onChange={handleChange}
+                focused
+                margin='normal'
+                sx={{
+                    width: '100%',
+                }}
+            />
+
+            <h1 className={styles.titulos}>Tipo de grupo</h1>
+            <Radio.Group style={{ display: 'flex' }} onChange={handleRadioChange} value={type_group} size='25'>
+                <Radio value={"interno"} defaultChecked>Interno</Radio>
+                <Radio value={"externo"}>Externo</Radio>
+            </Radio.Group>
+
+            <h1 className={styles.titulos}>Observações</h1>
             <TextArea
                 placeholder='Digite aqui as observações'
                 value={observations}
                 rows={5}
                 onChange={handleObservations}
             />
-            <h1>Tipo de grupo</h1>
-            <Select
-                allowClear
-                style={{ width: '100%', height: '4em' }}
-                placeholder="Selecione o tipo de grupo"
-                onChange={handleChange}
-                filterOption={(input, option) =>
-                    (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
-                }
-                options={option.map((rep) => ({ value: rep.id, label: rep.name }))}
-            />
-
-            {/* <Radio.Group style={{ display: 'flex', flexDirection: 'column' }} onChange={handleRadioChange} value={type_group.type_group} size='20'>
-                <Radio value={"interno"} defaultChecked>Interno</Radio>
-                <Radio value={"externo"}>Externo</Radio>
-            </Radio.Group> */}
         </section>
     );
 };
@@ -140,7 +121,8 @@ const StepGroupRegister = () => {
 
     const [representatives, setRepresentatives] = useState([]);
     const [observations, setObservations] = useState([]);
-    const [type_group_id, setType_group_id] = useState(0);
+    const [name, setName] = useState("");
+    const [type_group, setType_group] = useState('interno');
     const [current, setCurrent] = useState(0);
 
     const steps = [
@@ -157,8 +139,10 @@ const StepGroupRegister = () => {
             content: <Observations
                 observations={observations}
                 setObservations={setObservations}
-                type_group_id={type_group_id}
-                setType_group_id={setType_group_id}
+                name={name}
+                setName={setName}
+                type_group={type_group}
+                setType_group={setType_group}
             />,
         },
     ];
@@ -166,16 +150,10 @@ const StepGroupRegister = () => {
     const Submit = async (e) => {
         e.preventDefault();
 
-        setFormulario(prev => ({
-            ...prev,
-            type_group_id,
-            observations,
-            representatives
-        }));
-
         const updatedFormulario = {
             ...formulario,
-            type_group_id,
+            name,
+            type_group,
             observations,
             representatives
         };

@@ -2,6 +2,7 @@ import React, { Fragment, useState } from 'react'
 import { IconContext } from "react-icons";
 
 import HeaderBar from '../../layout/header/HeaderBar';
+import Container from '../../layout/container/Container'
 import SubmitButton from '../../layout/submitbuttun/SubmitButton';
 import LinkButton from '../../layout/linkbutton/LinkButton';
 
@@ -28,7 +29,7 @@ const GroupsGerente = () => {
                         customClass="add"
                         to="/signGroups"
                         icon={
-                            <IconContext.Provider value={{ size: 25 }}>
+                            <IconContext.Provider value={{ size: '2rem' }}>
                                 <IoMdAdd />
                             </IconContext.Provider>
                         }
@@ -39,7 +40,7 @@ const GroupsGerente = () => {
                         customClass="button_filter"
                         onClick={() => setOpenModal(true)}
                         icon={
-                            <IconContext.Provider value={{ size: 20 }}>
+                            <IconContext.Provider value={{ size: '1.6rem' }}>
                                 <IoIosFunnel />
                             </IconContext.Provider>
                         }
@@ -52,12 +53,12 @@ const GroupsGerente = () => {
                 />
 
                 <h4>FILTROS RÁPIDOS</h4>
-                <section className={style.button_filters}>
+                <Container customClass='start'>
                     <SubmitButton text="Mais Recentes" customClass="button_filtes_bar" />
                     <SubmitButton text="Mais Antigos" customClass="button_filtes_bar" />
                     <SubmitButton text="Crescente" customClass="button_filtes_bar" />
                     <SubmitButton text="Descrecente" customClass="button_filtes_bar" />
-                </section>
+                </Container>
                 <TableGroups rota="detalhes-de-grupos-gerente"/>
             </div>
         </Fragment>

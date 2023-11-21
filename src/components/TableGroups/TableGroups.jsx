@@ -38,34 +38,28 @@ const TableGroups = ({ rota }) => {
         {
             title: 'Tipo do grupo',
             dataIndex: 'type_group',
-            width: '9%',
             render: (type_group) => type_group.type
         },
         {
             title: 'Nome',
             dataIndex: 'type_group',
-            width: '9%',
             render: (type_group) => type_group.name
         },
         {
             title: 'Equipe',
             dataIndex: 'team',
-            width: '9%',
         },
         {
             title: 'Orgão',
             dataIndex: 'organ',
-            width: '9%',
         },
         {
             title: 'Conselho',
             dataIndex: 'council',
-            width: '9%',
         },
         {
             title: 'E-mail',
             dataIndex: 'email',
-            width: '9%',
         },
         {
             title: 'Operações',
@@ -87,12 +81,11 @@ const TableGroups = ({ rota }) => {
 
     return (
         <Table
-            bordered
-            className={style.table}
+            bordered={true}
             rowKey={(record) => record.id}
             columns={columns}
             dataSource={data}
-            responsive
+            responsive={true}
             loading={loading}
             pagination={{
                 current: page,
