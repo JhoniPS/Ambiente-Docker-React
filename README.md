@@ -1,4 +1,4 @@
-# Sistema de Controle de Comissões - README
+# Sistema de Controle de Comissões - DEC
 
 ## Visão Geral
 
