@@ -11,9 +11,9 @@ import img2 from '../../../img/icon _work.svg'
 import img3 from '../../../img/verificacao-de-lista.svg'
 import TableGroupsDescription from "../../TableGroupsDescription/TableGroupsDescrition";
 import TableDetalhe from "../../TableDetalhes/TableDetalhe";
-import TableRepresentativeGroup from "../../TableRepresentativeGroup/TableRepresentativeGroup";
+import TableRepresentative from "../../TableRepresentative/TableRepresentative";
 import TableMemberGroupRepresentante from "../../TableMemberGroupRepresentante/TableMemberGroupRepresentante";
-import Observations from "../../layout/Obsavetions/Observations";
+import Observations from "../../layout/Observations/Observations";
 import LinkButton from "../../layout/linkbutton/LinkButton";
 
 const OverviewGroupGerente = () => {
@@ -67,7 +67,7 @@ const OverviewGroupGerente = () => {
         <div className={style.container_representantes_observacoes}>
           <section>
             <h2>Representantes</h2>
-            <TableRepresentativeGroup />
+            <TableRepresentative />
           </section>
           <section className={style.observacoes}>
             <h2>Observações</h2>

@@ -181,25 +181,25 @@ const StepGroupRegister = () => {
 
     return (
         <Fragment>
-            <Steps current={current} items={items} />
+            <Steps current={current} items={items} type="navigation"    />
             <Divider />
             <form className={styles.form}>
                 <div className={styles.container_step}>{steps[current].content}</div>
 
                 <div className={styles.button_steps}>
                     {current > 0 && (
-                        <Button onClick={() => prev()}>Previous</Button>
+                        <Button onClick={() => prev()}>Anterior</Button>
                     )}
 
                     {current < steps.length - 1 && (
                         <Button type="primary" onClick={() => next()}>
-                            Next
+                            Próximo
                         </Button>
                     )}
 
                     {current === steps.length - 1 && (
                         <Button type="primary" onClick={Submit}>
-                            Done
+                            Feito
                         </Button>
                     )}
                 </div>

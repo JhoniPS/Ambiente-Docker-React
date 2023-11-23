@@ -56,8 +56,6 @@ const GroupsGerente = () => {
                 <Container customClass='start'>
                     <SubmitButton text="Mais Recentes" customClass="button_filtes_bar" />
                     <SubmitButton text="Mais Antigos" customClass="button_filtes_bar" />
-                    <SubmitButton text="Crescente" customClass="button_filtes_bar" />
-                    <SubmitButton text="Descrecente" customClass="button_filtes_bar" />
                 </Container>
                 <TableGroups rota="detalhes-de-grupos-gerente"/>
             </div>

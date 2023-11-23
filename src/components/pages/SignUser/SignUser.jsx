@@ -1,4 +1,5 @@
 import React, { useEffect, useState, Fragment } from 'react';
+import { useNavigate } from 'react-router-dom';
 import useAuthContext from '../../contexts/Auth';
 import api from '../../../services/api';
 
@@ -13,6 +14,7 @@ import { ImArrowLeft2 } from "react-icons/im";
 
 const SignUser = () => {
   const { token } = useAuthContext();
+  const navigate = useNavigate();
 
   const [user, setUser] = useState({
     name: '',
@@ -22,6 +24,7 @@ const SignUser = () => {
   });
 
   const [errors, setErrors] = useState({
+    name: '',
     email: '',
     password: '',
     c_password: '',
@@ -41,14 +44,17 @@ const SignUser = () => {
 
     try {
       setErrors({
+        name: '',
         email: '',
         password: '',
         c_password: '',
         type_user_id: '',
       });
 
-      const reponse = await api.post('/register', updateUser)
-      console.log(reponse.data)
+      await api.post('/register', updateUser).then(() => {
+        navigate('/users');
+      });
+
     } catch (error) {
       if (error.response && error.response.data && error.response.data.errors) {
         setErrors(error.response.data.errors);
@@ -83,7 +89,7 @@ const SignUser = () => {
         }
       } catch (error) {
         if (error.response.status === 401) {
-          // Trate o erro 401 aqui, por exemplo, redirecionando o usuário para a página de login.
+          console.log(error)
         }
       }
     }
@@ -112,6 +118,8 @@ const SignUser = () => {
                   sx={{
                     width: '100%',
                   }}
+                  helperText={errors.name}
+                  error={Boolean(errors.name)}
                 />
               </div>
               <div className={styles.containerInput}>

@@ -76,14 +76,6 @@ export const AuthProvider = ({ children }) => {
     navigate("/");
   };
 
-  const newTypeUser = async ({ ...name }) => {
-    try {
-      await api.post('/type-user', name);
-    } catch (e) {
-      console.log(e);
-    }
-  }
-
   const deleteTypeUser = async ({ id }) => {
     try {
       await api.delete(`/type-user/${id}`);
@@ -111,7 +103,6 @@ export const AuthProvider = ({ children }) => {
           messageErrors,
           login,
           logout,
-          newTypeUser,
           deleteTypeUser,
           deleteUser,
         }

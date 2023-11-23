@@ -13,7 +13,7 @@ import TableGroupsDescription from "../../TableGroupsDescription/TableGroupsDesc
 import TableDetalhe from "../../TableDetalhes/TableDetalhe";
 import TableRepresentativeGroup from "../../TableRepresentativeGroup/TableRepresentativeGroup";
 import TableMemberGroupGerente from "../../TableMemberGroupGerente/TableMemberGroupGerente";
-import Observations from "../../layout/Obsavetions/Observations";
+import Observations from "../../layout/Observations/Observations"
 
 const OverviewGroupGerente = () => {
   return (
