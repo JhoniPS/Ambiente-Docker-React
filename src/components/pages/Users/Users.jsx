@@ -11,9 +11,18 @@ import TableUser from "../../TableUser/TableUser";
 import Modal from "../../Modals/modal_filter_user/Modal";
 import { IconContext } from "react-icons";
 import LinkButton from "../../layout/linkbutton/LinkButton";
+import { useLocation } from "react-router-dom";
+import Message from "../../layout/Message/Message";
 
 const Users = () => {
   const [openModal, setOpenModal] = useState(false);
+
+  const location = useLocation();
+  let message = '';
+
+  if (location.state) {
+    message = location.state.message;
+  }
 
   return (
     <Fragment>
@@ -50,9 +59,8 @@ const Users = () => {
           <SubmitButton text="Mais Recentes" customClass="button_filtes_bar" />
           <SubmitButton text="Mais Antigos" customClass="button_filtes_bar" />
         </section>
-
         <TableUser />
-
+        {message && <Message type='success' msg={message} />}
       </div>
     </Fragment>
   );
