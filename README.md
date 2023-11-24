@@ -118,6 +118,7 @@ Os usuários cadastrados serão importados por meio de uma API disponibilizada p
 - A autenticação dos usuários será realizada por meio de uma API externa disponibilizada pelo CTIC: [https://autenticacao.dev.ufopa.edu.br](https://autenticacao.dev.ufopa.edu.br)
 - Informações sobre usuários serão obtidas de uma API disponibilizada pelo CTIC: [https://api.dev.ufopa.edu.br](https://api.dev.ufopa.edu.br)
 - Biblioteca de componentes para react js Ant Design e MUI: React component:[https://mui.com/](https://mui.com/) | [https://ant.design/](https://ant.design/)
+- Back-End da aplicação:[https://github.com/devcavalcante/DecLaravel](https://github.com/devcavalcante/DecLaravel).
 
 Este documento de visão fornece uma visão geral do projeto e serve como referência para o desenvolvimento do Sistema de Controle de Comissões da Ufopa. Para obter informações detalhadas sobre os requisitos, funcionalidades e uso do sistema, consulte a documentação técnica e os manuais do usuário fornecidos durante o desenvolvimento e implementação do projeto.
 
