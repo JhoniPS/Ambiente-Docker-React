@@ -5,25 +5,30 @@ import SubmitButton from "../../layout/submitbuttun/SubmitButton"
 import { ImArrowLeft2 } from "react-icons/im";
 import { IoIosFunnel } from "react-icons/io";
 import { IoMdAdd } from "react-icons/io";
-
-
-
-
 import style from "./Users.module.css"
 
 import TableUser from "../../TableUser/TableUser";
 import Modal from "../../Modals/modal_filter_user/Modal";
 import { IconContext } from "react-icons";
 import LinkButton from "../../layout/linkbutton/LinkButton";
+import { useLocation } from "react-router-dom";
+import Message from "../../layout/Message/Message";
 
 const Users = () => {
   const [openModal, setOpenModal] = useState(false);
+
+  const location = useLocation();
+  let message = '';
+
+  if (location.state) {
+    message = location.state.message;
+  }
 
   return (
     <Fragment>
       <HeaderBar text="PAINEL DE CONTROLE" backPageIcon={<ImArrowLeft2 size={25} />} backPage="/administrador" />
       <div className={style.users}>
-        <h2>Usuarios</h2>
+        <h2>Usuários</h2>
         <section className={style.section_search}>
           <SubmitButton
             text="Filtro"
@@ -53,12 +58,9 @@ const Users = () => {
         <section className={style.button_filters}>
           <SubmitButton text="Mais Recentes" customClass="button_filtes_bar" />
           <SubmitButton text="Mais Antigos" customClass="button_filtes_bar" />
-          <SubmitButton text="Crescente" customClass="button_filtes_bar" />
-          <SubmitButton text="Descrecente" customClass="button_filtes_bar" />
         </section>
-
         <TableUser />
-
+        {message && <Message type='success' msg={message} />}
       </div>
     </Fragment>
   );

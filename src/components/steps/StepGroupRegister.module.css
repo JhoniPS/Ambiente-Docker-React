@@ -1,0 +1,41 @@
+.form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 20px;
+}
+
+.button_steps {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.container_step {
+    width: 100%;
+    justify-content: 'space-around';
+}
+
+.representantes {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 20px;
+}
+
+.observacoes {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.titulos {
+    color: #2C74AC;
+    font-feature-settings: 'clig' off, 'liga' off;
+    font-family: Roboto;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 150%;
+    letter-spacing: 0.15px;
+}

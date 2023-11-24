@@ -41,7 +41,7 @@ const Login = () => {
         <div className={styles.login}>
             <section>
                 <img src={img} alt='Logo da UFOPA' />
-                <h4>Documentos e Comissões</h4>
+                <h3>DEC</h3>
                 <h5>Seja bem vindo(a)!</h5>
                 <p>Digite seu e-mail institucional e a senha para realizar o login.</p>
                 <form className={styles.Form} onSubmit={handleLogin}>
@@ -93,7 +93,7 @@ const Login = () => {
                         </FormHelperText>
                     </FormControl>
 
-                    <SubmitButton text="Entrar na conta" to="/home" />
+                    <SubmitButton text="Entrar" to="/home" />
                 </form>
             </section>
         </div >

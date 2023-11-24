@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from 'react';
+import useAuthContext from '../contexts/Auth';
 import api from '../../services/api';
-
 import { Table } from 'antd';
 import { IconContext } from 'react-icons';
 import style from './TableTypeUser.module.css'
 import ModalEditTypeUser from '../Modals/modal_edit_type_user/ModalEditTypeUser';
-import Cookies from 'js-cookie'
 import ModalDeleteUser from '../Modals/modal_delete_type-user/ModalDeleteTypeUser';
 
 const TableTypeUser = () => {
+  const { token } = useAuthContext();
+
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
@@ -16,15 +17,10 @@ const TableTypeUser = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const token = Cookies.get('authToken')
       if (token) {
         try {
           setLoading(true);
-          const response = await api.get('type-user', {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            }
-          });
+          const response = await api.get('type-user');
           setData(response.data);
           setLoading(false);
         } catch (error) {
@@ -34,20 +30,21 @@ const TableTypeUser = () => {
     };
 
     fetchData();
-  }, []);
+  }, [token]);
 
 
   const columns = [
     {
       title: 'Tipos de usuario',
       dataIndex: 'name',
+      width: '100%',
       render: (name) => `${name}`
     },
 
     {
       title: 'Operação',
       dataIndex: 'id',
-      width: '10%',
+      width: '5%',
       align: 'center',
 
       render: (id) => (

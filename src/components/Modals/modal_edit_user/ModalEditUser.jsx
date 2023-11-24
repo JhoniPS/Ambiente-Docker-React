@@ -29,6 +29,8 @@ const EditUser = ({ id, data, setData }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+
+        //mudar isso aqui
         console.log("Amostra:", { name, email })
     }
 

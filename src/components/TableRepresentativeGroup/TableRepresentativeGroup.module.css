@@ -1,0 +1,9 @@
+.operation {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.operation > button {
+  border: none;
+  background-color: #FFF;
+}

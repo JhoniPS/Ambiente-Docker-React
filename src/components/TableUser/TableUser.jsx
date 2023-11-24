@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import api from '../../services/api';
-import Cookies from 'js-cookie'
 import { Table } from 'antd';
 import style from './TableUser.module.css'
 
@@ -15,21 +14,15 @@ const TableUser = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const token = Cookies.get('authToken');
-      if (token) {
-        try {
-          setLoading(true);
-          const response = await api.get('users', {
-            headers: {
-              Authorization: `Bearer ${token}`
-            }
-          });
+      try {
+        setLoading(true);
+        await api.get('users').then((response) => {
           const users = response.data.data;
           setData(users);
           setLoading(false);
-        } catch (error) {
-          console.log(error);
-        }
+        });
+      } catch (error) {
+        console.log(error);
       }
     };
 
@@ -53,7 +46,7 @@ const TableUser = () => {
       title: 'Operações',
       dataIndex: 'id',
       align: 'center',
-      width: '10%',
+      width: '5%',
       render: (id) => (
         <div className={style.operation}>
           <ModalDeleteUser id={id} data={data} setData={setData} />

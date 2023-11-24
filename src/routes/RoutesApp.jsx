@@ -1,32 +1,44 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 import Cookies from 'js-cookie';
 
 import { AuthProvider } from "../components/contexts/Auth";
+
 import Error404 from "../components/pages/Erro404/Error404";
 import Login from "../components/pages/Login/Login";
+import TypeUsers from "../components/pages/TypeUsers/TypeUsers";
+
 import Admin from "../components/pages/Home/Admin";
 import Manager from "../components/pages/Home/Manager";
 import Representative from "../components/pages/Home/Representative";
 import Viewer from "../components/pages/Home/Viewer";
-import Signup from "../components/pages/Signup/Signup";
+
 import Profile from "../components/pages/Profile/Profile";
 import EditorProfile from "../components/pages/EditorProfile/EditorProfile";
 import EditorPassword from "../components/pages/EditorPassword/EditorPassword";
 import Users from "../components/pages/Users/Users";
+
+import GroupsGerente from "../components/pages/GroupsGerente/GroupsGerente";
+import GroupsRepresentante from '../components/pages/GroupsRepresentante/GroupsRepresentante'
+
 import SignUser from "../components/pages/SignUser/SignUser";
-import Groups from "../components/pages/Groups/Groups";
 import SignGroups from "../components/pages/SignGroups/SignGroups";
-import EditGroup from "../components/pages/EditGroup/EditGroup";
-import Representatives from "../components/pages/Representatives/Representatives";
+import SignMember from "../components/pages/SignMember/SignMember";
 import SignRepresentatives from "../components/pages/SignRepresentative/SignRepresentative";
-import EditRepresentative from "../components/pages/EditRepresentative/EditRepresentative";
 import SignTypeUser from "../components/pages/SignTypeUser/SignTypeUser";
-import TypeUsers from "../components/pages/TypeUsers/TypeUsers";
+
+import OverviewGroupGerente from "../components/pages/OverviewGroupGerente/OverviewGroupGerente";
+import OverviewGroupRepresentante from "../components/pages/OverviewGroupRepresentante/OverviewGroupRepresentante"
+
 
 const PrivateRoute = ({ children, requiredUserType }) => {
     const isAuthenticated = Cookies.get('authToken');
     const userType = Cookies.get('userType');
+    const { pathname } = useLocation();
+
+    if (pathname === '/profile') {
+        return isAuthenticated ? children : <Error404 isPermissionDenied={userType} />;
+    }
 
     return (isAuthenticated && userType.includes(requiredUserType)) ? children : <Error404 isPermissionDenied={userType} />;
 };
@@ -48,7 +60,7 @@ const RoutesApp = () => {
                     />
 
                     <Route
-                        exact path="/manager"
+                        exact path="/gerente"
                         element={
                             <PrivateRoute requiredUserType={["gerente"]}>
                                 <Manager />
@@ -56,7 +68,7 @@ const RoutesApp = () => {
                         }
                     />
                     <Route
-                        exact path="/representative"
+                        exact path="/representante"
                         element={
                             <PrivateRoute requiredUserType={["representante"]}>
                                 <Representative />
@@ -64,7 +76,7 @@ const RoutesApp = () => {
                         }
                     />
                     <Route
-                        exact path="/viewer"
+                        exact path="/visualizador"
                         element={
                             <PrivateRoute requiredUserType={["visualizador"]}>
                                 <Viewer />
@@ -73,13 +85,9 @@ const RoutesApp = () => {
                     />
 
                     <Route
-                        exact path="/signup"
-                        element={<Signup />}
-                    />
-                    <Route
                         exact path="/profile"
                         element={
-                            <PrivateRoute requiredUserType={["administrador", "gerente", "representante", "visualizador"]}>
+                            <PrivateRoute requiredUserType={["administrador"]}>
                                 <Profile />
                             </PrivateRoute>
                         }
@@ -87,7 +95,7 @@ const RoutesApp = () => {
                     <Route
                         exact path="/editorProfile"
                         element={
-                            <PrivateRoute requiredUserType={["administrador", "gerente", "representante", "visualizador"]}>
+                            <PrivateRoute requiredUserType={["administrador"]}>
                                 <EditorProfile />
                             </PrivateRoute>
                         }
@@ -95,7 +103,7 @@ const RoutesApp = () => {
                     <Route
                         exact path="/updatePassword"
                         element={
-                            <PrivateRoute requiredUserType={["administrador", "gerente", "representante", "visualizador"]}>
+                            <PrivateRoute requiredUserType={["administrador"]}>
                                 <EditorPassword />
                             </PrivateRoute>
                         }
@@ -118,10 +126,10 @@ const RoutesApp = () => {
                     />
 
                     <Route
-                        exact path="/groups"
+                        exact path="/groups-gerente"
                         element={
                             <PrivateRoute requiredUserType={["gerente"]}>
-                                <Groups />
+                                <GroupsGerente />
                             </PrivateRoute>
                         }
                     />
@@ -133,20 +141,39 @@ const RoutesApp = () => {
                             </PrivateRoute>
                         }
                     />
+
                     <Route
-                        exact path="/editGroup"
+                        exact path="/detalhes-de-grupos-representante/:id/adicionar-membro"
                         element={
-                            <PrivateRoute requiredUserType={["gerente"]}>
-                                <EditGroup />
+                            <PrivateRoute requiredUserType={["representante"]}>
+                                <SignMember />
                             </PrivateRoute>
                         }
                     />
 
                     <Route
-                        exact path="/representantes"
+                        exact path="/detalhes-de-grupos-gerente/:id"
                         element={
                             <PrivateRoute requiredUserType={["gerente"]}>
-                                <Representatives />
+                                <OverviewGroupGerente />
+                            </PrivateRoute>
+                        }
+                    />
+
+                    <Route
+                        exact path="/detalhes-de-grupos-representante/:id"
+                        element={
+                            <PrivateRoute requiredUserType={["representante"]}>
+                                <OverviewGroupRepresentante />
+                            </PrivateRoute>
+                        }
+                    />
+
+                    <Route
+                        exact path="/groups-representante"
+                        element={
+                            <PrivateRoute requiredUserType={["representante"]}>
+                                <GroupsRepresentante />
                             </PrivateRoute>
                         }
                     />
@@ -155,14 +182,6 @@ const RoutesApp = () => {
                         element={
                             <PrivateRoute requiredUserType={["gerente"]}>
                                 <SignRepresentatives />
-                            </PrivateRoute>
-                        }
-                    />
-                    <Route
-                        exact path="/editRepresentante"
-                        element={
-                            <PrivateRoute requiredUserType={["gerente"]}>
-                                <EditRepresentative />
                             </PrivateRoute>
                         }
                     />

@@ -1,104 +1,99 @@
-import React from 'react';
-import { NavLink } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import api from '../../services/api';
+import useAuthContext from '../contexts/Auth';
+
+import { useNavigate } from 'react-router-dom';
 import { Table } from 'antd';
-import { IoTrash, IoPencilSharp } from "react-icons/io5";
-
 import style from './TableGroups.module.css'
-import { IconContext } from 'react-icons';
+import ModalDeleteGroup from '../Modals/modal_delete_group/ModalDeleteGroup';
+import ModalEditGroup from '../Modals/modal_edit_group/ModalEditGroup';
 
-const handlDelete = (e) => {
-    e.stopPropagation();
-    alert("Delete");
-};
+const TableGroups = ({ rota }) => {
+    const { token } = useAuthContext();
+    const [data, setData] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const [page, setPage] = useState(1);
+    const [pageSize, setPageSize] = useState(10);
+    const navigate = useNavigate();
 
-const handleEdit = (event) => {
-    event.stopPropagation();
-};
+    useEffect(() => {
+        const fetchData = async () => {
+            if (token) {
+                try {
+                    setLoading(true);
+                    const { data } = await api.get('group');
+                    const groups = data.data;
+                    setData(groups);
+                    setLoading(false);
+                } catch (error) {
+                    console.log(error);
+                }
+            }
+        };
 
+        fetchData();
+    }, [token]);
 
-const columns = [
-    {
-        title: 'Tipo do grupo',
-        dataIndex: 'name',
-        width: '20%',
-    },
-    {
-        title: 'Nome',
-        dataIndex: 'equip',
-        width: '20%',
-    },
-    {
-        title: 'Equipe',
-        dataIndex: 'organ',
-        width: '20%',
-    },
-    {
-        title: 'Orgão',
-        dataIndex: 'council',
-        width: '20%',
-    },
-    {
-        title: 'Conselho',
-        dataIndex: 'email',
-        width: '20%',
-    },
-    {
-        title: 'E-mail',
-        dataIndex: 'email',
-        width: '20%',
-    },
-    {
-        title: 'Operações',
-        dataIndex: 'operation',
-        width: 60,
-        align: 'center',
-        render: () => (
-            <div className={style.operation}>
-                <IconContext.Provider value={{ color: "#93000A", size: 20 }}>
-                    <button onClick={handlDelete}>
-                        <IoTrash />
-                    </button>
-                </IconContext.Provider>
-
-                <IconContext.Provider value={{ color: "#2C74AC", size: 20 }}>
-                    <NavLink to='/editGroup' onClick={handleEdit}>
-                        <IoPencilSharp />
-                    </NavLink>
-                </IconContext.Provider>
-            </div>
-        ),
-    },
-];
-
-const TableGroups = () => {
-
-    const data = [];
-
-    for (let i = 0; i < 100; i++) {
-        data.push({
-            key: i,
-            name: `Edward King ${i}`,
-            equip: `Teste`,
-            organ: 'Teste',
-            council: 'Teste',
-            email: `teste@teste.com`,
-        });
-    }
+    const columns = [
+        {
+            title: 'Tipo do grupo',
+            dataIndex: 'type_group',
+            render: (type_group) => type_group.type
+        },
+        {
+            title: 'Nome',
+            dataIndex: 'type_group',
+            render: (type_group) => type_group.name
+        },
+        {
+            title: 'Equipe',
+            dataIndex: 'team',
+        },
+        {
+            title: 'Orgão',
+            dataIndex: 'organ',
+        },
+        {
+            title: 'Conselho',
+            dataIndex: 'council',
+        },
+        {
+            title: 'E-mail',
+            dataIndex: 'email',
+        },
+        {
+            title: 'Operações',
+            dataIndex: 'id',
+            align: 'center',
+            width: '0.1%',
+            render: (id) => (
+                <div className={style.operation}>
+                    <ModalDeleteGroup id={id} data={data} setData={setData} />
+                    <ModalEditGroup id={id} data={data} setData={setData} />
+                </div>
+            ),
+        },
+    ];
 
     const handleRowClick = (record) => {
-        alert(record.key);
+        navigate(`/${rota}/${record.id}`);
     };
 
     return (
         <Table
-            bordered
-            className={style.table}
-            rowKey={(record) => record.key}
+            bordered={true}
+            rowKey={(record) => record.id}
             columns={columns}
             dataSource={data}
-            responsive
+            responsive={true}
+            loading={loading}
             pagination={{
-                defaultPageSize: 10,
+                current: page,
+                pageSize: pageSize,
+                onChange: (page, pageSize) => {
+                    setPage(page);
+                    setPageSize(pageSize)
+                }
             }}
             onRow={(record) => {
                 return {

@@ -12,18 +12,22 @@ import { IoPencilSharp } from "react-icons/io5";
 import { Typography, TextField } from '@mui/material';
 
 const style = {
+    position: 'fixed',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
     display: 'flex',
     flexDirection: 'column',
-    transform: 'translate(80%, 50%)',
     justifyContent: 'center',
     alignItems: 'center',
     textAlign: 'justify',
-    gap: '20px',
+    gap: '2em',
     backgroundColor: '#FFF',
-    width: '500px',
-    height: '300px',
+    minwidth: '700px',
+    minheight: '700px',
+    padding: '2.5rem',
     outline: 'none',
-    borderRadius: '3px',
+    borderRadius: '15px',
     boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)',
 };
 
@@ -40,7 +44,7 @@ const styleTitle = {
 };
 
 export default function EditTypeUser({ id, data, setData }) {
-    const { editTypeUser, error, messageErrors } = useAuthContext();
+    const { error, messageErrors } = useAuthContext();
 
     const [name, setName] = useState("");
     const [open, setOpen] = useState(false);
@@ -50,7 +54,7 @@ export default function EditTypeUser({ id, data, setData }) {
     const handlEdit = async (e) => {
         e.preventDefault()
         try {
-            await editTypeUser({ id, name });
+            await api.put(`/type-user/${id}`, { name });
 
             const updatedData = data.map(item => {
                 if (item.id === id) {
@@ -61,7 +65,7 @@ export default function EditTypeUser({ id, data, setData }) {
             setData(updatedData);
             handleClose();
         } catch (error) {
-            console.log(e)
+            console.log(error)
         }
     }
 

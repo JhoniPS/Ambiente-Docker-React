@@ -1,28 +1,16 @@
 .form {
     display: flex;
-    flex-direction: column;
-    gap: 10px;
-    justify-content: center;
-    align-items: center;
+    width: 100%;
+    justify-content: space-between;
 }
 
-.container_form {
+.container_input1, .container_input2 {
   display: flex;
+  width: 45%;
   flex-direction: column;
-}
-
-.container_text1, .container_text2, .container_text3 {
-  display: flex;
-  gap: 20px;
 }
 
 .error {
   color: red;
   font-size: 12px;
-}
-
-.button {
-  display: flex;
-  width: 100%;
-  justify-content: space-between;
 }

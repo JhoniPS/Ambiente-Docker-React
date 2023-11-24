@@ -6,23 +6,5 @@
 .operation > button {
   border: none;
   background-color: #FFF;
-}
-
-.drawerTable {
-  padding: 10px;
-}
-
-.drawerTable > p {
-  display: flex;
-  flex-direction: row;
-  gap: 5px;
-  color: #9c9b9b;
-  align-items: center;
-  padding: 5px;
-}
-
-.drawerTable > p > h3{
-  display: flex;
-  font-weight: bold;
-  color: #000;
+  width: 100%;
 }

@@ -20,7 +20,6 @@ export const AuthProvider = ({ children }) => {
 
       if (authToken) {
         api.defaults.headers.common['Authorization'] = `Bearer ${authToken}`;
-        // Você pode fazer uma chamada à API aqui para obter as informações do usuário, se necessário.
         setToken(authToken);
         setUserType(storedUserType);
       }
@@ -33,8 +32,7 @@ export const AuthProvider = ({ children }) => {
     try {
       const response = await api.post('/login', data)
       const { token, type_user } = response.data;
-      api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-      Cookies.set('authToken', token); // Armazene o token nos cookies
+      Cookies.set('authToken', token, { expires: 7, secure: true, sameSite: 'Strict' }); // Armazene o token nos cookies
 
       switch (type_user.name) {
         case 'administrador':
@@ -42,15 +40,15 @@ export const AuthProvider = ({ children }) => {
           Cookies.set('userType', type_user.name);
           break;
         case 'gerente':
-          navigate('/manager');
+          navigate('/gerente');
           Cookies.set('userType', type_user.name);
           break;
         case 'representante':
-          navigate('/representative');
+          navigate('/representante');
           Cookies.set('userType', type_user.name);
           break;
         case 'visualizador':
-          navigate('/viewer');
+          navigate('/visualizador');
           Cookies.set('userType', type_user.name);
           break;
         default:
@@ -71,32 +69,16 @@ export const AuthProvider = ({ children }) => {
 
   const logout = async () => {
     await api.post('users/logout');
-    Cookies.remove('authToken');
+    Cookies.remove('authToken', { secure: true, sameSite: 'Strict' });
     Cookies.remove('userType');
     setToken(null);
     setUserType("");
     navigate("/");
   };
 
-  const newTypeUser = async ({ ...name }) => {
-    try {
-      await api.post('/type-user', name);
-    } catch (e) {
-      console.log(e);
-    }
-  }
-
   const deleteTypeUser = async ({ id }) => {
     try {
       await api.delete(`/type-user/${id}`);
-    } catch (e) {
-      console.log(e);
-    }
-  }
-
-  const editTypeUser = async ({ id, name }) => {
-    try {
-      await api.put(`type-user/${id}`, { name });
     } catch (e) {
       console.log(e);
     }
@@ -121,9 +103,7 @@ export const AuthProvider = ({ children }) => {
           messageErrors,
           login,
           logout,
-          newTypeUser,
           deleteTypeUser,
-          editTypeUser,
           deleteUser,
         }
       }
