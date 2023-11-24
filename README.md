@@ -39,6 +39,10 @@ O projeto envolve o desenvolvimento de um software de controle e gerenciamento d
 
 O sistema fornecerá uma interface amigável para visualização dos grupos em formato de tabela, facilitando a identificação e acompanhamento das informações detalhadas de cada grupo. Além disso, os usuários poderão realizar o cadastro de comissões com informações flexíveis.
 
+**Diagrama de Componentes**
+
+![Diagrama de componentes](https://github.com/JhoniPS/Ambiente-Docker-React/blob/main/src/img/Driagrama%20de%20componentes.png)
+
 ## Envolvimento
 
 ### Abrangência
