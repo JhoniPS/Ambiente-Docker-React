@@ -2,8 +2,7 @@
     display: flex;
     position: fixed;
     top: 90%;
-    left: 20%;
-    transform: translate(-50%, -50%);
+    right: 1%;
     justify-content: space-around;
     align-items: center;
     width: 344px;
@@ -18,6 +17,17 @@
     line-height: 20px;
     letter-spacing: 0.25px;
     z-index: 1000;
+    animation: go-back 1s;
+}
+
+@keyframes go-back {
+    from {
+        transform: translateX(100px);
+    }
+
+    to {
+        transform: translateX(0);
+    }
 }
 
 .success {

@@ -11,6 +11,31 @@
     justify-content: space-between;
 }
 
+.button_proximo,
+.button_feito {
+    width: 146px;
+    height: 38px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    border: 1px solid #2C74AC;
+    gap: 8px;
+    color: #FFF;
+    background-color: #2C74AC;
+}
+
+.button_anterior {
+    width: 146px;
+    height: 38px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    border: 1px solid #2C74AC;
+    gap: 8px;
+    color: #2C74AC;
+    background-color: #FFF;
+}
+
 .container_step {
     width: 100%;
     justify-content: 'space-around';

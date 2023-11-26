@@ -1,4 +1,5 @@
 import React, { Fragment, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import api from '../../services/api';
 
 import { Button, Steps, Divider, Select, Radio } from 'antd';
@@ -125,6 +126,8 @@ const StepGroupRegister = () => {
     const [type_group, setType_group] = useState('interno');
     const [current, setCurrent] = useState(0);
 
+    const navigate = useNavigate();
+
     const steps = [
         {
             title: 'Grupo',
@@ -159,8 +162,10 @@ const StepGroupRegister = () => {
         };
 
         try {
-            const response = await api.post('group', updatedFormulario);
-            console.log('Resposta do servidor:', response.data);
+            await api.post('group', updatedFormulario).then(() => {
+                navigate('/groups-gerente', { state: { message: 'Grupo criado com sucesso!', messagetype: 'success' } });
+            });
+
         } catch (error) {
             console.error('Erro ao enviar formulário:', error.response.data);
         }
@@ -181,24 +186,24 @@ const StepGroupRegister = () => {
 
     return (
         <Fragment>
-            <Steps current={current} items={items} type="navigation"    />
+            <Steps current={current} items={items} type="navigation" />
             <Divider />
             <form className={styles.form}>
                 <div className={styles.container_step}>{steps[current].content}</div>
 
                 <div className={styles.button_steps}>
                     {current > 0 && (
-                        <Button onClick={() => prev()}>Anterior</Button>
+                        <Button className={styles.button_anterior} onClick={() => prev()}>Anterior</Button>
                     )}
 
                     {current < steps.length - 1 && (
-                        <Button type="primary" onClick={() => next()}>
+                        <Button className={styles.button_proximo} onClick={() => next()} >
                             Próximo
                         </Button>
                     )}
 
                     {current === steps.length - 1 && (
-                        <Button type="primary" onClick={Submit}>
+                        <Button className={styles.button_feito} onClick={Submit}>
                             Feito
                         </Button>
                     )}

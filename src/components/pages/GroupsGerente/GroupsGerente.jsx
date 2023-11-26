@@ -1,6 +1,8 @@
 import React, { Fragment, useState } from 'react'
 import { IconContext } from "react-icons";
+import { useLocation } from "react-router-dom";
 
+import Message from "../../layout/Message/Message";
 import HeaderBar from '../../layout/header/HeaderBar';
 import Container from '../../layout/container/Container'
 import SubmitButton from '../../layout/submitbuttun/SubmitButton';
@@ -11,12 +13,20 @@ import { IoIosFunnel } from "react-icons/io";
 import { IoMdAdd } from "react-icons/io";
 
 import style from './Groups.module.css'
-
 import Modal from '../../Modals/modal_filter_groups/Modal';
 import TableGroups from '../../TableGroups/TableGroups'
 
 const GroupsGerente = () => {
     const [openModal, setOpenModal] = useState(false);
+
+    const location = useLocation();
+    let message = '';
+    let messagetype = '';
+
+    if (location.state) {
+        message = location.state.message;
+        messagetype = location.state.messagetype;
+    }
 
     return (
         <Fragment>
@@ -57,7 +67,8 @@ const GroupsGerente = () => {
                     <SubmitButton text="Mais Recentes" customClass="button_filtes_bar" />
                     <SubmitButton text="Mais Antigos" customClass="button_filtes_bar" />
                 </Container>
-                <TableGroups rota="detalhes-de-grupos-gerente"/>
+                <TableGroups rota="detalhes-de-grupos-gerente" />
+                {message && <Message type={messagetype} msg={message} />}
             </div>
         </Fragment>
     );

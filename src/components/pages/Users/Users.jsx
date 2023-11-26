@@ -19,9 +19,11 @@ const Users = () => {
 
   const location = useLocation();
   let message = '';
+  let messageType = '';
 
   if (location.state) {
     message = location.state.message;
+    messageType = location.state.messageType
   }
 
   return (
@@ -60,7 +62,7 @@ const Users = () => {
           <SubmitButton text="Mais Antigos" customClass="button_filtes_bar" />
         </section>
         <TableUser />
-        {message && <Message type='success' msg={message} />}
+        {message && <Message type={messageType} msg={message} />}
       </div>
     </Fragment>
   );
