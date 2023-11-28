@@ -23,7 +23,7 @@ const Users = () => {
 
   if (location.state) {
     message = location.state.message;
-    messageType = location.state.messageType
+    messageType = location.state.messagetype
   }
 
   return (

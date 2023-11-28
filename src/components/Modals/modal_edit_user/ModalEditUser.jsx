@@ -1,4 +1,5 @@
 import React, { Fragment, useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import SubmitButton from '../../layout/submitbuttun/SubmitButton';
 import api from '../../../services/api';
 
@@ -7,47 +8,45 @@ import Button from '@mui/material/Button';
 import { IconContext } from 'react-icons';
 import { TextField } from '@mui/material';
 import { IoPencilSharp } from "react-icons/io5";
-import { Select, ConfigProvider } from 'antd';
 import styles from './EditUser.module.css'
 
-const options = [];
-
-for (let i = 1; i < 36; i++) {
-    options.push({
-        value: 'Type' + i,
-        label: 'Type' + i,
-    });
-}
 
 const EditUser = ({ id, data, setData }) => {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
     const [open, setOpen] = useState(false);
 
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
-    const handleSubmit = (e) => {
+    const navigate = useNavigate();
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
+        try {
+            await api.put(`users/${id}`, { name, email, password })
 
-        //mudar isso aqui
-        console.log("Amostra:", { name, email })
-    }
+            const updatedUser = {
+                name,
+                email,
+                password
+            }
 
-    const onChange = (value) => {
-        console.log(`select: ${value}`)
-    }
-
-    const onSearch = (value) => {
-        console.log(`search: ${value}`)
+            setData(data.map(item => (item.id === id ? updatedUser : item)));
+            navigate('/users', { state: { message: 'usuário atualizado com sucesso!', messagetype: 'success' } });
+            handleClose();
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await api.get(`/users/${id}`);
-                setName(response.data.name);
-                setEmail(response.data.email);
+                const { data } = await api.get(`/users/${id}`);
+                setName(data.data.name);
+                setEmail(data.data.email);
             } catch (error) {
                 console.error(error);
             }
@@ -77,59 +76,41 @@ const EditUser = ({ id, data, setData }) => {
                                 type='text'
                                 label="Nome"
                                 name='name'
-                                placeholder='Jhonicley P. Silva'
+                                placeholder='Digite um novo nome'
                                 value={name}
                                 onChange={(e) => setName(e.target.value)}
                                 focused
                                 margin='normal'
                                 sx={{
-                                    width: 350,
+                                    width: '100%',
                                 }}
 
                             />
                             <TextField
                                 type='e-mail'
                                 label="E-mail"
-                                name='new password'
-                                placeholder='Digite uma nova senha'
+                                name='email'
+                                placeholder='Digite um novo e-mail'
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                                 focused
                                 sx={{
-                                    width: 350,
+                                    width: '100%',
                                 }}
                             />
 
-                            <ConfigProvider
-                                theme={{
-                                    token: {
-                                        colorBorder: '#2C74AC',
-                                        lineWidth: 2,
-                                        controlHeight: 45,
-                                    },
+                            <TextField
+                                type='password'
+                                label="Senha"
+                                name='password'
+                                placeholder='Digite uma nova senha'
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                focused
+                                sx={{
+                                    width: '100%',
                                 }}
-                            >
-                                <Select
-                                    showSearch
-                                    getPopupContainer={(trigger) => {
-                                        return trigger;
-                                    }}
-                                    style={{
-                                        width: 350,
-
-                                    }}
-                                    size='large'
-                                    label="Tipo de Usuário"
-                                    placeholder="Selecione um tipo de usuário"
-                                    onChange={onChange}
-                                    optionFilterProp='children'
-                                    onSearch={onSearch}
-                                    filterOption={(input, option) =>
-                                        (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
-                                    }
-                                    options={options}
-                                />
-                            </ConfigProvider>
+                            />
 
                             <div>
                                 <SubmitButton text="Voltar" customClass="button_back" onClick={handleClose} />

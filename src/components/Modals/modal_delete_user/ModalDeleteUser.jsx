@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import useAuthContext from '../../contexts/Auth';
-import styleButton from './modal_delete.module.css'
+import api from '../../../services/api';
+import { useNavigate } from 'react-router-dom';
 
+import styleButton from './modal_delete.module.css'
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
@@ -54,17 +55,20 @@ const styleTitle = {
 };
 
 export default function ModalDeleteUser({ id, data, setData }) {
-    const { deleteUser } = useAuthContext();
-
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
+    const navigate = useNavigate();
+
     const handlDelete = async () => {
         try {
-            await deleteUser({ id })
-            const updatedData = data.filter(item => item.id !== id);
-            setData(updatedData);
+            await api.delete(`users/${id}`).then(() => {
+                const updatedData = data.filter(item => item.id !== id);
+                setData(updatedData);
+                navigate('/users', { state: { message: 'usuário deletado com sucesso!', messagetype: 'success' } });
+            })
+
         } catch (error) {
             console.error(error);
         }

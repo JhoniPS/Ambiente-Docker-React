@@ -84,14 +84,6 @@ export const AuthProvider = ({ children }) => {
     }
   }
 
-  const deleteUser = async ({ id }) => {
-    try {
-      await api.delete(`users/${id}`);
-    } catch (e) {
-      console.log(e);
-    }
-  }
-
   return (
     <AuthContext.Provider
       value={
@@ -104,7 +96,6 @@ export const AuthProvider = ({ children }) => {
           login,
           logout,
           deleteTypeUser,
-          deleteUser,
         }
       }
     >
