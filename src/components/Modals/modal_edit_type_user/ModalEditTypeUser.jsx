@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import useAuthContext from '../../contexts/Auth';
 import api from '../../../services/api';
 
@@ -51,6 +52,8 @@ export default function EditTypeUser({ id, data, setData }) {
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
+    const navigate = useNavigate();
+
     const handlEdit = async (e) => {
         e.preventDefault()
         try {
@@ -63,6 +66,13 @@ export default function EditTypeUser({ id, data, setData }) {
                 return item;
             });
             setData(updatedData);
+            navigate('/Tipos-de-Usuarios', {
+                state: {
+                    message: 'Atualizado com sucesso!',
+                    messageType: 'success',
+                    showMessage: true,
+                }
+            });
             handleClose();
         } catch (error) {
             console.log(error)

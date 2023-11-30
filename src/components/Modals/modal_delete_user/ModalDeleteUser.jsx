@@ -66,10 +66,22 @@ export default function ModalDeleteUser({ id, data, setData }) {
             await api.delete(`users/${id}`).then(() => {
                 const updatedData = data.filter(item => item.id !== id);
                 setData(updatedData);
-                navigate('/users', { state: { message: 'Deletado com sucesso!', messagetype: 'success' } });
+                navigate('/users', {
+                    state: {
+                        message: 'Deletado com sucesso!',
+                        messageType: 'success',
+                        showMessage: true,
+                    }
+                });
             })
         } catch (error) {
-            navigate('/users', { state: { message: 'Ops algo deu errado!', messagetype: 'error' } });
+            navigate('/users', {
+                state: {
+                    message: 'Ops! algo deu errado',
+                    messageType: 'error',
+                    showMessage: true,
+                }
+            });
         }
     };
 
