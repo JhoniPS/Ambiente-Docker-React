@@ -1,5 +1,7 @@
 .btn {
     display: flex;
+    width: 146px;
+    height: 38px;
     background-color: #2C74AC;
     color: #FFF;
     border: none;
@@ -9,7 +11,10 @@
     font-weight: bold;
     transition: .5s;
     cursor: pointer;
-    width: 100%;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    gap: 8px;
 }
 
 .button_editar_perfil {

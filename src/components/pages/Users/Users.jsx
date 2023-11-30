@@ -16,12 +16,14 @@ import Message from "../../layout/Message/Message";
 
 const Users = () => {
   const [openModal, setOpenModal] = useState(false);
-
   const location = useLocation();
+
   let message = '';
+  let messageType = '';
 
   if (location.state) {
     message = location.state.message;
+    messageType = location.state.messagetype
   }
 
   return (
@@ -60,7 +62,7 @@ const Users = () => {
           <SubmitButton text="Mais Antigos" customClass="button_filtes_bar" />
         </section>
         <TableUser />
-        {message && <Message type='success' msg={message} />}
+        {message && <Message type={messageType} msg={message} />}
       </div>
     </Fragment>
   );

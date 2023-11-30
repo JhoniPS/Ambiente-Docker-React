@@ -52,7 +52,7 @@ const SignUser = () => {
       });
 
       await api.post('/register', updateUser).then(() => {
-        navigate('/users', { state: { message: 'Usuário criado com sucesso!' } });
+        navigate('/users', { state: { message: 'Criado com sucesso!', messagetype: 'success' } });
       });
 
     } catch (error) {

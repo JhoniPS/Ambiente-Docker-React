@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import useAuthContext from '../../contexts/Auth';
-import styleButton from './modal_delete.module.css'
+import api from '../../../services/api';
+import { useNavigate } from 'react-router-dom';
 
+import styleButton from './modal_delete.module.css'
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
@@ -10,16 +11,16 @@ import { IoTrash } from "react-icons/io5";
 import { Typography } from '@mui/material';
 
 const style = {
+    display: 'flex',
     position: 'fixed',
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
     textAlign: 'justify',
-    gap: '2em',
+    gap: '1.5em',
     backgroundColor: '#FFDAD6',
     width: '400px',
     height: '200px',
@@ -54,19 +55,21 @@ const styleTitle = {
 };
 
 export default function ModalDeleteUser({ id, data, setData }) {
-    const { deleteUser } = useAuthContext();
-
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
+    const navigate = useNavigate();
+
     const handlDelete = async () => {
         try {
-            await deleteUser({ id })
-            const updatedData = data.filter(item => item.id !== id);
-            setData(updatedData);
+            await api.delete(`users/${id}`).then(() => {
+                const updatedData = data.filter(item => item.id !== id);
+                setData(updatedData);
+                navigate('/users', { state: { message: 'Deletado com sucesso!', messagetype: 'success' } });
+            })
         } catch (error) {
-            console.error(error);
+            navigate('/users', { state: { message: 'Ops algo deu errado!', messagetype: 'error' } });
         }
     };
 

@@ -94,10 +94,10 @@ const MenuAppBar = () => {
               open={Boolean(anchorEl)}
               onClose={handleClose}
             >
-              <MenuItem onClick={handleClose}>
+              {/* <MenuItem onClick={handleClose}>
                 <img src={Settings} alt="Configurações" className={styles} />
                 <LinkButton text="Configurações" to="/profile" />
-              </MenuItem>
+              </MenuItem> */}
               <MenuItem onClick={handleLogout}>
                 <img src={Logout} alt="Logout" className={styles} />
                 Sair
