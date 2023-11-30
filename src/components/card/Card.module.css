@@ -55,3 +55,7 @@
   background: #FFF;
   color: #000;
 }
+
+.overViewCard:hover {
+  background-color: #FFE08B;
+}
