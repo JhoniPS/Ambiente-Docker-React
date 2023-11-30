@@ -8,8 +8,6 @@ import ModalEditTypeUser from '../Modals/modal_edit_type_user/ModalEditTypeUser'
 import ModalDeleteUser from '../Modals/modal_delete_type-user/ModalDeleteTypeUser';
 
 const TableTypeUser = () => {
-  const { token } = useAuthContext();
-
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
@@ -17,20 +15,18 @@ const TableTypeUser = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      if (token) {
-        try {
-          setLoading(true);
-          const response = await api.get('type-user');
-          setData(response.data);
-          setLoading(false);
-        } catch (error) {
-          console.log(error);
-        }
+      try {
+        setLoading(true);
+        const response = await api.get('type-user');
+        setData(response.data);
+        setLoading(false);
+      } catch (error) {
+        console.log(error);
       }
     };
 
     fetchData();
-  }, [token]);
+  }, []);
 
 
   const columns = [

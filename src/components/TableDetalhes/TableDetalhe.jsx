@@ -2,29 +2,25 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import api from '../../services/api';
 import { Divider } from 'antd';
-import useAuthContext from '../contexts/Auth';
 import style from './TableDetalhes.module.css';
 
 const TableDetalhe = () => {
-    const { token } = useAuthContext();
     const { id } = useParams();
     const [data, setData] = useState({});
 
     useEffect(() => {
         const fetchData = async () => {
-            if (token) {
-                try {
-                    const response = await api.get(`group/${id}`);
-                    const group = response.data.data;
-                    setData(group);
-                } catch (error) {
-                    console.log(error);
-                }
+            try {
+                const response = await api.get(`group/${id}`);
+                const group = response.data.data;
+                setData(group);
+            } catch (error) {
+                console.log(error);
             }
         };
 
         fetchData();
-    }, [token, id]);
+    }, [id]);
 
     function formatarData() {
         const dt = new Date(data.created_at);

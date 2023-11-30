@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import useAuthContext from '../contexts/Auth';
 import api from '../../services/api';
 import style from './TableRepresentativeGroup.module.css'
 import { useParams } from 'react-router-dom';
@@ -10,7 +9,6 @@ import ModalEditRepresentativeGroup from '../Modals/modal_edit_representante_gro
 
 //Problemas com o edit representantes
 const TableRepresentativeGroup = () => {
-  const { token } = useAuthContext();
   const { id } = useParams();
   const [data, setData] = useState([]);
 
@@ -20,21 +18,19 @@ const TableRepresentativeGroup = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      if (token) {
-        try {
-          setLoading(true);
-          const response = await api.get(`group/${id}`);
-          const users = response.data.data.representatives;
-          setData(users);
-          setLoading(false);
-        } catch (error) {
-          console.log(error);
-        }
+      try {
+        setLoading(true);
+        const response = await api.get(`group/${id}`);
+        const users = response.data.data.representatives;
+        setData(users);
+        setLoading(false);
+      } catch (error) {
+        console.log(error);
       }
     };
 
     fetchData();
-  }, [token, id]);
+  }, [id]);
 
 
   const columns = [

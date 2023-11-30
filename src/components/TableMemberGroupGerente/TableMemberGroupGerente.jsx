@@ -3,11 +3,9 @@ import { useParams } from 'react-router-dom';
 import { Table } from 'antd';
 
 import style from './TableMemberGroupGerente.module.css'
-import useAuthContext from '../contexts/Auth';
 import api from '../../services/api';
 
 const TableMemberGroupGerente = () => {
-  const { token } = useAuthContext();
   const { id } = useParams();
   const [data, setData] = useState([]);
 
@@ -17,22 +15,20 @@ const TableMemberGroupGerente = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      if (token) {
-        try {
-          setLoading(true);
-          const response = await api.get(`group/${id}/`);
-          const users = response.data.data.members;
-          console.log(users)
-          setData(users);
-          setLoading(false);
-        } catch (error) {
-          console.log(error);
-        }
+      try {
+        setLoading(true);
+        const response = await api.get(`group/${id}/`);
+        const users = response.data.data.members;
+        console.log(users)
+        setData(users);
+        setLoading(false);
+      } catch (error) {
+        console.log(error);
       }
     };
 
     fetchData();
-  }, [token, id]);
+  }, [id]);
 
   const columns = [
     {

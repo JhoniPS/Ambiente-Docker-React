@@ -1,29 +1,26 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from "react-router-dom";
 import api from '../../services/api';
-import useAuthContext from '../contexts/Auth';
+
 import { Table } from 'antd';
 
 const TableGroupsDescription = () => {
-    const { token } = useAuthContext();
     const { id } = useParams();
     const [data, setData] = useState([]);
 
     useEffect(() => {
         const fetchData = async () => {
-            if (token) {
-                try {
-                    const response = await api.get(`group/${id}`);
-                    const group = response.data.data;
-                    setData([group]);
-                } catch (error) {
-                    console.log(error);
-                }
+            try {
+                const response = await api.get(`group/${id}`);
+                const group = response.data.data;
+                setData([group]);
+            } catch (error) {
+                console.log(error);
             }
         };
 
         fetchData();
-    }, [token, id]);
+    }, [id]);
 
     const getMembersCount = (members) => {
         return members ? members.length : null;

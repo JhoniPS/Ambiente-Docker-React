@@ -1,4 +1,4 @@
-import React, { useState, createContext, useContext, useEffect } from "react";
+import React, { useState, createContext, useContext } from "react";
 import api from "../../services/api";
 import Cookies from 'js-cookie'
 import { useNavigate } from "react-router-dom";
@@ -6,27 +6,11 @@ import { useNavigate } from "react-router-dom";
 export const AuthContext = createContext({});
 
 export const AuthProvider = ({ children }) => {
-  const [token, setToken] = useState(null);
   const [userType, setUserType] = useState("")
   const [error, setError] = useState(false)
   const [messageErrors, setMessageErrors] = useState([]);
 
   const navigate = useNavigate();
-
-  useEffect(() => {
-    const checkAuthentication = async () => {
-      const authToken = Cookies.get('authToken');
-      const storedUserType = Cookies.get('userType');
-
-      if (authToken) {
-        api.defaults.headers.common['Authorization'] = `Bearer ${authToken}`;
-        setToken(authToken);
-        setUserType(storedUserType);
-      }
-    };
-
-    checkAuthentication();
-  }, []);
 
   const login = async ({ ...data }) => {
     try {
@@ -71,8 +55,7 @@ export const AuthProvider = ({ children }) => {
     await api.post('users/logout');
     Cookies.remove('authToken', { secure: true, sameSite: 'Strict' });
     Cookies.remove('userType');
-    setToken(null);
-    setUserType("");
+    setUserType(null);
     navigate("/");
   };
 
@@ -88,7 +71,7 @@ export const AuthProvider = ({ children }) => {
     <AuthContext.Provider
       value={
         {
-          token,
+          //token,
           userType,
           setUserType,
           error,

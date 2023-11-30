@@ -5,11 +5,9 @@ import ModalDeleteMember from '../Modals/modal_delete_member/ModalDeleteMember';
 import ModalEditMember from '../Modals/modal_edit_member/ModalEditMember';
 
 import style from './TableMemberGroupRepresentante.module.css'
-import useAuthContext from '../contexts/Auth';
 import api from '../../services/api';
 
 const TableMemberGroupRepresentante = () => {
-  const { token } = useAuthContext();
   const { id } = useParams();
   const [data, setData] = useState([]);
 
@@ -19,22 +17,20 @@ const TableMemberGroupRepresentante = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      if (token) {
-        try {
-          setLoading(true);
-          const response = await api.get(`group/${id}/`);
-          const users = response.data.data.members;
-          console.log(users)
-          setData(users);
-          setLoading(false);
-        } catch (error) {
-          console.log(error);
-        }
+      try {
+        setLoading(true);
+        const response = await api.get(`group/${id}/`);
+        const users = response.data.data.members;
+        console.log(users)
+        setData(users);
+        setLoading(false);
+      } catch (error) {
+        console.log(error);
       }
     };
 
     fetchData();
-  }, [token, id]);
+  }, [id]);
 
   const columns = [
     {
