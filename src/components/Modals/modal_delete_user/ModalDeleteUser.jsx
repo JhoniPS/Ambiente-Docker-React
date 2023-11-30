@@ -11,16 +11,16 @@ import { IoTrash } from "react-icons/io5";
 import { Typography } from '@mui/material';
 
 const style = {
+    display: 'flex',
     position: 'fixed',
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
     textAlign: 'justify',
-    gap: '2em',
+    gap: '1.5em',
     backgroundColor: '#FFDAD6',
     width: '400px',
     height: '200px',
@@ -66,11 +66,10 @@ export default function ModalDeleteUser({ id, data, setData }) {
             await api.delete(`users/${id}`).then(() => {
                 const updatedData = data.filter(item => item.id !== id);
                 setData(updatedData);
-                navigate('/users', { state: { message: 'usuário deletado com sucesso!', messagetype: 'success' } });
+                navigate('/users', { state: { message: 'Deletado com sucesso!', messagetype: 'success' } });
             })
-
         } catch (error) {
-            console.error(error);
+            navigate('/users', { state: { message: 'Ops algo deu errado!', messagetype: 'error' } });
         }
     };
 

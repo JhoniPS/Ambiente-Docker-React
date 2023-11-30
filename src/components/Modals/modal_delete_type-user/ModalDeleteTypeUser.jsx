@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import useAuthContext from '../../contexts/Auth';
 import styleButton from './modal_delete.module.css'
 
@@ -19,7 +20,7 @@ const style = {
     justifyContent: 'center',
     alignItems: 'center',
     textAlign: 'justify',
-    gap: '2em',
+    gap: '1.5em',
     backgroundColor: '#FFDAD6',
     width: '400px',
     height: '200px',
@@ -60,11 +61,14 @@ export default function ModalDeleteUser({ id, data, setData }) {
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
+    const navigate = useNavigate();
+
     const handlDelete = async () => {
         try {
             await deleteTypeUser({ id })
             const updatedData = data.filter(item => item.id !== id);
             setData(updatedData);
+            navigate('/Tipos-de-Usuarios', { state: { message: 'Deletado com sucesso!', messageType: 'success' } });
         } catch (error) {
             console.error(error);
         }

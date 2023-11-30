@@ -58,7 +58,7 @@ const Login = () => {
                             onKeyDown={handleKeyDown}
                         />
                         <FormHelperText error={error}>
-                            {messageErrors.email || messageErrors}
+                            {(messageErrors.email && <span>{messageErrors.email}</span>) || < span > {messageErrors}</span>}
                         </FormHelperText>
                     </FormControl>
 
@@ -89,7 +89,7 @@ const Login = () => {
                             onKeyDown={handleKeyDown}
                         />
                         <FormHelperText error={error}>
-                            {messageErrors.password || messageErrors}
+                            {(messageErrors.password && <span>{messageErrors.password}</span>) || <span>{messageErrors}</span>}
                         </FormHelperText>
                     </FormControl>
 

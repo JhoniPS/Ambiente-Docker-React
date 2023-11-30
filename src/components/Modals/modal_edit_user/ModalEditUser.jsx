@@ -15,6 +15,10 @@ const EditUser = ({ id, data, setData }) => {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [errorMessages, setErrorMessages] = useState({
+        email: null,
+        password: null,
+    });
     const [open, setOpen] = useState(false);
 
     const handleOpen = () => setOpen(true);
@@ -25,6 +29,12 @@ const EditUser = ({ id, data, setData }) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
+
+            setErrorMessages({
+                email: null,
+                password: null,
+            });
+
             await api.put(`users/${id}`, { name, email, password })
 
             const updatedUser = {
@@ -34,10 +44,17 @@ const EditUser = ({ id, data, setData }) => {
             }
 
             setData(data.map(item => (item.id === id ? updatedUser : item)));
-            navigate('/users', { state: { message: 'usuário atualizado com sucesso!', messagetype: 'success' } });
+            navigate('/users', { state: { message: 'Atualizado com sucesso!', messagetype: 'success' } });
             handleClose();
         } catch (error) {
-            console.log(error)
+            const apiErrors = error.response.data.errors;
+
+            setErrorMessages({
+                email: apiErrors.email ? apiErrors.email[0] : null,
+                password: apiErrors.password ? apiErrors.password[0] : null,
+            });
+
+            navigate('/users', { state: { message: 'Ops algo deu errado!', messagetype: 'error' } });
         }
     }
 
@@ -72,45 +89,55 @@ const EditUser = ({ id, data, setData }) => {
                     <h4>Editar Usuário</h4>
                     <div>
                         <form className={styles.form} onSubmit={handleSubmit}>
-                            <TextField
-                                type='text'
-                                label="Nome"
-                                name='name'
-                                placeholder='Digite um novo nome'
-                                value={name}
-                                onChange={(e) => setName(e.target.value)}
-                                focused
-                                margin='normal'
-                                sx={{
-                                    width: '100%',
-                                }}
+                            <div className={styles.inputField}>
+                                <TextField
+                                    type='text'
+                                    label="Nome"
+                                    name='name'
+                                    placeholder='Digite um novo nome'
+                                    value={name}
+                                    onChange={(e) => setName(e.target.value)}
+                                    focused
+                                    margin='normal'
+                                    sx={{
+                                        width: '100%',
+                                    }}
 
-                            />
-                            <TextField
-                                type='e-mail'
-                                label="E-mail"
-                                name='email'
-                                placeholder='Digite um novo e-mail'
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                                focused
-                                sx={{
-                                    width: '100%',
-                                }}
-                            />
+                                />
+                            </div>
+                            <div className={styles.inputField}>
+                                <TextField
+                                    type='e-mail'
+                                    label="E-mail"
+                                    name='email'
+                                    placeholder='Digite um novo e-mail'
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    focused
+                                    error={errorMessages.email !== null}
+                                    helperText={errorMessages.email}
+                                    sx={{
+                                        width: '100%',
+                                    }}
+                                />
+                            </div>
 
-                            <TextField
-                                type='password'
-                                label="Senha"
-                                name='password'
-                                placeholder='Digite uma nova senha'
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                                focused
-                                sx={{
-                                    width: '100%',
-                                }}
-                            />
+                            <div className={styles.inputField}>
+                                <TextField
+                                    type='password'
+                                    label="Senha"
+                                    name='password'
+                                    placeholder='Digite uma nova senha'
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
+                                    focused
+                                    error={errorMessages.password !== null}
+                                    helperText={errorMessages.password}
+                                    sx={{
+                                        width: '100%',
+                                    }}
+                                />
+                            </div>
 
                             <div>
                                 <SubmitButton text="Voltar" customClass="button_back" onClick={handleClose} />

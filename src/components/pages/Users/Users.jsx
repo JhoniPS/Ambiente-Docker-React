@@ -16,8 +16,8 @@ import Message from "../../layout/Message/Message";
 
 const Users = () => {
   const [openModal, setOpenModal] = useState(false);
-
   const location = useLocation();
+
   let message = '';
   let messageType = '';
 

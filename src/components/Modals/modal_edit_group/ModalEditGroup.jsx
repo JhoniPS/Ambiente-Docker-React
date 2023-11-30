@@ -145,6 +145,7 @@ export default function ModalEditGroup({ id, data, setData }) {
                                     <TextField
                                         type='text'
                                         label="Entidade"
+                                        variant="standard"
                                         name='entity'
                                         value={form.entity}
                                         onChange={handlEdit}
@@ -157,6 +158,7 @@ export default function ModalEditGroup({ id, data, setData }) {
                                     <TextField
                                         type='text'
                                         label="Orgão"
+                                        variant="standard"
                                         name='organ'
                                         value={form.organ}
                                         onChange={handlEdit}
@@ -169,6 +171,7 @@ export default function ModalEditGroup({ id, data, setData }) {
                                     <TextField
                                         type='text'
                                         label="Conselho"
+                                        variant="standard"
                                         name='council'
                                         value={form.council}
                                         onChange={handlEdit}
@@ -178,14 +181,13 @@ export default function ModalEditGroup({ id, data, setData }) {
                                             width: '100%',
                                         }}
                                     />
-                                </div>
 
-                                <div className={styles.container_text2}>
                                     <TextField
                                         type='text'
-                                        label="Portaria"
-                                        name='internal_concierge'
-                                        value={form.internal_concierge}
+                                        label="Oficio que solicitou"
+                                        name='office_requested'
+                                        variant="standard"
+                                        value={form.office_requested}
                                         onChange={handlEdit}
                                         focused
                                         margin='normal'
@@ -193,9 +195,13 @@ export default function ModalEditGroup({ id, data, setData }) {
                                             width: '100%',
                                         }}
                                     />
+                                </div>
+
+                                <div className={styles.container_text1}>
                                     <TextField
                                         type='text'
                                         label="Sigla"
+                                        variant="standard"
                                         name='acronym'
                                         value={form.acronym}
                                         onChange={handlEdit}
@@ -208,6 +214,7 @@ export default function ModalEditGroup({ id, data, setData }) {
                                     <TextField
                                         type='text'
                                         label="Equipe"
+                                        variant="standard"
                                         name='team'
                                         value={form.team}
                                         onChange={handlEdit}
@@ -217,82 +224,82 @@ export default function ModalEditGroup({ id, data, setData }) {
                                             width: '100%',
                                         }}
                                     />
+                                    <TextField
+                                        type='text'
+                                        label="E-mail"
+                                        variant="standard"
+                                        name='email'
+                                        value={form.email}
+                                        onChange={handlEdit}
+                                        focused
+                                        margin='normal'
+                                        sx={{
+                                            width: '100%',
+                                        }}
+                                    />
+
+                                    <TextField
+                                        type='text'
+                                        label="Oficio que indicou"
+                                        name='office_indicated'
+                                        variant="standard"
+                                        value={form.office_indicated}
+                                        onChange={handlEdit}
+                                        focused
+                                        margin='normal'
+                                        sx={{
+                                            width: '100%',
+                                        }}
+                                    />
                                 </div>
 
-                                <div className={styles.container_text3}>
-                                    <div>
-                                        <TextField
-                                            type='text'
-                                            label="E-mail"
-                                            name='email'
-                                            value={form.email}
-                                            onChange={handlEdit}
-                                            focused
-                                            margin='normal'
-                                            sx={{
-                                                width: '100%',
-                                            }}
-                                        />
-                                        <TextField
-                                            type='text'
-                                            label="Observações"
-                                            name='comments'
+                                <div className={styles.container_text1}>
+                                    <TextField
+                                        type='text'
+                                        label="Unidade"
+                                        name='unit'
+                                        variant="standard"
+                                        value={form.unit}
+                                        onChange={handlEdit}
+                                        focused
+                                        margin='normal'
+                                        sx={{
+                                            width: '100%',
+                                        }}
+                                    />
 
-                                            value={form.observations}
-                                            onChange={handlEdit}
-                                            focused
-                                            margin='normal'
-                                            multiline
-                                            rows={4.5}
-                                            sx={{
-                                                width: '100%',
-                                            }}
-                                        />
-                                    </div>
-
-                                    <div>
-                                        <TextField
-                                            type='text'
-                                            label="Unidade"
-                                            name='unit'
-
-                                            value={form.unit}
-                                            onChange={handlEdit}
-                                            focused
-                                            margin='normal'
-                                            sx={{
-                                                width: '100%',
-                                            }}
-                                        />
-                                        <TextField
-                                            type='text'
-                                            label="Oficio que solicitou"
-                                            name='office_requested'
-
-                                            value={form.office_requested}
-                                            onChange={handlEdit}
-                                            focused
-                                            margin='normal'
-                                            sx={{
-                                                width: '100%',
-                                            }}
-                                        />
-                                        <TextField
-                                            type='text'
-                                            label="Oficio que indicou"
-                                            name='office_indicated'
-
-                                            value={form.office_indicated}
-                                            onChange={handlEdit}
-                                            focused
-                                            margin='normal'
-                                            sx={{
-                                                width: '100%',
-                                            }}
-                                        />
-                                    </div>
+                                    <TextField
+                                        type='text'
+                                        label="Portaria"
+                                        variant="standard"
+                                        name='internal_concierge'
+                                        value={form.internal_concierge}
+                                        onChange={handlEdit}
+                                        focused
+                                        margin='normal'
+                                        sx={{
+                                            width: '100%',
+                                        }}
+                                    />
                                 </div>
 
+                                <div className={styles.container_text1}>
+                                    <TextField
+                                        type='text'
+                                        label="Observações"
+                                        name='comments'
+                                        variant="standard"
+                                        value={form.observations}
+                                        onChange={handlEdit}
+                                        focused
+                                        margin='normal'
+                                        multiline
+                                        rows={10}
+                                        sx={{
+                                            width: '100%',
+                                        }}
+                                    />
+                                </div>
                             </div>
 
                             <div className={styles.button}>

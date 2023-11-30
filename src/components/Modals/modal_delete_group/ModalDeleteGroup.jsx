@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import api from '../../../services/api'
+import { useNavigate } from 'react-router-dom';
 import styleButton from './modal_delete.module.css'
 
 import Box from '@mui/material/Box';
@@ -19,7 +20,7 @@ const style = {
     justifyContent: 'center',
     alignItems: 'center',
     textAlign: 'justify',
-    gap: '2em',
+    gap: '1.5em',
     backgroundColor: '#FFDAD6',
     width: '400px',
     height: '200px',
@@ -65,14 +66,19 @@ export default function ModalEditGroup({ id, data, setData }) {
         setOpen(false);
     }
 
+    const navigate = useNavigate();
+
     const handlDelete = async (event) => {
         event.stopPropagation();
         try {
             await api.delete(`/group/${id}`);
             const updatedData = data.filter(item => item.id !== id);
             setData(updatedData);
-        } catch (error) {
-            console.error(error);
+            navigate('/groups-gerente', { state: { message: 'Deletado com sucesso!', messagetype: 'success' } });
+            handleClose();
+        } catch (e) {
+            console.error(e);
+            navigate('/groups-gerente', { state: { message: `${e.response.data.errors || 'Ops! algo deu errado'}`, messagetype: 'error' } });
         }
     };
 
