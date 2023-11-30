@@ -44,7 +44,13 @@ const EditUser = ({ id, data, setData }) => {
             }
 
             setData(data.map(item => (item.id === id ? updatedUser : item)));
-            navigate('/users', { state: { message: 'Atualizado com sucesso!', messagetype: 'success' } });
+            navigate('/users', {
+                state: {
+                    message: 'Atualizado com sucesso!',
+                    messageType: 'success',
+                    showMessage: true,
+                }
+            });
             handleClose();
         } catch (error) {
             const apiErrors = error.response.data.errors;

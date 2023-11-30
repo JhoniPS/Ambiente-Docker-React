@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import Message from "../../layout/Message/Message";
 
@@ -12,15 +12,19 @@ import { IconContext } from "react-icons";
 
 
 const TypeUsers = () => {
-
+    const [message, setMessage] = useState('');
+    const [messageType, setMessageType] = useState('');
+    const [showMessage, setShowMessage] = useState(false);
     const location = useLocation();
-    let message = '';
-    let messageType = '';
 
-    if (location.state) {
-        message = location.state.message;
-        messageType = location.state.messageType
-    }
+    useEffect(() => {
+        if (location.state) {
+            setMessage(location.state.message);
+            setMessageType(location.state.messageType);
+            setShowMessage(location.state.showMessage);
+        }
+
+    }, [location.state]);
 
     return (
         <Fragment>
@@ -40,7 +44,7 @@ const TypeUsers = () => {
                     />
                 </section>
                 <TableTypeUser />
-                {message && <Message type={messageType} msg={message} />}
+                {showMessage && <Message type={messageType} msg={message} setShowMessage={setShowMessage} />}
             </div>
         </Fragment>
     );

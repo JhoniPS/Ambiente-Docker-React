@@ -56,7 +56,6 @@ const styleTitle = {
 
 export default function ModalDeleteUser({ id, data, setData }) {
     const { deleteTypeUser } = useAuthContext();
-
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
@@ -68,9 +67,21 @@ export default function ModalDeleteUser({ id, data, setData }) {
             await deleteTypeUser({ id })
             const updatedData = data.filter(item => item.id !== id);
             setData(updatedData);
-            navigate('/Tipos-de-Usuarios', { state: { message: 'Deletado com sucesso!', messageType: 'success' } });
-        } catch (error) {
-            console.error(error);
+            navigate('/Tipos-de-Usuarios', {
+                state: {
+                    message: 'Deletado com sucesso!',
+                    messageType: 'success',
+                    showMessage: true,
+                }
+            });
+        } catch (e) {
+            navigate('/Tipos-de-Usuarios', {
+                state: {
+                    message: `${e.reponse.errors}`,
+                    messageType: 'error',
+                    showMessage: true,
+                }
+            });
         }
     };
 

@@ -2,7 +2,7 @@ import React, { Fragment, useEffect, useState } from 'react'
 import { AiOutlineClose } from "react-icons/ai";
 import style from './Message.module.css'
 
-function Message({ type, msg }) {
+function Message({ type, msg, setShowMessage }) {
     const [visible, setVisible] = useState(false);
 
     useEffect(() => {
@@ -15,11 +15,12 @@ function Message({ type, msg }) {
 
         const timer = setTimeout(() => {
             setVisible(false);
+            setShowMessage(false);
         }, 3000);
 
         return () => clearTimeout(timer);
 
-    }, [msg]);
+    }, [msg, setShowMessage]);
 
     return (
         <Fragment>

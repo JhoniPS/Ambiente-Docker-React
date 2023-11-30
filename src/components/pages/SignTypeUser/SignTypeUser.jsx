@@ -22,7 +22,13 @@ const SignTypeUser = () => {
     e.preventDefault()
     try {
       await api.post('/type-user', { name }).then(() => {
-        navigate('/Tipos-de-Usuarios', { state: { message: 'Tipo de usuário criado com sucesso!', messageType: 'success' } });
+        navigate('/Tipos-de-Usuarios', {
+          state: {
+            message: 'Tipo de usuário criado com sucesso!',
+            messageType: 'success',
+            showMessage: true,
+          }
+        });
       })
     } catch (error) {
       setError(true);

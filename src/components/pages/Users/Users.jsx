@@ -1,4 +1,4 @@
-import { Fragment, useState } from "react";
+import { Fragment, useState, useEffect } from "react";
 import HeaderBar from "../../layout/header/HeaderBar";
 import SubmitButton from "../../layout/submitbuttun/SubmitButton"
 
@@ -18,13 +18,18 @@ const Users = () => {
   const [openModal, setOpenModal] = useState(false);
   const location = useLocation();
 
-  let message = '';
-  let messageType = '';
+  const [message, setMessage] = useState('');
+  const [messageType, setMessageType] = useState('');
+  const [showMessage, setShowMessage] = useState(false);
 
-  if (location.state) {
-    message = location.state.message;
-    messageType = location.state.messagetype
-  }
+  useEffect(() => {
+    if (location.state) {
+      setMessage(location.state.message);
+      setMessageType(location.state.messageType);
+      setShowMessage(location.state.showMessage);
+    }
+
+  }, [location.state]);
 
   return (
     <Fragment>
@@ -62,7 +67,7 @@ const Users = () => {
           <SubmitButton text="Mais Antigos" customClass="button_filtes_bar" />
         </section>
         <TableUser />
-        {message && <Message type={messageType} msg={message} />}
+        {showMessage && <Message type={messageType} msg={message} setShowMessage={setShowMessage} />}
       </div>
     </Fragment>
   );
