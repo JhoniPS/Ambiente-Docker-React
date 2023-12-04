@@ -7,3 +7,8 @@
   border: none;
   background-color: #FFF;
 }
+
+.tableContainer {
+  max-height: 400px; 
+  overflow-y: auto; 
+}

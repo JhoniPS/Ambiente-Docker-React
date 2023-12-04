@@ -56,12 +56,15 @@ const OverviewGroupGerente = () => {
         <h2>Detalhes</h2>
         <TableDetalhe />
 
-        <h2>Membros</h2>
-        <LinkButton
-          text="Adicionar Membro" 
-          to="adicionar-membro"
-          customClass="add"
-        />
+        <div className={style.tableMember}>
+          <h2>Membros</h2>
+          <LinkButton
+            text="Adicionar Membro"
+            to="adicionar-membro"
+            customClass="add"
+          />
+        </div>
+
         <TableMemberGroupRepresentante />
 
         <div className={style.container_representantes_observacoes}>

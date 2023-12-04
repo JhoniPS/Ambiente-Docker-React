@@ -76,23 +76,24 @@ const TableMemberGroupGerente = () => {
   }
 
   return (
-    <Table
-      className={style.table}
-      rowKey={(record) => record.id}
-      bordered
-      columns={columns}
-      dataSource={data}
-      responsive={true}
-      loading={loading}
-      pagination={{
-        current: page,
-        pageSize: pageSize,
-        onChange: (page, pageSize) => {
-          setPage(page);
-          setPageSize(pageSize)
-        }
-      }}
-    />
+    <div className={style.tableContainer}>
+      <Table
+        rowKey={(record) => record.id}
+        bordered
+        columns={columns}
+        dataSource={data}
+        responsive={true}
+        loading={loading}
+        pagination={{
+          current: page,
+          pageSize: pageSize,
+          onChange: (page, pageSize) => {
+            setPage(page);
+            setPageSize(pageSize)
+          }
+        }}
+      />
+    </div>
   );
 };
 

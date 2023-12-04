@@ -46,7 +46,6 @@ export const AuthProvider = ({ children }) => {
       } else if (e.response.status === 401) {
         setError(true);
         setMessageErrors("E-mail ou senha incorretos.");
-        logout();
       }
     }
   }

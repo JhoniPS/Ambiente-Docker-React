@@ -37,12 +37,12 @@ const TableRepresentativeGroup = () => {
     {
       title: 'Nome',
       dataIndex: 'name',
-      width: '20%',
+      width: '10%',
     },
     {
       title: 'E-mail',
       dataIndex: 'email',
-      width: '20%',
+      width: '10%',
     },
     {
       title: 'Operações',
@@ -70,23 +70,24 @@ const TableRepresentativeGroup = () => {
   ];
 
   return (
-    <Table
-      className={style.table}
-      rowKey={(record) => record.id}
-      bordered
-      columns={columns}
-      dataSource={data}
-      responsive={true}
-      loading={loading}
-      pagination={{
-        current: page,
-        pageSize: pageSize,
-        onChange: (page, pageSize) => {
-          setPage(page);
-          setPageSize(pageSize)
-        }
-      }}
-    />
+    <div className={style.tableContainer}>
+      <Table
+        rowKey={(record) => record.id}
+        bordered
+        columns={columns}
+        dataSource={data}
+        responsive={true}
+        loading={loading}
+        pagination={{
+          current: page,
+          pageSize: pageSize,
+          onChange: (page, pageSize) => {
+            setPage(page);
+            setPageSize(pageSize)
+          }
+        }}
+      />
+    </div>
   );
 };
 
