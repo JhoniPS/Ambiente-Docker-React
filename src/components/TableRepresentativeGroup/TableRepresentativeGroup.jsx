@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import api from '../../services/api';
+import React, {useState } from 'react';
 import style from './TableRepresentativeGroup.module.css'
 import { useParams } from 'react-router-dom';
 import { Table } from 'antd';
@@ -8,30 +7,10 @@ import ModalDeleteRepresentiveGroup from '../Modals/modal_delete_representive_gr
 import ModalEditRepresentativeGroup from '../Modals/modal_edit_representante_group/ModalEditRepresentativeGroup';
 
 //Problemas com o edit representantes
-const TableRepresentativeGroup = () => {
+const TableRepresentativeGroup = ({ data, setData}) => {
   const { id } = useParams();
-  const [data, setData] = useState([]);
-
-  const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setLoading(true);
-        const response = await api.get(`group/${id}`);
-        const users = response.data.data.representatives;
-        setData(users);
-        setLoading(false);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    fetchData();
-  }, [id]);
-
 
   const columns = [
     {
@@ -77,7 +56,6 @@ const TableRepresentativeGroup = () => {
         columns={columns}
         dataSource={data}
         responsive={true}
-        loading={loading}
         pagination={{
           current: page,
           pageSize: pageSize,

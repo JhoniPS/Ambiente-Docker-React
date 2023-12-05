@@ -1,34 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import React, { useState } from 'react';
 import { Table } from 'antd';
 
 import style from './TableMemberGroupGerente.module.css'
-import api from '../../services/api';
 
-const TableMemberGroupGerente = () => {
-  const { id } = useParams();
-  const [data, setData] = useState([]);
-
-  const [loading, setLoading] = useState(false);
+const TableMemberGroupGerente = ({ members }) => {
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setLoading(true);
-        const response = await api.get(`group/${id}/`);
-        const users = response.data.data.members;
-        console.log(users)
-        setData(users);
-        setLoading(false);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    fetchData();
-  }, [id]);
 
   const columns = [
     {
@@ -81,9 +58,8 @@ const TableMemberGroupGerente = () => {
         rowKey={(record) => record.id}
         bordered
         columns={columns}
-        dataSource={data}
+        dataSource={members}
         responsive={true}
-        loading={loading}
         pagination={{
           current: page,
           pageSize: pageSize,

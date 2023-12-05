@@ -88,8 +88,11 @@ export default function EditTypeUser({ id, data, setData }) {
                 console.error(error);
             }
         };
-        fetchData();
-    }, [id]);
+
+        if (open) {
+            fetchData();
+        }
+    }, [open, id]);
 
     return (
         <div>

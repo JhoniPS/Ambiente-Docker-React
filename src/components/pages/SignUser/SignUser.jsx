@@ -1,6 +1,5 @@
 import React, { useEffect, useState, Fragment } from 'react';
 import { useNavigate } from 'react-router-dom';
-import useAuthContext from '../../contexts/Auth';
 import api from '../../../services/api';
 
 import styles from './SignUser.module.css'
@@ -13,7 +12,6 @@ import { TextField } from '@mui/material';
 import { ImArrowLeft2 } from "react-icons/im";
 
 const SignUser = () => {
-  const { token } = useAuthContext();
   const navigate = useNavigate();
 
   const [user, setUser] = useState({
@@ -85,14 +83,12 @@ const SignUser = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        if (token) {
-          const apiResponse = await api.get('type-user');
-          const options = apiResponse.data.map(type => ({
-            value: type.id,
-            label: type.name,
-          }));
-          setOption(options);
-        }
+        const apiResponse = await api.get('type-user');
+        const options = apiResponse.data.map(type => ({
+          value: type.id,
+          label: type.name,
+        }));
+        setOption(options);
       } catch (error) {
         if (error.response.status === 401) {
           console.log(error)
@@ -101,7 +97,7 @@ const SignUser = () => {
     }
 
     fetchData();
-  }, [token]);
+  }, []);
 
 
   return (

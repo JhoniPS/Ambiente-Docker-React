@@ -74,8 +74,11 @@ const EditUser = ({ id, data, setData }) => {
                 console.error(error);
             }
         };
-        fetchData();
-    }, [id]);
+
+        if (open) {
+            fetchData();
+        }
+    }, [open, id]);
 
     return (
         <Fragment>

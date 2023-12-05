@@ -30,7 +30,7 @@ const TableGroups = ({ rota }) => {
         fetchData();
     }, []);
 
-    const columns = [
+    const baseColumns = [
         {
             title: 'Tipo do grupo',
             dataIndex: 'type_group',
@@ -57,7 +57,11 @@ const TableGroups = ({ rota }) => {
             title: 'E-mail',
             dataIndex: 'email',
         },
-        {
+    ];
+
+    // Condicionalmente adiciona a coluna 'Operações' se a rota for diferente de 'groups-representante'
+    if (rota !== 'detalhes-de-grupos-representante') {
+        baseColumns.push({
             title: 'Operações',
             dataIndex: 'id',
             align: 'center',
@@ -68,8 +72,8 @@ const TableGroups = ({ rota }) => {
                     <ModalEditGroup id={id} data={data} setData={setData} />
                 </div>
             ),
-        },
-    ];
+        });
+    }
 
     const handleRowClick = (record) => {
         navigate(`/${rota}/${record.id}`);
@@ -79,7 +83,7 @@ const TableGroups = ({ rota }) => {
         <Table
             bordered={true}
             rowKey={(record) => record.id}
-            columns={columns}
+            columns={baseColumns}
             dataSource={data}
             responsive={true}
             loading={loading}
