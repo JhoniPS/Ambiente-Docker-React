@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Table } from 'antd';
-import { useParams } from 'react-router-dom';
+
 import style from './TableRepresentative.module.css'
-import api from '../../services/api';
 
 const columns = [
   {
@@ -18,30 +17,9 @@ const columns = [
 ];
 
 
-const TableRepresentative = () => {
-  const { id } = useParams();
-
-  const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(false);
+const TableRepresentative = ({ data }) => {
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setLoading(true);
-        await api.get(`group/${id}`).then((response) => {
-          const users = response.data.data.representatives;
-          setData(users);
-          setLoading(false);
-        })
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    fetchData();
-  }, [id]);
 
   return (
     <div className={style.tableContainer}>
@@ -51,7 +29,6 @@ const TableRepresentative = () => {
         columns={columns}
         dataSource={data}
         responsive={true}
-        loading={loading}
         pagination={{
           current: page,
           pageSize: pageSize,

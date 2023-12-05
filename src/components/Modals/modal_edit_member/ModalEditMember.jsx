@@ -80,27 +80,29 @@ export default function ModalEditMember({ memberId, data, setData }) {
     useEffect(() => {
         const fetchMember = async () => {
             try {
-                const response = await api.get(`members/${memberId}`);
-                const memberData = response.data.data;
+                if (open) {
+                    const response = await api.get(`members/${memberId}`);
+                    const memberData = response.data.data;
 
-                if (memberData) {
-                    setMember({
-                        id: memberData.id,
-                        role: memberData.role || '',
-                        phone: memberData.phone || '',
-                        entry_date: memberData.entry_date || '',
-                        departure_date: memberData.departure_date || '',
-                        created_at: memberData.created_at || '',
-                        updated_at: memberData.updated_at || '',
-                        user: {
-                            id: memberData.user.id,
-                            name: memberData.user.name || '',
-                            email: memberData.user.email || '',
-                            type_user: memberData.user.type_user || ''
-                        }
-                    });
-                } else {
-                    console.error('Dados de membro não encontrados');
+                    if (memberData) {
+                        setMember({
+                            id: memberData.id,
+                            role: memberData.role || '',
+                            phone: memberData.phone || '',
+                            entry_date: memberData.entry_date || '',
+                            departure_date: memberData.departure_date || '',
+                            created_at: memberData.created_at || '',
+                            updated_at: memberData.updated_at || '',
+                            user: {
+                                id: memberData.user.id,
+                                name: memberData.user.name || '',
+                                email: memberData.user.email || '',
+                                type_user: memberData.user.type_user || ''
+                            }
+                        });
+                    } else {
+                        console.error('Dados de membro não encontrados');
+                    }
                 }
             } catch (error) {
                 console.error('Erro ao buscar membro:', error);
@@ -108,8 +110,7 @@ export default function ModalEditMember({ memberId, data, setData }) {
         };
 
         fetchMember();
-
-    }, [memberId]);
+    }, [open, memberId]);
 
     return (
         <div>

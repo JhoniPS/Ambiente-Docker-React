@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import SubmitButton from '../../layout/submitbuttun/SubmitButton';
-import api from '../../../services/api'
+import api from '../../../services/api';
 
-import styles from './modal_edit_group.module.css'
+import styles from './modal_edit_group.module.css';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
 import { TextField, Typography } from '@mui/material';
 import { IconContext } from 'react-icons';
-import { IoPencilSharp } from "react-icons/io5";
+import { IoPencilSharp } from 'react-icons/io5';
 
 const style = {
     position: 'fixed',
@@ -46,17 +46,19 @@ export default function ModalEditGroup({ id, data, setData }) {
     const [open, setOpen] = useState(false);
 
     const [form, setForm] = useState({
-        entity: "",
-        organ: "",
-        council: "",
-        internal_concierge: "",
-        acronym: "",
-        team: "",
-        email: "",
-        observations: "",
-        unit: "",
-        office_requested: "",
-        office_indicated: "",
+        entity: '',
+        organ: '',
+        council: '',
+        internal_concierge: '',
+        acronym: '',
+        team: '',
+        name: '',
+        type: '',
+        email: '',
+        observations: '',
+        unit: '',
+        office_requested: '',
+        office_indicated: '',
     });
 
     useEffect(() => {
@@ -66,36 +68,41 @@ export default function ModalEditGroup({ id, data, setData }) {
                 const groupData = response.data.data;
 
                 setForm({
-                    entity: groupData.entity || "",
-                    organ: groupData.organ || "",
-                    council: groupData.council || "",
-                    internal_concierge: groupData.internal_concierge || "",
-                    acronym: groupData.acronym || "",
-                    team: groupData.team || "",
-                    email: groupData.email || "",
-                    observations: groupData.observations || "",
-                    unit: groupData.unit || "",
-                    office_requested: groupData.office_requested || "",
-                    office_indicated: groupData.office_indicated || "",
+                    entity: groupData.entity || '',
+                    organ: groupData.organ || '',
+                    council: groupData.council || '',
+                    internal_concierge: groupData.internal_concierge || '',
+                    acronym: groupData.acronym || '',
+                    team: groupData.team || '',
+                    name: groupData.type_group.name || '',
+                    type: groupData.type_group.type || '',
+                    email: groupData.email || '',
+                    observations: groupData.observations || '',
+                    unit: groupData.unit || '',
+                    office_requested: groupData.office_requested || '',
+                    office_indicated: groupData.office_indicated || '',
                 });
             } catch (error) {
                 console.error(error);
             }
         };
-        fetchData();
-    }, [id]);
 
+        if (open) {
+            fetchData();
+        }
+    }, [id, open]);
 
     const handleOpen = (event) => {
         event.stopPropagation();
         setOpen(true);
-    }
+    };
+
     const handleClose = (event) => {
         event.stopPropagation();
         setOpen(false);
-    }
+    };
 
-    const handlEdit = async (event) => {
+    const handleEdit = (event) => {
         const { name, value } = event.target;
         setForm({
             ...form,
@@ -103,12 +110,12 @@ export default function ModalEditGroup({ id, data, setData }) {
         });
     };
 
-    const Submit = async (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
         try {
-            await api.put(`/group/${id}`, form)
+            await api.put(`/group/${id}`, form);
 
-            const updatedData = data.map(item => {
+            const updatedData = data.map((item) => {
                 if (item.id === id) {
                     return { ...item, ...form };
                 }
@@ -118,13 +125,13 @@ export default function ModalEditGroup({ id, data, setData }) {
             setData(updatedData);
             handleClose();
         } catch (error) {
-            console.log(error)
+            console.error(error);
         }
     };
 
     return (
         <div>
-            <IconContext.Provider value={{ color: "#2C74AC", size: 20 }}>
+            <IconContext.Provider value={{ color: '#2C74AC', size: 20 }}>
                 <Button onClick={handleOpen}>
                     <IoPencilSharp />
                 </Button>
@@ -139,16 +146,16 @@ export default function ModalEditGroup({ id, data, setData }) {
                 <Box sx={style} onClick={(event) => event.stopPropagation()}>
                     <Typography sx={styleTitle}>Editar tipo de usuário</Typography>
                     <div>
-                        <form className={styles.form} onSubmit={Submit}>
+                        <form className={styles.form} onSubmit={handleSubmit}>
                             <div className={styles.container_form}>
                                 <div className={styles.container_text1}>
                                     <TextField
                                         type='text'
-                                        label="Entidade"
-                                        variant="standard"
+                                        label='Entidade'
+                                        variant='standard'
                                         name='entity'
                                         value={form.entity}
-                                        onChange={handlEdit}
+                                        onChange={handleEdit}
                                         focused
                                         margin='normal'
                                         sx={{
@@ -157,11 +164,11 @@ export default function ModalEditGroup({ id, data, setData }) {
                                     />
                                     <TextField
                                         type='text'
-                                        label="Orgão"
-                                        variant="standard"
+                                        label='Orgão'
+                                        variant='standard'
                                         name='organ'
                                         value={form.organ}
-                                        onChange={handlEdit}
+                                        onChange={handleEdit}
                                         focused
                                         margin='normal'
                                         sx={{
@@ -170,25 +177,24 @@ export default function ModalEditGroup({ id, data, setData }) {
                                     />
                                     <TextField
                                         type='text'
-                                        label="Conselho"
-                                        variant="standard"
+                                        label='Conselho'
+                                        variant='standard'
                                         name='council'
                                         value={form.council}
-                                        onChange={handlEdit}
+                                        onChange={handleEdit}
                                         focused
                                         margin='normal'
                                         sx={{
                                             width: '100%',
                                         }}
                                     />
-
                                     <TextField
                                         type='text'
-                                        label="Oficio que solicitou"
-                                        name='office_requested'
-                                        variant="standard"
-                                        value={form.office_requested}
-                                        onChange={handlEdit}
+                                        label='Nome'
+                                        variant='standard'
+                                        name='name'
+                                        value={form.name}
+                                        onChange={handleEdit}
                                         focused
                                         margin='normal'
                                         sx={{
@@ -200,11 +206,11 @@ export default function ModalEditGroup({ id, data, setData }) {
                                 <div className={styles.container_text1}>
                                     <TextField
                                         type='text'
-                                        label="Sigla"
-                                        variant="standard"
+                                        label='Sigla'
+                                        variant='standard'
                                         name='acronym'
                                         value={form.acronym}
-                                        onChange={handlEdit}
+                                        onChange={handleEdit}
                                         focused
                                         margin='normal'
                                         sx={{
@@ -213,11 +219,11 @@ export default function ModalEditGroup({ id, data, setData }) {
                                     />
                                     <TextField
                                         type='text'
-                                        label="Equipe"
-                                        variant="standard"
+                                        label='Equipe'
+                                        variant='standard'
                                         name='team'
                                         value={form.team}
-                                        onChange={handlEdit}
+                                        onChange={handleEdit}
                                         focused
                                         margin='normal'
                                         sx={{
@@ -226,25 +232,24 @@ export default function ModalEditGroup({ id, data, setData }) {
                                     />
                                     <TextField
                                         type='text'
-                                        label="E-mail"
-                                        variant="standard"
+                                        label='E-mail'
+                                        variant='standard'
                                         name='email'
                                         value={form.email}
-                                        onChange={handlEdit}
+                                        onChange={handleEdit}
                                         focused
                                         margin='normal'
                                         sx={{
                                             width: '100%',
                                         }}
                                     />
-
                                     <TextField
                                         type='text'
-                                        label="Oficio que indicou"
-                                        name='office_indicated'
-                                        variant="standard"
-                                        value={form.office_indicated}
-                                        onChange={handlEdit}
+                                        label='Tipo'
+                                        variant='standard'
+                                        name='type'
+                                        value={form.type}
+                                        onChange={handleEdit}
                                         focused
                                         margin='normal'
                                         sx={{
@@ -256,25 +261,50 @@ export default function ModalEditGroup({ id, data, setData }) {
                                 <div className={styles.container_text1}>
                                     <TextField
                                         type='text'
-                                        label="Unidade"
+                                        label='Unidade'
                                         name='unit'
-                                        variant="standard"
+                                        variant='standard'
                                         value={form.unit}
-                                        onChange={handlEdit}
+                                        onChange={handleEdit}
                                         focused
                                         margin='normal'
                                         sx={{
                                             width: '100%',
                                         }}
                                     />
-
                                     <TextField
                                         type='text'
-                                        label="Portaria"
-                                        variant="standard"
+                                        label='Portaria'
+                                        variant='standard'
                                         name='internal_concierge'
                                         value={form.internal_concierge}
-                                        onChange={handlEdit}
+                                        onChange={handleEdit}
+                                        focused
+                                        margin='normal'
+                                        sx={{
+                                            width: '100%',
+                                        }}
+                                    />
+                                    <TextField
+                                        type='text'
+                                        label='Oficio que solicitou'
+                                        name='office_requested'
+                                        variant='standard'
+                                        value={form.office_requested}
+                                        onChange={handleEdit}
+                                        focused
+                                        margin='normal'
+                                        sx={{
+                                            width: '100%',
+                                        }}
+                                    />
+                                    <TextField
+                                        type='text'
+                                        label='Oficio que indicou'
+                                        name='office_indicated'
+                                        variant='standard'
+                                        value={form.office_indicated}
+                                        onChange={handleEdit}
                                         focused
                                         margin='normal'
                                         sx={{
@@ -286,11 +316,11 @@ export default function ModalEditGroup({ id, data, setData }) {
                                 <div className={styles.container_text1}>
                                     <TextField
                                         type='text'
-                                        label="Observações"
-                                        name='comments'
-                                        variant="standard"
+                                        label='Observações'
+                                        name='observations'
+                                        variant='standard'
                                         value={form.observations}
-                                        onChange={handlEdit}
+                                        onChange={handleEdit}
                                         focused
                                         margin='normal'
                                         multiline
@@ -303,13 +333,13 @@ export default function ModalEditGroup({ id, data, setData }) {
                             </div>
 
                             <div className={styles.button}>
-                                <SubmitButton text="Voltar" customClass="button_back" onClick={handleClose} />
-                                <SubmitButton text="Editar" customClass="button_editar_perfil" />
+                                <SubmitButton text='Voltar' customClass='button_back' onClick={handleClose} />
+                                <SubmitButton text='Editar' customClass='button_editar_perfil' />
                             </div>
                         </form>
-                    </div >
+                    </div>
                 </Box>
             </Modal>
-        </div >
+        </div>
     );
 }

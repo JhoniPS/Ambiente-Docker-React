@@ -1,32 +1,14 @@
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import api from '../../services/api';
+import React from "react";
 import { Divider } from 'antd';
 import style from './TableDetalhes.module.css';
 
-const TableDetalhe = () => {
-    const { id } = useParams();
-    const [data, setData] = useState({});
+const TableDetalhe = ({ data }) => {
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await api.get(`group/${id}`);
-                const group = response.data.data;
-                setData(group);
-            } catch (error) {
-                console.log(error);
-            }
-        };
-
-        fetchData();
-    }, [id]);
-
-    function formatarData() {
-        const dt = new Date(data.created_at);
-        const ano = dt.getFullYear();
-        const mes = String(dt.getMonth() + 1).padStart(2, '0');
-        const dia = String(dt.getDate()).padStart(2, '0');
+    function formatarData(dt) {
+        const dataObj = new Date(dt);
+        const ano = dataObj.getFullYear();
+        const mes = String(dataObj.getMonth() + 1).padStart(2, '0');
+        const dia = String(dataObj.getDate()).padStart(2, '0');
 
         return `${ano}-${mes}-${dia}`;
     }
@@ -85,7 +67,7 @@ const TableDetalhe = () => {
                         <td>{data.office_requested}</td>
                         <td>{data.office_indicated}</td>
                         <td>{data.email}</td>
-                        <td>{formatarData(data)}</td>
+                        <td>{formatarData(data.created_at)}</td>
                     </tr>
                 </tbody>
             </table>

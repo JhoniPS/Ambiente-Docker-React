@@ -1,36 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Table } from 'antd';
+
 import ModalDeleteMember from '../Modals/modal_delete_member/ModalDeleteMember';
 import ModalEditMember from '../Modals/modal_edit_member/ModalEditMember';
 
-import style from './TableMemberGroupRepresentante.module.css'
-import api from '../../services/api';
+import style from './TableMemberGroupRepresentante.module.css';
 
-const TableMemberGroupRepresentante = () => {
+const TableMemberGroupRepresentante = ({ members, setMembers }) => {
   const { id } = useParams();
-  const [data, setData] = useState([]);
-
-  const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setLoading(true);
-        const response = await api.get(`group/${id}/`);
-        const users = response.data.data.members;
-        console.log(users)
-        setData(users);
-        setLoading(false);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    fetchData();
-  }, [id]);
 
   const columns = [
     {
@@ -72,11 +52,11 @@ const TableMemberGroupRepresentante = () => {
       width: '0.5%',
       render: (memberId) => (
         <div className={style.operation}>
-          <ModalDeleteMember memberId={memberId} groupId={id} data={data} setData={setData} />
-          <ModalEditMember memberId={memberId} data={data} setData={setData} />
+          <ModalDeleteMember memberId={memberId} groupId={id} data={members} setData={setMembers} />
+          <ModalEditMember memberId={memberId} data={members} setData={setMembers} />
         </div>
       ),
-    }
+    },
   ];
 
   function formatarData(created_at) {
@@ -94,16 +74,15 @@ const TableMemberGroupRepresentante = () => {
         rowKey={(record) => record.id}
         bordered
         columns={columns}
-        dataSource={data}
+        dataSource={members}
         responsive={true}
-        loading={loading}
         pagination={{
           current: page,
           pageSize: pageSize,
           onChange: (page, pageSize) => {
             setPage(page);
-            setPageSize(pageSize)
-          }
+            setPageSize(pageSize);
+          },
         }}
       />
     </div>

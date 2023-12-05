@@ -1,26 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import { useParams } from "react-router-dom";
-import api from '../../services/api';
-
+import React from 'react';
 import { Table } from 'antd';
 
-const TableGroupsDescription = () => {
-    const { id } = useParams();
-    const [data, setData] = useState([]);
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await api.get(`group/${id}`);
-                const group = response.data.data;
-                setData([group]);
-            } catch (error) {
-                console.log(error);
-            }
-        };
-
-        fetchData();
-    }, [id]);
+const TableGroupsDescription = ({ description }) => {
+    const data = [description]
 
     const getMembersCount = (members) => {
         return members ? members.length : null;
@@ -36,7 +19,7 @@ const TableGroupsDescription = () => {
             title: 'Criado por',
             dataIndex: 'created_by',
             width: '1%',
-            render: (created_by) => created_by.name
+            render: (created_by) => created_by ? created_by.name : 'N/A'
         },
         {
             title: 'Membros do grupo',
@@ -54,7 +37,6 @@ const TableGroupsDescription = () => {
 
     return (
         <Table
-            rowKey={(record) => record.id}
             columns={columns}
             dataSource={data}
             components={{
