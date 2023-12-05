@@ -16,29 +16,6 @@ const GroupsRepresentante = () => {
             <HeaderBar text="PAINEL DE CONTROLE" backPageIcon={<ImArrowLeft2 size={25} />} backPage="/representante" />
             <div className={style.groups}>
                 <h2>Grupos</h2>
-                {/* <section className={style.section_search}>
-                    <LinkButton
-                        text="Adicionar Grupo"
-                        customClass="add"
-                        to="/signGroups"
-                        icon={
-                            <IconContext.Provider value={{ size: 25 }}>
-                                <IoMdAdd />
-                            </IconContext.Provider>
-                        }
-                    />
-
-                    <SubmitButton
-                        text="Filtro"
-                        customClass="button_filter"
-                        onClick={() => setOpenModal(true)}
-                        icon={
-                            <IconContext.Provider value={{ size: 20 }}>
-                                <IoIosFunnel />
-                            </IconContext.Provider>
-                        }
-                    />
-                </section> */}
 
                 <Modal
                     openModal={openModal}

@@ -1,5 +1,6 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import api from '../../../services/api';
+
 import useAuthContext from '../../contexts/Auth';
 import MenuAppBar from '../../layout/AppBar/MenuAppBar';
 import { Avatar } from '@mui/material';
@@ -31,8 +32,8 @@ const Perfil = () => {
                 <h5>{user.name}</h5>
                 <p>{user.email}</p>
                 <section>
-                    <LinkButton text="Editar Perfil" customClass="perfil" to="/editorProfile" />
-                    <LinkButton text="Alterar Senha" customClass="editar_senha" to="/updatePassword" />
+                    <LinkButton text="Editar Perfil" customClass="perfil" />
+                    <LinkButton text="Alterar Senha" customClass="editar_senha" />
                 </section>
             </div>
         </Fragment>
