@@ -60,7 +60,7 @@ const TableGroups = ({ rota }) => {
     ];
 
     // Condicionalmente adiciona a coluna 'Operações' se a rota for diferente de 'groups-representante'
-    if (rota !== 'detalhes-de-grupos-representante') {
+    if (rota === 'detalhes-de-grupos-gerente') {
         baseColumns.push({
             title: 'Operações',
             dataIndex: 'id',

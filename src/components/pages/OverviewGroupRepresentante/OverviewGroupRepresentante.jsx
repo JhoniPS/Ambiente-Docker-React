@@ -18,7 +18,7 @@ import img3 from '../../../img/verificacao-de-lista.svg'
 import TableGroupsDescription from "../../TableGroupsDescription/TableGroupsDescrition";
 import TableDetalhe from "../../TableDetalhes/TableDetalhe";
 import TableRepresentative from "../../TableRepresentative/TableRepresentative";
-import TableMemberGroupRepresentante from "../../TableMemberGroupRepresentante/TableMemberGroupRepresentante";
+import TableMemberGroup from "../../TableMemberGroup/TableMemberGroup";
 import Observations from "../../layout/Observations/Observations";
 
 
@@ -99,7 +99,7 @@ const OverviewGroupGerente = () => {
           />
         </div>
 
-        <TableMemberGroupRepresentante members={members} setMembres={setMembres} />
+        <TableMemberGroup members={members} setMembres={setMembres} rota={`detalhes-de-grupos-representante/${id}`} />
 
         <div className={style.container_representantes_observacoes}>
           <section>

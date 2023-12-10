@@ -8,7 +8,7 @@ import Card from "../../card/Card";
 
 import { ImArrowLeft2 } from "react-icons/im";
 import { Divider } from 'antd';
-import style from "./OverviewGroupGerente.module.css"
+import style from "./OverviewGroupVisualizador.module.css"
 
 import img from '../../../img/icon _group.svg'
 import img2 from '../../../img/icon _work.svg'
@@ -16,12 +16,12 @@ import img3 from '../../../img/verificacao-de-lista.svg'
 
 import TableGroupsDescription from "../../TableGroupsDescription/TableGroupsDescrition";
 import TableDetalhe from "../../TableDetalhes/TableDetalhe";
-import TableRepresentativeGroup from "../../TableRepresentativeGroup/TableRepresentativeGroup";
+import TableRepresentative from "../../TableRepresentative/TableRepresentative";
 import TableMemberGroup from "../../TableMemberGroup/TableMemberGroup";
-import Observations from "../../layout/Observations/Observations"
+import Observations from "../../layout/Observations/Observations";
 
-const OverviewGroupGerente = () => {
 
+const OverviewGroupVisualizador = () => {
   const { id } = useParams();
   const [data, setData] = useState({});
   const [members, setMembres] = useState([]);
@@ -49,9 +49,10 @@ const OverviewGroupGerente = () => {
 
     fetchData();
   }, [id]);
+
   return (
     <Fragment>
-      <HeaderBar text="PAINEL DE CONTROLE" backPageIcon={<ImArrowLeft2 size={25} />} backPage="/groups-gerente" />
+      <HeaderBar text="PAINEL DE CONTROLE" backPageIcon={<ImArrowLeft2 size={25} />} backPage="/groups-visualizador" />
       <div className={style.representatives}>
         <h2>Overview</h2>
         <Container customClass='start'>
@@ -88,13 +89,16 @@ const OverviewGroupGerente = () => {
         <h2>Detalhes</h2>
         <TableDetalhe data={data} />
 
-        <h2>Membros</h2>
-        <TableMemberGroup members={members} setMembres={setMembres} rota={`detalhes-de-grupos-gerente/${id}`} />
+        <div className={style.tableMember}>
+          <h2>Membros</h2>
+        </div>
+
+        <TableMemberGroup members={members} setMembres={setMembres} rota={`detalhes-de-grupos-visualizador/${id}`} />
 
         <div className={style.container_representantes_observacoes}>
           <section>
             <h2>Representantes</h2>
-            <TableRepresentativeGroup data={representatives} setData={setRepresentatives} />
+            <TableRepresentative data={representatives} />
           </section>
           <section className={style.observacoes}>
             <h2>Observações</h2>
@@ -106,4 +110,4 @@ const OverviewGroupGerente = () => {
   );
 };
 
-export default OverviewGroupGerente;
+export default OverviewGroupVisualizador;

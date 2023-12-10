@@ -27,7 +27,8 @@ import SignTypeUser from "../components/pages/SignTypeUser/SignTypeUser";
 
 import OverviewGroupGerente from "../components/pages/OverviewGroupGerente/OverviewGroupGerente";
 import OverviewGroupRepresentante from "../components/pages/OverviewGroupRepresentante/OverviewGroupRepresentante"
-
+import OverviewGroupVisualizador from "../components/pages/OverviewGroupVisualizador/OverviewGroupVisualizador";
+import GroupsVisualizador from "../components/pages/GroupsVisualizador/GroupsVisualizador";
 
 const PrivateRoute = ({ children, requiredUserType }) => {
     const isAuthenticated = Cookies.get('authToken');
@@ -74,7 +75,7 @@ const RoutesApp = () => {
                             </PrivateRoute>
                         }
                     />
-                    
+
                     <Route
                         exact path="/visualizador"
                         element={
@@ -121,6 +122,15 @@ const RoutesApp = () => {
                     />
 
                     <Route
+                        exact path="/groups-visualizador"
+                        element={
+                            <PrivateRoute requiredUserType={["visualizador"]}>
+                                <GroupsVisualizador />
+                            </PrivateRoute>
+                        }
+                    />
+
+                    <Route
                         exact path="/detalhes-de-grupos-representante/:id/adicionar-membro"
                         element={
                             <PrivateRoute requiredUserType={["representante"]}>
@@ -143,6 +153,15 @@ const RoutesApp = () => {
                         element={
                             <PrivateRoute requiredUserType={["representante"]}>
                                 <OverviewGroupRepresentante />
+                            </PrivateRoute>
+                        }
+                    />
+
+                    <Route
+                        exact path="/detalhes-de-grupos-visualizador/:id"
+                        element={
+                            <PrivateRoute requiredUserType={["visualizador"]}>
+                                <OverviewGroupVisualizador />
                             </PrivateRoute>
                         }
                     />

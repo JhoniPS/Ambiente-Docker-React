@@ -19,6 +19,7 @@ const Home = () => {
                         icon={img2}
                         title="GRUPOS"
                         description="Gerenciar grupos do sistema"
+                        to="/groups-visualizador"
                     />
                 </Container>
             </div>

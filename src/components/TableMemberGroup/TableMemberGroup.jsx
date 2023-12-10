@@ -1,9 +1,14 @@
 import React, { useState } from 'react';
+import { useParams } from 'react-router-dom';
 import { Table } from 'antd';
 
-import style from './TableMemberGroupGerente.module.css'
+import ModalDeleteMember from '../Modals/modal_delete_member/ModalDeleteMember';
+import ModalEditMember from '../Modals/modal_edit_member/ModalEditMember';
 
-const TableMemberGroupGerente = ({ members }) => {
+import style from './TableMemberGroup.module.css';
+
+const TableMemberGroup = ({ members, setMembers, rota }) => {
+  const { id } = useParams();
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
 
@@ -43,6 +48,20 @@ const TableMemberGroupGerente = ({ members }) => {
     },
   ];
 
+  if (rota === `detalhes-de-grupos-representante/${id}`) {
+    columns.push({
+      title: 'Operações',
+      dataIndex: 'id',
+      width: '0.5%',
+      render: (memberId) => (
+        <div className={style.operation}>
+          <ModalDeleteMember memberId={memberId} groupId={id} data={members} setData={setMembers} />
+          <ModalEditMember memberId={memberId} data={members} setData={setMembers} />
+        </div>
+      ),
+    });
+  }
+
   function formatarData(created_at) {
     const dt = new Date(created_at);
     const ano = dt.getFullYear();
@@ -65,12 +84,12 @@ const TableMemberGroupGerente = ({ members }) => {
           pageSize: pageSize,
           onChange: (page, pageSize) => {
             setPage(page);
-            setPageSize(pageSize)
-          }
+            setPageSize(pageSize);
+          },
         }}
       />
     </div>
   );
 };
 
-export default TableMemberGroupGerente;
+export default TableMemberGroup;
