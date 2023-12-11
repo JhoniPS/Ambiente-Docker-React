@@ -125,7 +125,7 @@ const FormMember = ({ member, setMember, setUser_id }) => {
                     />
                 </LocalizationProvider>
             </div>
-        </div>
+        </div> 
     );
 };
 

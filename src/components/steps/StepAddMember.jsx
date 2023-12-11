@@ -22,7 +22,7 @@ const StepAddMember = () => {
     const steps = [
         {
             title: 'Membros',
-            content: <FormMember member={member} setMember={setMember} setUser_id={setUser_id} />,
+            content: <FormMember member={member} setMember={setMember} setUser_id={setUser_id} /> ,
         },
     ];
 

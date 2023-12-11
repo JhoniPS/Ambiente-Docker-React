@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react'
+import React, { Fragment } from 'react'
 import { IconContext } from "react-icons";
 import { useLocation } from "react-router-dom";
 
@@ -9,16 +9,13 @@ import SubmitButton from '../../layout/submitbuttun/SubmitButton';
 import LinkButton from '../../layout/linkbutton/LinkButton';
 
 import { ImArrowLeft2 } from "react-icons/im";
-import { IoIosFunnel } from "react-icons/io";
 import { IoMdAdd } from "react-icons/io";
 
 import style from './Groups.module.css'
-import Modal from '../../Modals/modal_filter_groups/Modal';
 import TableGroups from '../../TableGroups/TableGroups'
+import Filter from '../../layout/filter/Filter';
 
 const GroupsGerente = () => {
-    const [openModal, setOpenModal] = useState(false);
-
     const location = useLocation();
     let message = '';
     let messagetype = '';
@@ -45,22 +42,8 @@ const GroupsGerente = () => {
                         }
                     />
 
-                    <SubmitButton
-                        text="Filtro"
-                        customClass="button_filter"
-                        onClick={() => setOpenModal(true)}
-                        icon={
-                            <IconContext.Provider value={{ size: '1.6rem' }}>
-                                <IoIosFunnel />
-                            </IconContext.Provider>
-                        }
-                    />
+                    <Filter />
                 </section>
-
-                <Modal
-                    openModal={openModal}
-                    setOpenModal={() => setOpenModal(!openModal)}
-                />
 
                 <h4>FILTROS RÁPIDOS</h4>
                 <Container customClass='start'>
