@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useState } from 'react'
 import { IconContext } from "react-icons";
 import { useLocation } from "react-router-dom";
 
@@ -16,6 +16,9 @@ import TableGroups from '../../TableGroups/TableGroups'
 import Filter from '../../layout/filter/Filter';
 
 const GroupsGerente = () => {
+    const [data, setData] = useState([]);
+    const [sortOrder, setSortOrder] = useState("desc");
+
     const location = useLocation();
     let message = '';
     let messagetype = '';
@@ -24,6 +27,18 @@ const GroupsGerente = () => {
         message = location.state.message;
         messagetype = location.state.messagetype;
     }
+
+    const sortUsers = () => {
+        return [...data].sort((a, b) => {
+            if (sortOrder === "desc") {
+                return new Date(b.created_at) - new Date(a.created_at);
+            } else {
+                return new Date(a.created_at) - new Date(b.created_at);
+            }
+        });
+    };
+
+
 
     return (
         <Fragment>
@@ -47,10 +62,18 @@ const GroupsGerente = () => {
 
                 <h4>FILTROS RÁPIDOS</h4>
                 <Container customClass='start'>
-                    <SubmitButton text="Mais Recentes" customClass="button_filtes_bar" />
-                    <SubmitButton text="Mais Antigos" customClass="button_filtes_bar" />
+                    <SubmitButton
+                        text="Mais Recentes"
+                        customClass="button_filtes_bar"
+                        onClick={() => setSortOrder("desc")}
+                    />
+                    <SubmitButton
+                        text="Mais Antigos"
+                        customClass="button_filtes_bar"
+                        onClick={() => setSortOrder("asc")}
+                    />
                 </Container>
-                <TableGroups rota="detalhes-de-grupos-gerente" />
+                <TableGroups rota="detalhes-de-grupos-gerente" data={sortUsers()} setData={setData} />
                 {message && <Message type={messagetype} msg={message} />}
             </div>
         </Fragment>

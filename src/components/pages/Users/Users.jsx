@@ -11,13 +11,26 @@ import { IconContext } from "react-icons";
 import LinkButton from "../../layout/linkbutton/LinkButton";
 import { useLocation } from "react-router-dom";
 import Message from "../../layout/Message/Message";
+import FilterUser from "../../layout/filterUser/FilterUser";
 
 const Users = () => {
   const location = useLocation();
 
+  const [data, setData] = useState([]);
   const [message, setMessage] = useState('');
   const [messageType, setMessageType] = useState('');
   const [showMessage, setShowMessage] = useState(false);
+  const [sortOrder, setSortOrder] = useState("desc");
+
+  const sortUsers = () => {
+    return [...data].sort((a, b) => {
+      if (sortOrder === "desc") {
+        return new Date(b.created_at) - new Date(a.created_at);
+      } else {
+        return new Date(a.created_at) - new Date(b.created_at);
+      }
+    });
+  };
 
   useEffect(() => {
     if (location.state) {
@@ -44,14 +57,23 @@ const Users = () => {
               </IconContext.Provider>
             }
           />
+          <FilterUser setData={setData} />
         </section>
 
         <h4>FILTROS RÁPIDOS</h4>
         <section className={style.button_filters}>
-          <SubmitButton text="Mais Recentes" customClass="button_filtes_bar" />
-          <SubmitButton text="Mais Antigos" customClass="button_filtes_bar" />
+          <SubmitButton
+            text="Mais Recentes"
+            customClass="button_filtes_bar"
+            onClick={() => setSortOrder("desc")}
+          />
+          <SubmitButton
+            text="Mais Antigos"
+            customClass="button_filtes_bar"
+            onClick={() => setSortOrder("asc")}
+          />
         </section>
-        <TableUser />
+        <TableUser data={sortUsers()} setData={setData} />
         {showMessage && <Message type={messageType} msg={message} setShowMessage={setShowMessage} />}
       </div>
     </Fragment>

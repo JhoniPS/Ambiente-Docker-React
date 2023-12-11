@@ -6,8 +6,7 @@ import style from './TableUser.module.css'
 import ModalDeleteUser from '../Modals/modal_delete_user/ModalDeleteUser';
 import ModalEditUser from '../Modals/modal_edit_user/ModalEditUser'
 
-const TableUser = () => {
-  const [data, setData] = useState([]);
+const TableUser = ({ data, setData }) => {
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
@@ -27,7 +26,7 @@ const TableUser = () => {
     };
 
     fetchData();
-  }, []);
+  }, [setData]);
 
   const columns = [
     {

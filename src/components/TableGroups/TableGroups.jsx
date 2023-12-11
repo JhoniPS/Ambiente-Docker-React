@@ -7,8 +7,7 @@ import style from './TableGroups.module.css'
 import ModalDeleteGroup from '../Modals/modal_delete_group/ModalDeleteGroup';
 import ModalEditGroup from '../Modals/modal_edit_group/ModalEditGroup';
 
-const TableGroups = ({ rota }) => {
-    const [data, setData] = useState([]);
+const TableGroups = ({ rota, data, setData }) => {
     const [loading, setLoading] = useState(false);
     const [page, setPage] = useState(1);
     const [pageSize, setPageSize] = useState(10);
