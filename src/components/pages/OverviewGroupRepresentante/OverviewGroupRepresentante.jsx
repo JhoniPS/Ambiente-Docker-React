@@ -1,9 +1,10 @@
 import React, { Fragment, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useLocation } from "react-router-dom";
 import api from "../../../services/api";
 
 import HeaderBar from "../../layout/header/HeaderBar";
 import Container from "../../layout/container/Container";
+import Message from "../../layout/Message/Message";
 import LinkButton from "../../layout/linkbutton/LinkButton";
 import Card from "../../card/Card";
 
@@ -11,9 +12,10 @@ import { ImArrowLeft2 } from "react-icons/im";
 import { Divider } from 'antd';
 import style from "./OverviewGroupRepresentante.module.css"
 
-import img from '../../../img/icon _group.svg'
+import img1 from '../../../img/notas.svg'
 import img2 from '../../../img/icon _work.svg'
-import img3 from '../../../img/verificacao-de-lista.svg'
+import img3 from '../../../img/historico-reuniao.svg'
+import img4 from '../../../img/documentos.png'
 
 import TableGroupsDescription from "../../TableGroupsDescription/TableGroupsDescrition";
 import TableDetalhe from "../../TableDetalhes/TableDetalhe";
@@ -22,18 +24,32 @@ import TableMemberGroup from "../../TableMemberGroup/TableMemberGroup";
 import Observations from "../../layout/Observations/Observations";
 
 
-const OverviewGroupGerente = () => {
+const OverviewGroupRepresentante = () => {
   const { id } = useParams();
   const [data, setData] = useState({});
+
   const [members, setMembres] = useState([]);
   const [observacao, setObservacao] = useState("");
   const [representatives, setRepresentatives] = useState([]);
+  const [message, setMessage] = useState('');
+  const [messageType, setMessageType] = useState('');
+  const [showMessage, setShowMessage] = useState(false);
+
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.state) {
+      setMessage(location.state.message);
+      setMessageType(location.state.messageType);
+      setShowMessage(location.state.showMessage);
+    }
+
+  }, [location.state]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const { data } = await api.get(`group/${id}`);
-
         const group = data.data;
         const members = data.data.members;
         const observacao = data.data.observations;
@@ -58,28 +74,29 @@ const OverviewGroupGerente = () => {
         <h2>Overview</h2>
         <Container customClass='start'>
           <Card
-            icon={img}
+            icon={img1}
             customClass={'overViewCard'}
             title="Notas"
-            description="Gerenciar presentante do sistema"
+            description="Gerencia notas feitas pelo representante"
           />
           <Card
             icon={img2}
             customClass={'overViewCard'}
             title="Atividades"
-            description="Gerenciar grupos do sistema"
+            description="Gerencie atividades"
           />
           <Card
             icon={img3}
             customClass={'overViewCard'}
             title="Histórico de reuniões"
-            description="Gerencie suas tarefas"
+            description="Gerencie as reuniões realizadas"
           />
           <Card
-            icon={img3}
+            icon={img4}
             customClass={'overViewCard'}
             title="Documentos"
-            description="Gerencie suas tarefas"
+            description="Gerencia documentos do grupo"
+            to={`/detalhes-de-grupos-representante/${id}/documentos`}
           />
         </Container>
 
@@ -100,6 +117,7 @@ const OverviewGroupGerente = () => {
         </div>
 
         <TableMemberGroup members={members} setMembres={setMembres} rota={`detalhes-de-grupos-representante/${id}`} />
+        {showMessage && <Message type={messageType} msg={message} setShowMessage={setShowMessage} />}
 
         <div className={style.container_representantes_observacoes}>
           <section>
@@ -116,4 +134,4 @@ const OverviewGroupGerente = () => {
   );
 };
 
-export default OverviewGroupGerente;
+export default OverviewGroupRepresentante;

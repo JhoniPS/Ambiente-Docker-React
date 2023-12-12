@@ -10,9 +10,10 @@ import { ImArrowLeft2 } from "react-icons/im";
 import { Divider } from 'antd';
 import style from "./OverviewGroupGerente.module.css"
 
-import img from '../../../img/icon _group.svg'
+import img1 from '../../../img/notas.svg'
 import img2 from '../../../img/icon _work.svg'
-import img3 from '../../../img/verificacao-de-lista.svg'
+import img3 from '../../../img/historico-reuniao.svg'
+import img4 from '../../../img/documentos.png'
 
 import TableGroupsDescription from "../../TableGroupsDescription/TableGroupsDescrition";
 import TableDetalhe from "../../TableDetalhes/TableDetalhe";
@@ -21,7 +22,6 @@ import TableMemberGroup from "../../TableMemberGroup/TableMemberGroup";
 import Observations from "../../layout/Observations/Observations"
 
 const OverviewGroupGerente = () => {
-
   const { id } = useParams();
   const [data, setData] = useState({});
   const [members, setMembres] = useState([]);
@@ -56,7 +56,7 @@ const OverviewGroupGerente = () => {
         <h2>Overview</h2>
         <Container customClass='start'>
           <Card
-            icon={img}
+            icon={img1}
             customClass={'overViewCard'}
             title="Notas"
             description="Gerenciar presentante do sistema"
@@ -74,10 +74,11 @@ const OverviewGroupGerente = () => {
             description="Gerencie suas tarefas"
           />
           <Card
-            icon={img3}
+            icon={img4}
             customClass={'overViewCard'}
             title="Documentos"
             description="Gerencie suas tarefas"
+            to={`/detalhes-de-grupos-gerente/${id}/documentos`}
           />
         </Container>
 

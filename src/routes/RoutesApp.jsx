@@ -30,6 +30,8 @@ import OverviewGroupRepresentante from "../components/pages/OverviewGroupReprese
 import OverviewGroupVisualizador from "../components/pages/OverviewGroupVisualizador/OverviewGroupVisualizador";
 import GroupsVisualizador from "../components/pages/GroupsVisualizador/GroupsVisualizador";
 
+import Documents from "../components/pages/Documents/Documents";
+
 const PrivateRoute = ({ children, requiredUserType }) => {
     const isAuthenticated = Cookies.get('authToken');
     const userType = Cookies.get('userType');
@@ -149,6 +151,15 @@ const RoutesApp = () => {
                     />
 
                     <Route
+                        exact path="/detalhes-de-grupos-gerente/:id/documentos"
+                        element={
+                            <PrivateRoute requiredUserType={["gerente"]}>
+                                <Documents />
+                            </PrivateRoute>
+                        }
+                    />
+
+                    <Route
                         exact path="/detalhes-de-grupos-representante/:id"
                         element={
                             <PrivateRoute requiredUserType={["representante"]}>
@@ -158,10 +169,28 @@ const RoutesApp = () => {
                     />
 
                     <Route
+                        exact path="/detalhes-de-grupos-representante/:id/documentos"
+                        element={
+                            <PrivateRoute requiredUserType={["representante"]}>
+                                <Documents />
+                            </PrivateRoute>
+                        }
+                    />
+
+                    <Route
                         exact path="/detalhes-de-grupos-visualizador/:id"
                         element={
                             <PrivateRoute requiredUserType={["visualizador"]}>
                                 <OverviewGroupVisualizador />
+                            </PrivateRoute>
+                        }
+                    />
+
+                    <Route
+                        exact path="/detalhes-de-grupos-visualizador/:id/documentos"
+                        element={
+                            <PrivateRoute requiredUserType={["visualizador"]}>
+                                <Documents />
                             </PrivateRoute>
                         }
                     />

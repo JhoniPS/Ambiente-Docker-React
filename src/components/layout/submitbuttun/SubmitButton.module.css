@@ -69,6 +69,21 @@
     background: #2C74AC;
 }
 
+
+.salvar {
+    display: flex;
+    width: 146px;
+    height: 38px;
+    padding: 10px 24px 10px 16px;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    border-radius: 8px;
+    border: 1px solid #2C74AC;
+    color: #FFF;
+    background: #2C74AC;
+}
+
 .button_filtes_bar {
     display: flex;
     padding: 8px 16px;

@@ -36,7 +36,7 @@ const UploadFile = () => (
     <p className="ant-upload-drag-icon">
       <InboxOutlined />
     </p>
-    <p className={styles.upload}>Clique e procure a foto que você <br/>deseja para o seu perfil</p>
+    <p className={styles.upload}>Clique e procure o arquivo que deseja adiconar</p>
   </Dragger>
 );
 export default UploadFile;

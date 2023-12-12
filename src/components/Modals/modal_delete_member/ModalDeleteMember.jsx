@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import api from '../../../services/api'
 import styleButton from './modal_delete_member.module.css'
 
@@ -55,23 +56,43 @@ const styleTitle = {
 
 export default function ModalDeleteMember({ memberId, groupId, data, setData }) {
     const [open, setOpen] = useState(false);
+    const { id } = useParams();
 
-    const handleOpen = () => {
-        setOpen(true);
-    }
-    const handleClose = () => {
-        setOpen(false);
-    }
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
+    const navigate = useNavigate();
 
     const handlDelete = async () => {
         try {
             await api.delete(`/group/${groupId}/members/${memberId}`);
             const updatedData = data.filter(item => item.id !== memberId);
             setData(updatedData);
+            handleClose();
+            navigate(`/detalhes-de-grupos-representante/${id}`, {
+                state: {
+                    message: 'Deletado com sucesso!',
+                    messageType: 'success',
+                    showMessage: true,
+                }
+            });
         } catch (error) {
-            console.error(error);
+
+            let errorMessage = 'Erro ao excluir o membro.';
+
+            if (error.response && error.response.data && error.response.data.errors) {
+                errorMessage = error.response.data.errors;
+            }
+
+            navigate(`/detalhes-de-grupos-representante/${id}`, {
+                state: {
+                    message: errorMessage,
+                    messageType: 'error',
+                    showMessage: true,
+                }
+            });
         }
     };
+
 
     return (
         <div>
@@ -87,7 +108,7 @@ export default function ModalDeleteMember({ memberId, groupId, data, setData }) 
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
             >
-                <Box sx={style} onClick={(event) => event.stopPropagation()}>
+                <Box sx={style}>
                     <Typography sx={styleTitle}>Deletar membro</Typography>
                     <Typography sx={styleDescrition}>Você tem certeza que deseja excluir este membro?</Typography>
                     <div className={styleButton.button_container}>

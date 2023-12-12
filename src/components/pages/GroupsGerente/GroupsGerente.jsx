@@ -1,5 +1,4 @@
-import React, { Fragment, useState } from 'react'
-import { IconContext } from "react-icons";
+import React, { Fragment, useState, useEffect } from 'react'
 import { useLocation } from "react-router-dom";
 
 import Message from "../../layout/Message/Message";
@@ -7,26 +6,31 @@ import HeaderBar from '../../layout/header/HeaderBar';
 import Container from '../../layout/container/Container'
 import SubmitButton from '../../layout/submitbuttun/SubmitButton';
 import LinkButton from '../../layout/linkbutton/LinkButton';
+import TableGroups from '../../TableGroups/TableGroups'
+import Filter from '../../layout/filter/Filter';
 
 import { ImArrowLeft2 } from "react-icons/im";
+import { IconContext } from "react-icons";
 import { IoMdAdd } from "react-icons/io";
 
 import style from './Groups.module.css'
-import TableGroups from '../../TableGroups/TableGroups'
-import Filter from '../../layout/filter/Filter';
 
 const GroupsGerente = () => {
     const [data, setData] = useState([]);
     const [sortOrder, setSortOrder] = useState("desc");
+    const [message, setMessage] = useState('');
+    const [messageType, setMessageType] = useState('');
+    const [showMessage, setShowMessage] = useState(false);
 
     const location = useLocation();
-    let message = '';
-    let messagetype = '';
 
-    if (location.state) {
-        message = location.state.message;
-        messagetype = location.state.messagetype;
-    }
+    useEffect(() => {
+        if (location.state) {
+            setMessage(location.state.message);
+            setMessageType(location.state.messagetype);
+            setShowMessage(location.state.showMessage);
+        }
+    }, [location.state]);
 
     const sortUsers = () => {
         return [...data].sort((a, b) => {
@@ -37,8 +41,6 @@ const GroupsGerente = () => {
             }
         });
     };
-
-
 
     return (
         <Fragment>
@@ -74,7 +76,7 @@ const GroupsGerente = () => {
                     />
                 </Container>
                 <TableGroups rota="detalhes-de-grupos-gerente" data={sortUsers()} setData={setData} />
-                {message && <Message type={messagetype} msg={message} />}
+                {showMessage && <Message type={messageType} msg={message} setShowMessage={setShowMessage} />}
             </div>
         </Fragment>
     );
