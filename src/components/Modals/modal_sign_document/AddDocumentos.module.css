@@ -53,28 +53,8 @@ p {
 .container_conteudo {
     display: flex;
     flex-direction: column;
-    gap: 0.6rem;
+    gap: 1.5rem;
     padding: 0vw 1vw 1vw 1vw;
-    overflow: auto;
-    /* Added overflow property */
-}
-
-.data {
-    display: flex;
-    width: 100%;
-    gap: 2rem;
-}
-
-.select {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-column-gap: 14px;
-    grid-row-gap: 1em;
-}
-
-.select>div {
-    display: grid;
-    gap: 10px;
 }
 
 .button {
@@ -96,6 +76,6 @@ p {
 
 .buttons {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     margin: 0;
 }

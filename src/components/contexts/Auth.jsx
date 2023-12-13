@@ -70,7 +70,6 @@ export const AuthProvider = ({ children }) => {
     <AuthContext.Provider
       value={
         {
-          //token,
           userType,
           setUserType,
           error,

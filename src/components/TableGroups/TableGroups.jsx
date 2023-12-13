@@ -27,7 +27,7 @@ const TableGroups = ({ rota, data, setData }) => {
         };
 
         fetchData();
-    }, []);
+    }, [setData]);
 
     const baseColumns = [
         {
