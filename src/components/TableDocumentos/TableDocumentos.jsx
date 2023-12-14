@@ -1,15 +1,16 @@
 import React, { useState } from 'react';
 import api from '../../services/api';
+import Cookies from 'js-cookie'
 
 import { Table } from 'antd';
 import style from './TableDocumentos.module.css'
 
-// import ModalDeleteUser from '../Modals/modal_delete_user/ModalDeleteUser';
-// import ModalEditUser from '../Modals/modal_edit_user/ModalEditUser'
+import ModalDeleteDocument from '../Modals/modal_delete_document/ModalDeleteDocument';
 
 const TableDocumentos = ({ data, setData }) => {
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
+  const userRole = Cookies.get('userType');
 
   function formatarData(dt) {
     const dataObj = new Date(dt);
@@ -49,7 +50,7 @@ const TableDocumentos = ({ data, setData }) => {
     {
       title: 'Arquivo',
       dataIndex: 'file',
-      render: (file, record) => (<p onClick={() => handleDownload(record.id, file)}>{file}</p>),
+      render: (file, record) => (<p className={style.link} onClick={() => handleDownload(record.id, file)}>{file}</p>),
     },
     {
       title: 'Tamanho',
@@ -62,6 +63,19 @@ const TableDocumentos = ({ data, setData }) => {
       render: (created_at) => (formatarData(created_at)),
     }
   ];
+
+  if (userRole === "representante") {
+    columns.push({
+      title: 'Operações',
+      dataIndex: 'id',
+      width: '0.5%',
+      render: (id) => (
+        <div className={style.operation}>
+          <ModalDeleteDocument docId={id} data={data} setData={setData} />
+        </div>
+      ),
+    });
+  }
 
   return (
     <Table

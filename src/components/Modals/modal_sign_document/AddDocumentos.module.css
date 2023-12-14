@@ -41,15 +41,6 @@
     background: #FFE08B;
 }
 
-p {
-    color: #2C74AC;
-    font-family: Roboto;
-    font-size: 12px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 150%;
-}
-
 .container_conteudo {
     display: flex;
     flex-direction: column;

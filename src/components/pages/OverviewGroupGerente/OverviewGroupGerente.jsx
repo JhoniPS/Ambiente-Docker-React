@@ -72,6 +72,7 @@ const OverviewGroupGerente = () => {
             customClass={'overViewCard'}
             title="Histórico de reuniões"
             description="Gerencie suas tarefas"
+            to={`/detalhes-de-grupos-gerente/${id}/historico-de-reunioes`}
           />
           <Card
             icon={img4}

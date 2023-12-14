@@ -31,6 +31,7 @@ import OverviewGroupVisualizador from "../components/pages/OverviewGroupVisualiz
 import GroupsVisualizador from "../components/pages/GroupsVisualizador/GroupsVisualizador";
 
 import Documents from "../components/pages/Documents/Documents";
+import HistoricoReuniao from "../components/pages/HistoricoReuniao/HistoricoReuniao";
 
 const PrivateRoute = ({ children, requiredUserType }) => {
     const isAuthenticated = Cookies.get('authToken');
@@ -160,6 +161,15 @@ const RoutesApp = () => {
                     />
 
                     <Route
+                        exact path="/detalhes-de-grupos-gerente/:id/historico-de-reunioes"
+                        element={
+                            <PrivateRoute requiredUserType={["gerente"]}>
+                                <HistoricoReuniao />
+                            </PrivateRoute>
+                        }
+                    />
+
+                    <Route
                         exact path="/detalhes-de-grupos-representante/:id"
                         element={
                             <PrivateRoute requiredUserType={["representante"]}>
@@ -178,6 +188,15 @@ const RoutesApp = () => {
                     />
 
                     <Route
+                        exact path="/detalhes-de-grupos-representante/:id/historico-de-reunioes"
+                        element={
+                            <PrivateRoute requiredUserType={["representante"]}>
+                                <HistoricoReuniao />
+                            </PrivateRoute>
+                        }
+                    />
+
+                    <Route
                         exact path="/detalhes-de-grupos-visualizador/:id"
                         element={
                             <PrivateRoute requiredUserType={["visualizador"]}>
@@ -191,6 +210,15 @@ const RoutesApp = () => {
                         element={
                             <PrivateRoute requiredUserType={["visualizador"]}>
                                 <Documents />
+                            </PrivateRoute>
+                        }
+                    />
+
+                    <Route
+                        exact path="/detalhes-de-grupos-visualizador/:id/historico-de-reunioes"
+                        element={
+                            <PrivateRoute requiredUserType={["visualizador"]}>
+                                <HistoricoReuniao />
                             </PrivateRoute>
                         }
                     />

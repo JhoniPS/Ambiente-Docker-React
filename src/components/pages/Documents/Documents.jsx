@@ -4,6 +4,7 @@ import Cookies from 'js-cookie'
 
 import HeaderBar from '../../layout/header/HeaderBar';
 import SubmitButton from '../../layout/submitbuttun/SubmitButton';
+import Message from '../../layout/Message/Message';
 import style from './Documents.module.css'
 
 import { ImArrowLeft2 } from "react-icons/im";
@@ -14,6 +15,9 @@ import api from '../../../services/api';
 function Documents() {
     const { id } = useParams();
     const [data, setData] = useState([]);
+    const [message, setMessage] = useState('');
+    const [messageType, setMessageType] = useState('');
+    const [showMessage, setShowMessage] = useState(false);
     const [sortOrder, setSortOrder] = useState("desc");
 
     const location = useLocation();
@@ -31,12 +35,21 @@ function Documents() {
     };
 
     useEffect(() => {
+        if (location.state) {
+            setMessage(location.state.message);
+            setMessageType(location.state.messageType);
+            setShowMessage(location.state.showMessage);
+        }
+
+    }, [location.state]);
+
+    useEffect(() => {
         const fetchData = async () => {
             try {
                 const { data } = await api.get(`group/${id}/documents`);
                 setData(data)
             } catch (error) {
-
+                console.log(error)
             }
         }
         fetchData();
@@ -69,6 +82,7 @@ function Documents() {
                     />
                 </section>
                 <TableDocumentos data={sortDocs()} setData={setData} />
+                {showMessage && <Message type={messageType} msg={message} setShowMessage={setShowMessage} />}
             </div>
         </Fragment>
     );
