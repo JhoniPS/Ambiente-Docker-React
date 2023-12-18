@@ -97,8 +97,7 @@ export default function ModalEditGroup({ id, data, setData }) {
         setOpen(true);
     };
 
-    const handleClose = (event) => {
-        event.stopPropagation();
+    const handleClose = () => {
         setOpen(false);
     };
 
@@ -327,6 +326,7 @@ export default function ModalEditGroup({ id, data, setData }) {
                                         rows={10}
                                         sx={{
                                             width: '100%',
+                                            height:'10%'
                                         }}
                                     />
                                 </div>
