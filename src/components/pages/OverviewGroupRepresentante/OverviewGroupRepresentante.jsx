@@ -28,7 +28,7 @@ const OverviewGroupRepresentante = () => {
   const { id } = useParams();
   const [data, setData] = useState({});
 
-  const [members, setMembres] = useState([]);
+  const [members, setMembers] = useState([]);
   const [observacao, setObservacao] = useState("");
   const [representatives, setRepresentatives] = useState([]);
   const [message, setMessage] = useState('');
@@ -56,7 +56,7 @@ const OverviewGroupRepresentante = () => {
         const representatives = data.data.representatives;
 
         setData(group);
-        setMembres(members);
+        setMembers(members);
         setObservacao(observacao);
         setRepresentatives(representatives);
       } catch (error) {
@@ -117,7 +117,7 @@ const OverviewGroupRepresentante = () => {
           />
         </div>
 
-        <TableMemberGroup members={members} setMembres={setMembres} rota={`detalhes-de-grupos-representante/${id}`} />
+        <TableMemberGroup members={members} setMembers={setMembers} rota={`detalhes-de-grupos-representante/${id}`} />
         {showMessage && <Message type={messageType} msg={message} setShowMessage={setShowMessage} />}
 
         <div className={style.container_representantes_observacoes}>

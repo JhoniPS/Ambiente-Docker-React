@@ -1,6 +1,6 @@
 import React, { Fragment, useState } from 'react';
 import { Steps, Divider } from 'antd';
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import api from '../../services/api';
 import styles from './StepAddMember.module.css';
 import FormMember from '../Forms/formMember/FormMember';
@@ -8,6 +8,9 @@ import SubmitButton from '../layout/submitbuttun/SubmitButton';
 import LinkButton from '../../components/layout/linkbutton/LinkButton'
 
 const StepAddMember = () => {
+
+    const navigate = useNavigate();
+
     const [member, setMember] = useState({
         role: '',
         phone: '',
@@ -22,7 +25,7 @@ const StepAddMember = () => {
     const steps = [
         {
             title: 'Membros',
-            content: <FormMember member={member} setMember={setMember} setUser_id={setUser_id} /> ,
+            content: <FormMember member={member} setMember={setMember} setUser_id={setUser_id} />,
         },
     ];
 
@@ -41,6 +44,13 @@ const StepAddMember = () => {
 
         try {
             await api.post(`group/${id}/members`, { updatedFormulario });
+            navigate(`/detalhes-de-grupos-representante/${id}/`, {
+                state: {
+                    message: 'Adicionado com sucesso!',
+                    messageType: 'success',
+                    showMessage: true,
+                }
+            });
         } catch (error) {
             console.error('Erro ao enviar formulário:', error.response.data);
         }

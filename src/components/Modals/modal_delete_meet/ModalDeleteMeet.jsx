@@ -1,26 +1,25 @@
 import React, { useState } from 'react';
+import api from '../../../services/api';
 import { useNavigate, useParams } from 'react-router-dom';
-import api from '../../../services/api'
-import styleButton from './modal_delete_member.module.css'
 
+import styleButton from './modal_delete.module.css'
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
 import { IconContext } from 'react-icons';
 import { IoTrash } from "react-icons/io5";
 import { Typography } from '@mui/material';
 
 const style = {
+    display: 'flex',
     position: 'fixed',
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
     textAlign: 'justify',
-    gap: '2em',
+    gap: '1.5em',
     backgroundColor: '#FFDAD6',
     width: '400px',
     height: '200px',
@@ -54,20 +53,21 @@ const styleTitle = {
     letterSpacing: '0.25px'
 };
 
-export default function ModalDeleteMember({ memberId, groupId, data, setData }) {
+function ModalDeleteMeet({ idMeet, data, setData }) {
     const [open, setOpen] = useState(false);
-    const { id } = useParams();
-
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
+
     const navigate = useNavigate();
+    const { id } = useParams();
 
     const handlDelete = async () => {
         try {
-            await api.delete(`/group/${groupId}/members/${memberId}`);
-            const updatedData = data.filter(item => item.id !== memberId);
+            await api.delete(`/group/${id}/meeting-history/${idMeet}`);
+
+            const updatedData = data.filter(item => item.id !== idMeet);
             setData(updatedData);
-            navigate(`/detalhes-de-grupos-representante/${id}`, {
+            navigate(`/detalhes-de-grupos-representante/${id}/historico-de-reunioes`, {
                 state: {
                     message: 'Deletado com sucesso!',
                     messageType: 'success',
@@ -75,17 +75,22 @@ export default function ModalDeleteMember({ memberId, groupId, data, setData }) 
                 }
             });
         } catch (error) {
-            console.log(error)
+            navigate(`/detalhes-de-grupos-representante/${id}/historico-de-reunioes`, {
+                state: {
+                    message: 'Ops! algo deu errado',
+                    messageType: 'error',
+                    showMessage: true,
+                }
+            });
         }
     };
 
-
     return (
         <div>
-            <IconContext.Provider value={{ color: "#93000A", size: 20 }}>
-                <Button onClick={handleOpen}>
+            <IconContext.Provider value={{ color: "#93000A", size: 25 }}>
+                <button onClick={handleOpen} className={styleButton.button}>
                     <IoTrash />
-                </Button>
+                </button>
             </IconContext.Provider>
 
             <Modal
@@ -95,8 +100,8 @@ export default function ModalDeleteMember({ memberId, groupId, data, setData }) 
                 aria-describedby="modal-modal-description"
             >
                 <Box sx={style}>
-                    <Typography sx={styleTitle}>Deletar membro</Typography>
-                    <Typography sx={styleDescrition}>Você tem certeza que deseja excluir este membro?</Typography>
+                    <Typography sx={styleTitle}>Deletar Documento</Typography>
+                    <Typography sx={styleDescrition}>Você tem certeza que deseja excluir esta reunião?</Typography>
                     <div className={styleButton.button_container}>
                         <button onClick={handleClose} className={styleButton.cancelar}>Cancelar</button>
                         <button onClick={handlDelete} className={styleButton.excluir}>Excluir</button>
@@ -106,3 +111,5 @@ export default function ModalDeleteMember({ memberId, groupId, data, setData }) 
         </div>
     );
 }
+
+export default ModalDeleteMeet;
