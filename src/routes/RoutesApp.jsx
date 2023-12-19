@@ -32,6 +32,7 @@ import GroupsVisualizador from "../components/pages/GroupsVisualizador/GroupsVis
 
 import Documents from "../components/pages/Documents/Documents";
 import HistoricoReuniao from "../components/pages/HistoricoReuniao/HistoricoReuniao";
+import Notas from "../components/pages/Notas/Notas";
 
 const PrivateRoute = ({ children, requiredUserType }) => {
     const isAuthenticated = Cookies.get('authToken');
@@ -50,6 +51,7 @@ const RoutesApp = () => {
         <Router>
             <AuthProvider>
                 <Routes>
+
                     <Route exact path="/" element={<Login />} />
 
                     <Route
@@ -170,6 +172,15 @@ const RoutesApp = () => {
                     />
 
                     <Route
+                        exact path="/detalhes-de-grupos-gerente/:id/notas"
+                        element={
+                            <PrivateRoute requiredUserType={["gerente"]}>
+                                <Notas />
+                            </PrivateRoute>
+                        }
+                    />
+
+                    <Route
                         exact path="/detalhes-de-grupos-representante/:id"
                         element={
                             <PrivateRoute requiredUserType={["representante"]}>
@@ -197,6 +208,15 @@ const RoutesApp = () => {
                     />
 
                     <Route
+                        exact path="/detalhes-de-grupos-representante/:id/notas"
+                        element={
+                            <PrivateRoute requiredUserType={["representante"]}>
+                                <Notas />
+                            </PrivateRoute>
+                        }
+                    />
+
+                    <Route
                         exact path="/detalhes-de-grupos-visualizador/:id"
                         element={
                             <PrivateRoute requiredUserType={["visualizador"]}>
@@ -219,6 +239,15 @@ const RoutesApp = () => {
                         element={
                             <PrivateRoute requiredUserType={["visualizador"]}>
                                 <HistoricoReuniao />
+                            </PrivateRoute>
+                        }
+                    />
+
+                    <Route
+                        exact path="/detalhes-de-grupos-visualizador/:id/notas"
+                        element={
+                            <PrivateRoute requiredUserType={["visualizador"]}>
+                                <Notas />
                             </PrivateRoute>
                         }
                     />

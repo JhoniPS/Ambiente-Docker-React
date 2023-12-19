@@ -60,6 +60,7 @@ const OverviewGroupGerente = () => {
             customClass={'overViewCard'}
             title="Notas"
             description="Gerenciar presentante do sistema"
+            to={`/detalhes-de-grupos-gerente/${id}/notas`}
           />
           <Card
             icon={img2}

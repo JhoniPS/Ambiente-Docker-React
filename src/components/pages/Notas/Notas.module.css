@@ -1,0 +1,55 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    padding: 20px 100px 80px 100px;
+    gap: 20px;
+    height: 100%;
+    background: #ffffffcc;
+}
+
+.button_filters {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+}
+
+.cardNotas {
+    width: 273px;
+    height: 269px;
+    flex-shrink: 0;
+    border-radius: 8px;
+    border: 1px solid rgba(29, 27, 32, 0.06);
+    padding: 1em;
+    opacity: 0.9;
+    transition: 0.3s;
+}
+
+.data {
+    color: rgba(0, 0, 0, 0.70);
+    font-family: Roboto;
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 20px;
+    letter-spacing: 0.1px;
+}
+
+.cardNotas:hover {
+    opacity: 1;
+}
+
+.customColorGreen {
+    background: #BDF8C3;
+}
+
+.customColorYellow {
+    background: #ffe08b;
+}
+
+.customColorBlue {
+    background: #2C74AC;
+}
+
+.customColorRed {
+    background: #F2B8B5;
+}
