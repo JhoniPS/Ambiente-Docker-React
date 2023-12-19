@@ -45,7 +45,7 @@ const Login = () => {
                 <h5>Seja bem vindo(a)!</h5>
                 <p>Digite seu e-mail institucional e a senha para realizar o login.</p>
                 <form className={styles.Form} onSubmit={handleLogin}>
-                    <FormControl focused sx={{ width: 350 }}>
+                    <FormControl focused sx={{ width: '100%' }}>
                         <InputLabel htmlFor="outlined-adornment-password">E-mail</InputLabel>
                         <OutlinedInput
                             type='e-mail'
@@ -63,7 +63,7 @@ const Login = () => {
                         </FormHelperText>
                     </FormControl>
 
-                    <FormControl focused sx={{ width: 350 }} >
+                    <FormControl focused sx={{ width: '100%' }} >
                         <InputLabel htmlFor="outlined-adornment-password">Senha</InputLabel>
                         <OutlinedInput
                             type={showPassword ? 'text' : 'password'}

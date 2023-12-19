@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from "react-router-dom";
 import Cookies from 'js-cookie';
 
 import { AuthProvider } from "../components/contexts/Auth";
@@ -40,268 +40,62 @@ const PrivateRoute = ({ children, requiredUserType }) => {
     const { pathname } = useLocation();
 
     if (pathname === '/profile') {
-        return isAuthenticated ? children : <Error404 isPermissionDenied={userType} />;
+        return isAuthenticated ? children : <Navigate to="/Error404" />;
     }
 
-    return (isAuthenticated && userType.includes(requiredUserType)) ? children : <Error404 isPermissionDenied={userType} />;
+    return isAuthenticated && userType.includes(requiredUserType) ? (
+        children
+    ) : (
+        <Navigate to="/Error404" />
+    );
 };
+
+const routes = [
+    /* Acesso Geral */
+    { path: '/', element: <Login /> },
+    { path: '/Error404', element: <Error404 /> },
+
+    /* Administrador */
+    { path: '/users', element: <PrivateRoute requiredUserType={["administrador"]}><Users /></PrivateRoute> },
+    { path: '/profile', element: <PrivateRoute requiredUserType={["administrador"]}><Profile /></PrivateRoute> },
+    { path: '/signUser', element: <PrivateRoute requiredUserType={["administrador"]}><SignUser /></PrivateRoute> },
+    { path: '/administrador', element: <PrivateRoute requiredUserType={["administrador"]}><Admin /></PrivateRoute> },
+    { path: '/Novo-tipo', element: <PrivateRoute requiredUserType={["administrador"]}><SignTypeUser /></PrivateRoute> },
+    { path: '/Tipos-de-Usuarios', element: <PrivateRoute requiredUserType={["administrador"]}><TypeUsers /></PrivateRoute> },
+
+    /* Gerente */
+    { path: '/gerente', element: <PrivateRoute requiredUserType={["gerente"]}><Manager /></PrivateRoute> },
+    { path: '/signRepresentantes', element: <PrivateRoute requiredUserType={["gerente"]}><SignRepresentatives /></PrivateRoute> },
+    { path: '/signGroups', element: <PrivateRoute requiredUserType={["gerente"]}><SignGroups /></PrivateRoute> },
+    { path: '/groups-gerente', element: <PrivateRoute requiredUserType={["gerente"]}><GroupsGerente /></PrivateRoute> },
+    { path: '/detalhes-de-grupos-gerente/:id', element: <PrivateRoute requiredUserType={["gerente"]}><OverviewGroupGerente /></PrivateRoute> },
+    { path: '/detalhes-de-grupos-gerente/:id/documentos', element: <PrivateRoute requiredUserType={["gerente"]}><Documents /></PrivateRoute> },
+    { path: '/detalhes-de-grupos-gerente/:id/notas', element: <PrivateRoute requiredUserType={["gerente"]}><Notas /></PrivateRoute> },
+    { path: '/detalhes-de-grupos-gerente/:id/historico-de-reunioes', element: <PrivateRoute requiredUserType={["gerente"]}><HistoricoReuniao /></PrivateRoute> },
+
+    /* Representante */
+    { path: '/representante', element: <PrivateRoute requiredUserType={["representante"]}><Representative /></PrivateRoute> },
+    { path: '/groups-representante', element: <PrivateRoute requiredUserType={["representante"]}><GroupsRepresentante /></PrivateRoute> },
+    { path: '/detalhes-de-grupos-representante/:id', element: <PrivateRoute requiredUserType={["representante"]}><OverviewGroupRepresentante /></PrivateRoute> },
+    { path: '/detalhes-de-grupos-representante/:id/notas', element: <PrivateRoute requiredUserType={["representante"]}><Notas /></PrivateRoute> },
+    { path: '/detalhes-de-grupos-representante/:id/documentos', element: <PrivateRoute requiredUserType={["representante"]}><Documents /></PrivateRoute> },
+    { path: '/detalhes-de-grupos-representante/:id/adicionar-membro', element: <PrivateRoute requiredUserType={["representante"]}><SignMember /></PrivateRoute> },
+    { path: '/detalhes-de-grupos-representante/:id/historico-de-reunioes', element: <PrivateRoute requiredUserType={["representante"]}><HistoricoReuniao /></PrivateRoute> },
+    
+    /* Visualizador */
+    { path: '/visualizador', element: <PrivateRoute requiredUserType={["visualizador"]}><Viewer /></PrivateRoute> },
+    { path: '/groups-visualizador', element: <PrivateRoute requiredUserType={["visualizador"]}><GroupsVisualizador /></PrivateRoute> },
+    { path: '/detalhes-de-grupos-visualizador/:id', element: <PrivateRoute requiredUserType={["visualizador"]}><OverviewGroupVisualizador /></PrivateRoute> },
+    { path: '/detalhes-de-grupos-visualizador/:id/notas', element: <PrivateRoute requiredUserType={["visualizador"]}><Notas /></PrivateRoute> },
+    { path: '/detalhes-de-grupos-visualizador/:id/documentos', element: <PrivateRoute requiredUserType={["visualizador"]}><Documents /></PrivateRoute> },
+    { path: '/detalhes-de-grupos-visualizador/:id/historico-de-reunioes', element: <PrivateRoute requiredUserType={["visualizador"]}><HistoricoReuniao /></PrivateRoute> },
+];
 
 const RoutesApp = () => {
     return (
         <Router>
             <AuthProvider>
-                <Routes>
-
-                    <Route exact path="/" element={<Login />} />
-
-                    <Route
-                        exact path="/administrador"
-                        element={
-                            <PrivateRoute requiredUserType={["administrador"]}>
-                                <Admin />
-                            </PrivateRoute>
-                        }
-                    />
-
-                    <Route
-                        exact path="/gerente"
-                        element={
-                            <PrivateRoute requiredUserType={["gerente"]}>
-                                <Manager />
-                            </PrivateRoute>
-                        }
-                    />
-
-                    <Route
-                        exact path="/representante"
-                        element={
-                            <PrivateRoute requiredUserType={["representante"]}>
-                                <Representative />
-                            </PrivateRoute>
-                        }
-                    />
-
-                    <Route
-                        exact path="/visualizador"
-                        element={
-                            <PrivateRoute requiredUserType={["visualizador"]}>
-                                <Viewer />
-                            </PrivateRoute>
-                        }
-                    />
-
-                    <Route
-                        exact path="/profile"
-                        element={
-                            <PrivateRoute requiredUserType={["administrador"]}>
-                                <Profile />
-                            </PrivateRoute>
-                        }
-                    />
-
-                    <Route
-                        exact path="/users"
-                        element={
-                            <PrivateRoute requiredUserType={["administrador"]}>
-                                <Users />
-                            </PrivateRoute>
-                        }
-                    />
-
-                    <Route
-                        exact path="/groups-gerente"
-                        element={
-                            <PrivateRoute requiredUserType={["gerente"]}>
-                                <GroupsGerente />
-                            </PrivateRoute>
-                        }
-                    />
-
-                    <Route
-                        exact path="/groups-representante"
-                        element={
-                            <PrivateRoute requiredUserType={["representante"]}>
-                                <GroupsRepresentante />
-                            </PrivateRoute>
-                        }
-                    />
-
-                    <Route
-                        exact path="/groups-visualizador"
-                        element={
-                            <PrivateRoute requiredUserType={["visualizador"]}>
-                                <GroupsVisualizador />
-                            </PrivateRoute>
-                        }
-                    />
-
-                    <Route
-                        exact path="/detalhes-de-grupos-representante/:id/adicionar-membro"
-                        element={
-                            <PrivateRoute requiredUserType={["representante"]}>
-                                <SignMember />
-                            </PrivateRoute>
-                        }
-                    />
-
-                    <Route
-                        exact path="/detalhes-de-grupos-gerente/:id"
-                        element={
-                            <PrivateRoute requiredUserType={["gerente"]}>
-                                <OverviewGroupGerente />
-                            </PrivateRoute>
-                        }
-                    />
-
-                    <Route
-                        exact path="/detalhes-de-grupos-gerente/:id/documentos"
-                        element={
-                            <PrivateRoute requiredUserType={["gerente"]}>
-                                <Documents />
-                            </PrivateRoute>
-                        }
-                    />
-
-                    <Route
-                        exact path="/detalhes-de-grupos-gerente/:id/historico-de-reunioes"
-                        element={
-                            <PrivateRoute requiredUserType={["gerente"]}>
-                                <HistoricoReuniao />
-                            </PrivateRoute>
-                        }
-                    />
-
-                    <Route
-                        exact path="/detalhes-de-grupos-gerente/:id/notas"
-                        element={
-                            <PrivateRoute requiredUserType={["gerente"]}>
-                                <Notas />
-                            </PrivateRoute>
-                        }
-                    />
-
-                    <Route
-                        exact path="/detalhes-de-grupos-representante/:id"
-                        element={
-                            <PrivateRoute requiredUserType={["representante"]}>
-                                <OverviewGroupRepresentante />
-                            </PrivateRoute>
-                        }
-                    />
-
-                    <Route
-                        exact path="/detalhes-de-grupos-representante/:id/documentos"
-                        element={
-                            <PrivateRoute requiredUserType={["representante"]}>
-                                <Documents />
-                            </PrivateRoute>
-                        }
-                    />
-
-                    <Route
-                        exact path="/detalhes-de-grupos-representante/:id/historico-de-reunioes"
-                        element={
-                            <PrivateRoute requiredUserType={["representante"]}>
-                                <HistoricoReuniao />
-                            </PrivateRoute>
-                        }
-                    />
-
-                    <Route
-                        exact path="/detalhes-de-grupos-representante/:id/notas"
-                        element={
-                            <PrivateRoute requiredUserType={["representante"]}>
-                                <Notas />
-                            </PrivateRoute>
-                        }
-                    />
-
-                    <Route
-                        exact path="/detalhes-de-grupos-visualizador/:id"
-                        element={
-                            <PrivateRoute requiredUserType={["visualizador"]}>
-                                <OverviewGroupVisualizador />
-                            </PrivateRoute>
-                        }
-                    />
-
-                    <Route
-                        exact path="/detalhes-de-grupos-visualizador/:id/documentos"
-                        element={
-                            <PrivateRoute requiredUserType={["visualizador"]}>
-                                <Documents />
-                            </PrivateRoute>
-                        }
-                    />
-
-                    <Route
-                        exact path="/detalhes-de-grupos-visualizador/:id/historico-de-reunioes"
-                        element={
-                            <PrivateRoute requiredUserType={["visualizador"]}>
-                                <HistoricoReuniao />
-                            </PrivateRoute>
-                        }
-                    />
-
-                    <Route
-                        exact path="/detalhes-de-grupos-visualizador/:id/notas"
-                        element={
-                            <PrivateRoute requiredUserType={["visualizador"]}>
-                                <Notas />
-                            </PrivateRoute>
-                        }
-                    />
-
-                    <Route
-                        exact path="/signRepresentantes"
-                        element={
-                            <PrivateRoute requiredUserType={["gerente"]}>
-                                <SignRepresentatives />
-                            </PrivateRoute>
-                        }
-                    />
-
-                    <Route
-                        exact path="/signGroups"
-                        element={
-                            <PrivateRoute requiredUserType={["gerente"]}>
-                                <SignGroups />
-                            </PrivateRoute>
-                        }
-                    />
-
-                    <Route
-                        exact path="/signUser"
-                        element={
-                            <PrivateRoute requiredUserType={["administrador"]}>
-                                <SignUser />
-                            </PrivateRoute>
-                        }
-                    />
-
-                    <Route
-                        exact path="/Tipos-de-Usuarios"
-                        element={
-                            <PrivateRoute requiredUserType={["administrador"]}>
-                                <TypeUsers />
-                            </PrivateRoute>
-                        }
-                    />
-
-                    <Route
-                        exact path="/Novo-tipo"
-                        element={
-                            <PrivateRoute requiredUserType={["administrador"]}>
-                                <SignTypeUser />
-                            </PrivateRoute>
-                        }
-                    />
-
-                    <Route
-                        exact path="/Error404"
-                        element={<Error404 />}
-                    />
-                </Routes>
+                <Routes>{routes.map((route, index) => <Route key={index} {...route} />)}</Routes>
             </AuthProvider>
         </Router>
     );
