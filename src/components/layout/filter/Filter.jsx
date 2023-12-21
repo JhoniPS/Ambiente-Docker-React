@@ -43,28 +43,6 @@ const Filter = () => {
                     </nav>
 
                     <div className={style.container_conteudo}>
-                        <p>Data de Criação</p>
-                        <div className={style.data}>
-                            <DatePicker
-                                size='large'
-                                placeholder='Selecione uma data'
-                                style={{
-                                    width: '100%',
-                                    height: '70px',
-                                    zIndex: 1,
-                                }}
-                            />
-                            <DatePicker
-                                size='large'
-                                placeholder='Selecione uma data'
-                                style={{
-                                    width: '100%',
-                                    height: '70px',
-                                    zIndex: 1,
-                                }}
-                            />
-                        </div>
-
                         <p>Representante</p>
                         <div>
                             <Select
@@ -79,19 +57,6 @@ const Filter = () => {
                         </div>
 
                         <div className={style.select}>
-                            <div>
-                                Equipe
-                                <Select
-                                    placeholder='Selecione uma equipe'
-                                    size='large'
-                                    type='text'
-                                    style={{
-                                        width: '100%',
-                                        height: '70px',
-                                    }}
-                                />
-                            </div>
-
                             <div>
                                 Unidade
                                 <Select
@@ -109,19 +74,6 @@ const Filter = () => {
                                 Conselho
                                 <Select
                                     placeholder='Selecione um conselho'
-                                    size='large'
-                                    type='text'
-                                    style={{
-                                        width: '100%',
-                                        height: '70px',
-                                    }}
-                                />
-                            </div>
-
-                            <div>
-                                Orgão
-                                <Select
-                                    placeholder='Selecione um orgão'
                                     size='large'
                                     type='text'
                                     style={{

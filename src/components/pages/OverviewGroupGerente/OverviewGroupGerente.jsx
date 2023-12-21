@@ -51,7 +51,7 @@ const OverviewGroupGerente = () => {
   }, [id]);
   return (
     <Fragment>
-      <HeaderBar text="PAINEL DE CONTROLE" backPageIcon={<ImArrowLeft2 size={25} />} backPage="/groups-gerente" />
+      <HeaderBar text="PAINEL DE CONTROLE" backPageIcon={<ImArrowLeft2 size={25} />} backPage="/gerente" />
       <div className={style.representatives}>
         <h2>Overview</h2>
         <Container customClass='start'>

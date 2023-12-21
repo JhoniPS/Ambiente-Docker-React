@@ -1,8 +1,6 @@
 import React, { Fragment, useState, useEffect } from 'react'
-import HeaderBar from '../../layout/header/HeaderBar';
 import SubmitButton from '../../layout/submitbuttun/SubmitButton';
 
-import { ImArrowLeft2 } from "react-icons/im";
 import style from './Groups.module.css'
 
 import TableGroups from '../../TableGroups/TableGroups'
@@ -48,7 +46,7 @@ const GroupsRepresentante = () => {
 
     return (
         <Fragment>
-            <HeaderBar text="PAINEL DE CONTROLE" backPageIcon={<ImArrowLeft2 size={25} />} backPage="/representante" />
+            {/* <HeaderBar text="PAINEL DE CONTROLE" backPageIcon={<ImArrowLeft2 size={25} />} backPage="/representante" /> */}
             <div className={style.groups}>
                 <h2>Grupos</h2>
                 <Filter />

@@ -66,7 +66,7 @@ export default function EditTypeUser({ id, data, setData }) {
                 return item;
             });
             setData(updatedData);
-            navigate('/Tipos-de-Usuarios', {
+            navigate('/administrador', {
                 state: {
                     message: 'Atualizado com sucesso!',
                     messageType: 'success',

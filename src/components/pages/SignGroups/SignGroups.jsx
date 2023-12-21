@@ -9,7 +9,7 @@ import StepGroupRegister from '../../steps/StepGroupRegister'
 const SignGroups = () => {
   return (
     <Fragment>
-      <HeaderBar text="PAINEL DE CONTROLE" backPageIcon={<ImArrowLeft2 size={25} />} backPage="/groups-gerente" />
+      <HeaderBar text="PAINEL DE CONTROLE" backPageIcon={<ImArrowLeft2 size={25} />} backPage="/gerente" />
       <div className={styles.sign_groups}>
         <section className={styles.section_group}>
           <StepGroupRegister />

@@ -50,7 +50,7 @@ const SignUser = () => {
       });
 
       await api.post('/register', updateUser).then(() => {
-        navigate('/users', {
+        navigate('/administrador', {
           state: {
             message: 'Criado com sucesso!',
             messageType: 'success',

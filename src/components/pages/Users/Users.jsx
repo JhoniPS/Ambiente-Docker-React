@@ -1,8 +1,7 @@
 import { Fragment, useState, useEffect } from "react";
-import HeaderBar from "../../layout/header/HeaderBar";
 import SubmitButton from "../../layout/submitbuttun/SubmitButton"
+import TypeUsers from '../TypeUsers/TypeUsers'
 
-import { ImArrowLeft2 } from "react-icons/im";
 import { IoMdAdd } from "react-icons/io";
 import style from "./Users.module.css"
 
@@ -43,7 +42,6 @@ const Users = () => {
 
   return (
     <Fragment>
-      <HeaderBar text="PAINEL DE CONTROLE" backPageIcon={<ImArrowLeft2 size={25} />} backPage="/administrador" />
       <div className={style.users}>
         <h2>Usuários</h2>
         <section className={style.section_search}>
@@ -74,6 +72,8 @@ const Users = () => {
           />
         </section>
         <TableUser data={sortUsers()} setData={setData} />
+
+        <TypeUsers />
         {showMessage && <Message type={messageType} msg={message} setShowMessage={setShowMessage} />}
       </div>
     </Fragment>

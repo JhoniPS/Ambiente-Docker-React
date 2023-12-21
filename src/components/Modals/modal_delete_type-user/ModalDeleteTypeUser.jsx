@@ -67,7 +67,7 @@ export default function ModalDeleteUser({ id, data, setData }) {
             await deleteTypeUser({ id })
             const updatedData = data.filter(item => item.id !== id);
             setData(updatedData);
-            navigate('/Tipos-de-Usuarios', {
+            navigate('/administrador', {
                 state: {
                     message: 'Deletado com sucesso!',
                     messageType: 'success',
@@ -75,7 +75,7 @@ export default function ModalDeleteUser({ id, data, setData }) {
                 }
             });
         } catch (e) {
-            navigate('/Tipos-de-Usuarios', {
+            navigate('/administrador', {
                 state: {
                     message: `${e.reponse.errors}`,
                     messageType: 'error',

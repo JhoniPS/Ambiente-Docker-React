@@ -74,11 +74,11 @@ export default function ModalEditGroup({ id, data, setData }) {
             await api.delete(`/group/${id}`);
             const updatedData = data.filter(item => item.id !== id);
             setData(updatedData);
-            navigate('/groups-gerente', { state: { message: 'Deletado com sucesso!', messagetype: 'success' } });
+            navigate('/gerente', { state: { message: 'Deletado com sucesso!', messagetype: 'success' } });
             handleClose();
         } catch (e) {
             console.error(e);
-            navigate('/groups-gerente', { state: { message: `${e.response.data.errors || 'Ops! algo deu errado'}`, messagetype: 'error' } });
+            navigate('/gerente', { state: { message: `${e.response.data.errors || 'Ops! algo deu errado'}`, messagetype: 'error' } });
         }
     };
 

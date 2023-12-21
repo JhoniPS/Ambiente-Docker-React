@@ -163,7 +163,7 @@ const StepGroupRegister = () => {
 
         try {
             await api.post('group', updatedFormulario).then(() => {
-                navigate('/groups-gerente', {
+                navigate('/gerente', {
                     state: {
                         message: 'Grupo criado com sucesso!',
                         messagetype: 'success',

@@ -53,28 +53,6 @@ const FilterUser = ({ setData }) => {
                     </nav>
 
                     <div className={style.container_conteudo}>
-                        <p>Data de Criação</p>
-                        <div className={style.data}>
-                            <DatePicker
-                                size='large'
-                                placeholder='Selecione uma data'
-                                style={{
-                                    width: '100%',
-                                    height: '70px',
-                                    zIndex: 1,
-                                }}
-                            />
-                            <DatePicker
-                                size='large'
-                                placeholder='Selecione uma data'
-                                style={{
-                                    width: '100%',
-                                    height: '70px',
-                                    zIndex: 1,
-                                }}
-                            />
-                        </div>
-
                         <p>Usuário</p>
                         <div>
                             <Input
@@ -88,35 +66,22 @@ const FilterUser = ({ setData }) => {
                             />
                         </div>
 
-                        <div className={style.select}>
-                            <div>
-                                Email
-                                <Input
-                                    placeholder='Selecione o email'
-                                    size='large'
-                                    type='text'
-                                    value={email}
-                                    onChange={(e) => setEmail(e.target.value)}
-                                    style={{
-                                        width: '100%',
-                                        height: '70px',
-                                    }}
-                                />
-                            </div>
 
-                            <div>
-                                Tipo de usuário
-                                <Select
-                                    placeholder='Selecione o tipo de usuário'
-                                    size='large'
-                                    type='text'
-                                    style={{
-                                        width: '100%',
-                                        height: '70px',
-                                    }}
-                                />
-                            </div>
+                        <div>
+                            Email
+                            <Input
+                                placeholder='Selecione o email'
+                                size='large'
+                                type='text'
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                style={{
+                                    width: '100%',
+                                    height: '70px',
+                                }}
+                            />
                         </div>
+
 
                         <section className={style.buttons}>
                             <SubmitButton

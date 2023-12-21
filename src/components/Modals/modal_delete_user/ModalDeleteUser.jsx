@@ -66,7 +66,7 @@ export default function ModalDeleteUser({ id, data, setData }) {
             await api.delete(`users/${id}`).then(() => {
                 const updatedData = data.filter(item => item.id !== id);
                 setData(updatedData);
-                navigate('/users', {
+                navigate('/administrador', {
                     state: {
                         message: 'Deletado com sucesso!',
                         messageType: 'success',
@@ -75,7 +75,7 @@ export default function ModalDeleteUser({ id, data, setData }) {
                 });
             })
         } catch (error) {
-            navigate('/users', {
+            navigate('/administrador', {
                 state: {
                     message: 'Ops! algo deu errado',
                     messageType: 'error',

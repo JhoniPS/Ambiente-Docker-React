@@ -1,8 +1,6 @@
 .typeUsers {
     display: flex;
     flex-direction: column;
-    padding: 20px 100px 0px 100px;
     gap: 20px;
-    height: 100vh;
     background: #ffffffcc;
 }

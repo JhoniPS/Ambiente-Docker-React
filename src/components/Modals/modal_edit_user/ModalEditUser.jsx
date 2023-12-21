@@ -44,7 +44,7 @@ const EditUser = ({ id, data, setData }) => {
             }
 
             setData(data.map(item => (item.id === id ? updatedUser : item)));
-            navigate('/users', {
+            navigate('/administrador', {
                 state: {
                     message: 'Atualizado com sucesso!',
                     messageType: 'success',
@@ -60,7 +60,7 @@ const EditUser = ({ id, data, setData }) => {
                 password: apiErrors.password ? apiErrors.password[0] : null,
             });
 
-            navigate('/users', { state: { message: 'Ops algo deu errado!', messagetype: 'error' } });
+            navigate('/administrador', { state: { message: 'Ops algo deu errado!', messagetype: 'error' } });
         }
     }
 

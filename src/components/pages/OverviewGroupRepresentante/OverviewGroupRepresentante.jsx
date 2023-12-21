@@ -69,7 +69,7 @@ const OverviewGroupRepresentante = () => {
 
   return (
     <Fragment>
-      <HeaderBar text="PAINEL DE CONTROLE" backPageIcon={<ImArrowLeft2 size={25} />} backPage="/groups-representante" />
+      <HeaderBar text="PAINEL DE CONTROLE" backPageIcon={<ImArrowLeft2 size={25} />} backPage="/representante" />
       <div className={style.representatives}>
         <h2>Overview</h2>
         <Container customClass='start'>
