@@ -1,16 +1,18 @@
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Table } from 'antd';
+import Cookies from 'js-cookie'
 
 import ModalDeleteMember from '../Modals/modal_delete_member/ModalDeleteMember';
 import ModalEditMember from '../Modals/modal_edit_member/ModalEditMember';
 
 import style from './TableMemberGroup.module.css';
 
-const TableMemberGroup = ({ members, setMembers, rota }) => {
+const TableMemberGroup = ({ members, setMembers }) => {
   const { id } = useParams();
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
+  const userRole = Cookies.get('userType');
 
   const columns = [
     {
@@ -48,7 +50,7 @@ const TableMemberGroup = ({ members, setMembers, rota }) => {
     },
   ];
 
-  if (rota === `detalhes-de-grupos-representante/${id}`) {
+  if (userRole === 'representante') {
     columns.push({
       title: 'Operações',
       dataIndex: 'id',
@@ -88,6 +90,7 @@ const TableMemberGroup = ({ members, setMembers, rota }) => {
           },
         }}
       />
+
     </div>
   );
 };

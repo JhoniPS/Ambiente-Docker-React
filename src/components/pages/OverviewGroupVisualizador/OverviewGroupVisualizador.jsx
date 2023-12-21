@@ -53,7 +53,7 @@ const OverviewGroupVisualizador = () => {
 
   return (
     <Fragment>
-      <HeaderBar text="PAINEL DE CONTROLE" backPageIcon={<ImArrowLeft2 size={25} />} backPage="/groups-visualizador" />
+      <HeaderBar text="PAINEL DE CONTROLE" backPageIcon={<ImArrowLeft2 size={25} />} backPage="/visualizador" />
       <div className={style.representatives}>
         <h2>Overview</h2>
         <Container customClass='start'>
@@ -97,7 +97,7 @@ const OverviewGroupVisualizador = () => {
           <h2>Membros</h2>
         </div>
 
-        <TableMemberGroup members={members} setMembres={setMembres} rota={`detalhes-de-grupos-visualizador/${id}`} />
+        <TableMemberGroup members={members} setMembres={setMembres} />
 
         <div className={style.container_representantes_observacoes}>
           <section>

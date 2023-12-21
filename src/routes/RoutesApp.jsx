@@ -83,8 +83,8 @@ const routes = [
     { path: '/detalhes-de-grupos-representante/:id/historico-de-reunioes', element: <PrivateRoute requiredUserType={["representante"]}><HistoricoReuniao /></PrivateRoute> },
     
     /* Visualizador */
-    { path: '/visualizador', element: <PrivateRoute requiredUserType={["visualizador"]}><Viewer /></PrivateRoute> },
-    { path: '/groups-visualizador', element: <PrivateRoute requiredUserType={["visualizador"]}><GroupsVisualizador /></PrivateRoute> },
+    { path: '/visualizador', element: <PrivateRoute requiredUserType={["visualizador"]}><GroupsVisualizador /></PrivateRoute> },
+    // { path: '/groups-visualizador', element: <PrivateRoute requiredUserType={["visualizador"]}><Viewer /></PrivateRoute> },
     { path: '/detalhes-de-grupos-visualizador/:id', element: <PrivateRoute requiredUserType={["visualizador"]}><OverviewGroupVisualizador /></PrivateRoute> },
     { path: '/detalhes-de-grupos-visualizador/:id/notas', element: <PrivateRoute requiredUserType={["visualizador"]}><Notas /></PrivateRoute> },
     { path: '/detalhes-de-grupos-visualizador/:id/documentos', element: <PrivateRoute requiredUserType={["visualizador"]}><Documents /></PrivateRoute> },

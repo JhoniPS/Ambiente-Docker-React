@@ -9,11 +9,15 @@ import style from './Notas.module.css'
 import { ImArrowLeft2 } from "react-icons/im";
 import AddNotas from '../../Modals/modal_sign_notas/AddNotas';
 import Container from '../../layout/container/Container';
+import Message from '../../layout/Message/Message';
 import { Divider } from 'antd';
+import api from '../../../services/api';
+import ModalDeleteNota from '../../Modals/modal_delete_notas/ModalDeleteNota';
+import ModalEditNota from '../../Modals/modal_edit_notas/ModalEditNota';
 
 export default function Notas() {
     const { id } = useParams();
-    const [data, setData] = useState([]);
+    const [notas, setNotas] = useState([]);
     const [message, setMessage] = useState('');
     const [messageType, setMessageType] = useState('');
     const [showMessage, setShowMessage] = useState(false);
@@ -24,7 +28,7 @@ export default function Notas() {
     const userRole = Cookies.get('userType');
 
     const sortDocs = () => {
-        return [...data].sort((a, b) => {
+        return [...notas].sort((a, b) => {
             if (sortOrder === "desc") {
                 return new Date(b.created_at) - new Date(a.created_at);
             } else {
@@ -32,6 +36,37 @@ export default function Notas() {
             }
         });
     };
+
+    function formatarData(dt) {
+        const dataObj = new Date(dt);
+        const ano = dataObj.getFullYear();
+        const mes = String(dataObj.getMonth() + 1).padStart(2, '0');
+        const dia = String(dataObj.getDate()).padStart(2, '0');
+
+        return `${dia}/${mes}/${ano}`;
+    }
+
+    useEffect(() => {
+        if (location.state) {
+            setMessage(location.state.message);
+            setMessageType(location.state.messageType);
+            setShowMessage(location.state.showMessage);
+        }
+
+    }, [location.state]);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await api.get(`notes`);
+                setNotas(response.data);
+            } catch (error) {
+                console.log(error);
+            }
+        }
+
+        fetchData();
+    }, [id])
 
     return (
         <Fragment>
@@ -41,7 +76,7 @@ export default function Notas() {
                 {
                     userRole === 'representante' &&
                     <section className={style.section_filter}>
-                        <AddNotas data={data} setData={setData} />
+                        <AddNotas data={notas} setData={setNotas} />
                     </section>
                 }
 
@@ -59,30 +94,20 @@ export default function Notas() {
                     />
                 </section>
                 <Container customClass="start">
-                    <div className={`${style.cardNotas} ${style.customColorGreen}`}>
-                        <p className={style.data}>xx/xx/xxxx</p>
-                        <h3>Brainstorming</h3>
-                        <Divider style={{ marginTop: 5 }} />
-                    </div>
-
-                    <div className={`${style.cardNotas} ${style.customColorYellow}`}>
-                        <p className={style.data}>xx/xx/xxxx</p>
-                        <h3>Brainstorming</h3>
-                        <Divider style={{ marginTop: 5 }} />
-                    </div>
-
-                    <div className={`${style.cardNotas} ${style.customColorBlue}`}>
-                        <p className={style.data}>xx/xx/xxxx</p>
-                        <h3>Brainstorming</h3>
-                        <Divider style={{ marginTop: 5 }} />
-                    </div>
-
-                    <div className={`${style.cardNotas} ${style.customColorRed}`}>
-                        <p className={style.data}>xx/xx/xxxx</p>
-                        <h3>Brainstorming</h3>
-                        <Divider style={{ marginTop: 5 }} />
-                    </div>
+                    {sortDocs().map((nota) => (
+                        <div className={`${style.cardNotas} ${style[nota.color]}`} key={nota.id}>
+                            <p className={style.data}>{formatarData(nota.created_at)}</p>
+                            <h3>{nota.title}</h3>
+                            <Divider style={{ marginTop: 5 }} />
+                            <p className={style.description}>{nota.description}</p>
+                            <div className={style.container_button}>
+                                <ModalDeleteNota idNote={nota.id} data={notas} setData={setNotas} />
+                                <ModalEditNota idNota={nota.id} data={notas} setData={setNotas} />
+                            </div>
+                        </div>
+                    ) || "Sem dados")}
                 </Container>
+                {showMessage && <Message type={messageType} msg={message} setShowMessage={setShowMessage} />}
             </div>
         </Fragment>
     )

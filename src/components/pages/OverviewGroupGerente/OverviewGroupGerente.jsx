@@ -92,7 +92,7 @@ const OverviewGroupGerente = () => {
         <TableDetalhe data={data} />
 
         <h2>Membros</h2>
-        <TableMemberGroup members={members} setMembres={setMembres} rota={`detalhes-de-grupos-gerente/${id}`} />
+        <TableMemberGroup members={members} setMembres={setMembres} />
 
         <div className={style.container_representantes_observacoes}>
           <section>

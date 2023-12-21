@@ -1,20 +1,20 @@
-import React, { Fragment, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import React, { Fragment, useState, useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import api from '../../../services/api'
 
 import Modal from '@mui/material/Modal';
 import SubmitButton from '../../layout/submitbuttun/SubmitButton';
 import TextArea from 'antd/es/input/TextArea';
 
-import style from './AddNotas.module.css';
+import style from './ModalEditNota.module.css';
 
 import { Divider } from 'antd';
 import { IconContext } from 'react-icons';
-import { IoMdAdd } from 'react-icons/io';
+import { IoPencilSharp } from 'react-icons/io5';
 import { TextField } from '@mui/material';
 
 
-const AddNotas = ({ data, setData }) => {
+const ModalEditNota = ({ idNota, data, setData }) => {
     const [open, setOpen] = useState(false);
     const [nota, setNota] = useState({
         title: '',
@@ -27,6 +27,28 @@ const AddNotas = ({ data, setData }) => {
 
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
+
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await api.get(`notes/${idNota}`);
+                const noteData = response.data;
+
+                setNota({
+                    title: noteData.title || '',
+                    description: noteData.description || '',
+                    color: noteData.color || '',
+                });
+            } catch (error) {
+                console.error(error);
+            }
+        };
+
+        if (open) {
+            fetchData();
+        }
+    }, [idNota, open]);
 
     const handleColorButtonClick = (color) => {
         setNota({ ...nota, color: color });
@@ -42,8 +64,16 @@ const AddNotas = ({ data, setData }) => {
 
     const submit = async () => {
         try {
-            const response = await api.post(`group/${id}/notes`, nota)
-            setData([...data, response.data]);
+            await api.put(`notes/${idNota}`, nota)
+
+            const updatedData = data.map((item) => {
+                if (item.id === idNota) {
+                    return { ...item, ...nota };
+                }
+                return item;
+            });
+
+            setData(updatedData);
             navigate(`/detalhes-de-grupos-representante/${id}/notas`, {
                 state: {
                     message: 'Atualizado com sucesso!',
@@ -51,7 +81,6 @@ const AddNotas = ({ data, setData }) => {
                     showMessage: true,
                 }
             });
-            handleClose();
         } catch (error) {
             navigate(`/detalhes-de-grupos-representante/${id}/notas`, {
                 state: {
@@ -65,10 +94,9 @@ const AddNotas = ({ data, setData }) => {
 
     return (
         <Fragment>
-            <IconContext.Provider value={{ size: 25 }}>
+            <IconContext.Provider value={{ color: "#000", size: 25 }}>
                 <button onClick={handleOpen} className={style.button}>
-                    {<IoMdAdd />}
-                    <h1>Add Notas</h1>
+                    {<IoPencilSharp />}
                 </button>
             </IconContext.Provider>
             <Modal
@@ -152,4 +180,4 @@ const AddNotas = ({ data, setData }) => {
     );
 };
 
-export default AddNotas;
+export default ModalEditNota;

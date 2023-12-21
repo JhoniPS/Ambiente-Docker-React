@@ -11,7 +11,7 @@ import Modal from '@mui/material/Modal';
 import SubmitButton from '../../layout/submitbuttun/SubmitButton';
 import style from './AddMeet.module.css';
 
-import { Divider, Button } from 'antd';
+import { Divider } from 'antd';
 import { IconContext } from 'react-icons';
 import { IoMdAdd } from 'react-icons/io';
 

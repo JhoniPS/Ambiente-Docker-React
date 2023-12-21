@@ -1,0 +1,50 @@
+.button_container {
+    display: flex;
+    gap: 3em;
+    margin-left: 140px;
+}
+
+.button_container>button {
+    display: flex;
+    height: 40px;
+    font-size: 20px;
+    font-family: Roboto;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #FFDAD6;
+    border: none;
+    gap: 8px;
+}
+
+.button {
+    display: flex;
+    width: 38px;
+    height: 38px;
+    padding: 10px 2px 10px;
+    justify-content: center;
+    align-items: center;
+    font-size: 10px;
+    border-radius: 5px;
+    border: none;
+    color: #FFF;
+    background: transparent;
+}
+
+.excluir {
+    color: #BA1A1A;
+    text-align: center;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 20px;
+    letter-spacing: 0.1px;
+}
+
+.cancelar {
+    color: #2C74AC;
+    text-align: center;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 20px;
+    letter-spacing: 0.1px;
+}

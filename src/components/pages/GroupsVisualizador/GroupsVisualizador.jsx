@@ -3,6 +3,7 @@ import HeaderBar from '../../layout/header/HeaderBar';
 import SubmitButton from '../../layout/submitbuttun/SubmitButton';
 
 import { ImArrowLeft2 } from "react-icons/im";
+import MenuAppBar from '../../layout/AppBar/MenuAppBar';
 import style from './Groups.module.css';
 
 import TableGroups from '../../TableGroups/TableGroups';
@@ -48,7 +49,8 @@ const GroupsVisualizador = () => {
 
     return (
         <Fragment>
-            <HeaderBar text="PAINEL DE CONTROLE" backPageIcon={<ImArrowLeft2 size={25} />} backPage="/visualizador" />
+            {/* <HeaderBar text="PAINEL DE CONTROLE" backPageIcon={<ImArrowLeft2 size={25} />} backPage="/visualizador" /> */}
+            <MenuAppBar />
             <div className={style.groups}>
                 <h2>Grupos</h2>
                 <Filter />

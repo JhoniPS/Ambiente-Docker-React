@@ -118,7 +118,7 @@ const OverviewGroupRepresentante = () => {
           />
         </div>
 
-        <TableMemberGroup members={members} setMembers={setMembers} rota={`detalhes-de-grupos-representante/${id}`} />
+        <TableMemberGroup members={members} setMembers={setMembers}/>
         {showMessage && <Message type={messageType} msg={message} setShowMessage={setShowMessage} />}
 
         <div className={style.container_representantes_observacoes}>
