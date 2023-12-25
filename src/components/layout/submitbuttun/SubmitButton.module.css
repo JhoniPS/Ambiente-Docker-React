@@ -1,7 +1,7 @@
 .btn {
     display: flex;
-    width: 146px;
-    height: 38px;
+    width: 170px;
+    height: 40px;
     background-color: #2C74AC;
     color: #FFF;
     border: none;
@@ -13,6 +13,7 @@
     cursor: pointer;
     justify-content: center;
     align-items: center;
+    outline: none;
     border-radius: 10px;
     gap: 8px;
 }

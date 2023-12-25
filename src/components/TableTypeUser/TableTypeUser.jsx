@@ -1,17 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import useAuthContext from '../contexts/Auth';
 import api from '../../services/api';
-import { Table } from 'antd';
+
+import { MaterialReactTable, } from 'material-react-table';
 import { IconContext } from 'react-icons';
-import style from './TableTypeUser.module.css'
+
 import ModalEditTypeUser from '../Modals/modal_edit_type_user/ModalEditTypeUser';
 import ModalDeleteUser from '../Modals/modal_delete_type-user/ModalDeleteTypeUser';
 
 const TableTypeUser = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [page, setPage] = useState(1);
-  const [pageSize, setPageSize] = useState(10);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -31,28 +29,21 @@ const TableTypeUser = () => {
 
   const columns = [
     {
-      title: 'Tipos de usuario',
-      dataIndex: 'name',
-      width: '100%',
-      render: (name) => `${name}`
+      header: 'Tipos de usuario',
+      accessorKey: 'name',
+      size: 1000,
     },
 
     {
-      title: 'Operação',
-      dataIndex: 'id',
-      width: '5%',
-      align: 'center',
-
-      render: (id) => (
-        <div className={style.operation}>
-          <ModalDeleteUser id={id} data={data} setData={setData} />
-
+      header: null,
+      accessorKey: 'id',
+      columnDefType: 'display',
+  
+      Cell: ({ row }) => (
+        <div className="d-flex justify-content-center">
+          <ModalDeleteUser id={row.original.id} data={data} setData={setData} />
           <IconContext.Provider value={{ color: "#2C74AC", size: 20 }}>
-            <ModalEditTypeUser
-              id={id}
-              data={data}
-              setData={setData}
-            />
+            <ModalEditTypeUser id={row.original.id} data={data} setData={setData} />
           </IconContext.Provider>
         </div>
       ),
@@ -60,21 +51,31 @@ const TableTypeUser = () => {
   ];
 
   return (
-    <Table
+    <MaterialReactTable
       columns={columns}
-      bordered
-      rowKey={(record) => record.id}
-      dataSource={data}
-      reponsive={true}
-      loading={loading}
-      pagination={{
-        current: page,
-        pageSize: pageSize,
-        onChange: (page, pageSize) => {
-          setPage(page);
-          setPageSize(pageSize)
+      data={data}
+      enableColumnFilterModes
+      enableColumnOrdering
+      enableGlobalFilter
+      paginationDisplayMode='pages'
+      state={
+        loading
+      }
+
+      muiTablePaperProps={{
+        elevation: 0,
+        sx: {
+          borderRadius: '0',
+          border: '1px solid #e0e0e0',
+          boxShadow: 'none',
         },
       }}
+      muiTableProps={{
+        sx: {
+          tableLayout: 'fixed',
+        },
+      }}
+
     />
   );
 };

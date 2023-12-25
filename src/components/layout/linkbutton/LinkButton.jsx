@@ -1,13 +1,15 @@
 import styles from './LinkButton.module.css'
 import { NavLink } from 'react-router-dom';
 
-const LinkButton = ({ to, text, customClass, icon }) => {
+const LinkButton = ({ to, text, icon }) => {
     return (
         <NavLink
-            className={`${styles.btn} ${styles[customClass]}`}
+            className="btn btn-primary"
             to={to}
         >
-            {icon}{text}
+            <span className="d-flex align-items-center">
+                {icon}{text}
+            </span>
         </NavLink>
     );
 };

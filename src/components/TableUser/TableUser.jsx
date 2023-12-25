@@ -1,15 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import api from '../../services/api';
-import { Table } from 'antd';
-import style from './TableUser.module.css'
+import api from '../../services/api'
+
+import { MaterialReactTable, } from 'material-react-table';
 
 import ModalDeleteUser from '../Modals/modal_delete_user/ModalDeleteUser';
 import ModalEditUser from '../Modals/modal_edit_user/ModalEditUser'
 
 const TableUser = ({ data, setData }) => {
   const [loading, setLoading] = useState(false);
-  const [page, setPage] = useState(1);
-  const [pageSize, setPageSize] = useState(10);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -17,6 +15,7 @@ const TableUser = ({ data, setData }) => {
         setLoading(true);
         await api.get('users').then((response) => {
           const users = response.data.data;
+          console.log(users)
           setData(users);
           setLoading(false);
         });
@@ -30,48 +29,61 @@ const TableUser = ({ data, setData }) => {
 
   const columns = [
     {
-      title: 'Nome',
-      dataIndex: 'name',
+      header: 'Nome',
+      accessorKey: 'name',
+      size: 100,
     },
     {
-      title: 'Tipo de usuario',
-      dataIndex: 'type_user',
+      header: 'Tipo de usuario',
+      accessorKey: 'type_user',
+      size: 100,
     },
     {
-      title: 'E-mail',
-      dataIndex: 'email',
+      header: 'E-mail',
+      accessorKey: 'email',
+      size: 100,
     },
+
     {
-      title: 'Operações',
-      dataIndex: 'id',
-      align: 'center',
-      width: '5%',
-      render: (id) => (
-        <div className={style.operation}>
-          <ModalDeleteUser id={id} data={data} setData={setData} />
-          <ModalEditUser id={id} data={data} setData={setData} />
+      header: null,
+      accessorKey: 'id',
+      columnDefType: 'display',
+      size: 20,
+      Cell: ({ row }) => (
+        <div className="d-flex justify-content-around">
+          <ModalDeleteUser id={row.original.id} data={data} setData={setData} />
+          <ModalEditUser id={row.original.id} data={data} setData={setData} />
         </div>
       ),
     },
-  ];
+  ]
 
   return (
-    <Table
-      className={style.table}
-      bordered
-      rowKey={(record) => record.id}
+    <MaterialReactTable
       columns={columns}
-      dataSource={data}
-      responsive
-      loading={loading}
-      pagination={{
-        current: page,
-        pageSize: pageSize,
-        onChange: (page, pageSize) => {
-          setPage(page);
-          setPageSize(pageSize)
-        }
+      data={data}
+      enableColumnFilterModes
+      enableColumnOrdering
+      enableGlobalFilter
+      paginationDisplayMode='pages'
+      state={
+        loading
+      }
+
+      muiTablePaperProps={{
+        elevation: 0,
+        sx: {
+          borderRadius: '0',
+          border: '1px solid #e0e0e0',
+          boxShadow: 'none',
+        },
       }}
+      muiTableProps={{
+        sx: {
+          tableLayout: 'fixed',
+        },
+      }}
+
     />
   );
 };

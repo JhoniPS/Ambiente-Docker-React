@@ -5,7 +5,7 @@ const SubmitButton = ({ text, customClass, onClick, value, onChange, icon }) => 
     return (
         <div>
             <button
-                className={`${styles.btn} ${styles[customClass]}`}
+                className="btn btn-warning"
                 onClick={onClick}
                 value={value}
                 onChange={onChange}

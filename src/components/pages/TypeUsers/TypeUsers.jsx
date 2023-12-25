@@ -28,7 +28,7 @@ const TypeUsers = () => {
         <Fragment>
             <div className={style.typeUsers}>
                 <h2>Tipos de Usuários</h2>
-                <section className={style.section_search}>
+                <section className="mb-0">
                     <LinkButton
                         text="Adicionar novo tipo"
                         customClass="add"

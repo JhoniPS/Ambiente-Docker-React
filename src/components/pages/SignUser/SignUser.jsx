@@ -102,7 +102,7 @@ const SignUser = () => {
 
   return (
     <Fragment>
-      <HeaderBar text="PAINEL DE CONTROLE" backPageIcon={<ImArrowLeft2 size={25} />} backPage="/users" />
+      <HeaderBar text="PAINEL DE CONTROLE" backPageIcon={<ImArrowLeft2 size={25} />} backPage="/administrador" />
       <div className={styles.sign_user}>
         <section>
           <h4>Cadastrar Usuário</h4>

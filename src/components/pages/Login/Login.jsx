@@ -1,19 +1,43 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import useAuthContext from '../../contexts/Auth';
+import logoImg from '../../../img/BrasãoUfopa.png';
 
-import { FormControl, FormHelperText, IconButton } from '@mui/material';
-import Visibility from '@mui/icons-material/Visibility';
-import VisibilityOff from '@mui/icons-material/VisibilityOff';
-import InputAdornment from '@mui/material/InputAdornment';
-import OutlinedInput from '@mui/material/OutlinedInput';
-import InputLabel from '@mui/material/InputLabel';
+import {
+    CButton,
+    CCard,
+    CCardBody,
+    CCardGroup,
+    CCol,
+    CContainer,
+    CForm,
+    CImage,
+    CFormInput,
+    CInputGroup,
+    CInputGroupText,
+    CRow,
+} from '@coreui/react'
 
-import SubmitButton from '../../layout/submitbuttun/SubmitButton';
-import styles from './Login.module.css'
-import img from '../../../img/BrasãoUfopa.png'
+import CIcon from '@coreui/icons-react'
+import { cilLockLocked, cilUser } from '@coreui/icons'
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
+import '@coreui/coreui/dist/css/coreui.min.css'
+import 'bootstrap/dist/css/bootstrap.min.css'
+
+// import { FormControl, FormHelperText, IconButton } from '@mui/material';
+// import Visibility from '@mui/icons-material/Visibility';
+// import VisibilityOff from '@mui/icons-material/VisibilityOff';
+// import InputAdornment from '@mui/material/InputAdornment';
+// import OutlinedInput from '@mui/material/OutlinedInput';
+// import InputLabel from '@mui/material/InputLabel';
+
+// import SubmitButton from '../../layout/submitbuttun/SubmitButton';
+// import styles from './Login.module.css'
+// import img from '../../../img/BrasãoUfopa.png'
 
 const Login = () => {
+    const navigate = useNavigate();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
@@ -33,72 +57,85 @@ const Login = () => {
 
     const handleClickShowPassword = () => setShowPassword((show) => !show);
 
-    const handleMouseDownPassword = (event) => {
-        event.preventDefault();
-    };
-
     return (
-        <div className={styles.login}>
-            <section>
-                <img src={img} alt='Logo da UFOPA' />
-                <h3>DEC</h3>
-                <h5>Seja bem vindo(a)!</h5>
-                <p>Digite seu e-mail institucional e a senha para realizar o login.</p>
-                <form className={styles.Form} onSubmit={handleLogin}>
-                    <FormControl focused sx={{ width: '100%' }}>
-                        <InputLabel htmlFor="outlined-adornment-password">E-mail</InputLabel>
-                        <OutlinedInput
-                            type='e-mail'
-                            label="E-mail"
-                            name='email'
-                            autoComplete="On"
-                            placeholder='Digite seu e-mail'
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            onKeyDown={handleKeyDown}
-                        />
-                        <FormHelperText error={error}>
-                            {messageErrors.email && <>{messageErrors.email}</>} 
-                            {!messageErrors.email && !messageErrors.password && <>{messageErrors}</>}
-                        </FormHelperText>
-                    </FormControl>
+        <div className="bg-light min-vh-100 d-flex flex-row align-items-center">
+            <CContainer>
+                <CRow className="justify-content-center">
+                    <CCol md={8}>
+                        <CCardGroup>
+                            <CCard className="p-4">
+                                <CCardBody>
+                                    <CForm style={{ textAlign: 'center' }} onSubmit={handleLogin}>
+                                        <CImage src={logoImg} width={80} />
+                                        <h1>Login</h1>
+                                        <p className="text-medium-emphasis">Utilize as credenciais do SIGAA</p>
 
-                    <FormControl focused sx={{ width: '100%' }} >
-                        <InputLabel htmlFor="outlined-adornment-password">Senha</InputLabel>
-                        <OutlinedInput
-                            type={showPassword ? 'text' : 'password'}
-                            label="Senha"
-                            name='password'
-                            autoComplete="On"
-                            placeholder='Digite sua senha'
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                            endAdornment={
-                                <InputAdornment position="end">
-                                    <IconButton
-                                        aria-label="toggle password visibility"
-                                        onClick={handleClickShowPassword}
-                                        onMouseDown={handleMouseDownPassword}
-                                        edge="end"
-                                    >
-                                        {showPassword ? <VisibilityOff /> : <Visibility />}
-                                    </IconButton>
-                                </InputAdornment>
-                            }
-                            autoFocus
-                            margin='dense'
-                            onKeyDown={handleKeyDown}
-                        />
-                        <FormHelperText error={error}>             
-                            {messageErrors.password && <>{messageErrors.password}</>}
-                            {!messageErrors.email && !messageErrors.password && <>{messageErrors}</>}
-                        </FormHelperText>
-                    </FormControl>
+                                        <CInputGroup className="mb-3">
+                                            <CInputGroupText>
+                                                <CIcon icon={cilUser} />
+                                            </CInputGroupText>
 
-                    <SubmitButton text="Entrar" to="/home" />
-                </form>
-            </section>
-        </div >
+                                            <CFormInput
+                                                type='e-mail'
+                                                name='email'
+                                                autoComplete="On"
+                                                placeholder='Digite seu e-mail'
+                                                value={email}
+                                                onChange={(e) => setEmail(e.target.value)}
+                                                onKeyDown={handleKeyDown}
+                                            />
+                                        </CInputGroup>
+
+                                        <CInputGroup className="mb-4">
+                                            <CInputGroupText>
+                                                <CIcon icon={cilLockLocked} />
+                                            </CInputGroupText>
+
+                                            <CFormInput
+                                                type={showPassword ? "text" : "password"}
+                                                name='password'
+                                                placeholder="Password"
+                                                autoComplete="current-password"
+                                                value={password}
+                                                onChange={(e) => setPassword(e.target.value)}
+                                                autoFocus={true}
+                                                onKeyDown={handleKeyDown}
+                                            />
+
+                                            {/* Botão com ícone do react-icons */}
+                                            <CButton
+                                                color="light"
+                                                onClick={handleClickShowPassword}
+                                                style={{
+                                                    backgroundColor: 'var(--cui-input-group-addon-bg, #d8dbe0)',
+                                                    border: '1px solid var(--cui-input-group-addon-border-color, #b1b7c1)'
+                                                }}
+                                            >
+                                                {showPassword ? <FaEyeSlash /> : <FaEye />} {/* Alterna entre ícones de olho aberto e fechado */}
+                                            </CButton>
+                                        </CInputGroup>
+
+                                        <CRow>
+                                            <CCol xs={12} className="mb-4">
+                                                <CButton color="primary" className="px-4" type='submit'>
+                                                    Entrar
+                                                </CButton>
+                                            </CCol>
+
+                                            <CCol xs={12}>
+                                                <a href="/forget-password" onClick={(e) => { e.preventDefault(); navigate('/forget-password') }} target="_blank" rel="noopener noreferrer">
+                                                    Esqueci minha senha
+                                                </a>
+                                            </CCol>
+                                        </CRow>
+                                    </CForm>
+                                </CCardBody>
+                            </CCard>
+                        </CCardGroup>
+                    </CCol>
+                </CRow>
+            </CContainer>
+        </div>
     );
 };
 

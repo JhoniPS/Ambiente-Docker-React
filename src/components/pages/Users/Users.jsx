@@ -11,6 +11,7 @@ import LinkButton from "../../layout/linkbutton/LinkButton";
 import { useLocation } from "react-router-dom";
 import Message from "../../layout/Message/Message";
 import FilterUser from "../../layout/filterUser/FilterUser";
+import { CCard, CCardBody } from "@coreui/react";
 
 const Users = () => {
   const location = useLocation();
@@ -42,38 +43,46 @@ const Users = () => {
 
   return (
     <Fragment>
-      <div className={style.users}>
-        <h2>Usuários</h2>
-        <section className={style.section_search}>
-          <LinkButton
-            text="Adicionar Usuário"
-            customClass="add"
-            to="/signUser"
-            icon={
-              <IconContext.Provider value={{ size: 25 }}>
-                <IoMdAdd />
-              </IconContext.Provider>
-            }
-          />
-          <FilterUser setData={setData} />
-        </section>
+      <div class="d-flex flex-column p-4 gap-3 h-100">
+        <CCard className="md-2">
+          <CCardBody>
+            <h2>Usuários</h2>
+            <section class="d-flex gap-4 align-items-center">
+              <LinkButton
+                text="Adicionar Usuário"
+                to="/signUser"
+                icon={
+                  <IconContext.Provider value={{ size: 25 }}>
+                    <IoMdAdd />
+                  </IconContext.Provider>
+                }
+              />
+              <FilterUser setData={setData} />
+            </section>
 
-        <h4>FILTROS RÁPIDOS</h4>
-        <section className={style.button_filters}>
-          <SubmitButton
-            text="Mais Recentes"
-            customClass="button_filtes_bar"
-            onClick={() => setSortOrder("desc")}
-          />
-          <SubmitButton
-            text="Mais Antigos"
-            customClass="button_filtes_bar"
-            onClick={() => setSortOrder("asc")}
-          />
-        </section>
-        <TableUser data={sortUsers()} setData={setData} />
+            <h4>FILTROS RÁPIDOS</h4>
+            <section className="d-grid gap-2 d-md-flex justify-content-md-start">
+              <SubmitButton
+                text="Mais Recentes"
+                customClass="button_filtes_bar"
+                onClick={() => setSortOrder("desc")}
+              />
+              <SubmitButton
+                text="Mais Antigos"
+                customClass="button_filtes_bar"
+                onClick={() => setSortOrder("asc")}
+              />
+            </section>
+            <TableUser data={sortUsers()} setData={setData} />
+          </CCardBody>
+        </CCard>
 
-        <TypeUsers />
+
+        <CCard className="md-2">
+          <CCardBody>
+            <TypeUsers />
+          </CCardBody>
+        </CCard>
         {showMessage && <Message type={messageType} msg={message} setShowMessage={setShowMessage} />}
       </div>
     </Fragment>
