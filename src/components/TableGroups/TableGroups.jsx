@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import { MaterialReactTable, } from 'material-react-table';
 import api from '../../services/api';
+import Cookies from 'js-cookie'
 
 import { useNavigate } from 'react-router-dom';
-import { Table } from 'antd';
-import style from './TableGroups.module.css'
 import ModalDeleteGroup from '../Modals/modal_delete_group/ModalDeleteGroup';
 import ModalEditGroup from '../Modals/modal_edit_group/ModalEditGroup';
 
@@ -11,6 +11,8 @@ const TableGroups = ({ rota, data, setData }) => {
     const [loading, setLoading] = useState(false);
     const [page, setPage] = useState(1);
     const [pageSize, setPageSize] = useState(10);
+    const userRole = Cookies.get('userType');
+
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -29,46 +31,62 @@ const TableGroups = ({ rota, data, setData }) => {
         fetchData();
     }, [setData]);
 
-    const baseColumns = [
+    const columns = [
         {
-            title: 'Tipo do grupo',
-            dataIndex: 'type_group',
-            render: (type_group) => type_group.type
+            id: 'Tipo do grupo',
+            header: 'Tipo do grupo',
+            accessorFn: (row) => row.type_group.type,
         },
         {
-            title: 'Nome',
-            dataIndex: 'type_group',
-            render: (type_group) => type_group.name
+            id: 'Nome',
+            header: 'Nome',
+            accessorFn: (row) => row.type_group.name,
         },
         {
-            title: 'Equipe',
-            dataIndex: 'team',
+            id: 'Equipe',
+            header: 'Equipe',
+            accessorKey: 'team',
         },
         {
-            title: 'Orgão',
-            dataIndex: 'organ',
+            id: 'Orgão',
+            header: 'Orgão',
+            accessorKey: 'organ',
         },
         {
-            title: 'Conselho',
-            dataIndex: 'council',
+            id: 'Conselho',
+            header: 'Conselho',
+            accessorKey: 'council',
         },
         {
-            title: 'E-mail',
-            dataIndex: 'email',
+            id: 'E-mail',
+            header: 'E-mail',
+            accessorKey: 'email',
+        },
+        {
+            header: 'Detalhes',
+            accessorKey: 'id',
+            Cell: ({ row }) => (
+                <div
+                    style={{ cursor: 'pointer', textDecoration: 'underline', color: 'blue' }}
+                    onClick={() => handleRowClick(row.original)}
+                >
+                    Detalhes
+                </div>
+            ),
         },
     ];
 
-    // Condicionalmente adiciona a coluna 'Operações' se a rota for diferente de 'groups-representante'
-    if (rota === 'detalhes-de-grupos-gerente') {
-        baseColumns.push({
-            title: 'Operações',
-            dataIndex: 'id',
-            align: 'center',
-            width: '0.1%',
-            render: (id) => (
-                <div className={style.operation}>
-                    <ModalDeleteGroup id={id} data={data} setData={setData} />
-                    <ModalEditGroup id={id} data={data} setData={setData} />
+    // Condicionalmente adiciona a coluna 'Operações' se o tipo de usuário for representante'
+    if (userRole === 'gerente') {
+        columns.push({
+            id: "Operações",
+            header: null,
+            accessorKey: 'id',
+            columnDefType: 'display',
+            Cell: ({ row }) => (
+                <div className="d-flex">
+                    <ModalDeleteGroup id={row.original.id} data={data} setData={setData} />
+                    <ModalEditGroup id={row.original.id} data={data} setData={setData} />
                 </div>
             ),
         });
@@ -79,21 +97,30 @@ const TableGroups = ({ rota, data, setData }) => {
     };
 
     return (
-        <Table
-            bordered={true}
+        <MaterialReactTable
             rowKey={(record) => record.id}
-            columns={baseColumns}
-            dataSource={data}
-            responsive={true}
-            loading={loading}
-            pagination={{
-                current: page,
-                pageSize: pageSize,
-                onChange: (page, pageSize) => {
-                    setPage(page);
-                    setPageSize(pageSize)
-                }
+            columns={columns}
+            data={data}
+            enableColumnFilterModes
+            enableColumnOrdering
+            enableGlobalFilter
+            paginationDisplayMode='pages'
+
+            muiTablePaperProps={{
+                elevation: 0,
+                sx: {
+                    borderRadius: '0',
+                    border: '1px solid #e0e0e0',
+                    boxShadow: 'none',
+                },
             }}
+
+            muiTableProps={{
+                sx: {
+                    tableLayout: 'fixed',
+                },
+            }}
+
             onRow={(record) => {
                 return {
                     onClick: () => handleRowClick(record),

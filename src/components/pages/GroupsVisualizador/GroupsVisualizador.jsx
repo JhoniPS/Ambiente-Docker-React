@@ -1,13 +1,10 @@
 import React, { Fragment, useState, useEffect } from 'react';
-import HeaderBar from '../../layout/header/HeaderBar';
+
 import SubmitButton from '../../layout/submitbuttun/SubmitButton';
-
-import { ImArrowLeft2 } from "react-icons/im";
 import MenuAppBar from '../../layout/AppBar/MenuAppBar';
-import style from './Groups.module.css';
-
 import TableGroups from '../../TableGroups/TableGroups';
-import Filter from '../../layout/filter/Filter';
+import Container from '../../layout/container/Container';
+import { CCard, CCardBody } from '@coreui/react';
 
 const GroupsVisualizador = () => {
     const [data, setData] = useState([]);
@@ -49,20 +46,23 @@ const GroupsVisualizador = () => {
 
     return (
         <Fragment>
-            {/* <HeaderBar text="PAINEL DE CONTROLE" backPageIcon={<ImArrowLeft2 size={25} />} backPage="/visualizador" /> */}
             <MenuAppBar />
-            <div className={style.groups}>
-                <h2>Grupos</h2>
-                <Filter />
-                <h4>FILTROS RÁPIDOS</h4>
-                <section className={style.button_filters}>
-                    <SubmitButton text="Mais Recentes" customClass="button_filtes_bar" onClick={() => setSortOrder('desc')} />
-                    <SubmitButton text="Mais Antigos" customClass="button_filtes_bar" onClick={() => setSortOrder('asc')} />
-                    <SubmitButton text="Grupos Internos" customClass="button_filtes_bar" onClick={() => setGroupType('interno')} />
-                    <SubmitButton text="Grupos Externos" customClass="button_filtes_bar" onClick={() => setGroupType('externo')} />
-                    <SubmitButton text="Mostrar Todos" customClass="button_filtes_bar" onClick={() => setGroupType('')} />
-                </section>
-                <TableGroups rota="detalhes-de-grupos-visualizador" data={sortUsers()} setData={setData} />
+            <div className="d-flex flex-column p-4 gap-4 h-100">
+                <CCard>
+                    <CCardBody className="d-flex flex-column gap-3">
+                        <h2>Grupos</h2>
+                        <h4>FILTROS RÁPIDOS</h4>
+                        <Container customClass="start">
+                            <SubmitButton text="Mais Recentes" customClass="button_filtes_bar" onClick={() => setSortOrder('desc')} />
+                            <SubmitButton text="Mais Antigos" customClass="button_filtes_bar" onClick={() => setSortOrder('asc')} />
+                            <SubmitButton text="Grupos Internos" customClass="button_filtes_bar" onClick={() => setGroupType('interno')} />
+                            <SubmitButton text="Grupos Externos" customClass="button_filtes_bar" onClick={() => setGroupType('externo')} />
+                            <SubmitButton text="Mostrar Todos" customClass="button_filtes_bar" onClick={() => setGroupType('')} />
+                        </Container>
+                        <TableGroups rota="detalhes-de-grupos-visualizador" data={sortUsers()} setData={setData} />
+                    </CCardBody>
+                </CCard>
+
             </div>
         </Fragment>
     );

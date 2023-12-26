@@ -1,16 +1,15 @@
 import { Fragment, useState, useEffect } from "react";
 import SubmitButton from "../../layout/submitbuttun/SubmitButton"
 import TypeUsers from '../TypeUsers/TypeUsers'
-
+import api from "../../../services/api";
 import { IoMdAdd } from "react-icons/io";
-import style from "./Users.module.css"
+// import style from "./Users.module.css"
 
 import TableUser from "../../TableUser/TableUser";
 import { IconContext } from "react-icons";
 import LinkButton from "../../layout/linkbutton/LinkButton";
 import { useLocation } from "react-router-dom";
 import Message from "../../layout/Message/Message";
-import FilterUser from "../../layout/filterUser/FilterUser";
 import { CCard, CCardBody } from "@coreui/react";
 
 const Users = () => {
@@ -33,21 +32,39 @@ const Users = () => {
   };
 
   useEffect(() => {
+    const fetchData = async () => {
+      try {
+        await api.get('users').then((response) => {
+          const users = response.data.data;
+          console.log(users)
+          setData(users);
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  useEffect(() => {
     if (location.state) {
       setMessage(location.state.message);
       setMessageType(location.state.messageType);
       setShowMessage(location.state.showMessage);
     }
 
+    window.history.replaceState(null, '');
+
   }, [location.state]);
 
   return (
     <Fragment>
-      <div class="d-flex flex-column p-4 gap-3 h-100">
+      <div className="d-flex flex-column p-4 gap-2 h-100">
         <CCard className="md-2">
-          <CCardBody>
+          <CCardBody className="d-flex flex-column gap-3">
             <h2>Usuários</h2>
-            <section class="d-flex gap-4 align-items-center">
+            <section className="mb-0 p-0">
               <LinkButton
                 text="Adicionar Usuário"
                 to="/signUser"
@@ -57,11 +74,10 @@ const Users = () => {
                   </IconContext.Provider>
                 }
               />
-              <FilterUser setData={setData} />
             </section>
 
             <h4>FILTROS RÁPIDOS</h4>
-            <section className="d-grid gap-2 d-md-flex justify-content-md-start">
+            <section className="d-grid gap-2 d-md-flex justify-content-md-start mb-0">
               <SubmitButton
                 text="Mais Recentes"
                 customClass="button_filtes_bar"

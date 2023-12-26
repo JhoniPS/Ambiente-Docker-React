@@ -1,31 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import api from '../../services/api'
-
+import React from 'react';
 import { MaterialReactTable, } from 'material-react-table';
 
 import ModalDeleteUser from '../Modals/modal_delete_user/ModalDeleteUser';
 import ModalEditUser from '../Modals/modal_edit_user/ModalEditUser'
 
 const TableUser = ({ data, setData }) => {
-  const [loading, setLoading] = useState(false);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setLoading(true);
-        await api.get('users').then((response) => {
-          const users = response.data.data;
-          console.log(users)
-          setData(users);
-          setLoading(false);
-        });
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    fetchData();
-  }, [setData]);
 
   const columns = [
     {
@@ -66,9 +45,6 @@ const TableUser = ({ data, setData }) => {
       enableColumnOrdering
       enableGlobalFilter
       paginationDisplayMode='pages'
-      state={
-        loading
-      }
 
       muiTablePaperProps={{
         elevation: 0,
@@ -78,6 +54,7 @@ const TableUser = ({ data, setData }) => {
           boxShadow: 'none',
         },
       }}
+
       muiTableProps={{
         sx: {
           tableLayout: 'fixed',

@@ -5,7 +5,6 @@ import Message from "../../layout/Message/Message";
 import TableTypeUser from "../../TableTypeUser/TableTypeUser";
 import LinkButton from "../../layout/linkbutton/LinkButton";
 import { IoMdAdd } from "react-icons/io";
-import style from './TypeUsers.module.css'
 import { IconContext } from "react-icons";
 
 
@@ -26,7 +25,7 @@ const TypeUsers = () => {
 
     return (
         <Fragment>
-            <div className={style.typeUsers}>
+            <div className="d-flex flex-column gap-4">
                 <h2>Tipos de Usuários</h2>
                 <section className="mb-0">
                     <LinkButton
