@@ -7,7 +7,7 @@ import Modal from '@mui/material/Modal';
 import Button from '@mui/material/Button';
 import { IconContext } from 'react-icons';
 import { TextField } from '@mui/material';
-import { IoPencilSharp } from "react-icons/io5";
+import { AiFillEdit } from 'react-icons/ai';
 import styles from './EditUser.module.css'
 
 
@@ -84,7 +84,7 @@ const EditUser = ({ id, data, setData }) => {
         <Fragment>
             <IconContext.Provider value={{ color: "#2C74AC", size: 20 }}>
                 <Button onClick={handleOpen}>
-                    <IoPencilSharp />
+                    <AiFillEdit />
                 </Button>
             </IconContext.Provider>
             <Modal

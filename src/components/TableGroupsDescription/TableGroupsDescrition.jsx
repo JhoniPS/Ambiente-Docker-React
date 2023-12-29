@@ -1,9 +1,8 @@
 import React from 'react';
-import { Table } from 'antd';
+import { CCard, CCardBody, CCardHeader, CCol, CRow } from '@coreui/react';
 
 
 const TableGroupsDescription = ({ description }) => {
-    const data = [description]
 
     const getMembersCount = (members) => {
         return members ? members.length : null;
@@ -14,66 +13,31 @@ const TableGroupsDescription = ({ description }) => {
     };
 
 
-    const columns = [
-        {
-            title: 'Criado por',
-            dataIndex: 'created_by',
-            width: '1%',
-            render: (created_by) => created_by ? created_by.name : 'N/A'
-        },
-        {
-            title: 'Membros do grupo',
-            dataIndex: 'members',
-            width: '1%',
-            render: (members) => getMembersCount(members)
-        },
-        {
-            title: 'Representantes do grupo',
-            dataIndex: 'representatives',
-            width: '2%',
-            render: (representatives) => getRepresentativesCount(representatives)
-        },
-    ];
-
     return (
-        <Table
-            columns={columns}
-            dataSource={data}
-            components={{
-                header: {
-                    cell: (props) => (
-                        <th style={{
-                            background: 'none',
-                            border: 'none',
-                            color: '#000000B5',
-                            fontFamily: 'Roboto',
-                            fontSize: '20px',
-                            fontWeight: '700',
-                            lineHeight: '30px',
-                            letterSpacing: '0px',
-                            textAlign: 'left',
-                        }}>
-                            {props.children}
-                        </th>
-                    ),
-                },
+        <CCard>
+            <CRow>
+                <CCol xs="12" lg="4" style={{ width: '100%' }}>
+                    <CCardHeader component='h3'>Criado por</CCardHeader>
+                    <CCardBody>
+                        <CCol xs={{ span: 12, order: 'last' }}>{description.created_by?.name}</CCol>
+                    </CCardBody>
+                </CCol>
+                <CCol xs="12" lg="4" style={{ width: '100%' }}>
+                    <CCardHeader component='h3'>Membros do grupo</CCardHeader>
+                    <CCardBody>
+                        <CCol xs={{ span: 12 }}>{getMembersCount(description.members)}</CCol>
+                    </CCardBody>
+                </CCol>
+                <CCol xs="12" lg="4" style={{ width: '100%' }}>
+                    <CCardHeader component='h3'>Representantes do grupo</CCardHeader>
+                    <CCardBody>
+                        <CCol xs={{ span: 12, order: 'first' }}>{getRepresentativesCount(description.representatives)}</CCol>
+                    </CCardBody>
+                </CCol>
+            </CRow>
+        </CCard>
 
-                body: {
-                    cell: (props) => (
-                        <td style={{
-                            border: 'none',
-                            fontFamily: 'Roboto',
-                            fontSize: '30px',
-                            fontWeight: '700',
-                            lineHeight: '20px',
-                            textAlign: 'left',
-                        }}>{props.children}</td>
-                    ),
-                },
-            }}
-            pagination={false}
-            responsive
-        />
+
     );
 };
 

@@ -7,7 +7,7 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
 import { IconContext } from 'react-icons';
-import { IoTrash } from "react-icons/io5";
+import { BsFillTrashFill } from "react-icons/bs";
 import { Typography } from '@mui/material';
 
 const style = {
@@ -86,7 +86,7 @@ export default function ModalEditGroup({ id, data, setData }) {
         <div>
             <IconContext.Provider value={{ color: "#93000A", size: 20 }}>
                 <Button onClick={handleOpen}>
-                    <IoTrash />
+                    <BsFillTrashFill />
                 </Button>
             </IconContext.Provider>
 

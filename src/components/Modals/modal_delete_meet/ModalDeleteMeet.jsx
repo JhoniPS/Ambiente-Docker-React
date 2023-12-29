@@ -6,7 +6,7 @@ import styleButton from './modal_delete.module.css'
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import { IconContext } from 'react-icons';
-import { IoTrash } from "react-icons/io5";
+import { BsFillTrashFill } from "react-icons/bs";
 import { Typography } from '@mui/material';
 
 const style = {
@@ -89,7 +89,7 @@ function ModalDeleteMeet({ idMeet, data, setData }) {
         <div>
             <IconContext.Provider value={{ color: "#93000A", size: 25 }}>
                 <button onClick={handleOpen} className={styleButton.button}>
-                    <IoTrash />
+                    <BsFillTrashFill />
                 </button>
             </IconContext.Provider>
 

@@ -7,7 +7,7 @@ import Modal from '@mui/material/Modal';
 import SubmitButton from '../../layout/submitbuttun/SubmitButton';
 import styles from './ModalEditRepresentativeGroup.module.css'
 import { IconContext } from 'react-icons';
-import { IoPencilSharp } from "react-icons/io5";
+import { AiFillEdit } from 'react-icons/ai';
 import { Typography, TextField } from '@mui/material';
 import { ConfigProvider } from 'antd';
 
@@ -79,7 +79,7 @@ export default function ModalEditRepresentativeGroup({ GroupId, RepresentativeId
         <div>
             <IconContext.Provider value={{ color: "#2C74AC", size: 20 }}>
                 <Button onClick={handleOpen}>
-                    <IoPencilSharp />
+                    <AiFillEdit />
                 </Button>
             </IconContext.Provider>
             <Modal

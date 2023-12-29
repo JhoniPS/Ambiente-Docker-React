@@ -1,19 +1,12 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { cilDescription, cilNotes, cilTask, cilList } from '@coreui/icons';
+import { Divider } from 'antd';
+import { CRow } from "@coreui/react";
 import api from "../../../services/api";
 
-import HeaderBar from "../../layout/header/HeaderBar";
-import Container from "../../layout/container/Container";
+import MenuAppBar from "../../layout/AppBar/MenuAppBar";
 import Card from "../../card/Card";
-
-import { ImArrowLeft2 } from "react-icons/im";
-import { Divider } from 'antd';
-import style from "./OverviewGroupGerente.module.css"
-
-import img1 from '../../../img/notas.svg'
-import img2 from '../../../img/icon _work.svg'
-import img3 from '../../../img/historico-reuniao.svg'
-import img4 from '../../../img/documentos.png'
 
 import TableGroupsDescription from "../../TableGroupsDescription/TableGroupsDescrition";
 import TableDetalhe from "../../TableDetalhes/TableDetalhe";
@@ -51,38 +44,34 @@ const OverviewGroupGerente = () => {
   }, [id]);
   return (
     <Fragment>
-      <HeaderBar text="PAINEL DE CONTROLE" backPageIcon={<ImArrowLeft2 size={25} />} backPage="/gerente" />
-      <div className={style.representatives}>
+      <MenuAppBar />
+      <div className="d-flex flex-column p-4 gap-2 h-100">
         <h2>Overview</h2>
-        <Container customClass='start'>
+        <CRow>
           <Card
-            icon={img1}
-            customClass={'overViewCard'}
+            icon={cilDescription}
             title="Notas"
-            description="Gerenciar presentante do sistema"
+            description="Gerencie suas Notas"
             to={`/detalhes-de-grupos-gerente/${id}/notas`}
           />
           <Card
-            icon={img2}
-            customClass={'overViewCard'}
-            title="Atividades"
-            description="Gerenciar grupos do sistema"
-          />
-          <Card
-            icon={img3}
-            customClass={'overViewCard'}
-            title="Histórico de reuniões"
-            description="Gerencie suas tarefas"
-            to={`/detalhes-de-grupos-gerente/${id}/historico-de-reunioes`}
-          />
-          <Card
-            icon={img4}
-            customClass={'overViewCard'}
+            icon={cilNotes}
             title="Documentos"
             description="Gerencie suas tarefas"
             to={`/detalhes-de-grupos-gerente/${id}/documentos`}
           />
-        </Container>
+          <Card
+            icon={cilTask}
+            title="Atividades"
+            description="Gerenciar suas atividades"
+          />
+          <Card
+            icon={cilList}
+            title="Reuniões"
+            description="Gerencie as reuniões"
+            to={`/detalhes-de-grupos-gerente/${id}/historico-de-reunioes`}
+          />
+        </CRow>
 
         <TableGroupsDescription description={data} />
 
@@ -94,18 +83,18 @@ const OverviewGroupGerente = () => {
         <h2>Membros</h2>
         <TableMemberGroup members={members} setMembres={setMembres} />
 
-        <div className={style.container_representantes_observacoes}>
-          <section>
+        <div className="d-flex flex-nowrap justify-content-around gap-2">
+          <section className="d-flex flex-column gap-2 mb-3 w-100">
             <h2>Representantes</h2>
             <TableRepresentativeGroup data={representatives} setData={setRepresentatives} />
           </section>
-          <section className={style.observacoes}>
+          <section className="d-flex flex-column gap-2 mb-3 w-100">
             <h2>Observações</h2>
             <Observations data={observacao} />
           </section>
         </div>
       </div>
-    </Fragment>
+    </Fragment >
   );
 };
 
