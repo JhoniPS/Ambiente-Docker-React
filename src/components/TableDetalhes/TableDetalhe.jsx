@@ -1,6 +1,5 @@
 import React from "react";
-import { Divider } from 'antd';
-import style from './TableDetalhes.module.css';
+import { CTable, CTableBody, CTableDataCell, CTableHead, CTableHeaderCell, CTableRow } from "@coreui/react";
 
 const TableDetalhe = ({ data }) => {
 
@@ -14,65 +13,60 @@ const TableDetalhe = ({ data }) => {
     }
 
     return (
-            <div className={style.detalhes}>
-                <table className={style.detalhes_tabela}>
-                    <thead>
-                        <tr>
-                            <th>Portaria Interna</th>
-                            <th>Conselho</th>
-                            <th>Orgão</th>
-                            <th>Unidade</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>{data.internal_concierge}</td>
-                            <td>{data.council}</td>
-                            <td>{data.organ}</td>
-                            <td>{data.unit}</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <Divider />
-                <table className={style.detalhes_tabela}>
-                    <thead>
-                        <tr>
-                            <th>Entidade</th>
-                            <th>Sigla</th>
-                            <th>Time</th>
-                            <th>Tipo de Grupo</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>{data.entity}</td>
-                            <td>{data.acronym}</td>
-                            <td>{data.team}</td>
-                            <td>{data.type_group?.type}</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <Divider />
-                <table className={style.detalhes_tabela}>
-                    <thead>
-                        <tr>
-                            <th>Oficio Solicitado</th>
-                            <th>Oficio Indicado</th>
-                            <th>Email</th>
-                            <th>Data de criação</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>{data.office_requested}</td>
-                            <td>{data.office_indicated}</td>
-                            <td>{data.email}</td>
-                            <td>{formatarData(data.created_at)}</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+        <CTable responsive>
+            <CTableHead>
+                <CTableRow>
+                    <CTableHeaderCell scope="col" style={{ padding: '15px', fontSize: 20 }}>Tipo de Grupo</CTableHeaderCell>
+                    <CTableHeaderCell scope="col" style={{ padding: '15px', fontSize: 20 }}>Sigla</CTableHeaderCell>
+                    <CTableHeaderCell scope="col" style={{ padding: '15px', fontSize: 20 }}>Orgão</CTableHeaderCell>
+                    <CTableHeaderCell scope="col" style={{ padding: '15px', fontSize: 20 }}>Conselho</CTableHeaderCell>
+                </CTableRow>
+            </CTableHead>
+            <CTableBody>
+                <CTableRow>
+                    <CTableDataCell style={{ padding: '15px' }}>{data.type_group?.type}</CTableDataCell>
+                    <CTableDataCell style={{ padding: '15px' }}>{data.acronym}</CTableDataCell>
+                    <CTableDataCell style={{ padding: '15px' }}>{data.organ}</CTableDataCell>
+                    <CTableDataCell style={{ padding: '15px' }}>{data.council}</CTableDataCell>
+                </CTableRow>
+            </CTableBody>
+
+            <CTableHead>
+                <CTableRow>
+                    <CTableHeaderCell scope="col" style={{ padding: '15px', fontSize: 20 }}>Entidade</CTableHeaderCell>
+                    <CTableHeaderCell scope="col" style={{ padding: '15px', fontSize: 20 }}>Unidade</CTableHeaderCell>
+                    <CTableHeaderCell scope="col" style={{ padding: '15px', fontSize: 20 }}>Time</CTableHeaderCell>
+                    <CTableHeaderCell scope="col" style={{ padding: '15px', fontSize: 20 }}>Portaria Interna</CTableHeaderCell>
+                </CTableRow>
+            </CTableHead>
+            <CTableBody>
+                <CTableRow>
+                    <CTableDataCell style={{ padding: '15px' }}>{data.entity}</CTableDataCell>
+                    <CTableDataCell style={{ padding: '15px' }}>{data.unit}</CTableDataCell>
+                    <CTableDataCell style={{ padding: '15px' }}>{data.team}</CTableDataCell>
+                    <CTableDataCell style={{ padding: '15px' }}>{data.internal_concierge}</CTableDataCell>
+                </CTableRow>
+            </CTableBody>
+
+            <CTableHead>
+                <CTableRow>
+                    <CTableHeaderCell scope="col" style={{ padding: '15px', fontSize: 20 }}>Oficio Solicitado</CTableHeaderCell>
+                    <CTableHeaderCell scope="col" style={{ padding: '15px', fontSize: 20 }}>Oficio Indicado</CTableHeaderCell>
+                    <CTableHeaderCell scope="col" style={{ padding: '15px', fontSize: 20 }}>Email</CTableHeaderCell>
+                    <CTableHeaderCell scope="col" style={{ padding: '15px', fontSize: 20 }}>Data de criação</CTableHeaderCell>
+                </CTableRow>
+            </CTableHead>
+            <CTableBody>
+                <CTableRow>
+                    <CTableDataCell style={{ padding: '15px' }}>{data.office_requested}</CTableDataCell>
+                    <CTableDataCell style={{ padding: '15px' }}>{data.office_indicated}</CTableDataCell>
+                    <CTableDataCell style={{ padding: '15px' }}>{data.email}</CTableDataCell>
+                    <CTableDataCell style={{ padding: '15px' }}>{formatarData(data.created_at)}</CTableDataCell>
+                </CTableRow>
+            </CTableBody>
+        </CTable>
     );
+
 }
 
 export default TableDetalhe;

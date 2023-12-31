@@ -2,7 +2,7 @@ import React, { Fragment, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { cilDescription, cilNotes, cilTask, cilList } from '@coreui/icons';
 import { Divider } from 'antd';
-import { CRow } from "@coreui/react";
+import { CCard, CCardBody, CRow } from "@coreui/react";
 import api from "../../../services/api";
 
 import MenuAppBar from "../../layout/AppBar/MenuAppBar";
@@ -77,21 +77,33 @@ const OverviewGroupGerente = () => {
 
         <Divider />
 
-        <h2>Detalhes</h2>
-        <TableDetalhe data={data} />
+        <CCard>
+          <CCardBody>
+            <h2 style={{ paddingLeft: '15px' }}>Detalhes</h2>
+            <TableDetalhe data={data} />
+          </CCardBody>
+        </CCard>
 
-        <h2>Membros</h2>
-        <TableMemberGroup members={members} setMembres={setMembres} />
+        <CCard>
+          <CCardBody>
+            <h2>Membros</h2>
+            <TableMemberGroup members={members} setMembres={setMembres} />
+          </CCardBody>
+        </CCard>
 
         <div className="d-flex flex-nowrap justify-content-around gap-2">
-          <section className="d-flex flex-column gap-2 mb-3 w-100">
-            <h2>Representantes</h2>
-            <TableRepresentativeGroup data={representatives} setData={setRepresentatives} />
-          </section>
-          <section className="d-flex flex-column gap-2 mb-3 w-100">
-            <h2>Observações</h2>
-            <Observations data={observacao} />
-          </section>
+          <CCard className="d-flex flex-column gap-2 mb-3 w-100">
+            <CCardBody>
+              <h2>Representantes</h2>
+              <TableRepresentativeGroup data={representatives} setData={setRepresentatives} />
+            </CCardBody>
+          </CCard>
+          <CCard className="d-flex flex-column gap-2 mb-3 w-100">
+            <CCardBody>
+              <h2>Observações</h2>
+              <Observations data={observacao} />
+            </CCardBody>
+          </CCard>
         </div>
       </div>
     </Fragment >
