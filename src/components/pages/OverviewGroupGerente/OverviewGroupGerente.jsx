@@ -42,6 +42,7 @@ const OverviewGroupGerente = () => {
 
     fetchData();
   }, [id]);
+
   return (
     <Fragment>
       <MenuAppBar />
@@ -57,7 +58,7 @@ const OverviewGroupGerente = () => {
           <Card
             icon={cilNotes}
             title="Documentos"
-            description="Gerencie suas tarefas"
+            description="Gerencia documentos do grupo"
             to={`/detalhes-de-grupos-gerente/${id}/documentos`}
           />
           <Card
@@ -67,7 +68,7 @@ const OverviewGroupGerente = () => {
           />
           <Card
             icon={cilList}
-            title="Reuniões"
+            title="Histórico de reuniões"
             description="Gerencie as reuniões"
             to={`/detalhes-de-grupos-gerente/${id}/historico-de-reunioes`}
           />

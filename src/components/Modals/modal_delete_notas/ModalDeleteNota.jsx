@@ -86,7 +86,7 @@ function ModalDeleteNota({ idNote, data, setData }) {
 
     return (
         <div>
-            <IconContext.Provider value={{ color: "#000", size: 25 }}>
+            <IconContext.Provider value={{ color: "#93000A", size: 25 }}>
                 <button onClick={handleOpen} className={styleButton.button}>
                     <BsFillTrashFill />
                 </button>

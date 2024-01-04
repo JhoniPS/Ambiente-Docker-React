@@ -1,31 +1,23 @@
 import React, { Fragment, useEffect, useState } from "react";
+import { cilDescription, cilNotes, cilTask, cilList } from '@coreui/icons';
 import { useParams } from "react-router-dom";
 import api from "../../../services/api";
 
-import HeaderBar from "../../layout/header/HeaderBar";
-import Container from "../../layout/container/Container";
 import Card from "../../card/Card";
-
-import { ImArrowLeft2 } from "react-icons/im";
 import { Divider } from 'antd';
-import style from "./OverviewGroupVisualizador.module.css"
-
-import img1 from '../../../img/notas.svg'
-import img2 from '../../../img/icon _work.svg'
-import img3 from '../../../img/historico-reuniao.svg'
-import img4 from '../../../img/documentos.png'
 
 import TableGroupsDescription from "../../TableGroupsDescription/TableGroupsDescrition";
 import TableDetalhe from "../../TableDetalhes/TableDetalhe";
-import TableRepresentative from "../../TableRepresentative/TableRepresentative";
 import TableMemberGroup from "../../TableMemberGroup/TableMemberGroup";
 import Observations from "../../layout/Observations/Observations";
-
+import MenuAppBar from "../../layout/AppBar/MenuAppBar";
+import { CCard, CCardBody, CRow } from "@coreui/react";
+import TableRepresentativeGroup from "../../TableRepresentativeGroup/TableRepresentativeGroup";
 
 const OverviewGroupVisualizador = () => {
   const { id } = useParams();
   const [data, setData] = useState({});
-  const [members, setMembres] = useState([]);
+  const [members, setMembers] = useState([]);
   const [observacao, setObservacao] = useState("");
   const [representatives, setRepresentatives] = useState([]);
 
@@ -33,14 +25,13 @@ const OverviewGroupVisualizador = () => {
     const fetchData = async () => {
       try {
         const { data } = await api.get(`group/${id}`);
-
         const group = data.data;
         const members = data.data.members;
         const observacao = data.data.observations;
         const representatives = data.data.representatives;
 
         setData(group);
-        setMembres(members);
+        setMembers(members);
         setObservacao(observacao);
         setRepresentatives(representatives);
       } catch (error) {
@@ -53,64 +44,72 @@ const OverviewGroupVisualizador = () => {
 
   return (
     <Fragment>
-      <HeaderBar text="PAINEL DE CONTROLE" backPageIcon={<ImArrowLeft2 size={25} />} backPage="/visualizador" />
-      <div className={style.representatives}>
+      <MenuAppBar />
+      <div className="d-flex flex-column p-4 gap-2 h-100">
         <h2>Overview</h2>
-        <Container customClass='start'>
+        <CRow>
           <Card
-            icon={img1}
-            customClass={'overViewCard'}
+            icon={cilDescription}
             title="Notas"
-            description="Gerenciar presentante do sistema"
+            description="Gerencie suas Notas"
             to={`/detalhes-de-grupos-visualizador/${id}/notas`}
           />
           <Card
-            icon={img2}
-            customClass={'overViewCard'}
-            title="Atividades"
-            description="Gerenciar grupos do sistema"
-          />
-          <Card
-            icon={img3}
-            customClass={'overViewCard'}
-            title="Histórico de reuniões"
-            description="Gerencie suas tarefas"
-            to={`/detalhes-de-grupos-visualizador/${id}/historico-de-reunioes`}
-          />
-          <Card
-            icon={img4}
-            customClass={'overViewCard'}
+            icon={cilNotes}
             title="Documentos"
-            description="Gerencie suas tarefas"
+            description="Gerencia documentos do grupo"
             to={`/detalhes-de-grupos-visualizador/${id}/documentos`}
           />
-        </Container>
+          <Card
+            icon={cilTask}
+            title="Atividades"
+            description="Gerenciar suas atividades"
+          />
+          <Card
+            icon={cilList}
+            title="Histórico de reuniões"
+            description="Gerencie as reuniões"
+            to={`/detalhes-de-grupos-visualizador/${id}/historico-de-reunioes`}
+          />
+        </CRow>
 
         <TableGroupsDescription description={data} />
 
         <Divider />
 
-        <h2>Detalhes</h2>
-        <TableDetalhe data={data} />
+        <CCard>
+          <CCardBody>
+            <h2 style={{ paddingLeft: '15px' }}>Detalhes</h2>
+            <TableDetalhe data={data} />
+          </CCardBody>
+        </CCard>
 
-        <div className={style.tableMember}>
-          <h2>Membros</h2>
-        </div>
+        <CCard>
+          <CCardBody>
+            <div className="d-flex justify-content-between align-items-center w-100 h-auto">
+              <h2>Membros</h2>
+            </div>
+            <TableMemberGroup members={members} setMembers={setMembers} />
+          </CCardBody>
+        </CCard>
 
-        <TableMemberGroup members={members} setMembres={setMembres} />
+        <div className="d-flex flex-nowrap justify-content-around gap-2">
+          <CCard className="d-flex flex-column gap-2 mb-3 w-100">
+            <CCardBody>
+              <h2>Representantes</h2>
+              <TableRepresentativeGroup data={representatives} />
+            </CCardBody>
+          </CCard>
 
-        <div className={style.container_representantes_observacoes}>
-          <section>
-            <h2>Representantes</h2>
-            <TableRepresentative data={representatives} />
-          </section>
-          <section className={style.observacoes}>
-            <h2>Observações</h2>
-            <Observations data={observacao} />
-          </section>
+          <CCard className="d-flex flex-column gap-2 mb-3 w-100">
+            <CCardBody>
+              <h2>Observações</h2>
+              <Observations data={observacao} />
+            </CCardBody>
+          </CCard>
         </div>
       </div>
-    </Fragment>
+    </Fragment >
   );
 };
 

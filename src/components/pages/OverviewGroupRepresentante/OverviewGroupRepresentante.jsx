@@ -1,27 +1,21 @@
 import React, { Fragment, useEffect, useState } from "react";
+import { cilDescription, cilNotes, cilTask, cilList } from '@coreui/icons';
 import { useParams, useLocation } from "react-router-dom";
 import api from "../../../services/api";
 
-import HeaderBar from "../../layout/header/HeaderBar";
-import Container from "../../layout/container/Container";
 import Message from "../../layout/Message/Message";
 import LinkButton from "../../layout/linkbutton/LinkButton";
 import Card from "../../card/Card";
 
-import { ImArrowLeft2 } from "react-icons/im";
 import { Divider } from 'antd';
-import style from "./OverviewGroupRepresentante.module.css"
-
-import img1 from '../../../img/notas.svg'
-import img2 from '../../../img/icon _work.svg'
-import img3 from '../../../img/historico-reuniao.svg'
-import img4 from '../../../img/documentos.png'
 
 import TableGroupsDescription from "../../TableGroupsDescription/TableGroupsDescrition";
 import TableDetalhe from "../../TableDetalhes/TableDetalhe";
-import TableRepresentative from "../../TableRepresentative/TableRepresentative";
 import TableMemberGroup from "../../TableMemberGroup/TableMemberGroup";
 import Observations from "../../layout/Observations/Observations";
+import MenuAppBar from "../../layout/AppBar/MenuAppBar";
+import { CCard, CCardBody, CRow } from "@coreui/react";
+import TableRepresentativeGroup from "../../TableRepresentativeGroup/TableRepresentativeGroup";
 
 
 const OverviewGroupRepresentante = () => {
@@ -44,6 +38,7 @@ const OverviewGroupRepresentante = () => {
       setShowMessage(location.state.showMessage);
     }
 
+    window.history.replaceState(null, '');
   }, [location.state]);
 
   useEffect(() => {
@@ -69,67 +64,75 @@ const OverviewGroupRepresentante = () => {
 
   return (
     <Fragment>
-      <HeaderBar text="PAINEL DE CONTROLE" backPageIcon={<ImArrowLeft2 size={25} />} backPage="/representante" />
-      <div className={style.representatives}>
+      <MenuAppBar />
+      <div className="d-flex flex-column p-4 gap-2 h-100">
         <h2>Overview</h2>
-        <Container customClass='start'>
+        <CRow>
           <Card
-            icon={img1}
-            customClass={'overViewCard'}
+            icon={cilDescription}
             title="Notas"
-            description="Gerencia notas feitas pelo representante"
+            description="Gerencie suas Notas"
             to={`/detalhes-de-grupos-representante/${id}/notas`}
           />
           <Card
-            icon={img2}
-            customClass={'overViewCard'}
-            title="Atividades"
-            description="Gerencie atividades"
-          />
-          <Card
-            icon={img3}
-            customClass={'overViewCard'}
-            title="Histórico de reuniões"
-            description="Gerencie as reuniões realizadas"
-            to={`/detalhes-de-grupos-representante/${id}/historico-de-reunioes`}
-          />
-          <Card
-            icon={img4}
-            customClass={'overViewCard'}
+            icon={cilNotes}
             title="Documentos"
             description="Gerencia documentos do grupo"
             to={`/detalhes-de-grupos-representante/${id}/documentos`}
           />
-        </Container>
+          <Card
+            icon={cilTask}
+            title="Atividades"
+            description="Gerenciar suas atividades"
+          />
+          <Card
+            icon={cilList}
+            title="Histórico de reuniões"
+            description="Gerencie as reuniões"
+            to={`/detalhes-de-grupos-representante/${id}/historico-de-reunioes`}
+          />
+        </CRow>
 
         <TableGroupsDescription description={data} />
 
         <Divider />
 
-        <h2>Detalhes</h2>
-        <TableDetalhe data={data} />
+        <CCard>
+          <CCardBody>
+            <h2 style={{ paddingLeft: '15px' }}>Detalhes</h2>
+            <TableDetalhe data={data} />
+          </CCardBody>
+        </CCard>
 
-        <div className={style.tableMember}>
-          <h2>Membros</h2>
-          <LinkButton
-            text="Adicionar Membro"
-            to="adicionar-membro"
-            customClass="add"
-          />
-        </div>
-
-        <TableMemberGroup members={members} setMembers={setMembers}/>
+        <CCard>
+          <CCardBody>
+            <div className="d-flex justify-content-between align-items-center w-100 h-auto">
+              <h2>Membros</h2>
+              <LinkButton
+                text="Adicionar Membro"
+                to="adicionar-membro"
+                customClass="add"
+              />
+            </div>
+            <TableMemberGroup members={members} setMembers={setMembers} />
+          </CCardBody>
+        </CCard>
         {showMessage && <Message type={messageType} msg={message} setShowMessage={setShowMessage} />}
 
-        <div className={style.container_representantes_observacoes}>
-          <section>
-            <h2>Representantes</h2>
-            <TableRepresentative data={representatives} />
-          </section>
-          <section className={style.observacoes}>
-            <h2>Observações</h2>
-            <Observations data={observacao} />
-          </section>
+        <div className="d-flex flex-nowrap justify-content-around gap-2">
+          <CCard className="d-flex flex-column gap-2 mb-3 w-100">
+            <CCardBody>
+              <h2>Representantes</h2>
+              <TableRepresentativeGroup data={representatives} />
+            </CCardBody>
+          </CCard>
+
+          <CCard className="d-flex flex-column gap-2 mb-3 w-100">
+            <CCardBody>
+              <h2>Observações</h2>
+              <Observations data={observacao} />
+            </CCardBody>
+          </CCard>
         </div>
       </div>
     </Fragment>

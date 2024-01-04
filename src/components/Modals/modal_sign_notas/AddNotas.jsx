@@ -12,6 +12,7 @@ import { Divider } from 'antd';
 import { IconContext } from 'react-icons';
 import { IoMdAdd } from 'react-icons/io';
 import { TextField } from '@mui/material';
+import { CButton } from '@coreui/react';
 
 
 const AddNotas = ({ data, setData }) => {
@@ -65,11 +66,10 @@ const AddNotas = ({ data, setData }) => {
 
     return (
         <Fragment>
-            <IconContext.Provider value={{ size: 25 }}>
-                <button onClick={handleOpen} className={style.button}>
-                    {<IoMdAdd />}
-                    <h1>Add Notas</h1>
-                </button>
+            <IconContext.Provider value={{ size: 22 }}>
+                <CButton onClick={handleOpen} className="mb-3" color="primary">
+                    <IoMdAdd /> Adicionar Notas
+                </CButton>
             </IconContext.Provider>
             <Modal
                 open={open}

@@ -6,59 +6,55 @@ import Cookies from 'js-cookie'
 import ModalDeleteMember from '../Modals/modal_delete_member/ModalDeleteMember';
 import ModalEditMember from '../Modals/modal_edit_member/ModalEditMember';
 
-import style from './TableMemberGroup.module.css';
+import { MaterialReactTable } from 'material-react-table';
 
 const TableMemberGroup = ({ members, setMembers }) => {
   const { id } = useParams();
-  const [page, setPage] = useState(1);
-  const [pageSize, setPageSize] = useState(10);
   const userRole = Cookies.get('userType');
 
   const columns = [
     {
-      title: 'Nome',
-      dataIndex: 'user',
-      width: '10%',
-      render: (user) => user.name,
+      id: 'Nome',
+      header: 'Nome',
+      accessorFn: (row) => row.user.name,
     },
     {
-      title: 'Cargo',
-      dataIndex: 'role',
-      width: '10%',
+      id: 'Cargo',
+      header: 'Cargo',
+      accessorKey: 'role',
     },
     {
-      title: 'Telefone',
-      dataIndex: 'phone',
-      width: '10%',
+      id: 'Telefone',
+      header: 'Telefone',
+      accessorKey: 'phone',
     },
     {
-      title: 'Data de entrada',
-      dataIndex: 'created_at',
-      width: '10%',
-      render: (created_at) => formatarData(created_at),
+      id: 'Data de entrada',
+      header: 'Data de entrada',
+      accessorFn: (row) => formatarData(row.created_at),
     },
     {
-      title: 'Data de saida',
-      dataIndex: 'departure_date',
-      width: '10%',
+      id: 'Data de saida',
+      header: 'Data de saida',
+      accessorFn: (row) => formatarData(row.departure_date),
     },
     {
-      title: 'E-mail',
-      dataIndex: 'user',
-      width: '10%',
-      render: (user) => user.email,
+      id: 'E-mail',
+      header: 'E-mail',
+      accessorFn: (row) => row.user.email,
     },
   ];
 
   if (userRole === 'representante') {
     columns.push({
-      title: 'Operações',
-      dataIndex: 'id',
-      width: '0.5%',
-      render: (memberId) => (
-        <div className={style.operation}>
-          <ModalDeleteMember memberId={memberId} groupId={id} data={members} setData={setMembers} />
-          <ModalEditMember memberId={memberId} data={members} setData={setMembers} />
+      id: "Operações",
+      header: null,
+      accessorKey: 'id',
+      columnDefType: 'display',
+      Cell: ({ row }) => (
+        <div className="d-flex">
+          <ModalDeleteMember memberId={row.original.id} groupId={id} data={members} setData={setMembers} />
+          <ModalEditMember memberId={row.original.id} data={members} setData={setMembers} />
         </div>
       ),
     });
@@ -70,28 +66,49 @@ const TableMemberGroup = ({ members, setMembers }) => {
     const mes = String(dt.getMonth() + 1).padStart(2, '0');
     const dia = String(dt.getDate()).padStart(2, '0');
 
-    return `${ano}-${mes}-${dia}`;
+    return `${dia}/${mes}/${ano}`;
   }
 
   return (
-    <div className={style.tableContainer}>
-      <Table
-        rowKey={(record) => record.id}
-        bordered
-        columns={columns}
-        dataSource={members}
-        responsive={true}
-        pagination={{
-          current: page,
-          pageSize: pageSize,
-          onChange: (page, pageSize) => {
-            setPage(page);
-            setPageSize(pageSize);
-          },
-        }}
-      />
+    // <Table
+    //   rowKey={(record) => record.id}
+    //   bordered
+    //   columns={columns}
+    //   dataSource={members}
+    //   responsive={true}
+    //   pagination={{
+    //     current: page,
+    //     pageSize: pageSize,
+    //     onChange: (page, pageSize) => {
+    //       setPage(page);
+    //       setPageSize(pageSize);
+    //     },
+    //   }}
+    // />
+    <MaterialReactTable
+      rowKey={(record) => record.id}
+      columns={columns}
+      data={members}
+      enableColumnFilterModes
+      enableColumnOrdering
+      enableGlobalFilter
+      paginationDisplayMode='pages'
 
-    </div>
+      muiTablePaperProps={{
+        elevation: 0,
+        sx: {
+          borderRadius: '0',
+          border: '1px solid #e0e0e0',
+          boxShadow: 'none',
+        },
+      }}
+
+      muiTableProps={{
+        sx: {
+          tableLayout: 'fixed',
+        },
+      }}
+    />
   );
 };
 

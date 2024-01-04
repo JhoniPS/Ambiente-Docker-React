@@ -2,7 +2,7 @@
   min-width: 100%;
   display: flex;
   justify-content: space-between;
-  gap: 1em;
+  gap: 3em;
   flex-wrap: wrap;
   background-color: inherit;
 }

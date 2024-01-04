@@ -94,7 +94,7 @@ const ModalEditNota = ({ idNota, data, setData }) => {
 
     return (
         <Fragment>
-            <IconContext.Provider value={{ color: "#000", size: 25 }}>
+            <IconContext.Provider value={{ color: "#2C74AC", size: 25 }}>
                 <button onClick={handleOpen} className={style.button}>
                     {<IoPencilSharp />}
                 </button>

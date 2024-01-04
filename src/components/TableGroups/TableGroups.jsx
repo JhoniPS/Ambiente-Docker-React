@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { MaterialReactTable, } from 'material-react-table';
 import api from '../../services/api';
 import Cookies from 'js-cookie'
@@ -8,9 +8,6 @@ import ModalDeleteGroup from '../Modals/modal_delete_group/ModalDeleteGroup';
 import ModalEditGroup from '../Modals/modal_edit_group/ModalEditGroup';
 
 const TableGroups = ({ rota, data, setData }) => {
-    const [loading, setLoading] = useState(false);
-    const [page, setPage] = useState(1);
-    const [pageSize, setPageSize] = useState(10);
     const userRole = Cookies.get('userType');
 
     const navigate = useNavigate();
@@ -18,11 +15,9 @@ const TableGroups = ({ rota, data, setData }) => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                setLoading(true);
                 const { data } = await api.get('group');
                 const groups = data.data;
                 setData(groups);
-                setLoading(false);
             } catch (error) {
                 console.log(error);
             }
