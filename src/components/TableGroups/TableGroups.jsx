@@ -48,6 +48,11 @@ const TableGroups = ({ rota, data, setData }) => {
             accessorKey: 'organ',
         },
         {
+            id: 'Unidade',
+            header: 'Unidade',
+            accessorKey: 'unit',
+        },
+        {
             id: 'Conselho',
             header: 'Conselho',
             accessorKey: 'council',

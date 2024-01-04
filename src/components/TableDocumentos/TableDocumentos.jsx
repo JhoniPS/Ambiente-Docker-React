@@ -1,15 +1,12 @@
-import React, { useState } from 'react';
+import React from 'react';
 import api from '../../services/api';
 import Cookies from 'js-cookie'
-
-import { Table } from 'antd';
 import style from './TableDocumentos.module.css'
 
 import ModalDeleteDocument from '../Modals/modal_delete_document/ModalDeleteDocument';
+import { MaterialReactTable } from 'material-react-table';
 
 const TableDocumentos = ({ data, setData }) => {
-  const [page, setPage] = useState(1);
-  const [pageSize, setPageSize] = useState(10);
   const userRole = Cookies.get('userType');
 
   function formatarData(dt) {
@@ -44,54 +41,84 @@ const TableDocumentos = ({ data, setData }) => {
 
   const columns = [
     {
-      title: 'Nome',
-      dataIndex: 'name',
+      id: 'Nome',
+      header: 'Nome',
+      accessorKey: 'name',
+      size:200,
     },
     {
-      title: 'Arquivo',
-      dataIndex: 'file',
-      render: (file, record) => (<p className={style.link} onClick={() => handleDownload(record.id, file)}>{file}</p>),
+      id: 'Arquivo',
+      header: 'Arquivo',
+      accessorKey: 'file',
+      size:250,
+      Cell: ({ row }) => (
+        <div
+          style={{ cursor: 'pointer', textDecoration: 'underline', color: '#2C74AC' }}
+          onClick={() => handleDownload(row.original.id, row.original.file)}
+        >
+          {row.original.file}
+        </div>
+      ),
     },
     {
-      title: 'Tamanho',
-      dataIndex: 'file_size',
-      render: (file_size) => (<>{file_size}MB</>),
+      id: 'Tamanho',
+      header: 'Tamanho',
+      accessorKey: 'file_size',
+      size:100,
+      Cell: ({ row }) => (
+        <>{row.original.file_size}MB</>
+      ),
     },
     {
-      title: 'Criado em',
-      dataIndex: 'created_at',
-      render: (created_at) => (formatarData(created_at)),
-    }
+      id: 'Criado em',
+      header: 'Criado em',
+      accessorKey: 'created_at',
+      size:100,
+      Cell: ({ row }) => (
+        <>{formatarData(row.original.created_at)}</>
+      ),
+    },
+
+
   ];
 
   if (userRole === "representante") {
     columns.push({
-      title: 'Operações',
-      dataIndex: 'id',
-      width: '0.5%',
-      render: (id) => (
+      header: null,
+      accessorKey: 'id',
+      columnDefType: 'display',
+      size:50,
+      Cell: ({ row }) => (
         <div className={style.operation}>
-          <ModalDeleteDocument docId={id} data={data} setData={setData} />
+          <ModalDeleteDocument docId={row.original.id} data={data} setData={setData} />
         </div>
       ),
-    });
+    },);
   }
 
   return (
-    <Table
-      className={style.table}
-      bordered
+    <MaterialReactTable
       rowKey={(record) => record.id}
       columns={columns}
-      dataSource={data}
-      responsive
-      pagination={{
-        current: page,
-        pageSize: pageSize,
-        onChange: (page, pageSize) => {
-          setPage(page);
-          setPageSize(pageSize)
-        }
+      data={data}
+      enableColumnFilterModes
+      enableColumnOrdering
+      enableGlobalFilter
+      paginationDisplayMode='pages'
+
+      muiTablePaperProps={{
+        elevation: 0,
+        sx: {
+          borderRadius: '0',
+          border: '1px solid #e0e0e0',
+          boxShadow: 'none',
+        },
+      }}
+
+      muiTableProps={{
+        sx: {
+          tableLayout: 'fixed',
+        },
       }}
     />
   );

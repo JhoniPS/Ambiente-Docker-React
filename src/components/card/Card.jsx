@@ -11,7 +11,7 @@ const Card = ({ icon, title, description, to, customClass }) => {
   };
 
   return (
-    <CCol xs="12" sm="6" lg="3" className='mb-3'>
+    <CCol xs={12} sm={6} lg={3} className='mb-3'>
       <CWidgetStatsF
         color="primary"
         onClick={handleClick}

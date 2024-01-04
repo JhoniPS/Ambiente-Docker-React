@@ -131,23 +131,7 @@ const EditUser = ({ id, data, setData }) => {
                                 />
                             </div>
 
-                            <div className={styles.inputField}>
-                                <TextField
-                                    type='password'
-                                    label="Senha"
-                                    name='password'
-                                    placeholder='Digite uma nova senha'
-                                    value={password}
-                                    onChange={(e) => setPassword(e.target.value)}
-                                    focused
-                                    error={errorMessages.password !== null}
-                                    helperText={errorMessages.password}
-                                    sx={{
-                                        width: '100%',
-                                    }}
-                                />
-                            </div>
-
+                           
                             <div>
                                 <SubmitButton text="Voltar" customClass="button_back" onClick={handleClose} />
                                 <SubmitButton text="Editar" customClass="button_editar_perfil" />

@@ -3,22 +3,35 @@ import { useLocation, useParams } from 'react-router-dom';
 import api from '../../../services/api';
 import Cookies from 'js-cookie';
 
-import { ImArrowLeft2 } from 'react-icons/im';
-import HeaderBar from '../../layout/header/HeaderBar';
 import Container from '../../layout/container/Container';
 import SubmitButton from '../../layout/submitbuttun/SubmitButton';
 import style from './HistoricoReuniao.module.css';
 import AddMeet from '../../Modals/modal_sign_meet/AddMeet';
+import MenuAppBar from '../../layout/AppBar/MenuAppBar';
 import ModalDeleteMeet from '../../Modals/modal_delete_meet/ModalDeleteMeet';
+import { CButtonGroup, CCallout, CCard, CCardBody, CCardLink, CCardSubtitle, CCardText, CCardTitle, CCol, CRow } from '@coreui/react';
+import ModalEditMeet from '../../Modals/modal_edit_meet/ModalEditMeet';
+
 // Importe o componente ModalEditMeet aqui, se necessário.
 
 function HistoricoReuniao() {
     const { id } = useParams();
     const [meets, setMeets] = useState([]);
+    const [sortOrder, setSortOrder] = useState('desc');
 
     const location = useLocation();
     const backPage = location.pathname.replace('/historico-de-reunioes', '');
     const userRole = Cookies.get('userType');
+
+    const sortDocs = () => {
+        return [...meets].sort((a, b) => {
+            if (sortOrder === 'desc') {
+                return new Date(b.created_at) - new Date(a.created_at);
+            } else {
+                return new Date(a.created_at) - new Date(b.created_at);
+            }
+        });
+    };
 
     const formatarData = (dt) => {
         const dataObj = new Date(dt);
@@ -68,40 +81,77 @@ function HistoricoReuniao() {
 
     return (
         <Fragment>
-            <HeaderBar text="PAINEL DE CONTROLE" backPageIcon={<ImArrowLeft2 size={25} />} backPage={backPage} />
-            <div className={style.container}>
-                <h2>Histórico de Reuniões</h2>
+            <MenuAppBar />
+            <div className="d-flex flex-column p-4 gap-2 h-100">
+                <CCard>
+                    <CCardBody>
+                        <h2>Histórico de Reuniões</h2>
 
-                {userRole === 'representante' && (
-                    <section className={style.section_filter}>
-                        <AddMeet data={meets} setData={setMeets} />
-                    </section>
-                )}
+                        {userRole === 'representante' && (
+                            <section className={style.section_filter}>
+                                <AddMeet data={meets} setData={setMeets} />
+                            </section>
+                        )}
 
-                <h4>FILTROS RÁPIDOS</h4>
-                <section className={style.button_filters}>
-                    <SubmitButton text="Mais Recentes" customClass="button_filtes_bar" />
-                    <SubmitButton text="Mais Antigos" customClass="button_filtes_bar" />
-                </section>
-
-                <Container customClass="start">
-                    {meets.map((meet) => (
-                        <div className={style.cardReuniao} key={meet?.id}>
-                            <p className={style.dataReuniao}>{formatarData(meet?.date_meet)}</p>
-                            <div className={style.content}>
-                                <h2>{meet?.content}</h2>
-                                <div>
-                                    <ModalDeleteMeet idMeet={meet?.id} data={meets} setData={setMeets} />
-                                    {/* <ModalEditMeet idMeet={meet?.id} data={meets} setData={setMeets} /> */}
-                                </div>
-                            </div>
-                            <p className={style.resumoReuniao}>{meet?.summary}</p>
-                            <p className={style.link} onClick={() => handleDownload(meet.id, meet.ata)}>
-                                {meet?.ata}
-                            </p>
-                        </div>
-                    ))}
-                </Container>
+                        <h4>FILTROS RÁPIDOS</h4>
+                        <section className={style.button_filters}>
+                            <SubmitButton
+                                text="Mais Recentes"
+                                customClass="button_filtes_bar"
+                                onClick={() => setSortOrder('desc')}
+                            />
+                            <SubmitButton
+                                text="Mais Antigos"
+                                customClass="button_filtes_bar"
+                                onClick={() => setSortOrder('asc')}
+                            />
+                        </section>
+                        <CCallout>
+                            <Container customClass="start">
+                                {meets.length !== 0 ? (
+                                    <CRow>
+                                        {sortDocs().map((meet, index) => (
+                                            // <CCard 
+                                            //     style={{ width: '21rem' }} 
+                                            //     key={meet.id}
+                                            // >
+                                            //     <CCardBody>
+                                            //         <CCardTitle className='d-flex jus'>
+                                            //             {meet.content}
+                                            //             {<ModalDeleteMeet idMeet={meet?.id} data={meets} setData={setMeets} />}
+                                            //         </CCardTitle>
+                                            //         <CCardSubtitle className="mb-2 text-medium-emphasis">{formatarData(meet.date_meet)}</CCardSubtitle>
+                                            //         <CCardText>
+                                            //             {meet.summary}
+                                            //         </CCardText>
+                                            //         <CCardLink onClick={() => handleDownload(meet.id, meet.ata)}>{meet.ata}</CCardLink>
+                                            //     </CCardBody>
+                                            // </CCard>
+                                            <CCol sm={12} key={index}>
+                                                <CCard>
+                                                    <CCardBody className='d-flex flex-column'>
+                                                        <CCardTitle>{meet.content}</CCardTitle>
+                                                        <CCardSubtitle className="mb-2 text-medium-emphasis">{formatarData(meet.date_meet)}</CCardSubtitle>
+                                                        <CCardText>
+                                                            {meet.summary}
+                                                        </CCardText>
+                                                        <CCardLink onClick={() => handleDownload(meet.id, meet.ata)}>{meet.ata}</CCardLink>
+                                                        <CButtonGroup className='d-flex gap-3 md-3'>
+                                                            {<ModalDeleteMeet idMeet={meet?.id} data={meets} setData={setMeets} />}
+                                                            {<ModalEditMeet />}
+                                                        </CButtonGroup>
+                                                    </CCardBody>
+                                                </CCard>
+                                            </CCol>
+                                        ))}
+                                    </CRow>
+                                ) : (
+                                    <p>Sem notas</p>
+                                )}
+                            </Container>
+                        </CCallout>
+                    </CCardBody>
+                </CCard>
             </div>
         </Fragment>
     );

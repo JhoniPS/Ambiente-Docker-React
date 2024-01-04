@@ -175,34 +175,7 @@ const SignUser = () => {
                 />
               </div>
 
-              <ConfigProvider
-                theme={{
-                  token: {
-                    colorBorder: '#2C74AC',
-                    lineWidth: 2,
-                    controlHeight: 45,
-                  },
-                }}
-              >
-                <Select
-                  showSearch
-                  getPopupContainer={(trigger) => {
-                    return trigger;
-                  }}
-                  style={{
-                    width: '100%',
-                  }}
-                  size='large'
-                  label="Tipo de Usuário"
-                  placeholder="Selecione um tipo de usuário"
-                  onChange={onChange}
-                  optionFilterProp='children'
-                  filterOption={(input, option) =>
-                    (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
-                  }
-                  options={option}
-                />
-              </ConfigProvider>
+             
 
               <div>
                 <LinkButton text="Voltar" to="/users" customClass="button_back" />

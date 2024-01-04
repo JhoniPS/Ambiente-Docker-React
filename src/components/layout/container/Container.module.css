@@ -2,13 +2,14 @@
   min-width: 100%;
   display: flex;
   justify-content: space-between;
-  gap: 3em;
+  gap: 0.5em;
   flex-wrap: wrap;
   background-color: inherit;
 }
 
 .start {
   justify-content: flex-start;
+  gap: 0.5em;
 }
 
 .between {

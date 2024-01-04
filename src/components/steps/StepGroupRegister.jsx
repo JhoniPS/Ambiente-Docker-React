@@ -1,58 +1,33 @@
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { Fragment, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../../services/api';
 
-import { Button, Steps, Divider, Select, Radio } from 'antd';
+import { Button, Steps, Divider, Radio } from 'antd';
 import { TextField } from '@mui/material';
 import FormSignGroup from '../Forms/formSignGroup/FormSignGroup';
 import styles from './StepGroupRegister.module.css';
 import TextArea from 'antd/es/input/TextArea';
 
-const RepresentanteGroup = ({ setRepresentatives }) => {
-    const [option, setOption] = useState([]);
+const RepresentanteGroup = ({representative,  setRepresentative }) => {
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await api.get('users');
-
-                const representantesFiltrados = response.data.data.filter(
-                    (user) => user.type_user === 'representante'
-                );
-
-                setOption(
-                    representantesFiltrados.map((rep) => ({
-                        id: rep.id,
-                        name: rep.name,
-                        email: rep.email,
-                        type_user: rep.type_user,
-                    }))
-                );
-            } catch (error) {
-                console.error('Erro ao buscar os representantes:', error);
-            }
-        };
-
-        fetchData();
-    }, []);
-
-    const handleChange = (selectedValues) => {
-        setRepresentatives(selectedValues);
+    const handleChange = (e) => {
+        setRepresentative(e.target.value);
     };
 
     return (
         <section className={styles.representantes}>
-            <h1>Representante</h1>
-            <Select
-                mode="multiple"
-                allowClear
-                style={{ width: '100%', height: '4em' }}
-                placeholder="Selecione o representante"
+            <TextField
+                type='text'
+                label="E-mail do representante"
+                variant="standard"
+                name='representative'
+                value={representative}
                 onChange={handleChange}
-                filterOption={(input, option) =>
-                    (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
-                }
-                options={option.map((rep) => ({ value: rep.id, label: rep.name }))}
+                focused
+                margin='normal'
+                sx={{
+                    width: '100%',
+                }}
             />
         </section>
     );
@@ -120,7 +95,7 @@ const StepGroupRegister = () => {
         office_indicated: '',
     });
 
-    const [representatives, setRepresentatives] = useState([]);
+    const [representative, setRepresentative] = useState("");
     const [observations, setObservations] = useState([]);
     const [name, setName] = useState("");
     const [type_group, setType_group] = useState('interno');
@@ -134,8 +109,8 @@ const StepGroupRegister = () => {
             content: <FormSignGroup form={formulario} setForm={setFormulario} />,
         },
         {
-            title: 'Representantes',
-            content: <RepresentanteGroup setRepresentatives={setRepresentatives} />,
+            title: 'Representante',
+            content: <RepresentanteGroup representative={representative} setRepresentative={setRepresentative} />,
         },
         {
             title: 'Observações',
@@ -158,8 +133,10 @@ const StepGroupRegister = () => {
             name,
             type_group,
             observations,
-            representatives
+            representative
         };
+
+        console.log(updatedFormulario)
 
         try {
             await api.post('group', updatedFormulario).then(() => {

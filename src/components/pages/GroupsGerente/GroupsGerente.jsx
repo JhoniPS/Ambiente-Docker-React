@@ -77,7 +77,7 @@ const GroupsGerente = () => {
                                 customClass="add"
                                 to="/signGroups"
                                 icon={
-                                    <IconContext.Provider value={{ size: '2rem' }}>
+                                    <IconContext.Provider value={{ size: '1rem' }}>
                                         <IoMdAdd />
                                     </IconContext.Provider>
                                 }
@@ -85,13 +85,13 @@ const GroupsGerente = () => {
                         </section>
 
                         <h4 className='mb-0'>FILTROS RÁPIDOS</h4>
-                        <Container customClass="start">
-                            <SubmitButton text="Mais Recentes" customClass="button_filtes_bar" onClick={() => setSortOrder('desc')} />
+                        <section className="d-flex align-items-start gap-2 mb-5">
+                            <SubmitButton text="Mais Recentes" style={{opacity:'0.9'}} customClass="button_filtes_bar" onClick={() => setSortOrder('desc')}/>
                             <SubmitButton text="Mais Antigos" customClass="button_filtes_bar" onClick={() => setSortOrder('asc')} />
                             <SubmitButton text="Grupos Internos" customClass="button_filtes_bar" onClick={() => setGroupType('interno')} />
                             <SubmitButton text="Grupos Externos" customClass="button_filtes_bar" onClick={() => setGroupType('externo')} />
                             <SubmitButton text="Mostrar Todos" customClass="button_filtes_bar" onClick={() => setGroupType('')} />
-                        </Container>
+                        </section>
                         <TableGroups rota="detalhes-de-grupos-gerente" data={sortUsers()} setData={setData} />
                     </CCardBody>
                 </CCard>

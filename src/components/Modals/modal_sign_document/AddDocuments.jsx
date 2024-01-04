@@ -8,8 +8,9 @@ import style from './AddDocumentos.module.css'
 import { Divider } from 'antd';
 import { IconContext } from 'react-icons';
 import { IoMdAdd } from "react-icons/io";
+import { CButton } from '@coreui/react';
 
-const AddDocuments = ({data, setData}) => {
+const AddDocuments = ({ data, setData }) => {
     const [open, setOpen] = useState(false);
 
     const handleOpen = () => setOpen(true);
@@ -17,10 +18,10 @@ const AddDocuments = ({data, setData}) => {
 
     return (
         <Fragment>
-            <IconContext.Provider value={{ size: 25 }}>
-                <button onClick={handleOpen} className={style.button}>
-                    {<IoMdAdd />}<h1>Add Documento</h1>
-                </button>
+            <IconContext.Provider value={{ size: 22 }}>
+                <CButton onClick={handleOpen} className="mb-3" color="primary">
+                    <IoMdAdd /> Add Documento
+                </CButton>
             </IconContext.Provider>
             <Modal
                 open={open}
@@ -38,7 +39,7 @@ const AddDocuments = ({data, setData}) => {
                     </nav>
                     <div className={style.container_conteudo}>
 
-                        <Upload data={data} setData={setData}/>
+                        <Upload data={data} setData={setData} />
 
                         <section className={style.buttons}>
                             <SubmitButton

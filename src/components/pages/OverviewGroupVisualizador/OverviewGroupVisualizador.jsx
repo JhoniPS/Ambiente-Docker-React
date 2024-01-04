@@ -12,14 +12,12 @@ import TableMemberGroup from "../../TableMemberGroup/TableMemberGroup";
 import Observations from "../../layout/Observations/Observations";
 import MenuAppBar from "../../layout/AppBar/MenuAppBar";
 import { CCard, CCardBody, CRow } from "@coreui/react";
-import TableRepresentativeGroup from "../../TableRepresentativeGroup/TableRepresentativeGroup";
 
 const OverviewGroupVisualizador = () => {
   const { id } = useParams();
   const [data, setData] = useState({});
   const [members, setMembers] = useState([]);
   const [observacao, setObservacao] = useState("");
-  const [representatives, setRepresentatives] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -28,12 +26,10 @@ const OverviewGroupVisualizador = () => {
         const group = data.data;
         const members = data.data.members;
         const observacao = data.data.observations;
-        const representatives = data.data.representatives;
 
         setData(group);
         setMembers(members);
         setObservacao(observacao);
-        setRepresentatives(representatives);
       } catch (error) {
         console.log(error);
       }
@@ -51,24 +47,24 @@ const OverviewGroupVisualizador = () => {
           <Card
             icon={cilDescription}
             title="Notas"
-            description="Gerencie suas Notas"
+            description="Gerencia Notas"
             to={`/detalhes-de-grupos-visualizador/${id}/notas`}
           />
           <Card
             icon={cilNotes}
             title="Documentos"
-            description="Gerencia documentos do grupo"
+            description="Gerencia documentos"
             to={`/detalhes-de-grupos-visualizador/${id}/documentos`}
           />
           <Card
             icon={cilTask}
             title="Atividades"
-            description="Gerenciar suas atividades"
+            description="Gerencia atividades"
           />
           <Card
             icon={cilList}
-            title="Histórico de reuniões"
-            description="Gerencie as reuniões"
+            title="Reuniões"
+            description="Gerencia reuniões"
             to={`/detalhes-de-grupos-visualizador/${id}/historico-de-reunioes`}
           />
         </CRow>
@@ -94,13 +90,6 @@ const OverviewGroupVisualizador = () => {
         </CCard>
 
         <div className="d-flex flex-nowrap justify-content-around gap-2">
-          <CCard className="d-flex flex-column gap-2 mb-3 w-100">
-            <CCardBody>
-              <h2>Representantes</h2>
-              <TableRepresentativeGroup data={representatives} />
-            </CCardBody>
-          </CCard>
-
           <CCard className="d-flex flex-column gap-2 mb-3 w-100">
             <CCardBody>
               <h2>Observações</h2>

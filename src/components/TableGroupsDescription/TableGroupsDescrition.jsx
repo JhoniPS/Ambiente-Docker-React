@@ -8,11 +8,6 @@ const TableGroupsDescription = ({ description }) => {
         return members ? members.length : null;
     };
 
-    const getRepresentativesCount = (representatives) => {
-        return representatives ? representatives.length : null;
-    };
-
-
     return (
         <CRow>
             <CCol xs="12" sm="6" lg="4">
@@ -25,17 +20,17 @@ const TableGroupsDescription = ({ description }) => {
             </CCol>
             <CCol xs="12" sm="6" lg="4">
                 <CCard>
-                    <CCardHeader component='h3'>Membros do grupo</CCardHeader>
+                    <CCardHeader component='h3'>Representante</CCardHeader>
                     <CCardBody>
-                        {getMembersCount(description.members)}
+                        {description.representative?.email}
                     </CCardBody>
                 </CCard>
             </CCol>
             <CCol xs="12" sm="6" lg="4">
                 <CCard>
-                    <CCardHeader component='h3'>Representantes do Grupo</CCardHeader>
+                    <CCardHeader component='h3'>Membros do grupo</CCardHeader>
                     <CCardBody>
-                        {getRepresentativesCount(description.representatives)}
+                        {getMembersCount(description.members)}
                     </CCardBody>
                 </CCard>
             </CCol>

@@ -1,16 +1,15 @@
 import React, { Fragment, useEffect, useState } from 'react'
-import { useLocation, useParams } from "react-router-dom";
+import {useNavigate, useLocation, useParams } from "react-router-dom";
+import api from '../../../services/api';
 import Cookies from 'js-cookie'
 
-import HeaderBar from '../../layout/header/HeaderBar';
 import SubmitButton from '../../layout/submitbuttun/SubmitButton';
 import Message from '../../layout/Message/Message';
-import style from './Documents.module.css'
-
-import { ImArrowLeft2 } from "react-icons/im";
 import TableDocumentos from '../../TableDocumentos/TableDocumentos';
 import AddDocuments from '../../Modals/modal_sign_document/AddDocuments';
-import api from '../../../services/api';
+import MenuAppBar from '../../layout/AppBar/MenuAppBar';
+
+import { CCard, CCardBody } from '@coreui/react';
 
 function Documents() {
     const { id } = useParams();
@@ -20,6 +19,7 @@ function Documents() {
     const [showMessage, setShowMessage] = useState(false);
     const [sortOrder, setSortOrder] = useState("desc");
 
+    const navigate = useNavigate();
     const location = useLocation();
     const backPage = location.pathname.replace("/documentos", '');
     const userRole = Cookies.get('userType');
@@ -35,12 +35,26 @@ function Documents() {
     };
 
     useEffect(() => {
+        const handlePopstate = () => {
+            // Use o hook navigate para redirecionar para a rota desejada
+            navigate(`/detalhes-de-grupos-gerente/${id}/`);
+        };
+
+        // Adicione um event listener ao evento popstate
+        window.addEventListener('popstate', handlePopstate);
+
+        return () => {
+            // Remova o event listener ao desmontar o componente
+            window.removeEventListener('popstate', handlePopstate);
+        };
+    }, [id, navigate]);
+
+    useEffect(() => {
         if (location.state) {
             setMessage(location.state.message);
             setMessageType(location.state.messageType);
             setShowMessage(location.state.showMessage);
-        }
-
+        };
     }, [location.state]);
 
     useEffect(() => {
@@ -57,31 +71,35 @@ function Documents() {
 
     return (
         <Fragment>
-            <HeaderBar text="PAINEL DE CONTROLE" backPageIcon={<ImArrowLeft2 size={25} />} backPage={backPage} />
-            <div className={style.container}>
-                <h2>Documentos</h2>
+            <MenuAppBar />
+            <div className="d-flex flex-column p-4 gap-2 h-100">
+                <CCard>
+                    <CCardBody>
+                        <h2>Documentos</h2>
 
-                {
-                    userRole === 'representante' &&
-                    <section className={style.section_filter}>
-                        <AddDocuments data={data} setData={setData} />
-                    </section>
-                }
+                        {
+                            userRole === 'representante' &&
+                            <section className="d-flex align-items-start gap-4">
+                                <AddDocuments data={data} setData={setData} />
+                            </section>
+                        }
 
-                <h4>FILTROS RÁPIDOS</h4>
-                <section className={style.button_filters}>
-                    <SubmitButton
-                        text="Mais Recentes"
-                        customClass="button_filtes_bar"
-                        onClick={() => setSortOrder("desc")}
-                    />
-                    <SubmitButton
-                        text="Mais Antigos"
-                        customClass="button_filtes_bar"
-                        onClick={() => setSortOrder("asc")}
-                    />
-                </section>
-                <TableDocumentos data={sortDocs()} setData={setData} />
+                        <h4>FILTROS RÁPIDOS</h4>
+                        <section className="d-flex align-items-start gap-2 mb-4">
+                            <SubmitButton
+                                text="Mais Recentes"
+                                customClass="button_filtes_bar"
+                                onClick={() => setSortOrder("desc")}
+                            />
+                            <SubmitButton
+                                text="Mais Antigos"
+                                customClass="button_filtes_bar"
+                                onClick={() => setSortOrder("asc")}
+                            />
+                        </section>
+                        <TableDocumentos data={sortDocs()} setData={setData} />
+                    </CCardBody>
+                </CCard>
                 {showMessage && <Message type={messageType} msg={message} setShowMessage={setShowMessage} />}
             </div>
         </Fragment>

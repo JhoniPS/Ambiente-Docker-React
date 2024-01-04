@@ -31,7 +31,7 @@ const TableUser = ({ data, setData }) => {
       Cell: ({ row }) => (
         <div className="d-flex justify-content-around">
           <ModalDeleteUser id={row.original.id} data={data} setData={setData} />
-          <ModalEditUser id={row.original.id} data={data} setData={setData} />
+          {/* <ModalEditUser id={row.original.id} data={data} setData={setData} /> */}
         </div>
       ),
     },

@@ -76,6 +76,7 @@
     height: 19px;
     border-radius: 50%;
     border: none;
+    
 }
 
 .green {
@@ -87,7 +88,7 @@
 }
 
 .blue {
-    background: #321fdb;
+    background: #4332d8;
 }
 
 .red {

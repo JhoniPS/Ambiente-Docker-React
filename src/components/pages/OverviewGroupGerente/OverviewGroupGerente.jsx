@@ -10,7 +10,6 @@ import Card from "../../card/Card";
 
 import TableGroupsDescription from "../../TableGroupsDescription/TableGroupsDescrition";
 import TableDetalhe from "../../TableDetalhes/TableDetalhe";
-import TableRepresentativeGroup from "../../TableRepresentativeGroup/TableRepresentativeGroup";
 import TableMemberGroup from "../../TableMemberGroup/TableMemberGroup";
 import Observations from "../../layout/Observations/Observations"
 
@@ -19,7 +18,6 @@ const OverviewGroupGerente = () => {
   const [data, setData] = useState({});
   const [members, setMembres] = useState([]);
   const [observacao, setObservacao] = useState("");
-  const [representatives, setRepresentatives] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -29,12 +27,10 @@ const OverviewGroupGerente = () => {
         const group = data.data;
         const members = data.data.members;
         const observacao = data.data.observations;
-        const representatives = data.data.representatives;
 
         setData(group);
         setMembres(members);
         setObservacao(observacao);
-        setRepresentatives(representatives);
       } catch (error) {
         console.log(error);
       }
@@ -47,29 +43,29 @@ const OverviewGroupGerente = () => {
     <Fragment>
       <MenuAppBar />
       <div className="d-flex flex-column p-4 gap-2 h-100">
-        <h2>Overview</h2>
+        <h2>Visão Geral</h2>
         <CRow>
           <Card
             icon={cilDescription}
             title="Notas"
-            description="Gerencie suas Notas"
+            description="Gerencia Notas"
             to={`/detalhes-de-grupos-gerente/${id}/notas`}
           />
           <Card
             icon={cilNotes}
             title="Documentos"
-            description="Gerencia documentos do grupo"
+            description="Gerencia Documentos"
             to={`/detalhes-de-grupos-gerente/${id}/documentos`}
           />
           <Card
             icon={cilTask}
             title="Atividades"
-            description="Gerenciar suas atividades"
+            description="Gerencia Atividades"
           />
           <Card
             icon={cilList}
-            title="Histórico de reuniões"
-            description="Gerencie as reuniões"
+            title="Reuniões"
+            description="Gerencia Reuniões"
             to={`/detalhes-de-grupos-gerente/${id}/historico-de-reunioes`}
           />
         </CRow>
@@ -93,12 +89,6 @@ const OverviewGroupGerente = () => {
         </CCard>
 
         <div className="d-flex flex-nowrap justify-content-around gap-2">
-          <CCard className="d-flex flex-column gap-2 mb-3 w-100">
-            <CCardBody>
-              <h2>Representantes</h2>
-              <TableRepresentativeGroup data={representatives} setData={setRepresentatives} />
-            </CCardBody>
-          </CCard>
           <CCard className="d-flex flex-column gap-2 mb-3 w-100">
             <CCardBody>
               <h2>Observações</h2>

@@ -25,17 +25,6 @@ import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import '@coreui/coreui/dist/css/coreui.min.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
 
-// import { FormControl, FormHelperText, IconButton } from '@mui/material';
-// import Visibility from '@mui/icons-material/Visibility';
-// import VisibilityOff from '@mui/icons-material/VisibilityOff';
-// import InputAdornment from '@mui/material/InputAdornment';
-// import OutlinedInput from '@mui/material/OutlinedInput';
-// import InputLabel from '@mui/material/InputLabel';
-
-// import SubmitButton from '../../layout/submitbuttun/SubmitButton';
-// import styles from './Login.module.css'
-// import img from '../../../img/BrasãoUfopa.png'
-
 const Login = () => {
     const navigate = useNavigate();
     const [email, setEmail] = useState("");

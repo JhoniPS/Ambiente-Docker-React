@@ -64,7 +64,7 @@ const Users = () => {
         <CCard className="md-2">
           <CCardBody className="d-flex flex-column gap-3">
             <h2>Usuários</h2>
-            <section className="mb-0 p-0">
+            {/* <section className="mb-0 p-0">
               <LinkButton
                 text="Adicionar Usuário"
                 to="/signUser"
@@ -74,7 +74,7 @@ const Users = () => {
                   </IconContext.Provider>
                 }
               />
-            </section>
+            </section> */}
 
             <h4>FILTROS RÁPIDOS</h4>
             <section className="d-grid gap-2 d-md-flex justify-content-md-start mb-0">
