@@ -48,13 +48,31 @@
 
 .resumoReuniao {
   width: 100%;
+  height: auto;
+  max-height: 20px;
   color: #667085;
   font-feature-settings: 'clig' off, 'liga' off;
   font-family: Roboto;
   font-size: 15px;
   text-align: justify;
-  font-weight: 400;
-  line-height: 133.4%;
+  overflow-y: scroll;
+  scrollbar-width: thin;
+  /* para navegadores Firefox */
+  scrollbar-color: transparent transparent;
+  /* para navegadores Firefox */
+
+  /* Para navegadores Webkit (Chrome, Safari, Opera) */
+  &::-webkit-scrollbar {
+    width: 12px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: transparent;
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
 }
 
 .link {
@@ -73,7 +91,7 @@
   justify-content: space-between;
 }
 
-.content > div {
+.content>div {
   display: flex;
 }
 

@@ -133,7 +133,7 @@ const AddMeet = ({ data, setData }) => {
                             onChange={(e) => setFormulario({ ...formulario, summary: e.target.value })}
                         />
                         <TextField
-                            type="text"
+                            type="date"
                             label="Data da Reunião"
                             variant="standard"
                             name="date_meet"

@@ -9,10 +9,8 @@ import style from './HistoricoReuniao.module.css';
 import AddMeet from '../../Modals/modal_sign_meet/AddMeet';
 import MenuAppBar from '../../layout/AppBar/MenuAppBar';
 import ModalDeleteMeet from '../../Modals/modal_delete_meet/ModalDeleteMeet';
-import { CButtonGroup, CCallout, CCard, CCardBody, CCardLink, CCardSubtitle, CCardText, CCardTitle, CCol, CRow } from '@coreui/react';
+import { CButtonGroup, CCallout, CCard, CCardBody, CCardLink, CCardSubtitle, CCardText, CCardTitle } from '@coreui/react';
 import ModalEditMeet from '../../Modals/modal_edit_meet/ModalEditMeet';
-
-// Importe o componente ModalEditMeet aqui, se necessário.
 
 function HistoricoReuniao() {
     const { id } = useParams();
@@ -71,7 +69,7 @@ function HistoricoReuniao() {
         const fetchData = async () => {
             try {
                 const response = await api.get(`group/${id}/meeting-history`);
-                setMeets(response.data || []); // Certifique-se de tratar uma possível resposta vazia.
+                setMeets(response.data || []);
             } catch (error) {
                 console.log(error);
             }
@@ -109,42 +107,24 @@ function HistoricoReuniao() {
                         <CCallout>
                             <Container customClass="start">
                                 {meets.length !== 0 ? (
-                                    <CRow>
+                                    <Container customClass="start">
                                         {sortDocs().map((meet, index) => (
-                                            // <CCard 
-                                            //     style={{ width: '21rem' }} 
-                                            //     key={meet.id}
-                                            // >
-                                            //     <CCardBody>
-                                            //         <CCardTitle className='d-flex jus'>
-                                            //             {meet.content}
-                                            //             {<ModalDeleteMeet idMeet={meet?.id} data={meets} setData={setMeets} />}
-                                            //         </CCardTitle>
-                                            //         <CCardSubtitle className="mb-2 text-medium-emphasis">{formatarData(meet.date_meet)}</CCardSubtitle>
-                                            //         <CCardText>
-                                            //             {meet.summary}
-                                            //         </CCardText>
-                                            //         <CCardLink onClick={() => handleDownload(meet.id, meet.ata)}>{meet.ata}</CCardLink>
-                                            //     </CCardBody>
-                                            // </CCard>
-                                            <CCol sm={12} key={index}>
-                                                <CCard>
-                                                    <CCardBody className='d-flex flex-column'>
-                                                        <CCardTitle>{meet.content}</CCardTitle>
-                                                        <CCardSubtitle className="mb-2 text-medium-emphasis">{formatarData(meet.date_meet)}</CCardSubtitle>
-                                                        <CCardText>
-                                                            {meet.summary}
-                                                        </CCardText>
-                                                        <CCardLink onClick={() => handleDownload(meet.id, meet.ata)}>{meet.ata}</CCardLink>
-                                                        <CButtonGroup className='d-flex gap-3 md-3'>
-                                                            {<ModalDeleteMeet idMeet={meet?.id} data={meets} setData={setMeets} />}
-                                                            {<ModalEditMeet />}
-                                                        </CButtonGroup>
-                                                    </CCardBody>
-                                                </CCard>
-                                            </CCol>
+                                            <CCard className='d-flex flex-column' style={{ height: '200 px', width: '400px' }} key={index}>
+                                                <CCardBody className='d-flex flex-column'>
+                                                    <CCardTitle>{meet?.content}</CCardTitle>
+                                                    <CCardSubtitle className="mb-2 text-medium-emphasis">{formatarData(meet?.date_meet)}</CCardSubtitle>
+                                                    <CCardText className={style.resumoReuniao}>
+                                                        {meet?.summary}
+                                                    </CCardText>
+                                                    <CCardLink onClick={() => handleDownload(meet?.id, meet?.ata)}>{meet?.ata}</CCardLink>
+                                                    <CButtonGroup className='d-flex gap-3 md-3'>
+                                                        {<ModalDeleteMeet idMeet={meet?.id} data={meets} setData={setMeets} />}
+                                                        {<ModalEditMeet />}
+                                                    </CButtonGroup>
+                                                </CCardBody>
+                                            </CCard>
                                         ))}
-                                    </CRow>
+                                    </Container>
                                 ) : (
                                     <p>Sem notas</p>
                                 )}
