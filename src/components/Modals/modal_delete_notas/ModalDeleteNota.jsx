@@ -8,6 +8,7 @@ import Modal from '@mui/material/Modal';
 import { IconContext } from 'react-icons';
 import { BsFillTrashFill } from 'react-icons/bs';
 import { Typography } from '@mui/material';
+import { CButton, CModal, CModalBody, CModalFooter, CModalHeader, CModalTitle } from '@coreui/react';
 
 const style = {
     display: 'flex',
@@ -85,29 +86,32 @@ function ModalDeleteNota({ idNote, data, setData }) {
     };
 
     return (
-        <div>
-            <IconContext.Provider value={{ color: "#93000A", size: 25 }}>
-                <button onClick={handleOpen} className={styleButton.button}>
+        <>
+            <IconContext.Provider value={{ color: "#93000A", size: 20 }}>
+                <CButton onClick={handleOpen} color='null'>
                     <BsFillTrashFill />
-                </button>
+                </CButton>
             </IconContext.Provider>
-
-            <Modal
-                open={open}
+            <CModal
+                visible={open}
                 onClose={handleClose}
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
             >
-                <Box sx={style}>
-                    <Typography sx={styleTitle}>Deletar Nota</Typography>
-                    <Typography sx={styleDescrition}>Você tem certeza que deseja excluir esta nota?</Typography>
-                    <div className={styleButton.button_container}>
-                        <button onClick={handleClose} className={styleButton.cancelar}>Cancelar</button>
-                        <button onClick={handlDelete} className={styleButton.excluir}>Excluir</button>
-                    </div>
-                </Box>
-            </Modal>
-        </div>
+                <CModalHeader onClose={handleClose}>
+                    <CModalTitle id="titulo">Deletar Nota</CModalTitle>
+                </CModalHeader>
+                <CModalBody>
+                    <p>Você tem certeza que deseja excluir está nota?</p>
+                </CModalBody>
+                <CModalFooter>
+                    <CButton color="secondary" onClick={handleClose}>
+                        Close
+                    </CButton>
+                    <CButton color="primary" onClick={handlDelete}>Excluir</CButton>
+                </CModalFooter>
+            </CModal>
+        </>
     );
 }
 
