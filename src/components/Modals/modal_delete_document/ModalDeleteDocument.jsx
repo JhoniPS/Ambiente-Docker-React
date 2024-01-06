@@ -47,6 +47,7 @@ function ModalDeleteDocument({ docId, data, setData }) {
                 </CButton>
             </IconContext.Provider>
             <CModal
+                alignment="center"
                 visible={open}
                 onClose={handleClose}
                 aria-labelledby="modal-modal-title"

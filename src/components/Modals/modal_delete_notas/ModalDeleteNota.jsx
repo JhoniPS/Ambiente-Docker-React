@@ -1,58 +1,11 @@
 import React, { useState } from 'react';
 import api from '../../../services/api';
-import { useNavigate, useParams } from 'react-router-dom';
 
-import styleButton from './modal_delete.module.css'
-import Box from '@mui/material/Box';
-import Modal from '@mui/material/Modal';
+import { useNavigate, useParams } from 'react-router-dom';
 import { IconContext } from 'react-icons';
 import { BsFillTrashFill } from 'react-icons/bs';
-import { Typography } from '@mui/material';
 import { CButton, CModal, CModalBody, CModalFooter, CModalHeader, CModalTitle } from '@coreui/react';
 
-const style = {
-    display: 'flex',
-    position: 'fixed',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-    textAlign: 'justify',
-    gap: '1.5em',
-    backgroundColor: '#FFDAD6',
-    width: '400px',
-    height: '200px',
-    padding: '2.5rem',
-    outline: 'none',
-    borderRadius: '15px',
-    boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)',
-};
-
-const styleDescrition = {
-    color: '#1D1B20',
-    alignSelf: 'stretch',
-    fontFeatureSettings: "'clig' off, 'liga' off",
-    fontFamily: 'Roboto',
-    fontSize: '19px',
-    fontStyle: 'normal',
-    fontWeight: 400,
-    lineHeight: '20px',
-    letterSpacing: '0.20px'
-};
-
-const styleTitle = {
-    color: '#1D1B20',
-    alignSelf: 'stretch',
-    fontFeatureSettings: "'clig' off, 'liga' off",
-    fontFamily: 'Roboto',
-    fontSize: '30px',
-    fontStyle: 'normal',
-    fontWeight: 400,
-    lineHeight: '20px',
-    letterSpacing: '0.25px'
-};
 
 function ModalDeleteNota({ idNote, data, setData }) {
     const [open, setOpen] = useState(false);
@@ -93,6 +46,7 @@ function ModalDeleteNota({ idNote, data, setData }) {
                 </CButton>
             </IconContext.Provider>
             <CModal
+                alignment="center"
                 visible={open}
                 onClose={handleClose}
                 aria-labelledby="modal-modal-title"

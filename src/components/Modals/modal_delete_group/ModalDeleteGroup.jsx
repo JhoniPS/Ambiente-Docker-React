@@ -39,6 +39,7 @@ export default function ModalEditGroup({ id, data, setData }) {
                 </CButton>
             </IconContext.Provider>
             <CModal
+                alignment="center"
                 visible={open}
                 onClose={handleClose}
                 aria-labelledby="modal-modal-title"
