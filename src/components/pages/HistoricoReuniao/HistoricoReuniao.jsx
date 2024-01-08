@@ -2,14 +2,23 @@ import React, { Fragment, useEffect, useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import api from '../../../services/api';
 import Cookies from 'js-cookie';
-
+import {
+    CButtonGroup,
+    CCallout,
+    CCard,
+    CCardBody,
+    CCardHeader,
+    CCardLink,
+    CCardSubtitle,
+    CCardText,
+    CRow,
+} from '@coreui/react';
 import Container from '../../layout/container/Container';
 import SubmitButton from '../../layout/submitbuttun/SubmitButton';
 import style from './HistoricoReuniao.module.css';
 import AddMeet from '../../Modals/modal_sign_meet/AddMeet';
 import MenuAppBar from '../../layout/AppBar/MenuAppBar';
 import ModalDeleteMeet from '../../Modals/modal_delete_meet/ModalDeleteMeet';
-import { CButtonGroup, CCallout, CCard, CCardBody, CCardLink, CCardSubtitle, CCardText, CCardTitle } from '@coreui/react';
 import ModalEditMeet from '../../Modals/modal_edit_meet/ModalEditMeet';
 
 function HistoricoReuniao() {
@@ -42,20 +51,13 @@ function HistoricoReuniao() {
 
     const handleDownload = async (id, fileName) => {
         try {
-            // Certifique-se de que a rota está correta e que o ID é válido.
             const response = await api.get(`/meeting-history/download/${id}`, { responseType: 'blob' });
-
-            // Crie um blob com os dados recebidos e o tipo de conteúdo.
             const blob = new Blob([response.data], { type: response.headers['content-type'] });
-
-            // Crie uma URL para o blob e crie um link para iniciar o download.
             const url = window.URL.createObjectURL(blob);
             const link = document.createElement('a');
             link.href = url;
             link.download = fileName;
             document.body.appendChild(link);
-
-            // Inicie o download e limpe a URL criada.
             link.click();
             window.URL.revokeObjectURL(url);
 
@@ -86,48 +88,38 @@ function HistoricoReuniao() {
                         <h2>Histórico de Reuniões</h2>
 
                         {userRole === 'representante' && (
-                            <section className={style.section_filter}>
+                            <section className="d-flex align-items-start gap-4">
                                 <AddMeet data={meets} setData={setMeets} />
                             </section>
                         )}
 
                         <h4>FILTROS RÁPIDOS</h4>
-                        <section className={style.button_filters}>
-                            <SubmitButton
-                                text="Mais Recentes"
-                                customClass="button_filtes_bar"
-                                onClick={() => setSortOrder('desc')}
-                            />
-                            <SubmitButton
-                                text="Mais Antigos"
-                                customClass="button_filtes_bar"
-                                onClick={() => setSortOrder('asc')}
-                            />
+                        <section className="d-flex align-items-start gap-2 mb-5">
+                            <SubmitButton text="Mais Recentes" customClass="button_filters_bar" onClick={() => setSortOrder('desc')} />
+                            <SubmitButton text="Mais Antigos" customClass="button_filters_bar" onClick={() => setSortOrder('asc')} />
                         </section>
                         <CCallout>
                             <Container customClass="start">
-                                {meets.length !== 0 ? (
-                                    <Container customClass="start">
-                                        {sortDocs().map((meet, index) => (
-                                            <CCard className='d-flex flex-column' style={{ height: '200 px', width: '400px' }} key={index}>
-                                                <CCardBody className='d-flex flex-column'>
-                                                    <CCardTitle>{meet?.content}</CCardTitle>
-                                                    <CCardSubtitle className="mb-2 text-medium-emphasis">{formatarData(meet?.date_meet)}</CCardSubtitle>
-                                                    <CCardText className={style.resumoReuniao}>
-                                                        {meet?.summary}
-                                                    </CCardText>
+                                <CRow className="d-flex gap-4 p-3">
+                                    {meets.length !== 0 ? (
+                                        sortDocs().map((meet, index) => (
+                                            <CCard key={index} className="col-lg-6 col-md-6 col-sm-12 mb-4 p-0" style={{ maxWidth: '36rem'}}>
+                                                <CCardHeader className="text-lg" style={{ maxWidth: '36rem' }} dangerouslySetInnerHTML={{ __html: meet?.content }} />
+                                                <CCardBody className="d-flex flex-column p-3">
+                                                    <CCardSubtitle className="mb-2 text-medium-emphasis text-sm">{formatarData(meet?.date_meet)}</CCardSubtitle>
+                                                    <CCardText className={style.resumoReuniao + ' text-sm'}>{meet?.summary}</CCardText>
                                                     <CCardLink onClick={() => handleDownload(meet?.id, meet?.ata)}>{meet?.ata}</CCardLink>
-                                                    <CButtonGroup className='d-flex gap-3 md-3'>
+                                                    <CButtonGroup className="d-flex flex-md-row mt-3">
                                                         {<ModalDeleteMeet idMeet={meet?.id} data={meets} setData={setMeets} />}
-                                                        {<ModalEditMeet />}
+                                                        {<ModalEditMeet data={meets} setData={setMeets} />}
                                                     </CButtonGroup>
                                                 </CCardBody>
                                             </CCard>
-                                        ))}
-                                    </Container>
-                                ) : (
-                                    <p>Sem notas</p>
-                                )}
+                                        ))
+                                    ) : (
+                                        <p>Sem notas</p>
+                                    )}
+                                </CRow>
                             </Container>
                         </CCallout>
                     </CCardBody>
