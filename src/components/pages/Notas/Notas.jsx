@@ -69,7 +69,7 @@ export default function Notas() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await api.get(`notes`);
+                const response = await api.get(`group/${id}/notes`);
                 setNotas(response.data);
             } catch (error) {
                 console.log(error);

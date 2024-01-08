@@ -2,17 +2,23 @@ import React, { Fragment, useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import api from '../../../services/api'
 
-import Modal from '@mui/material/Modal';
-import SubmitButton from '../../layout/submitbuttun/SubmitButton';
-import TextArea from 'antd/es/input/TextArea';
 
 import style from './ModalEditNota.module.css';
-
-import { Divider } from 'antd';
 import { IconContext } from 'react-icons';
 import { IoPencilSharp } from 'react-icons/io5';
-import { TextField } from '@mui/material';
-
+import {
+    CButton,
+    CCol,
+    CContainer,
+    CFormInput,
+    CFormTextarea,
+    CModal,
+    CModalBody,
+    CModalFooter,
+    CModalHeader,
+    CModalTitle,
+    CRow
+} from '@coreui/react';
 
 const ModalEditNota = ({ idNota, data, setData }) => {
     const [open, setOpen] = useState(false);
@@ -81,6 +87,7 @@ const ModalEditNota = ({ idNota, data, setData }) => {
                     showMessage: true,
                 }
             });
+            handleClose();
         } catch (error) {
             navigate(`/detalhes-de-grupos-representante/${id}/notas`, {
                 state: {
@@ -94,88 +101,75 @@ const ModalEditNota = ({ idNota, data, setData }) => {
 
     return (
         <Fragment>
-            <IconContext.Provider value={{ color: "#2C74AC", size: 25 }}>
-                <button onClick={handleOpen} className={style.button}>
-                    {<IoPencilSharp />}
-                </button>
+            <IconContext.Provider value={{ color: '#2C74AC', size: 20 }}>
+                <CButton onClick={handleOpen} color='null'>
+                    <IoPencilSharp />
+                </CButton>
             </IconContext.Provider>
-            <Modal
-                open={open}
+            <CModal
+                alignment="center"
+                visible={open}
                 onClose={handleClose}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
-                style={{
-                    zIndex: 2,
-                }}
+                aria-labelledby="VerticallyCenteredScrollableExample"
             >
-                <section className={style.container_modal}>
-                    <nav className={style.header}>
-                        <div>
-                            <span>1</span> <strong>Nota</strong>
-                        </div>
-                        <Divider />
-                    </nav>
-                    <div className={style.container_conteudo}>
-                        <TextField
-                            type="text"
-                            label="Titulo"
-                            variant="standard"
-                            name="title"
-                            focused
-                            value={nota.title}
-                            onChange={handleEdit}
-                            margin="normal"
-                            sx={{
-                                width: '100%',
-                            }}
-                        />
-
-                        <p>Descrição</p>
-
-                        <TextArea
-                            placeholder="Insira aqui sua nota"
-                            value={nota.description}
-                            name='description'
-                            onChange={handleEdit}
-                            rows={5}
-                        />
-
-                        <p>Cor</p>
-                        <div className={style.container_button_color}>
-                            <button
-                                className={`${style.button_color} ${style.green}`}
-                                onClick={() => handleColorButtonClick('green')}
-                            ></button>
-                            <button
-                                className={`${style.button_color} ${style.yellow}`}
-                                onClick={() => handleColorButtonClick('yellow')}
-                            ></button>
-                            <button
-                                className={`${style.button_color} ${style.blue}`}
-                                onClick={() => handleColorButtonClick('blue')}
-                            ></button>
-                            <button
-                                className={`${style.button_color} ${style.red}`}
-                                onClick={() => handleColorButtonClick('red')}
-                            ></button>
-                        </div>
-
-                        <section className={style.buttons}>
-                            <SubmitButton
-                                text="Voltar"
-                                customClass="button_back"
-                                onClick={handleClose}
-                            />
-
-                            <SubmitButton
-                                text="Salvar"
-                                customClass="salvar"
-                                onClick={submit}
-                            />
-                        </section>
-                    </div>
-                </section>
-            </Modal>
+                <CModalHeader>
+                    <CModalTitle id="editarNota">Editar Reunião</CModalTitle>
+                </CModalHeader>
+                <CModalBody>
+                    <CContainer>
+                        <CRow>
+                            <CCol className='d-flex flex-column gap-2'>
+                                <CFormInput
+                                    type="text"
+                                    label="Titulo"
+                                    name="title"
+                                    value={nota.title}
+                                    onChange={handleEdit}
+                                />
+                                <CFormTextarea
+                                    label="Descrição"
+                                    placeholder="Insira aqui sua nota"
+                                    value={nota.description}
+                                    name='description'
+                                    onChange={handleEdit}
+                                    rows={5}
+                                />
+                                <p>Cor</p>
+                                <div className='d-flex gap-3'>
+                                    <button
+                                        className={`d-flex rounded-circle`}
+                                        style={{ width: '25px', height: '25px', background: "#BDF8C3", border: "1px solid rgba(0,0,0, 0.23)" }}
+                                        onClick={() => handleColorButtonClick('green')}
+                                    />
+                                    <button
+                                        className={`d-flex rounded-circle`}
+                                        style={{ width: '25px', height: '25px', background: "#FFE08B", border: "1px solid rgba(0,0,0, 0.23)" }}
+                                        onClick={() => handleColorButtonClick('yellow')}
+                                    />
+                                    <button
+                                        className={`d-flex rounded-circle ${style.blue}`}
+                                        style={{ width: '25px', height: '25px', background: "#2C74AC", border: "1px solid rgba(0,0,0, 0.23)" }}
+                                        onClick={() => handleColorButtonClick('blue')}
+                                    />
+                                    <button
+                                        className={`d-flex rounded-circle ${style.red}`}
+                                        style={{ width: '25px', height: '25px', background: "#F2B8B5", border: "1px solid rgba(0,0,0, 0.23)" }}
+                                        onClick={() => handleColorButtonClick('red')}
+                                    />
+                                </div>
+                            </CCol>
+                        </CRow>
+                    </CContainer>
+                </CModalBody>
+                <CModalFooter>
+                    <CButton color="secondary" onClick={handleClose}>
+                        Close
+                    </CButton>
+                    <CButton color="primary" onClick={submit}>
+                        Editar
+                    </CButton>
+                </CModalFooter>
+            </CModal>
         </Fragment>
     );
 };
