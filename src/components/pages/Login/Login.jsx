@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useAuthContext from '../../contexts/Auth';
 import logoImg from '../../../img/BrasãoUfopa.png';
+import { IconContext } from "react-icons";
 
 import {
     CButton,
@@ -19,11 +20,15 @@ import {
 } from '@coreui/react'
 
 import CIcon from '@coreui/icons-react'
+
 import { cilLockLocked, cilUser } from '@coreui/icons'
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import { BsPersonFillAdd } from "react-icons/bs";
 
 import '@coreui/coreui/dist/css/coreui.min.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
+
+import logo from '../../../img/BrasãoUfopa.png'
 
 const Login = () => {
     const navigate = useNavigate();
@@ -91,7 +96,6 @@ const Login = () => {
                                                 onKeyDown={handleKeyDown}
                                             />
 
-                                            {/* Botão com ícone do react-icons */}
                                             <CButton
                                                 color="light"
                                                 onClick={handleClickShowPassword}
@@ -106,11 +110,29 @@ const Login = () => {
 
                                         <CRow>
                                             <CCol xs={12} className="mb-4">
-                                                <CButton color="primary" className="px-4" type='submit'>
+                                                <CButton color="primary" className="px-5" type='submit'>
                                                     Entrar
                                                 </CButton>
                                             </CCol>
 
+                                            <CCol xs={12} className='d-flex justify-content-evenly mb-4'>
+                                                <img
+                                                    className="d-flex rounded-circle border-0 justify-content-center align-items-center"
+                                                    style={{ width: '60px', height: '60px' }}
+                                                    src={logo}
+                                                    alt='Login com SIGAA'
+                                                    onClick={() => { alert("Redirecionar") }}
+                                                />
+                                                <CButton
+                                                    className="d-flex rounded-circle border-0 justify-content-center align-items-center"
+                                                    style={{ width: '60px', height: '60px' }}
+                                                    onClick={() => { alert("kjoj") }}
+                                                >
+                                                    <IconContext.Provider value={{ size: 50 }}>
+                                                        <BsPersonFillAdd />
+                                                    </IconContext.Provider>
+                                                </CButton>
+                                            </CCol>
                                             <CCol xs={12}>
                                                 <a href="/forget-password" onClick={(e) => { e.preventDefault(); navigate('/forget-password') }} target="_blank" rel="noopener noreferrer">
                                                     Esqueci minha senha

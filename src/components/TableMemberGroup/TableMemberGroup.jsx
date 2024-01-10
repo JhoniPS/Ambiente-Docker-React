@@ -43,7 +43,6 @@ const TableMemberGroup = ({ members, setMembers }) => {
     columns.push({
       id: "Operações",
       header: null,
-      accessorKey: 'id',
       columnDefType: 'display',
       Cell: ({ row }) => (
         <div className="d-flex">
@@ -52,6 +51,7 @@ const TableMemberGroup = ({ members, setMembers }) => {
         </div>
       ),
     });
+
   }
 
   function formatarData(entry_date) {

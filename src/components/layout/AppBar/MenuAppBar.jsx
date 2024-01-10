@@ -27,7 +27,6 @@ import {
   CContainer,
   CHeader,
   CHeaderBrand,
-  CHeaderDivider,
   CHeaderNav,
   CNavLink,
   CNavItem,
