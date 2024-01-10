@@ -106,7 +106,7 @@ const OverviewGroupRepresentante = () => {
               <LinkButton
                 text="Adicionar Membro"
                 to="adicionar-membro"
-                customClass="add"
+                customClass="primary"
               />
             </div>
             <TableMemberGroup members={members} setMembers={setMembers} />

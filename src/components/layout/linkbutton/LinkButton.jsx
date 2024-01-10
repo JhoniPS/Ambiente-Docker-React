@@ -1,10 +1,9 @@
-import styles from './LinkButton.module.css'
 import { NavLink } from 'react-router-dom';
 
-const LinkButton = ({ to, text, icon }) => {
+const LinkButton = ({ to, text, icon, customClass }) => {
     return (
         <NavLink
-            className="btn btn-primary"
+            className={`btn btn-${customClass} px-4`}
             to={to}
         >
             <span className="d-flex align-items-center">

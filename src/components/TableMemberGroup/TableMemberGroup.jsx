@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useParams } from 'react-router-dom';
-import { Table } from 'antd';
 import Cookies from 'js-cookie'
 
 import ModalDeleteMember from '../Modals/modal_delete_member/ModalDeleteMember';
@@ -14,9 +13,9 @@ const TableMemberGroup = ({ members, setMembers }) => {
 
   const columns = [
     {
-      id: 'Nome',
-      header: 'Nome',
-      accessorFn: (row) => row.user.name,
+      id: 'E-mail',
+      header: 'E-mail',
+      accessorKey: 'email',
     },
     {
       id: 'Cargo',
@@ -31,17 +30,12 @@ const TableMemberGroup = ({ members, setMembers }) => {
     {
       id: 'Data de entrada',
       header: 'Data de entrada',
-      accessorFn: (row) => formatarData(row.created_at),
+      accessorFn: (row) => formatarData(row.entry_date),
     },
     {
       id: 'Data de saida',
       header: 'Data de saida',
       accessorFn: (row) => formatarData(row.departure_date),
-    },
-    {
-      id: 'E-mail',
-      header: 'E-mail',
-      accessorFn: (row) => row.user.email,
     },
   ];
 
@@ -54,14 +48,14 @@ const TableMemberGroup = ({ members, setMembers }) => {
       Cell: ({ row }) => (
         <div className="d-flex">
           <ModalDeleteMember memberId={row.original.id} groupId={id} data={members} setData={setMembers} />
-          <ModalEditMember memberId={row.original.id} data={members} setData={setMembers} />
+          <ModalEditMember memberId={row.original.id} groupId={id} data={members} setData={setMembers} />
         </div>
       ),
     });
   }
 
-  function formatarData(created_at) {
-    const dt = new Date(created_at);
+  function formatarData(entry_date) {
+    const dt = new Date(entry_date);
     const ano = dt.getFullYear();
     const mes = String(dt.getMonth() + 1).padStart(2, '0');
     const dia = String(dt.getDate()).padStart(2, '0');
@@ -70,21 +64,6 @@ const TableMemberGroup = ({ members, setMembers }) => {
   }
 
   return (
-    // <Table
-    //   rowKey={(record) => record.id}
-    //   bordered
-    //   columns={columns}
-    //   dataSource={members}
-    //   responsive={true}
-    //   pagination={{
-    //     current: page,
-    //     pageSize: pageSize,
-    //     onChange: (page, pageSize) => {
-    //       setPage(page);
-    //       setPageSize(pageSize);
-    //     },
-    //   }}
-    // />
     <MaterialReactTable
       rowKey={(record) => record.id}
       columns={columns}

@@ -16,7 +16,7 @@
     font-weight: 800px;
     line-height: 20px;
     letter-spacing: 0.25px;
-    z-index: 5000;
+    z-index: 5;
     animation: go-back 1s;
 }
 
