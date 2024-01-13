@@ -28,19 +28,22 @@ import { BsPersonFillAdd } from "react-icons/bs";
 import '@coreui/coreui/dist/css/coreui.min.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
 
-import logo from '../../../img/BrasãoUfopa.png'
-
 const Login = () => {
     const navigate = useNavigate();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
 
-    const { login, error, messageErrors } = useAuthContext();
+    const { login, loginSigaa, error, messageErrors } = useAuthContext();
 
     const handleLogin = async (e) => {
         e.preventDefault();
         await login({ email, password });
+    };
+
+    const handleLoginSIGAA = async (e) => {
+        e.preventDefault();
+        await loginSigaa();
     };
 
     const handleKeyDown = (e) => {
@@ -115,24 +118,24 @@ const Login = () => {
                                                 </CButton>
                                             </CCol>
 
-                                            <CCol xs={12} className='d-flex justify-content-evenly mb-4'>
-                                                <img
-                                                    className="d-flex rounded-circle border-0 justify-content-center align-items-center"
-                                                    style={{ width: '60px', height: '60px' }}
-                                                    src={logo}
-                                                    alt='Login com SIGAA'
-                                                    onClick={() => { alert("Redirecionar") }}
-                                                />
-                                                <CButton
-                                                    className="d-flex rounded-circle border-0 justify-content-center align-items-center"
-                                                    style={{ width: '60px', height: '60px' }}
-                                                    onClick={() => { alert("kjoj") }}
-                                                >
-                                                    <IconContext.Provider value={{ size: 50 }}>
-                                                        <BsPersonFillAdd />
-                                                    </IconContext.Provider>
-                                                </CButton>
-                                            </CCol>
+                                            <CRow>
+                                                <CCol xs={12} className='d-flex mb-4 gap-3 justify-content-center'>
+                                                    <CButton
+                                                        color="secondary"
+                                                        onClick={handleLoginSIGAA}
+                                                    > Entrar com SIGAA</CButton>
+
+                                                    <CButton
+                                                        color="secondary"
+                                                        onClick={(e) => { e.preventDefault(); navigate('/signUser') }}
+                                                    >
+                                                        <IconContext.Provider value={{ size: 20 }}>
+                                                            <BsPersonFillAdd /> Cadastrar
+                                                        </IconContext.Provider>
+                                                    </CButton>
+                                                </CCol>
+                                            </CRow>
+
                                             <CCol xs={12}>
                                                 <a href="/forget-password" onClick={(e) => { e.preventDefault(); navigate('/forget-password') }} target="_blank" rel="noopener noreferrer">
                                                     Esqueci minha senha

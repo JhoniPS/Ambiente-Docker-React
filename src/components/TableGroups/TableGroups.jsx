@@ -1,9 +1,13 @@
 import React, { useEffect } from 'react';
-import { MaterialReactTable, } from 'material-react-table';
 import api from '../../services/api';
 import Cookies from 'js-cookie'
 
+import { MaterialReactTable, } from 'material-react-table';
 import { useNavigate } from 'react-router-dom';
+import { IconContext } from 'react-icons';
+import { BsFolderFill } from "react-icons/bs";
+import { CButton } from '@coreui/react';
+
 import ModalDeleteGroup from '../Modals/modal_delete_group/ModalDeleteGroup';
 import ModalEditGroup from '../Modals/modal_edit_group/ModalEditGroup';
 
@@ -25,6 +29,10 @@ const TableGroups = ({ rota, data, setData }) => {
 
         fetchData();
     }, [setData]);
+
+    const handleRowClick = (record) => {
+        navigate(`/${rota}/${record.id}`);
+    };
 
     const columns = [
         {
@@ -63,38 +71,43 @@ const TableGroups = ({ rota, data, setData }) => {
             accessorKey: 'email',
         },
         {
-            header: 'Detalhes',
+            header: null,
             accessorKey: 'id',
+            columnDefType: 'display',
             Cell: ({ row }) => (
-                <div
-                    style={{ cursor: 'pointer', textDecoration: 'underline', color: 'blue' }}
-                    onClick={() => handleRowClick(row.original)}
-                >
-                    Detalhes
+                <div className='d-flex align-items-center'>
+                    <IconContext.Provider value={{ color: '#1e212b', size: 25 }}>
+                        <CButton onClick={() => handleRowClick(row.original)} color='null'>
+                            <BsFolderFill />
+                        </CButton>
+                    </IconContext.Provider>
+
+                    {userRole === 'gerente' && (
+                        <div className="d-flex">
+                            <ModalDeleteGroup id={row.original.id} data={data} setData={setData} />
+                            <ModalEditGroup id={row.original.id} data={data} setData={setData} />
+                        </div>
+                    )}
                 </div>
             ),
         },
     ];
 
     // Condicionalmente adiciona a coluna 'Operações' se o tipo de usuário for representante'
-    if (userRole === 'gerente') {
-        columns.push({
-            id: "Operações",
-            header: null,
-            accessorKey: 'id',
-            columnDefType: 'display',
-            Cell: ({ row }) => (
-                <div className="d-flex">
-                    <ModalDeleteGroup id={row.original.id} data={data} setData={setData} />
-                    <ModalEditGroup id={row.original.id} data={data} setData={setData} />
-                </div>
-            ),
-        });
-    }
-
-    const handleRowClick = (record) => {
-        navigate(`/${rota}/${record.id}`);
-    };
+    // if (userRole === 'gerente') {
+    //     columns.push({
+    //         id: "Operações",
+    //         header: null,
+    //         accessorKey: 'id',
+    //         columnDefType: 'display',
+    //         Cell: ({ row }) => (
+    //             <div className="d-flex">
+    //                 <ModalDeleteGroup id={row.original.id} data={data} setData={setData} />
+    //                 <ModalEditGroup id={row.original.id} data={data} setData={setData} />
+    //             </div>
+    //         ),
+    //     });
+    // }
 
     return (
         <MaterialReactTable

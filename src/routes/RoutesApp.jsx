@@ -46,10 +46,10 @@ const routes = [
     /* Acesso Geral */
     { path: '/', element: <Login /> },
     { path: '/Error404', element: <Error404 /> },
+    { path: '/signUser', element: <SignUser />},
 
     /* Administrador */
     { path: '/profile', element: <PrivateRoute requiredUserType="administrador"><Profile /></PrivateRoute> },
-    { path: '/signUser', element: <PrivateRoute requiredUserType="administrador"><SignUser /></PrivateRoute> },
     { path: '/administrador', element: <PrivateRoute requiredUserType="administrador"><Admin /></PrivateRoute> },
     { path: '/Novo-tipo', element: <PrivateRoute requiredUserType="administrador"><SignTypeUser /></PrivateRoute> },
 

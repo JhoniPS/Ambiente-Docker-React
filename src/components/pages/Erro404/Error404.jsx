@@ -1,11 +1,12 @@
 import React, { Fragment } from 'react';
+import { useNavigate } from 'react-router-dom';
 import style from './Error404.module.css'; // Importe seu arquivo CSS personalizado
-import MenuAppBar from '../../layout/AppBar/MenuAppBar';
 
 const Error404 = ({ isPermissionDenied }) => {
+    const navigate = useNavigate();
+
     return (
         <Fragment>
-            <MenuAppBar />
             <div className={style.error_container}>
                 <div className={style.error_content}>
                     <h1 className={style.error_title}>Error 404</h1>
@@ -14,6 +15,9 @@ const Error404 = ({ isPermissionDenied }) => {
                     ) : (
                         <p className={style.error_message}>A página que você está procurando não existe.</p>
                     )}
+                    <a href="/" onClick={(e) => { e.preventDefault(); navigate('/') }} target="_blank" rel="noopener noreferrer">
+                        Esqueci minha senha
+                    </a>
                 </div>
             </div>
         </Fragment>

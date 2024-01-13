@@ -93,7 +93,7 @@ export default function ModalEditGroup({ id, data, setData }) {
 
     return (
         <>
-            <IconContext.Provider value={{ color: '#2C74AC', size: 20 }}>
+            <IconContext.Provider value={{ color: '#2C74AC', size: 25 }}>
                 <CButton onClick={handleOpen} color='null'>
                     <IoPencilSharp />
                 </CButton>

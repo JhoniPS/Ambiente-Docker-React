@@ -33,7 +33,7 @@ export default function ModalEditGroup({ id, data, setData }) {
 
     return (
         <>
-            <IconContext.Provider value={{ color: "#93000A", size: 20 }}>
+            <IconContext.Provider value={{ color: "#93000A", size: 25 }}>
                 <CButton onClick={handleOpen} color='null'>
                     <BsFillTrashFill />
                 </CButton>

@@ -2,7 +2,6 @@ import React, { Fragment, useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 
 import Message from '../../layout/Message/Message';
-import Container from '../../layout/container/Container';
 import SubmitButton from '../../layout/submitbuttun/SubmitButton';
 import LinkButton from '../../layout/linkbutton/LinkButton';
 import TableGroups from '../../TableGroups/TableGroups';
@@ -74,7 +73,7 @@ const GroupsGerente = () => {
                         <section className='mb-0'>
                             <LinkButton
                                 text="Adicionar Grupo"
-                                customClass="add"
+                                customClass="primary"
                                 to="/signGroups"
                                 icon={
                                     <IconContext.Provider value={{ size: '1rem' }}>

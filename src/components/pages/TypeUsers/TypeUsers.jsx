@@ -30,7 +30,7 @@ const TypeUsers = () => {
                 <section className="mb-0">
                     <LinkButton
                         text="Adicionar novo tipo"
-                        customClass="add"
+                        customClass="primary"
                         to="/Novo-tipo"
                         icon={
                             <IconContext.Provider value={{ size: 25 }}>

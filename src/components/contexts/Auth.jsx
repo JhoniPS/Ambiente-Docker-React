@@ -50,21 +50,33 @@ export const AuthProvider = ({ children }) => {
     }
   }
 
-  const logout = async () => {
-    await api.post('users/logout');
-    Cookies.remove('authToken', { secure: true, sameSite: 'Strict' });
-    Cookies.remove('userType');
-    setUserType(null);
-    navigate("/");
-  };
-
-  const deleteTypeUser = async ({ id }) => {
+  const loginSigaa = async () => {
     try {
-      await api.delete(`/type-user/${id}`);
-    } catch (e) {
-      console.log(e);
+      await api.get('/redirect');
+    } catch (error) {
+      console.log(error);
     }
   }
+
+  const logout = async () => {
+    try {
+      await api.post('users/logout');
+      Cookies.remove('authToken', { secure: true, sameSite: 'Strict' });
+      Cookies.remove('userType');
+      setUserType(null);
+      navigate("/");
+    } catch (error) {
+      console.log(error.response);
+    }
+  };
+
+  const logoutSIGAA = async () => {
+    try {
+      await api.post('users/logout-ufopa');
+    } catch (error) {
+      console.log(error.response);
+    }
+  };
 
   return (
     <AuthContext.Provider
@@ -75,8 +87,9 @@ export const AuthProvider = ({ children }) => {
           error,
           messageErrors,
           login,
+          loginSigaa,
           logout,
-          deleteTypeUser,
+          logoutSIGAA,
         }
       }
     >

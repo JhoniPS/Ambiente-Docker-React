@@ -36,7 +36,6 @@ const Users = () => {
       try {
         await api.get('users').then((response) => {
           const users = response.data.data;
-          console.log(users)
           setData(users);
         });
       } catch (error) {
@@ -64,18 +63,6 @@ const Users = () => {
         <CCard className="md-2">
           <CCardBody className="d-flex flex-column gap-3">
             <h2>Usuários</h2>
-            {/* <section className="mb-0 p-0">
-              <LinkButton
-                text="Adicionar Usuário"
-                to="/signUser"
-                icon={
-                  <IconContext.Provider value={{ size: 25 }}>
-                    <IoMdAdd />
-                  </IconContext.Provider>
-                }
-              />
-            </section> */}
-
             <h4>FILTROS RÁPIDOS</h4>
             <section className="d-grid gap-2 d-md-flex justify-content-md-start mb-0">
               <SubmitButton

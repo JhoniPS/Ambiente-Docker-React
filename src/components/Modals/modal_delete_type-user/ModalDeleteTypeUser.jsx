@@ -5,9 +5,9 @@ import useAuthContext from '../../contexts/Auth';
 import { IconContext } from 'react-icons';
 import { BsFillTrashFill } from 'react-icons/bs';
 import { CButton, CModal, CModalBody, CModalFooter, CModalHeader, CModalTitle } from '@coreui/react';
+import api from '../../../services/api';
 
 export default function ModalDeleteUser({ id, data, setData }) {
-    const { deleteTypeUser } = useAuthContext();
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
@@ -16,7 +16,7 @@ export default function ModalDeleteUser({ id, data, setData }) {
 
     const handlDelete = async () => {
         try {
-            await deleteTypeUser({ id })
+            await api.delete(`/type-user/${id}`);
             const updatedData = data.filter(item => item.id !== id);
             setData(updatedData);
             navigate('/administrador', {
