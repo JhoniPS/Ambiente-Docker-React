@@ -98,8 +98,13 @@ const AddMeet = ({ data, setData }) => {
                                     placeholder="Digite aqui as observações"
                                     label="Resumo"
                                     value={formulario.summary}
-                                    rows={5}
-                                    onChange={(e) => setFormulario({ ...formulario, summary: e.target.value })}
+                                    text="Limite de 255 caracteres"
+                                    rows={4}
+                                    onChange={(e) => {
+                                        const inputText = e.target.value;
+                                        (inputText.length <= 255) ? setFormulario({ ...formulario, summary: inputText }) : alert("Limite de caracteres atingido");
+                                    }}
+
                                 />
 
                                 <CFormInput
