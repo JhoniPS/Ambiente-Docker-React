@@ -1,6 +1,6 @@
 import React, { Fragment, useEffect, useState } from "react";
-import { cilDescription, cilNotes, cilTask, cilList } from '@coreui/icons';
-import { useParams, useLocation } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import useAuthContext from '../../contexts/Auth';
 import api from "../../../services/api";
 
 import Message from "../../layout/Message/Message";
@@ -14,7 +14,9 @@ import TableDetalhe from "../../TableDetalhes/TableDetalhe";
 import TableMemberGroup from "../../TableMemberGroup/TableMemberGroup";
 import Observations from "../../layout/Observations/Observations";
 import MenuAppBar from "../../layout/AppBar/MenuAppBar";
+
 import { CCard, CCardBody, CRow } from "@coreui/react";
+import { cilDescription, cilNotes, cilTask, cilList } from '@coreui/icons';
 
 const OverviewGroupRepresentante = () => {
   const { id } = useParams();
@@ -22,21 +24,8 @@ const OverviewGroupRepresentante = () => {
 
   const [members, setMembers] = useState([]);
   const [observacao, setObservacao] = useState("");
-  const [message, setMessage] = useState('');
-  const [messageType, setMessageType] = useState('');
-  const [showMessage, setShowMessage] = useState(false);
 
-  const location = useLocation();
-
-  useEffect(() => {
-    if (location.state) {
-      setMessage(location.state.message);
-      setMessageType(location.state.messageType);
-      setShowMessage(location.state.showMessage);
-    }
-
-    window.history.replaceState(null, '');
-  }, [location.state]);
+  const { message, messageType, showMessage, setShowMessage } = useAuthContext();
 
   useEffect(() => {
     const fetchData = async () => {

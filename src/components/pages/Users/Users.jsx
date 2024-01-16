@@ -1,25 +1,23 @@
 import { Fragment, useState, useEffect } from "react";
-import SubmitButton from "../../layout/submitbuttun/SubmitButton"
-import TypeUsers from '../TypeUsers/TypeUsers'
 import api from "../../../services/api";
-import { IoMdAdd } from "react-icons/io";
-// import style from "./Users.module.css"
 
 import TableUser from "../../TableUser/TableUser";
-import { IconContext } from "react-icons";
-import LinkButton from "../../layout/linkbutton/LinkButton";
-import { useLocation } from "react-router-dom";
 import Message from "../../layout/Message/Message";
+import SubmitButton from "../../layout/submitbuttun/SubmitButton"
+import TypeUsers from '../TypeUsers/TypeUsers'
+import useAuthContext from '../../contexts/Auth';
+
 import { CCard, CCardBody } from "@coreui/react";
 
 const Users = () => {
-  const location = useLocation();
-
   const [data, setData] = useState([]);
-  const [message, setMessage] = useState('');
-  const [messageType, setMessageType] = useState('');
-  const [showMessage, setShowMessage] = useState(false);
   const [sortOrder, setSortOrder] = useState("desc");
+
+  const { message,
+    messageType,
+    showMessage,
+    setShowMessage
+  } = useAuthContext();
 
   const sortUsers = () => {
     return [...data].sort((a, b) => {
@@ -46,17 +44,6 @@ const Users = () => {
     fetchData();
   }, []);
 
-  useEffect(() => {
-    if (location.state) {
-      setMessage(location.state.message);
-      setMessageType(location.state.messageType);
-      setShowMessage(location.state.showMessage);
-    }
-
-    window.history.replaceState(null, '');
-
-  }, [location.state]);
-
   return (
     <Fragment>
       <div className="d-flex flex-column p-4 gap-2 h-100">
@@ -79,7 +66,6 @@ const Users = () => {
             <TableUser data={sortUsers()} setData={setData} />
           </CCardBody>
         </CCard>
-
 
         <CCard className="md-2">
           <CCardBody>

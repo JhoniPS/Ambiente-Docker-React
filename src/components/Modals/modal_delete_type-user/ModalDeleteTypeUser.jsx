@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import useAuthContext from '../../contexts/Auth';
 
 import { IconContext } from 'react-icons';
@@ -12,28 +11,20 @@ export default function ModalDeleteUser({ id, data, setData }) {
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
-    const navigate = useNavigate();
+    const { setMessageType, setShowMessage, setMessage } = useAuthContext();
 
     const handlDelete = async () => {
         try {
             await api.delete(`/type-user/${id}`);
             const updatedData = data.filter(item => item.id !== id);
             setData(updatedData);
-            navigate('/administrador', {
-                state: {
-                    message: 'Deletado com sucesso!',
-                    messageType: 'success',
-                    showMessage: true,
-                }
-            });
+            setMessage('Tipo de usuário deletado com sucesso!');
+            setMessageType('success');
+            setShowMessage(true);
         } catch (e) {
-            navigate('/administrador', {
-                state: {
-                    message: `${e.reponse.errors}`,
-                    messageType: 'error',
-                    showMessage: true,
-                }
-            });
+            setMessage('Ops!!! Algo deu errado');
+            setMessageType('error');
+            setShowMessage(true);
         }
     };
 
@@ -59,7 +50,7 @@ export default function ModalDeleteUser({ id, data, setData }) {
                 </CModalBody>
                 <CModalFooter>
                     <CButton color="secondary" onClick={handleClose}>
-                        Close
+                        Fechar
                     </CButton>
                     <CButton color="primary" onClick={handlDelete}>Excluir</CButton>
                 </CModalFooter>

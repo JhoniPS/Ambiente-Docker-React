@@ -1,34 +1,30 @@
 import React, { useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import useAuthContext from '../../contexts/Auth';
 import api from '../../../services/api'
 
 import { IconContext } from 'react-icons';
 import { BsFillTrashFill } from "react-icons/bs";
 import { CButton, CModal, CModalBody, CModalFooter, CModalHeader, CModalTitle } from '@coreui/react';
 
-
 export default function ModalDeleteMember({ memberId, groupId, data, setData }) {
     const [open, setOpen] = useState(false);
-    const { id } = useParams();
 
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
-    const navigate = useNavigate();
+    const { setShowMessage, setMessage, setMessageType } = useAuthContext();
 
     const handlDelete = async () => {
         try {
             await api.delete(`/group/${groupId}/members/${memberId}`);
             const updatedData = data.filter(item => item.id !== memberId);
             setData(updatedData);
-            navigate(`/detalhes-de-grupos-representante/${id}`, {
-                state: {
-                    message: 'Deletado com sucesso!',
-                    messageType: 'success',
-                    showMessage: true,
-                }
-            });
+            setMessage('Membro deletado com sucesso!');
+            setMessageType('success');
+            setShowMessage(true);
         } catch (error) {
-            console.log(error)
+            setMessage('Ops!!! houve algum problema');
+            setMessageType('error');
+            setShowMessage(true);
         }
     };
 
@@ -54,7 +50,7 @@ export default function ModalDeleteMember({ memberId, groupId, data, setData }) 
                 </CModalBody>
                 <CModalFooter>
                     <CButton color="secondary" onClick={handleClose}>
-                        Close
+                        Fechar  
                     </CButton>
                     <CButton color="primary" onClick={handlDelete}>Excluir</CButton>
                 </CModalFooter>

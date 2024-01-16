@@ -2,6 +2,7 @@ import React, { Fragment, useEffect, useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import api from '../../../services/api';
 import Cookies from 'js-cookie';
+
 import {
     CButtonGroup,
     CCallout,
@@ -13,6 +14,7 @@ import {
     CCardText,
     CRow,
 } from '@coreui/react';
+
 import Container from '../../layout/container/Container';
 import SubmitButton from '../../layout/submitbuttun/SubmitButton';
 import style from './HistoricoReuniao.module.css';
@@ -100,12 +102,12 @@ function HistoricoReuniao() {
                         </section>
                         <CCallout>
                             <Container customClass="start">
-                                <CRow className="d-flex gap-4 p-3">
+                                <CRow className="d-flex p-0 flex-wrap gap-4">
                                     {meets.length !== 0 ? (
                                         sortDocs().map((meet, index) => (
-                                            <CCard key={index} className="col-lg-6 col-md-6 col-sm-12 mb-4 p-0" style={{ maxWidth: '36rem'}}>
-                                                <CCardHeader className="text-lg" style={{ maxWidth: '36rem' }} dangerouslySetInnerHTML={{ __html: meet?.content }} />
-                                                <CCardBody className="d-flex flex-column p-3">
+                                            <CCard key={index} className="p-0" style={{ maxWidth: '25rem' }}>
+                                                <CCardHeader className="text-lg" style={{ maxWidth: '25rem' }} component="h5">{meet?.content}</CCardHeader>
+                                                <CCardBody className="d-flex flex-column p-2">
                                                     <CCardSubtitle className="mb-2 text-medium-emphasis text-sm">{formatarData(meet?.date_meet)}</CCardSubtitle>
                                                     <CCardText className={style.resumoReuniao + ' text-sm'}>{meet?.summary}</CCardText>
                                                     <CCardLink onClick={() => handleDownload(meet?.id, meet?.ata)}>{meet?.ata}</CCardLink>

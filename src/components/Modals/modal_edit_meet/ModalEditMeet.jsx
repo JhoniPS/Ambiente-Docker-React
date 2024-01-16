@@ -133,7 +133,7 @@ const ModalEditMeet = ({ data, setData }) => {
                 </CModalBody>
                 <CModalFooter>
                     <CButton color="secondary" onClick={handleClose}>
-                        Close
+                        Fechar
                     </CButton>
                     <CButton color="primary" onClick={handleUpload}>
                         Editar

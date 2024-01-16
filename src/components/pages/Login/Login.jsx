@@ -65,7 +65,6 @@ const Login = () => {
                                     <CForm style={{ textAlign: 'center' }} onSubmit={handleLogin}>
                                         <CImage src={logoImg} width={80} />
                                         <h1>Login</h1>
-                                        <p className="text-medium-emphasis">Utilize as credenciais do SIGAA</p>
 
                                         <CInputGroup className="mb-3">
                                             <CInputGroupText>

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import api from '../../../services/api';
+import useAuthContext from '../../contexts/Auth';
 
-import { useNavigate } from 'react-router-dom';
 import { IconContext } from 'react-icons';
 import { BsFillTrashFill } from 'react-icons/bs';
 import { CButton, CModal, CModalBody, CModalFooter, CModalHeader, CModalTitle } from '@coreui/react';
@@ -11,29 +11,21 @@ export default function ModalDeleteUser({ id, data, setData }) {
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
-    const navigate = useNavigate();
+    const { setMessageType, setShowMessage, setMessage } = useAuthContext();
 
     const handlDelete = async () => {
         try {
             await api.delete(`users/${id}`).then(() => {
                 const updatedData = data.filter(item => item.id !== id);
                 setData(updatedData);
-                navigate('/administrador', {
-                    state: {
-                        message: 'Deletado com sucesso!',
-                        messageType: 'success',
-                        showMessage: true,
-                    }
-                });
+                setMessage('Usuário deletado com sucesso!');
+                setMessageType('success');
+                setShowMessage(true);
             })
         } catch (error) {
-            navigate('/administrador', {
-                state: {
-                    message: 'Ops! algo deu errado',
-                    messageType: 'error',
-                    showMessage: true,
-                }
-            });
+            setMessage('Ops!!! Algo deu errado.');
+            setMessageType('error');
+            setShowMessage(true);
         }
     };
 
@@ -59,7 +51,7 @@ export default function ModalDeleteUser({ id, data, setData }) {
                 </CModalBody>
                 <CModalFooter>
                     <CButton color="secondary" onClick={handleClose}>
-                        Close
+                        Fechar
                     </CButton>
                     <CButton color="primary" onClick={handlDelete}>Excluir</CButton>
                 </CModalFooter>

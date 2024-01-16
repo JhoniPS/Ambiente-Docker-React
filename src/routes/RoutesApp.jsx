@@ -14,7 +14,6 @@ import Profile from "../components/pages/Profile/Profile";
 import SignUser from "../components/pages/SignUser/SignUser";
 import SignGroups from "../components/pages/SignGroups/SignGroups";
 import SignMember from "../components/pages/SignMember/SignMember";
-import SignRepresentatives from "../components/pages/SignRepresentative/SignRepresentative";
 import SignTypeUser from "../components/pages/SignTypeUser/SignTypeUser";
 
 import OverviewGroupGerente from "../components/pages/OverviewGroupGerente/OverviewGroupGerente";
@@ -55,7 +54,6 @@ const routes = [
 
     /* Gerente */
     { path: '/gerente', element: <PrivateRoute requiredUserType="gerente"><Manager /></PrivateRoute> },
-    { path: '/signRepresentantes', element: <PrivateRoute requiredUserType="gerente"><SignRepresentatives /></PrivateRoute> },
     { path: '/signGroups', element: <PrivateRoute requiredUserType="gerente"><SignGroups /></PrivateRoute> },
     { path: '/detalhes-de-grupos-gerente/:id', element: <PrivateRoute requiredUserType="gerente"><OverviewGroupGerente /></PrivateRoute> },
     { path: '/detalhes-de-grupos-gerente/:id/documentos', element: <PrivateRoute requiredUserType="gerente"><Documents /></PrivateRoute> },

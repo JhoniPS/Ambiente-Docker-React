@@ -1,10 +1,10 @@
 import { Fragment, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
-import { ImArrowLeft2 } from "react-icons/im";
+import { useParams } from "react-router-dom";
+import useAuthContext from '../../contexts/Auth';
+import MenuAppBar from "../../layout/AppBar/MenuAppBar"
 import LinkButton from "../../layout/linkbutton/LinkButton";
 import api from '../../../services/api'
 
-import HeaderBar from '../../layout/header/HeaderBar';
 import {
   CButton,
   CCard,
@@ -17,6 +17,7 @@ import {
   CFormInput,
   CRow
 } from "@coreui/react";
+import Message from "../../layout/Message/Message";
 
 const SignMember = () => {
   const { id } = useParams();
@@ -28,8 +29,7 @@ const SignMember = () => {
     departure_date: '',
   });
 
-
-  const navigate = useNavigate();
+  const { message, messageType, showMessage, setShowMessage, setMessage, setMessageType } = useAuthContext();
 
   const handleSubmit = (e) => {
     setMember(prev => ({
@@ -43,28 +43,27 @@ const SignMember = () => {
 
     try {
       await api.post(`group/${id}/members`, { member });
-      navigate(`/detalhes-de-grupos-representante/${id}/`, {
-        state: {
-          message: 'Adicionado com sucesso!',
-          messageType: 'success',
-          showMessage: true,
-        }
-      });
+      setMessage('Adicionado com sucesso!')
+      setMessageType('success')
+      setShowMessage(true);
     } catch (error) {
       console.error('Erro ao enviar formulário:', error.response.data);
+      setMessage('Ops! hover um error')
+      setMessageType('error')
+      setShowMessage(true);
     }
   };
 
   return (
     <Fragment>
-      <HeaderBar text="PAINEL DE CONTROLE" backPageIcon={<ImArrowLeft2 size={25} />} backPage={`/detalhes-de-grupos-representante/${id}/`} />
+      <MenuAppBar />
       <div className="bg-light min-vh-100 d-flex flex-row align-items-center">
         <CContainer>
           <CRow className="justify-content-center">
             <CCol md={10} sm={4} xl={12}>
               <CCardGroup>
                 <CCard>
-                  <CCardHeader>Cadastrar Membros</CCardHeader>
+                  <CCardHeader component="h2">Cadastrar Membros</CCardHeader>
                   <CCardBody>
                     <CForm className="d-flex flex-column gap-2" onSubmit={Submit}>
                       <CFormInput
@@ -114,10 +113,10 @@ const SignMember = () => {
                       </div>
                       <CRow >
                         <CCol xs={12} className="d-flex mt-4 justify-content-center gap-4">
-                          <LinkButton text="Voltar" customClass="secondary" to={"/detalhes-de-grupos-representante/id/"} />
+                          <LinkButton text="Voltar" customClass="secondary" to={`/detalhes-de-grupos-representante/${id}/`} />
                           <CButton color="primary" className="px-4" type="submit">Cadastrar</CButton>
                         </CCol>
-                      </CRow>
+                      </CRow>x
                     </CForm>
                   </CCardBody>
                 </CCard>
@@ -125,6 +124,7 @@ const SignMember = () => {
             </CCol>
           </CRow>
         </CContainer>
+        {showMessage && <Message type={messageType} msg={message} setShowMessage={setShowMessage} />}
       </div>
     </Fragment>
   )

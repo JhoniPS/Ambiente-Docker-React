@@ -10,6 +10,10 @@ export const AuthProvider = ({ children }) => {
   const [error, setError] = useState(false)
   const [messageErrors, setMessageErrors] = useState([]);
 
+  const [message, setMessage] = useState('');
+  const [messageType, setMessageType] = useState('');
+  const [showMessage, setShowMessage] = useState(false);
+
   const navigate = useNavigate();
 
   const login = async ({ ...data }) => {
@@ -90,6 +94,13 @@ export const AuthProvider = ({ children }) => {
           loginSigaa,
           logout,
           logoutSIGAA,
+
+          message,
+          messageType,
+          showMessage,
+          setMessage,
+          setMessageType,
+          setShowMessage
         }
       }
     >

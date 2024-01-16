@@ -1,9 +1,21 @@
 import React, { useState, useEffect } from 'react';
+import useAuthContext from '../../contexts/Auth';
 import api from '../../../services/api';
 
 import { IconContext } from 'react-icons';
 import { IoPencilSharp } from 'react-icons/io5';
-import { CButton, CCol, CContainer, CFormInput, CModal, CModalBody, CModalFooter, CModalHeader, CModalTitle, CRow } from '@coreui/react';
+import {
+    CButton,
+    CCol,
+    CContainer,
+    CFormInput,
+    CModal,
+    CModalBody,
+    CModalFooter,
+    CModalHeader,
+    CModalTitle,
+    CRow
+} from '@coreui/react';
 
 export default function ModalEditMember({ groupId, memberId, data, setData }) {
     const [open, setOpen] = useState(false);
@@ -12,11 +24,13 @@ export default function ModalEditMember({ groupId, memberId, data, setData }) {
         phone: '',
         email: '',
         departure_date: '',
-        entry_date:'',
+        entry_date: '',
     });
 
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
+
+    const { setShowMessage, setMessage, setMessageType } = useAuthContext();
 
     const handlEdit = async (e) => {
         e.preventDefault();
@@ -24,16 +38,18 @@ export default function ModalEditMember({ groupId, memberId, data, setData }) {
         try {
             await api.put(`group/${groupId}/members/${memberId}`, member);
 
-            console.log(member)
-
             const updatedData = data.map((item) =>
-                item.id === memberId ? member: item
+                item.id === memberId ? member : item
             );
-
             setData(updatedData);
+            setMessage('Membro editado com sucesso!');
+            setMessageType('success');
+            setShowMessage(true);
             handleClose();
         } catch (error) {
-            console.error('Erro ao editar membro:', error);
+            setMessage('Ops!! algo deu errado');
+            setMessageType('error');
+            setShowMessage(true);
         }
     };
 
@@ -50,7 +66,7 @@ export default function ModalEditMember({ groupId, memberId, data, setData }) {
                             phone: memberData.phone || '',
                             departure_date: memberData.departure_date || '',
                             email: memberData.email || '',
-                            entry_date:memberData.entry_date,
+                            entry_date: memberData.entry_date,
                         });
                     } else {
                         console.error('Dados de membro não encontrados');
@@ -79,7 +95,7 @@ export default function ModalEditMember({ groupId, memberId, data, setData }) {
                 aria-labelledby="VerticallyCenteredScrollableExample"
             >
                 <CModalHeader>
-                    <CModalTitle id="editarReuniao">Editar Reunião</CModalTitle>
+                    <CModalTitle component="h2">Editar Membro</CModalTitle>
                 </CModalHeader>
                 <CModalBody>
                     <CContainer>
@@ -122,7 +138,7 @@ export default function ModalEditMember({ groupId, memberId, data, setData }) {
                 </CModalBody>
                 <CModalFooter>
                     <CButton color="secondary" onClick={handleClose}>
-                        Close
+                        Fechar
                     </CButton>
                     <CButton color="primary" onClick={handlEdit} >
                         Editar

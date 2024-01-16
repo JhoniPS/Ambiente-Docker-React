@@ -12,6 +12,7 @@ function ModalDeleteMeet({ idMeet, data, setData }) {
     const handleClose = () => setOpen(false);
 
     const navigate = useNavigate();
+    
     const { id } = useParams();
 
     const handlDelete = async () => {
@@ -27,6 +28,7 @@ function ModalDeleteMeet({ idMeet, data, setData }) {
                     showMessage: true,
                 }
             });
+            handleClose();
         } catch (error) {
             navigate(`/detalhes-de-grupos-representante/${id}/historico-de-reunioes`, {
                 state: {
@@ -60,7 +62,7 @@ function ModalDeleteMeet({ idMeet, data, setData }) {
                 </CModalBody>
                 <CModalFooter>
                     <CButton color="secondary" onClick={handleClose}>
-                        Close
+                        Fechar
                     </CButton>
                     <CButton color="primary" onClick={handlDelete}>Excluir</CButton>
                 </CModalFooter>

@@ -1,9 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import api from '../../../services/api';
+import useAuthContext from '../../contexts/Auth';
 
 import { IconContext } from 'react-icons';
 import { IoPencilSharp } from 'react-icons/io5';
-import { CButton, CCol, CContainer, CFormInput, CFormTextarea, CModal, CModalBody, CModalFooter, CModalHeader, CModalTitle, CRow } from '@coreui/react';
+import {
+    CButton,
+    CCol,
+    CContainer,
+    CFormInput,
+    CFormTextarea,
+    CModal,
+    CModalBody,
+    CModalFooter,
+    CModalHeader,
+    CModalTitle,
+    CRow
+} from '@coreui/react';
 
 export default function ModalEditGroup({ id, data, setData }) {
     const [open, setOpen] = useState(false);
@@ -23,6 +36,8 @@ export default function ModalEditGroup({ id, data, setData }) {
         office_requested: '',
         office_indicated: '',
     });
+
+    const { setMessageType, setShowMessage, setMessage } = useAuthContext();
 
     useEffect(() => {
         const fetchData = async () => {
@@ -55,14 +70,8 @@ export default function ModalEditGroup({ id, data, setData }) {
         }
     }, [id, open]);
 
-    const handleOpen = (event) => {
-        event.stopPropagation();
-        setOpen(true);
-    };
-
-    const handleClose = () => {
-        setOpen(false);
-    };
+    const handleOpen = () => {setOpen(true)};
+    const handleClose = () => {setOpen(false)};
 
     const handleEdit = (event) => {
         const { name, value } = event.target;
@@ -85,9 +94,15 @@ export default function ModalEditGroup({ id, data, setData }) {
             });
 
             setData(updatedData);
+            setMessage('Grupo Editado com sucesso!');
+            setMessageType('success');
+            setShowMessage(true);
             handleClose();
         } catch (error) {
             console.error(error);
+            setMessage('Grupo Editado com sucesso!');
+            setMessageType('error');
+            setShowMessage(true);
         }
     };
 
@@ -231,7 +246,7 @@ export default function ModalEditGroup({ id, data, setData }) {
                 </CModalBody>
                 <CModalFooter>
                     <CButton color="secondary" onClick={handleClose}>
-                        Close
+                        Fechar
                     </CButton>
                     <CButton color="primary" onClick={handleSubmit}>Editar</CButton>
                 </CModalFooter>

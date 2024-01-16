@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import useAuthContext from '../../contexts/Auth';
 import api from '../../../services/api';
 
@@ -8,14 +7,12 @@ import { AiFillEdit } from 'react-icons/ai';
 import { CButton, CCol, CContainer, CFormInput, CModal, CModalBody, CModalFooter, CModalHeader, CModalTitle, CRow } from '@coreui/react';
 
 export default function EditTypeUser({ id, data, setData }) {
-    const { error, messageErrors } = useAuthContext();
-
     const [name, setName] = useState("");
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
-    const navigate = useNavigate();
+    const { setMessageType, setShowMessage, setMessage } = useAuthContext();
 
     const handlEdit = async (e) => {
         e.preventDefault()
@@ -29,16 +26,14 @@ export default function EditTypeUser({ id, data, setData }) {
                 return item;
             });
             setData(updatedData);
-            navigate('/administrador', {
-                state: {
-                    message: 'Atualizado com sucesso!',
-                    messageType: 'success',
-                    showMessage: true,
-                }
-            });
+            setMessage('Tipo de usuário editado com sucesso!');
+            setMessageType('success');
+            setShowMessage(true);
             handleClose();
         } catch (error) {
-            console.log(error)
+            setMessage('Ops!!! Algo deu errado.');
+            setMessageType('success');
+            setShowMessage(true);
         }
     }
 
@@ -91,7 +86,7 @@ export default function EditTypeUser({ id, data, setData }) {
                 </CModalBody>
                 <CModalFooter>
                     <CButton color="secondary" onClick={handleClose}>
-                        Close
+                        Fechar
                     </CButton>
                     <CButton color="primary" onClick={handlEdit}>Editar</CButton>
                 </CModalFooter>

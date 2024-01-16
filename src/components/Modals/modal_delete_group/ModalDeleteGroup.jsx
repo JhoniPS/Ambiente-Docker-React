@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import api from '../../../services/api'
-import { useNavigate } from 'react-router-dom';
+import useAuthContext from '../../contexts/Auth';
 
 import { IconContext } from 'react-icons';
 import { BsFillTrashFill } from "react-icons/bs";
@@ -8,26 +8,24 @@ import { CButton, CModal, CModalBody, CModalFooter, CModalHeader, CModalTitle } 
 
 export default function ModalEditGroup({ id, data, setData }) {
     const [open, setOpen] = useState(false);
+    const handleOpen = () => {setOpen(true);}
+    const handleClose = () => {setOpen(false);}
 
-    const handleOpen = (event) => {
-        setOpen(true);
-    }
-    const handleClose = (event) => {
-        setOpen(false);
-    }
+    const { setMessageType, setShowMessage, setMessage } = useAuthContext();
 
-    const navigate = useNavigate();
-
-    const handlDelete = async (event) => {
+    const handlDelete = async () => {
         try {
             await api.delete(`/group/${id}`);
             const updatedData = data.filter(item => item.id !== id);
             setData(updatedData);
-            navigate('/gerente', { state: { message: 'Deletado com sucesso!', messagetype: 'success' } });
+            setMessage('Grupo deletado com sucesso!');
+            setMessageType('success');
+            setShowMessage(true);
             handleClose();
         } catch (e) {
-            console.error(e);
-            navigate('/gerente', { state: { message: `${e.response.data.errors || 'Ops! algo deu errado'}`, messagetype: 'error' } });
+            setMessage('Ops! algo deu errado');
+            setMessageType('error');
+            setShowMessage(true);
         }
     };
 
@@ -53,7 +51,7 @@ export default function ModalEditGroup({ id, data, setData }) {
                 </CModalBody>
                 <CModalFooter>
                     <CButton color="secondary" onClick={handleClose}>
-                        Close
+                        Fechar
                     </CButton>
                     <CButton color="primary" onClick={handlDelete}>Excluir</CButton>
                 </CModalFooter>

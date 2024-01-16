@@ -1,27 +1,14 @@
-import React, { Fragment, useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import React, { Fragment } from "react";
 import Message from "../../layout/Message/Message";
+import useAuthContext from '../../contexts/Auth';
 
 import TableTypeUser from "../../TableTypeUser/TableTypeUser";
 import LinkButton from "../../layout/linkbutton/LinkButton";
 import { IoMdAdd } from "react-icons/io";
 import { IconContext } from "react-icons";
 
-
 const TypeUsers = () => {
-    const [message, setMessage] = useState('');
-    const [messageType, setMessageType] = useState('');
-    const [showMessage, setShowMessage] = useState(false);
-    const location = useLocation();
-
-    useEffect(() => {
-        if (location.state) {
-            setMessage(location.state.message);
-            setMessageType(location.state.messageType);
-            setShowMessage(location.state.showMessage);
-        }
-
-    }, [location.state]);
+    const { message, messageType, showMessage, setShowMessage } = useAuthContext();
 
     return (
         <Fragment>

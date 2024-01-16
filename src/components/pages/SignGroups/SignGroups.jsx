@@ -70,24 +70,25 @@ const Observations = ({ observations, setObservations, name, setName, type_group
 
       <h5 style={{ fontSize: '16px' }}>Tipo de grupo</h5>
 
-      <CRow>
-        <CFormCheck
-          inline
-          type="radio"
-          name="groupType"
-          value="interno"
-          label="Interno"
-          onChange={handleRadioChange}
-          defaultChecked
-        />
-        <CFormCheck
-          inline
-          type="radio"
-          name="groupType"
-          value="externo"
-          label="Externo"
-          onChange={handleRadioChange} />
-      </CRow>
+      <CFormCheck
+        inline
+        type="radio"
+        name="groupType"
+        value="interno"
+        label="Interno"
+        onChange={handleRadioChange}
+        defaultChecked
+      />
+      <CFormCheck
+        inline
+        type="radio"
+        name="groupType"
+        value="externo"
+        label="Externo"
+        onChange={handleRadioChange}
+      />
+      
+      <br />
 
       <CFormTextarea
         label="Observações"

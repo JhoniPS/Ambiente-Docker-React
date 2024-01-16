@@ -1,4 +1,5 @@
 import React, { Fragment, useState, useEffect } from 'react';
+import useAuthContext from '../../contexts/Auth';
 import { useLocation } from 'react-router-dom';
 
 import Message from '../../layout/Message/Message';
@@ -14,10 +15,9 @@ const GroupsGerente = () => {
     const [data, setData] = useState([]);
     const [filteredData, setFilteredData] = useState([]);
     const [sortOrder, setSortOrder] = useState('desc');
-    const [message, setMessage] = useState('');
-    const [messageType, setMessageType] = useState('');
-    const [showMessage, setShowMessage] = useState(false);
     const [groupType, setGroupType] = useState("");
+
+    const { message, messageType, showMessage, setShowMessage, setMessage, setMessageType } = useAuthContext();
 
     const location = useLocation();
 
@@ -45,8 +45,8 @@ const GroupsGerente = () => {
         }
 
         window.history.replaceState(null, '');
-        
-    }, [location.state]);
+
+    }, [location.state, setMessage, setMessageType, setShowMessage]);
 
     useEffect(() => {
         if (groupType === "") {
@@ -85,7 +85,7 @@ const GroupsGerente = () => {
 
                         <h4 className='mb-0'>FILTROS RÁPIDOS</h4>
                         <section className="d-flex align-items-start gap-2 mb-5">
-                            <SubmitButton text="Mais Recentes" style={{opacity:'0.9'}} customClass="button_filtes_bar" onClick={() => setSortOrder('desc')}/>
+                            <SubmitButton text="Mais Recentes" style={{ opacity: '0.9' }} customClass="button_filtes_bar" onClick={() => setSortOrder('desc')} />
                             <SubmitButton text="Mais Antigos" customClass="button_filtes_bar" onClick={() => setSortOrder('asc')} />
                             <SubmitButton text="Grupos Internos" customClass="button_filtes_bar" onClick={() => setGroupType('interno')} />
                             <SubmitButton text="Grupos Externos" customClass="button_filtes_bar" onClick={() => setGroupType('externo')} />
@@ -94,7 +94,6 @@ const GroupsGerente = () => {
                         <TableGroups rota="detalhes-de-grupos-gerente" data={sortUsers()} setData={setData} />
                     </CCardBody>
                 </CCard>
-
                 {showMessage && <Message type={messageType} msg={message} setShowMessage={setShowMessage} />}
             </div>
         </Fragment>
