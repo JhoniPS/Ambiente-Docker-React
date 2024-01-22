@@ -1,28 +1,24 @@
 import React, { Fragment, useEffect, useState } from 'react';
-import { useNavigate, useLocation, useParams } from 'react-router-dom';
+import useAuthContext from '../../contexts/Auth';
+import { useParams } from 'react-router-dom';
 import Cookies from 'js-cookie';
+import api from '../../../services/api';
+
 import SubmitButton from '../../layout/submitbuttun/SubmitButton';
-import style from './Notas.module.css';
 import AddNotas from '../../Modals/modal_sign_notas/AddNotas';
 import Container from '../../layout/container/Container';
 import Message from '../../layout/Message/Message';
-import { Divider } from 'antd';
-import api from '../../../services/api';
 import ModalDeleteNota from '../../Modals/modal_delete_notas/ModalDeleteNota';
 import ModalEditNota from '../../Modals/modal_edit_notas/ModalEditNota';
 import MenuAppBar from '../../layout/AppBar/MenuAppBar';
-import { CCallout, CCard, CCardBody } from '@coreui/react';
+import { CCallout, CCard, CCardBody, CCardFooter, CCardHeader, CCardText, CCardTitle } from '@coreui/react';
 
 export default function Notas() {
     const { id } = useParams();
     const [notas, setNotas] = useState([]);
-    const [message, setMessage] = useState('');
-    const [messageType, setMessageType] = useState('');
-    const [showMessage, setShowMessage] = useState(false);
     const [sortOrder, setSortOrder] = useState('desc');
 
-    const navigate = useNavigate();
-    const location = useLocation();
+    const { message, messageType, showMessage, setShowMessage } = useAuthContext();
     const userRole = Cookies.get('userType');
 
     const sortDocs = () => {
@@ -42,29 +38,6 @@ export default function Notas() {
         const dia = String(dataObj.getDate()).padStart(2, '0');
         return `${dia}/${mes}/${ano}`;
     }
-
-    useEffect(() => {
-        const handlePopstate = () => {
-            // Use o hook navigate para redirecionar para a rota desejada
-            navigate(`/detalhes-de-grupos-representante/${id}/`);
-        };
-
-        // Adicione um event listener ao evento popstate
-        window.addEventListener('popstate', handlePopstate);
-
-        return () => {
-            // Remova o event listener ao desmontar o componente
-            window.removeEventListener('popstate', handlePopstate);
-        };
-    }, [id, navigate]);
-
-    useEffect(() => {
-        if (location.state) {
-            setMessage(location.state.message);
-            setMessageType(location.state.messageType);
-            setShowMessage(location.state.showMessage);
-        }
-    }, [location.state]);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -109,20 +82,28 @@ export default function Notas() {
                         <CCallout>
                             <Container customClass="start">
                                 {notas.length !== 0 ? (
-                                    <Container customClass="start">
-                                        {sortDocs().map((nota) => (
-                                            <div className={`${style.cardNotas} ${style[nota.color]}`} key={nota.id}>
-                                                <p className={style.data}>{formatarData(nota.created_at)}</p>
-                                                <h3>{nota.title}</h3>
-                                                <Divider style={{ marginTop: 5 }} />
-                                                <p className={style.description}>{nota.description}</p>
-                                                <div className="d-flex justify-content-end w-100">
-                                                    <ModalDeleteNota idNote={nota.id} data={notas} setData={setNotas} />
-                                                    <ModalEditNota idNota={nota.id} data={notas} setData={setNotas} />
-                                                </div>
-                                            </div>
-                                        ))}
-                                    </Container>
+                                    sortDocs().map((nota) => (
+                                        <CCard
+                                            style={{
+                                                maxWidth: '18rem', width: '100%', backgroundColor: `${((nota.color === 'red') ? '#FD5E53' :
+                                                    (nota.color === 'blue') ? '#38ccf5' :
+                                                        (nota.color === 'green') ? '#a3e645' :
+                                                            (nota.color === 'yellow') ? '#fae332' : null)}`
+                                            }}
+                                            key={nota.id}
+                                        >
+                                            <CCardHeader className='fw-bold'>{formatarData(nota.created_at)}</CCardHeader>
+                                            <CCardBody>
+                                                <CCardTitle className='text-capitalize'>{nota.title}</CCardTitle>
+                                                <CCardText className='text-justify text-wrap text-break'>{nota.description}</CCardText>
+                                            </CCardBody>
+                                            <CCardFooter className="d-flex justify-content-end align-items-end">
+                                                <ModalDeleteNota idNote={nota.id} data={notas} setData={setNotas} />
+                                                <ModalEditNota idNota={nota.id} data={notas} setData={setNotas} />
+                                            </CCardFooter>
+                                        </CCard>
+                                    ))
+
                                 ) : (
                                     <p>Sem notas</p>
                                 )}

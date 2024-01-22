@@ -1,8 +1,7 @@
-
-import styles from './SignGroups.module.css';
 import { Fragment, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import MenuAppBar from '../../layout/AppBar/MenuAppBar'
+import useAuthContext from '../../contexts/Auth';
 
 import {
   CButton,
@@ -28,7 +27,7 @@ const RepresentanteGroup = ({ representative, setRepresentative }) => {
   };
 
   return (
-    <section className={styles.representantes}>
+    <section>
       <CFormInput
         type='text'
         label="Representante"
@@ -41,7 +40,7 @@ const RepresentanteGroup = ({ representative, setRepresentative }) => {
   );
 };
 
-const Observations = ({ observations, setObservations, name, setName, type_group, setType_group }) => {
+const Observations = ({ observations, setObservations, name, setName, setStatus, setType_group }) => {
 
   const handleObservations = (e) => {
     setObservations(e.target.value)
@@ -51,8 +50,12 @@ const Observations = ({ observations, setObservations, name, setName, type_group
     setName(e.target.value);
   };
 
-  const handleRadioChange = (e) => {
+  const handleChangeTypeGroup = (e) => {
     setType_group(e.target.value);
+  };
+
+  const handleChangeStatusGroup = (e) => {
+    setStatus(e.target.value);
   };
 
   return (
@@ -68,7 +71,27 @@ const Observations = ({ observations, setObservations, name, setName, type_group
         className='mb-3'
       />
 
-      <h5 style={{ fontSize: '16px' }}>Tipo de grupo</h5>
+      <h5 style={{ fontSize: '16px' }}>Status do Grupo</h5>
+
+      <CFormCheck
+        inline
+        type="radio"
+        name="status"
+        value="EM ANDAMENTO"
+        label="Em andamento"
+        onChange={handleChangeStatusGroup}
+        defaultChecked
+      />
+      <CFormCheck
+        inline
+        type="radio"
+        name="status"
+        value="FINALIZADO"
+        label="Finalizado"
+        onChange={handleChangeStatusGroup}
+      />
+
+      <h5 style={{ fontSize: '16px', marginTop:'5px' }}>Tipo de grupo</h5>
 
       <CFormCheck
         inline
@@ -76,7 +99,7 @@ const Observations = ({ observations, setObservations, name, setName, type_group
         name="groupType"
         value="interno"
         label="Interno"
-        onChange={handleRadioChange}
+        onChange={handleChangeTypeGroup}
         defaultChecked
       />
       <CFormCheck
@@ -85,9 +108,9 @@ const Observations = ({ observations, setObservations, name, setName, type_group
         name="groupType"
         value="externo"
         label="Externo"
-        onChange={handleRadioChange}
+        onChange={handleChangeTypeGroup}
       />
-      
+
       <br />
 
       <CFormTextarea
@@ -232,9 +255,12 @@ const SignGroups = () => {
   const [observations, setObservations] = useState([]);
   const [name, setName] = useState("");
   const [type_group, setType_group] = useState('interno');
+  const [status, setStatus] = useState('EM ANDAMENTO');
   const [current, setCurrent] = useState(0);
 
   const navigate = useNavigate();
+
+  const { setMessageType, setShowMessage, setMessage } = useAuthContext();
 
   const steps = [
     {
@@ -253,6 +279,7 @@ const SignGroups = () => {
         name={name}
         setName={setName}
         type_group={type_group}
+        setStatus={setStatus}
         setType_group={setType_group}
       />,
     },
@@ -265,19 +292,17 @@ const SignGroups = () => {
       ...formulario,
       name,
       type_group,
+      status,
       observations,
       representative
     };
 
     try {
       await api.post('group', updatedFormulario).then(() => {
-        navigate('/gerente', {
-          state: {
-            message: 'Grupo criado com sucesso!',
-            messagetype: 'success',
-            showMessage: true,
-          }
-        });
+        navigate('/gerente');
+        setMessage('Grupo criado com sucesso!');
+        setMessageType('success');
+        setShowMessage(true);
       });
 
     } catch (error) {
@@ -310,7 +335,7 @@ const SignGroups = () => {
                   <Steps current={current} items={items} type="navigation" />
                 </CCardHeader>
                 <CCardBody className="p-4">
-                  <CForm className={styles.form} onSubmit={Submit}>
+                  <CForm onSubmit={Submit}>
                     <div className="mb-4">{steps[current].content}</div>
 
                     <div className='d-flex justify-content-between'>

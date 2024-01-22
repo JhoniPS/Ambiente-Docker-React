@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import api from '../../../services/api';
+import useAuthContext from '../../contexts/Auth';
 
 import { IconContext } from 'react-icons';
 import { BsFillTrashFill } from 'react-icons/bs';
@@ -9,6 +10,8 @@ export default function ModalDeleteRepresentiveGroup({ GroupId, RepresentativeId
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
+
+    const { setMessageType, setShowMessage, setMessage } = useAuthContext();
 
     const handlDelete = async () => {
         try {
@@ -23,9 +26,16 @@ export default function ModalDeleteRepresentiveGroup({ GroupId, RepresentativeId
                 representatives: updatedRepresentatives,
             });
 
+            setMessage('Representante deletado com sucesso!');
+            setMessageType('success');
+            setShowMessage(true);
+
             handleClose();
         } catch (error) {
-            console.error(error);
+            setMessage('Ops! algo deu errado');
+            setMessageType('error');
+            setShowMessage(true);
+            handleClose();
         }
     };
 

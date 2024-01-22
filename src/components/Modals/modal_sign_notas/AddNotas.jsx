@@ -1,59 +1,55 @@
 import React, { Fragment, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import api from '../../../services/api'
-
-import style from './AddNotas.module.css';
+import useAuthContext from '../../contexts/Auth';
 
 import { IconContext } from 'react-icons';
 import { IoMdAdd } from 'react-icons/io';
-import { CButton, CCol, CContainer, CFormInput, CFormTextarea, CModal, CModalBody, CModalFooter, CModalHeader, CModalTitle, CRow } from '@coreui/react';
+import { CButton, CCol, CContainer, CFormCheck, CFormInput, CFormTextarea, CModal, CModalBody, CModalFooter, CModalHeader, CModalTitle, CRow } from '@coreui/react';
 
 const AddNotas = ({ data, setData }) => {
     const [open, setOpen] = useState(false);
+    const [selectedColor, setSelectedColor] = useState('');
     const [nota, setNota] = useState({
         title: '',
         description: '',
         color: '',
     })
 
-    const navigate = useNavigate();
+    const { setMessageType, setShowMessage, setMessage } = useAuthContext();
     const { id } = useParams();
 
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
-    const handleColorButtonClick = (color) => {
+    const handleColorButtonClick = (event) => {
+        const color = event.target.value;
         setNota({ ...nota, color: color });
+        setSelectedColor(color);
     };
 
     const handleEdit = (event) => {
         const { name, value } = event.target;
-        setNota({
+
+        (value.length <= 255) ? setNota({
             ...nota,
             [name]: value,
-        });
+        }) : alert("Limite de caracteres atingido");
     };
 
     const submit = async () => {
         try {
             const response = await api.post(`group/${id}/notes`, nota)
             setData([...data, response.data]);
-            navigate(`/detalhes-de-grupos-representante/${id}/notas`, {
-                state: {
-                    message: 'Atualizado com sucesso!',
-                    messageType: 'success',
-                    showMessage: true,
-                }
-            });
+            setMessage('Nota criada com sucesso!')
+            setMessageType('success');
+            setShowMessage(true);
             handleClose();
         } catch (error) {
-            navigate(`/detalhes-de-grupos-representante/${id}/notas`, {
-                state: {
-                    message: `Ops! algo deu errado ${error.response.data.errors}`,
-                    messageType: 'error',
-                    showMessage: true,
-                }
-            });
+            setMessage(`Ops! algo deu errado ${error.response.data.errors}`)
+            setMessageType('error');
+            setShowMessage(true);
+            handleClose();
         }
     }
 
@@ -92,27 +88,42 @@ const AddNotas = ({ data, setData }) => {
                                     onChange={handleEdit}
                                     rows={5}
                                 />
-                                <p>Cor</p>
-                                <div className='d-flex gap-3'>
-                                    <button
-                                        className={`d-flex rounded-circle`}
-                                        style={{ width: '25px', height: '25px', background: "#BDF8C3", border: "1px solid rgba(0,0,0, 0.23)" }}
-                                        onClick={() => handleColorButtonClick('green')}
+                                <p className='mb-0'>Cor</p>
+                                <div className='d-flex gap-3 mt-0'>
+                                    <CFormCheck
+                                        type='Radio'
+                                        name='color'
+                                        style={{ width: '30px', height: '30px', backgroundColor: "#a3e645" }}
+                                        value='green'
+                                        checked={selectedColor === 'green'}
+                                        onChange={handleColorButtonClick}
                                     />
-                                    <button
-                                        className={`d-flex rounded-circle`}
-                                        style={{ width: '25px', height: '25px', background: "#FFE08B", border: "1px solid rgba(0,0,0, 0.23)" }}
-                                        onClick={() => handleColorButtonClick('yellow')}
+
+                                    <CFormCheck
+                                        type='Radio'
+                                        name='color'
+                                        style={{ width: '30px', height: '30px', backgroundColor: "#fae332" }}
+                                        value='yellow'
+                                        checked={selectedColor === 'yellow'}
+                                        onChange={handleColorButtonClick}
                                     />
-                                    <button
-                                        className={`d-flex rounded-circle ${style.blue}`}
-                                        style={{ width: '25px', height: '25px', background: "#2C74AC", border: "1px solid rgba(0,0,0, 0.23)" }}
-                                        onClick={() => handleColorButtonClick('blue')}
+
+                                    <CFormCheck
+                                        type='Radio'
+                                        name='color'
+                                        style={{ width: '30px', height: '30px', backgroundColor: "#38ccf5" }}
+                                        value='blue'
+                                        checked={selectedColor === 'blue'}
+                                        onChange={handleColorButtonClick}
                                     />
-                                    <button
-                                        className={`d-flex rounded-circle ${style.red}`}
-                                        style={{ width: '25px', height: '25px', background: "#F2B8B5", border: "1px solid rgba(0,0,0, 0.23)" }}
-                                        onClick={() => handleColorButtonClick('red')}
+
+                                    <CFormCheck
+                                        type='Radio'
+                                        name='color'
+                                        style={{ width: '30px', height: '30px', backgroundColor: "#FD5E53" }}
+                                        value='red'
+                                        checked={selectedColor === 'red'}
+                                        onChange={handleColorButtonClick}
                                     />
                                 </div>
                             </CCol>

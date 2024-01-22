@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import api from '../../../services/api';
+import useAuthContext from '../../contexts/Auth';
 
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { IconContext } from 'react-icons';
 import { BsFillTrashFill } from 'react-icons/bs';
 import { CButton, CModal, CModalBody, CModalFooter, CModalHeader, CModalTitle } from '@coreui/react';
@@ -11,30 +12,22 @@ function ModalDeleteNota({ idNote, data, setData }) {
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
-
-    const navigate = useNavigate();
     const { id } = useParams();
+
+    const { setMessageType, setShowMessage, setMessage } = useAuthContext();
 
     const handlDelete = async () => {
         try {
             await api.delete(`/group/${id}/notes/${idNote}`);
             const updatedData = data.filter(item => item.id !== idNote);
             setData(updatedData);
-            navigate(`/detalhes-de-grupos-representante/${id}/notas`, {
-                state: {
-                    message: 'Deletado com sucesso!',
-                    messageType: 'success',
-                    showMessage: true,
-                }
-            });
+            setMessage('Deletado com sucesso!');
+            setMessageType('success');
+            setShowMessage(true);
         } catch (error) {
-            navigate(`/detalhes-de-grupos-representante/${id}/notas`, {
-                state: {
-                    message: 'Ops! algo deu errado',
-                    messageType: 'error',
-                    showMessage: true,
-                }
-            });
+            setMessage('Ops! algo deu errado');
+            setMessageType('error');
+            setShowMessage(true);
         }
     };
 

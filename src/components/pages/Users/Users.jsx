@@ -6,6 +6,7 @@ import Message from "../../layout/Message/Message";
 import SubmitButton from "../../layout/submitbuttun/SubmitButton"
 import TypeUsers from '../TypeUsers/TypeUsers'
 import useAuthContext from '../../contexts/Auth';
+import style from './Users.module.css'
 
 import { CCard, CCardBody } from "@coreui/react";
 
@@ -13,11 +14,7 @@ const Users = () => {
   const [data, setData] = useState([]);
   const [sortOrder, setSortOrder] = useState("desc");
 
-  const { message,
-    messageType,
-    showMessage,
-    setShowMessage
-  } = useAuthContext();
+  const { message, messageType, showMessage, setShowMessage } = useAuthContext();
 
   const sortUsers = () => {
     return [...data].sort((a, b) => {
@@ -50,7 +47,7 @@ const Users = () => {
         <CCard className="md-2">
           <CCardBody className="d-flex flex-column gap-3">
             <h2>Usuários</h2>
-            <h4>FILTROS RÁPIDOS</h4>
+            <h4 className={style}>FILTROS RÁPIDOS</h4>
             <section className="d-grid gap-2 d-md-flex justify-content-md-start mb-0">
               <SubmitButton
                 text="Mais Recentes"

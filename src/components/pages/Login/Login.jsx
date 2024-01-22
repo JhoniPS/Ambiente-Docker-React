@@ -34,16 +34,11 @@ const Login = () => {
     const [password, setPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
 
-    const { login, loginSigaa, error, messageErrors } = useAuthContext();
+    const { login, logoutSIGAA, sigaaLogin, error, messageErrors } = useAuthContext();
 
     const handleLogin = async (e) => {
         e.preventDefault();
         await login({ email, password });
-    };
-
-    const handleLoginSIGAA = async (e) => {
-        e.preventDefault();
-        await loginSigaa();
     };
 
     const handleKeyDown = (e) => {
@@ -111,29 +106,36 @@ const Login = () => {
                                         </CInputGroup>
 
                                         <CRow>
-                                            <CCol xs={12} className="mb-4">
-                                                <CButton color="primary" className="px-5" type='submit'>
-                                                    Entrar
+                                            <CCol xs={12} className='d-flex mb-4 gap-3 justify-content-center'>
+                                                <CButton color="primary" type='submit' style={{ width: '7em' }}>
+                                                    Login
                                                 </CButton>
+
+                                                <a href="https://autenticacao.dev.ufopa.edu.br/" target="_blank" rel="noopener noreferrer">
+                                                    <CButton
+                                                        color="secondary"
+                                                    > Login SIGAA</CButton>
+                                                </a>
                                             </CCol>
 
-                                            <CRow>
-                                                <CCol xs={12} className='d-flex mb-4 gap-3 justify-content-center'>
-                                                    <CButton
-                                                        color="secondary"
-                                                        onClick={handleLoginSIGAA}
-                                                    > Entrar com SIGAA</CButton>
-
-                                                    <CButton
-                                                        color="secondary"
-                                                        onClick={(e) => { e.preventDefault(); navigate('/signUser') }}
-                                                    >
-                                                        <IconContext.Provider value={{ size: 20 }}>
-                                                            <BsPersonFillAdd /> Cadastrar
-                                                        </IconContext.Provider>
-                                                    </CButton>
-                                                </CCol>
-                                            </CRow>
+                                            <CCol xs={12} className='d-flex mb-4 gap-3 justify-content-center'>
+                                                <CButton
+                                                    color="secondary"
+                                                    onClick={(e) => { e.preventDefault(); navigate('/signUser') }}
+                                                >
+                                                    <IconContext.Provider value={{ size: 20 }}>
+                                                        <BsPersonFillAdd /> Cadastrar
+                                                    </IconContext.Provider>
+                                                </CButton>
+                                                <CButton
+                                                    color="secondary"
+                                                    onClick={logoutSIGAA}
+                                                >
+                                                    <IconContext.Provider value={{ size: 20 }}>
+                                                        <BsPersonFillAdd /> Logout SIGAA
+                                                    </IconContext.Provider>
+                                                </CButton>
+                                            </CCol>
 
                                             <CCol xs={12}>
                                                 <a href="/forget-password" onClick={(e) => { e.preventDefault(); navigate('/forget-password') }} target="_blank" rel="noopener noreferrer">

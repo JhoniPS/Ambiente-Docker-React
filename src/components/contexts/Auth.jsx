@@ -1,6 +1,7 @@
 import React, { useState, createContext, useContext } from "react";
-import api from "../../services/api";
 import Cookies from 'js-cookie'
+import api from "../../services/api";
+
 import { useNavigate } from "react-router-dom";
 
 export const AuthContext = createContext({});
@@ -18,7 +19,7 @@ export const AuthProvider = ({ children }) => {
 
   const login = async ({ ...data }) => {
     try {
-      const response = await api.post('/login', data)
+      const response = await api.post('login', data)
       const { token, type_user } = response.data;
       Cookies.set('authToken', token, { expires: 7, secure: true, sameSite: 'Strict' }); // Armazene o token nos cookies
 
@@ -54,13 +55,15 @@ export const AuthProvider = ({ children }) => {
     }
   }
 
-  const loginSigaa = async () => {
+  const sigaaLogin = async () => {
     try {
-      await api.get('/redirect');
+      const response = await api.get('redirect');
+
+      console.log(response.data);
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
   const logout = async () => {
     try {
@@ -74,9 +77,16 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  //teste
+  const api_token = '2dacb2db-4206-45d1-a060-e6c4c000c68c';
+
   const logoutSIGAA = async () => {
     try {
-      await api.post('users/logout-ufopa');
+      await api.post('users/logout-ufopa', {
+        headers: {
+          'token': { api_token }
+        }
+      });
     } catch (error) {
       console.log(error.response);
     }
@@ -91,10 +101,9 @@ export const AuthProvider = ({ children }) => {
           error,
           messageErrors,
           login,
-          loginSigaa,
+          sigaaLogin,
           logout,
           logoutSIGAA,
-
           message,
           messageType,
           showMessage,

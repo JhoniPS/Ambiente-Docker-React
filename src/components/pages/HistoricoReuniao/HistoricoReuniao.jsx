@@ -8,6 +8,7 @@ import {
     CCallout,
     CCard,
     CCardBody,
+    CCardFooter,
     CCardHeader,
     CCardLink,
     CCardSubtitle,
@@ -96,26 +97,28 @@ function HistoricoReuniao() {
                         )}
 
                         <h4>FILTROS RÁPIDOS</h4>
-                        <section className="d-flex align-items-start gap-2 mb-5">
+                        <section className="d-flex align-items-start gap-2 mb-4">
                             <SubmitButton text="Mais Recentes" customClass="button_filters_bar" onClick={() => setSortOrder('desc')} />
                             <SubmitButton text="Mais Antigos" customClass="button_filters_bar" onClick={() => setSortOrder('asc')} />
                         </section>
-                        <CCallout>
+                        <CCallout className={'overflow-auto'} style={{ maxHeight: '500px' }}>
                             <Container customClass="start">
                                 <CRow className="d-flex p-0 flex-wrap gap-4">
                                     {meets.length !== 0 ? (
                                         sortDocs().map((meet, index) => (
-                                            <CCard key={index} className="p-0" style={{ maxWidth: '25rem' }}>
-                                                <CCardHeader className="text-lg" style={{ maxWidth: '25rem' }} component="h5">{meet?.content}</CCardHeader>
+                                            <CCard key={index} className="p-0" style={{ maxWidth: '24.5rem' }}>
+                                                <CCardHeader className="text-lg" style={{ maxWidth: '24.5rem' }} component="h5">{meet?.content}</CCardHeader>
                                                 <CCardBody className="d-flex flex-column p-2">
                                                     <CCardSubtitle className="mb-2 text-medium-emphasis text-sm">{formatarData(meet?.date_meet)}</CCardSubtitle>
                                                     <CCardText className={style.resumoReuniao + ' text-sm'}>{meet?.summary}</CCardText>
                                                     <CCardLink onClick={() => handleDownload(meet?.id, meet?.ata)}>{meet?.ata}</CCardLink>
-                                                    <CButtonGroup className="d-flex flex-md-row mt-3">
+                                                </CCardBody>
+                                                <CCardFooter className="d-flex justify-content-end p-0">
+                                                    <CButtonGroup>
                                                         {<ModalDeleteMeet idMeet={meet?.id} data={meets} setData={setMeets} />}
                                                         {<ModalEditMeet data={meets} setData={setMeets} />}
                                                     </CButtonGroup>
-                                                </CCardBody>
+                                                </CCardFooter>
                                             </CCard>
                                         ))
                                     ) : (

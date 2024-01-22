@@ -8,8 +8,8 @@ import { CButton, CModal, CModalBody, CModalFooter, CModalHeader, CModalTitle } 
 
 export default function ModalEditGroup({ id, data, setData }) {
     const [open, setOpen] = useState(false);
-    const handleOpen = () => {setOpen(true);}
-    const handleClose = () => {setOpen(false);}
+    const handleOpen = () => { setOpen(true); }
+    const handleClose = () => { setOpen(false); }
 
     const { setMessageType, setShowMessage, setMessage } = useAuthContext();
 
@@ -26,6 +26,7 @@ export default function ModalEditGroup({ id, data, setData }) {
             setMessage('Ops! algo deu errado');
             setMessageType('error');
             setShowMessage(true);
+            handleClose();
         }
     };
 

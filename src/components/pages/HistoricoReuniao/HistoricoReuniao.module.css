@@ -1,7 +1,7 @@
 .resumoReuniao {
   width: 100%;
   height: auto;
-  max-height: 70px;
+  max-height: 100px;
   color: #667085;
   font-feature-settings: 'clig' off, 'liga' off;
   font-family: Roboto;
@@ -26,6 +26,7 @@
     background-color: transparent;
   }
 }
+
 
 .link {
   color: #2C74AC;

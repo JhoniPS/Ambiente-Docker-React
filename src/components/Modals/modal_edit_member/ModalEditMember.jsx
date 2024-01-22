@@ -50,6 +50,7 @@ export default function ModalEditMember({ groupId, memberId, data, setData }) {
             setMessage('Ops!! algo deu errado');
             setMessageType('error');
             setShowMessage(true);
+            handleClose();
         }
     };
 

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import api from '../../../services/api';
+import useAuthContext from '../../contexts/Auth';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { IconContext } from 'react-icons';
@@ -12,7 +13,9 @@ function ModalDeleteMeet({ idMeet, data, setData }) {
     const handleClose = () => setOpen(false);
 
     const navigate = useNavigate();
-    
+
+    const { setMessageType, setShowMessage, setMessage } = useAuthContext();
+
     const { id } = useParams();
 
     const handlDelete = async () => {
@@ -21,22 +24,18 @@ function ModalDeleteMeet({ idMeet, data, setData }) {
 
             const updatedData = data.filter(item => item.id !== idMeet);
             setData(updatedData);
-            navigate(`/detalhes-de-grupos-representante/${id}/historico-de-reunioes`, {
-                state: {
-                    message: 'Deletado com sucesso!',
-                    messageType: 'success',
-                    showMessage: true,
-                }
-            });
+            navigate(`/detalhes-de-grupos-representante/${id}/historico-de-reunioes`);
+
+            setMessage('Deletado com sucesso!');
+            setMessageType('success');
+            setShowMessage(true);
             handleClose();
         } catch (error) {
-            navigate(`/detalhes-de-grupos-representante/${id}/historico-de-reunioes`, {
-                state: {
-                    message: 'Ops! algo deu errado',
-                    messageType: 'error',
-                    showMessage: true,
-                }
-            });
+            navigate(`/detalhes-de-grupos-representante/${id}/historico-de-reunioes`);
+            setMessage('Ops! algo deu errado');
+            setMessageType('error');
+            setShowMessage(true);
+            handleClose();
         }
     };
 

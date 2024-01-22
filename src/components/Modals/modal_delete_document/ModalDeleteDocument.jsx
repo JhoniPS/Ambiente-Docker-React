@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import api from '../../../services/api';
+import useAuthContext from '../../contexts/Auth';
+
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { IconContext } from 'react-icons';
@@ -13,6 +15,9 @@ function ModalDeleteDocument({ docId, data, setData }) {
     const handleClose = () => setOpen(false);
 
     const navigate = useNavigate();
+
+    const { setMessageType, setShowMessage, setMessage } = useAuthContext();
+
     const { id } = useParams();
 
     const handlDelete = async () => {
@@ -20,22 +25,17 @@ function ModalDeleteDocument({ docId, data, setData }) {
             await api.delete(`/group/${id}/documents/${docId}`).then(() => {
                 const updatedData = data.filter(item => item.id !== docId);
                 setData(updatedData);
-                navigate(`/detalhes-de-grupos-representante/${id}/documentos`, {
-                    state: {
-                        message: 'Deletado com sucesso!',
-                        messageType: 'success',
-                        showMessage: true,
-                    }
-                });
+                navigate(`/detalhes-de-grupos-representante/${id}/documentos`);
+                setMessage('Deletado com sucesso!');
+                setMessageType('success');
+                setShowMessage(true);
             })
         } catch (error) {
-            navigate(`/detalhes-de-grupos-representante/${id}/documentos`, {
-                state: {
-                    message: 'Ops! algo deu errado',
-                    messageType: 'error',
-                    showMessage: true,
-                }
-            });
+            navigate(`/detalhes-de-grupos-representante/${id}/documentos`);
+            setMessage('Ops! algo deu errado');
+            setMessageType('error');
+            setShowMessage(true);
+            handleClose();
         }
     };
 

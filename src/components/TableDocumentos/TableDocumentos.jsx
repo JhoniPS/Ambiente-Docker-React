@@ -1,7 +1,6 @@
 import React from 'react';
 import api from '../../services/api';
 import Cookies from 'js-cookie'
-import style from './TableDocumentos.module.css'
 
 import ModalDeleteDocument from '../Modals/modal_delete_document/ModalDeleteDocument';
 import { MaterialReactTable } from 'material-react-table';
@@ -89,7 +88,7 @@ const TableDocumentos = ({ data, setData }) => {
       columnDefType: 'display',
       size:50,
       Cell: ({ row }) => (
-        <div className={style.operation}>
+        <div className="d-flex justify-content-evenly">
           <ModalDeleteDocument docId={row.original.id} data={data} setData={setData} />
         </div>
       ),

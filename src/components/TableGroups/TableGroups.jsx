@@ -41,6 +41,11 @@ const TableGroups = ({ rota, data, setData }) => {
             accessorFn: (row) => row.type_group.type,
         },
         {
+            id: 'situacao',
+            header: 'Situação',
+            accessorFn: (row) => row.status,
+        },
+        {
             id: 'Nome',
             header: 'Nome',
             accessorFn: (row) => row.type_group.name,
@@ -92,22 +97,6 @@ const TableGroups = ({ rota, data, setData }) => {
             ),
         },
     ];
-
-    // Condicionalmente adiciona a coluna 'Operações' se o tipo de usuário for representante'
-    // if (userRole === 'gerente') {
-    //     columns.push({
-    //         id: "Operações",
-    //         header: null,
-    //         accessorKey: 'id',
-    //         columnDefType: 'display',
-    //         Cell: ({ row }) => (
-    //             <div className="d-flex">
-    //                 <ModalDeleteGroup id={row.original.id} data={data} setData={setData} />
-    //                 <ModalEditGroup id={row.original.id} data={data} setData={setData} />
-    //             </div>
-    //         ),
-    //     });
-    // }
 
     return (
         <MaterialReactTable

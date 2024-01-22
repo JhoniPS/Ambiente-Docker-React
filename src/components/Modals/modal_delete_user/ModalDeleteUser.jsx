@@ -15,13 +15,12 @@ export default function ModalDeleteUser({ id, data, setData }) {
 
     const handlDelete = async () => {
         try {
-            await api.delete(`users/${id}`).then(() => {
-                const updatedData = data.filter(item => item.id !== id);
-                setData(updatedData);
-                setMessage('Usuário deletado com sucesso!');
-                setMessageType('success');
-                setShowMessage(true);
-            })
+            await api.delete(`users/${id}`);
+            const updatedData = data.filter(item => item.id !== id);
+            setData(updatedData);
+            setMessage('Usuário deletado com sucesso!');
+            setMessageType('success');
+            setShowMessage(true);
         } catch (error) {
             setMessage('Ops!!! Algo deu errado.');
             setMessageType('error');

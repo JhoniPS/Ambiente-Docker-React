@@ -8,6 +8,7 @@ import {
     CButton,
     CCol,
     CContainer,
+    CFormCheck,
     CFormInput,
     CFormTextarea,
     CModal,
@@ -28,6 +29,7 @@ export default function ModalEditGroup({ id, data, setData }) {
         internal_concierge: '',
         acronym: '',
         team: '',
+        status: '',
         name: '',
         type: '',
         email: '',
@@ -53,6 +55,7 @@ export default function ModalEditGroup({ id, data, setData }) {
                     acronym: groupData.acronym || '',
                     team: groupData.team || '',
                     name: groupData.type_group.name || '',
+                    status: groupData.status || '',
                     type: groupData.type_group.type || '',
                     email: groupData.email || '',
                     observations: groupData.observations || '',
@@ -70,8 +73,8 @@ export default function ModalEditGroup({ id, data, setData }) {
         }
     }, [id, open]);
 
-    const handleOpen = () => {setOpen(true)};
-    const handleClose = () => {setOpen(false)};
+    const handleOpen = () => { setOpen(true) };
+    const handleClose = () => { setOpen(false) };
 
     const handleEdit = (event) => {
         const { name, value } = event.target;
@@ -225,8 +228,30 @@ export default function ModalEditGroup({ id, data, setData }) {
                                     type='text'
                                     label='Oficio que indicou'
                                     name='office_indicated'
-                                    variant='standard'
                                     value={form.office_indicated}
+                                    onChange={handleEdit}
+                                />
+                            </CCol>
+                        </CRow>
+                        <CRow>
+                            <CCol>
+                                <h5 style={{ fontSize: '16px', marginTop: '10px', marginBottom: '5px' }}>Status do Grupo</h5>
+
+                                <CFormCheck
+                                    inline
+                                    type="radio"
+                                    name="status"
+                                    value="EM ANDAMENTO"
+                                    label="Em andamento"
+                                    onChange={handleEdit}
+                                    defaultChecked
+                                />
+                                <CFormCheck
+                                    inline
+                                    type="radio"
+                                    name="status"
+                                    value="FINALIZADO"
+                                    label="Finalizado"
                                     onChange={handleEdit}
                                 />
                             </CCol>
