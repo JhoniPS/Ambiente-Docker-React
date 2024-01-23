@@ -127,14 +127,14 @@ const Login = () => {
                                                         <BsPersonFillAdd /> Cadastrar
                                                     </IconContext.Provider>
                                                 </CButton>
-                                                <CButton
+                                                {/* <CButton
                                                     color="secondary"
                                                     onClick={logoutSIGAA}
                                                 >
                                                     <IconContext.Provider value={{ size: 20 }}>
                                                         <BsPersonFillAdd /> Logout SIGAA
                                                     </IconContext.Provider>
-                                                </CButton>
+                                                </CButton> */}
                                             </CCol>
 
                                             <CCol xs={12}>

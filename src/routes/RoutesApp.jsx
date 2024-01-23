@@ -24,6 +24,7 @@ import GroupsVisualizador from "../components/pages/GroupsVisualizador/GroupsVis
 import Documents from "../components/pages/Documents/Documents";
 import HistoricoReuniao from "../components/pages/HistoricoReuniao/HistoricoReuniao";
 import Notas from "../components/pages/Notas/Notas";
+import Activity from "../components/pages/Atividades/Activity";
 
 const PrivateRoute = ({ children, requiredUserType }) => {
     const isAuthenticated = Cookies.get('authToken');
@@ -45,7 +46,7 @@ const routes = [
     /* Acesso Geral */
     { path: '/', element: <Login /> },
     { path: '/Error404', element: <Error404 /> },
-    { path: '/signUser', element: <SignUser />},
+    { path: '/signUser', element: <SignUser /> },
 
     /* Administrador */
     { path: '/profile', element: <PrivateRoute requiredUserType="administrador"><Profile /></PrivateRoute> },
@@ -59,6 +60,7 @@ const routes = [
     { path: '/detalhes-de-grupos-gerente/:id/documentos', element: <PrivateRoute requiredUserType="gerente"><Documents /></PrivateRoute> },
     { path: '/detalhes-de-grupos-gerente/:id/notas', element: <PrivateRoute requiredUserType="gerente"><Notas /></PrivateRoute> },
     { path: '/detalhes-de-grupos-gerente/:id/historico-de-reunioes', element: <PrivateRoute requiredUserType="gerente"><HistoricoReuniao /></PrivateRoute> },
+    { path: '/detalhes-de-grupos-gerente/:id/atividades', element: <PrivateRoute requiredUserType="gerente"><Activity /></PrivateRoute> },
 
     /* Representante */
     { path: '/representante', element: <PrivateRoute requiredUserType="representante"><Representative /></PrivateRoute> },

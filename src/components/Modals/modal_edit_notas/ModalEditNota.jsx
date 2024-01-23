@@ -130,7 +130,7 @@ const ModalEditNota = ({ idNota, data, setData }) => {
                                 <p className='mb-0'>Cor</p>
                                 <div className='d-flex gap-3'>
                                     <CFormCheck
-                                        type='Radio'
+                                        type='radio'
                                         name='color'
                                         style={{ width: '30px', height: '30px', backgroundColor: "#a3e645" }}
                                         value='green'
@@ -139,7 +139,7 @@ const ModalEditNota = ({ idNota, data, setData }) => {
                                     />
 
                                     <CFormCheck
-                                        type='Radio'
+                                        type='radio'
                                         name='color'
                                         style={{ width: '30px', height: '30px', backgroundColor: "#fae332" }}
                                         value='yellow'
@@ -148,7 +148,7 @@ const ModalEditNota = ({ idNota, data, setData }) => {
                                     />
 
                                     <CFormCheck
-                                        type='Radio'
+                                        type='radio'
                                         name='color'
                                         style={{ width: '30px', height: '30px', backgroundColor: "#38ccf5" }}
                                         value='blue'
@@ -157,7 +157,7 @@ const ModalEditNota = ({ idNota, data, setData }) => {
                                     />
 
                                     <CFormCheck
-                                        type='Radio'
+                                        type='radio'
                                         name='color'
                                         style={{ width: '30px', height: '30px', backgroundColor: "#FD5E53" }}
                                         value='red'
