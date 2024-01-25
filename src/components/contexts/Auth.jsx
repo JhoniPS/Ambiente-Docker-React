@@ -59,7 +59,7 @@ export const AuthProvider = ({ children }) => {
     try {
       const response = await api.get('redirect');
 
-      console.log(response.data);
+      console.log(response.data)
     } catch (error) {
       console.log(error);
     }
@@ -78,13 +78,13 @@ export const AuthProvider = ({ children }) => {
   };
 
   //teste
-  const api_token = '2dacb2db-4206-45d1-a060-e6c4c000c68c';
+  const api_token = '87fbc3f2-a72c-4f11-9ff3-23b15510964c';
 
   const logoutSIGAA = async () => {
     try {
-      await api.post('users/logout-ufopa', {
+      await api.post('users/logout-ufopa', {}, {
         headers: {
-          'token': { api_token }
+          'token': api_token
         }
       });
     } catch (error) {

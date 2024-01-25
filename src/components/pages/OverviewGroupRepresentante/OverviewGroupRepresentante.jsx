@@ -68,6 +68,7 @@ const OverviewGroupRepresentante = () => {
             icon={cilTask}
             title="Atividades"
             description="Gerencia atividades"
+            to={`/detalhes-de-grupos-representante/${id}/atividades`}
           />
           <Card
             icon={cilList}

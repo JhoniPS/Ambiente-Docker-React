@@ -69,6 +69,7 @@ const routes = [
     { path: '/detalhes-de-grupos-representante/:id/documentos', element: <PrivateRoute requiredUserType="representante"><Documents /></PrivateRoute> },
     { path: '/detalhes-de-grupos-representante/:id/adicionar-membro', element: <PrivateRoute requiredUserType="representante"><SignMember /></PrivateRoute> },
     { path: '/detalhes-de-grupos-representante/:id/historico-de-reunioes', element: <PrivateRoute requiredUserType="representante"><HistoricoReuniao /></PrivateRoute> },
+    { path: '/detalhes-de-grupos-representante/:id/atividades', element: <PrivateRoute requiredUserType="representante"><Activity /></PrivateRoute> },
 
     /* Visualizador */
     { path: '/visualizador', element: <PrivateRoute requiredUserType="visualizador"><GroupsVisualizador /></PrivateRoute> },
@@ -76,6 +77,7 @@ const routes = [
     { path: '/detalhes-de-grupos-visualizador/:id/notas', element: <PrivateRoute requiredUserType="visualizador"><Notas /></PrivateRoute> },
     { path: '/detalhes-de-grupos-visualizador/:id/documentos', element: <PrivateRoute requiredUserType="visualizador"><Documents /></PrivateRoute> },
     { path: '/detalhes-de-grupos-visualizador/:id/historico-de-reunioes', element: <PrivateRoute requiredUserType="visualizador"><HistoricoReuniao /></PrivateRoute> },
+    { path: '/detalhes-de-grupos-visualizador/:id/atividades', element: <PrivateRoute requiredUserType="visualizador"><Activity /></PrivateRoute> },
 ];
 
 const RoutesApp = () => {

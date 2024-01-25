@@ -111,7 +111,7 @@ const Login = () => {
                                                     Login
                                                 </CButton>
 
-                                                <a href="https://autenticacao.dev.ufopa.edu.br/" target="_blank" rel="noopener noreferrer">
+                                                <a href="http://localhost:8001/api/redirect" target="_blank" rel="noopener noreferrer">
                                                     <CButton
                                                         color="secondary"
                                                     > Login SIGAA</CButton>
@@ -127,14 +127,15 @@ const Login = () => {
                                                         <BsPersonFillAdd /> Cadastrar
                                                     </IconContext.Provider>
                                                 </CButton>
-                                                {/* <CButton
+
+                                                <CButton
                                                     color="secondary"
                                                     onClick={logoutSIGAA}
                                                 >
                                                     <IconContext.Provider value={{ size: 20 }}>
                                                         <BsPersonFillAdd /> Logout SIGAA
                                                     </IconContext.Provider>
-                                                </CButton> */}
+                                                </CButton>
                                             </CCol>
 
                                             <CCol xs={12}>

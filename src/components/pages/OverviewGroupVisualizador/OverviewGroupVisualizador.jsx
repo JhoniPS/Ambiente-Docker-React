@@ -60,6 +60,7 @@ const OverviewGroupVisualizador = () => {
             icon={cilTask}
             title="Atividades"
             description="Gerencia atividades"
+            to={`/detalhes-de-grupos-visualizador/${id}/atividades`}
           />
           <Card
             icon={cilList}
