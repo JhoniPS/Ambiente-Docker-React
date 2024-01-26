@@ -63,7 +63,6 @@ const Observations = ({ observations, setObservations, name, setName, setStatus,
       <CFormInput
         type='text'
         label="Nome do Grupo"
-        variant="standard"
         name='name'
         placeholder='Ex: Comissão'
         value={name}

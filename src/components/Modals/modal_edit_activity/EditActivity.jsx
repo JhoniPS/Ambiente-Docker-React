@@ -1,32 +1,85 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import useAuthContext from '../../contexts/Auth';
 import api from '../../../services/api'
-import { CButton, CCol, CContainer, CFormInput, CFormTextarea, CModal, CModalBody, CModalFooter, CModalHeader, CModalTitle, CRow } from '@coreui/react';
+
+import {
+    CButton,
+    CContainer,
+    CForm,
+    CFormInput,
+    CFormTextarea,
+    CInputGroup,
+    CInputGroupText,
+    CModal,
+    CModalBody,
+    CModalFooter,
+    CModalHeader,
+    CModalTitle
+} from '@coreui/react';
+
 import { AiFillEdit } from 'react-icons/ai';
-import { useParams } from 'react-router-dom';
+import CIcon from '@coreui/icons-react';
+import { cilBook, cilCalendar, cilColorBorder } from '@coreui/icons';
 
 
-const EditActivity = ({ data, setData }) => {
+
+
+
+const EditActivity = ({ id, data, setData }) => {
     const [open, setOpen] = useState(false);
-    const [Atividade, setAtividade] = useState({
-        name: "string",
-        description: "string",
-        start_date: "string",
-        end_date: "string"
-    })
-
-    const { id } = useParams();
+    const [activity, setActivity] = useState({
+        name: '',
+        description: '',
+        start_date: '',
+        end_date: '',
+    });
 
     const { setMessageType, setShowMessage, setMessage } = useAuthContext();
 
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await api.get(`activity/${id}`);
+                const activityData = response.data;
+
+                setActivity({
+                    name: activityData.name || '',
+                    description: activityData.description || '',
+                    start_date: activityData.start_date || '',
+                    end_date: activityData.end_date || '',
+                })
+            } catch (error) {
+                console.error(error);
+            }
+        };
+
+        if (open) {
+            fetchData();
+        }
+    }, [id, open]);
+
     const submit = async () => {
         try {
-            const response = await api.put(`activity/${id}`)
-            setData([...data, response.data]);
-            setMessage('Nota criada com sucesso!')
+            await api.put(`activity/${id}`, activity)
+
+            const updatedData = data.map((item) => {
+                if (item.id === id) {
+                    return { ...item, ...activity };
+                }
+                return item;
+            });
+            setData(updatedData);
+            setActivity({
+                name: '',
+                description: '',
+                start_date: '',
+                end_date: '',
+            });
+
+            setMessage('Atividade atualizada com sucesso!')
             setMessageType('success');
             setShowMessage(true);
             handleClose();
@@ -36,16 +89,26 @@ const EditActivity = ({ data, setData }) => {
             setShowMessage(true);
             handleClose();
         }
-    }
+    };
+
+    const handleEdit = (event) => {
+        const { name, value } = event.target;
+
+        setActivity({
+            ...activity,
+            [name]: value,
+        });
+    };
 
     return (
         <Fragment>
-            <CButton color='transparent' style={{ cursor: 'pointer' }} onClick={(e) => { e.stopPropagation(); }}>
+            <CButton color='transparent' style={{ cursor: 'pointer' }} onClick={(e) => { e.stopPropagation(); handleOpen() }}>
                 <AiFillEdit size={20} color='blue' />
             </CButton>
             <CModal
                 alignment="center"
                 visible={open}
+                size='lg'
                 onClose={handleClose}
                 aria-labelledby="VerticallyCenteredScrollableExample"
             >
@@ -54,30 +117,62 @@ const EditActivity = ({ data, setData }) => {
                 </CModalHeader>
                 <CModalBody>
                     <CContainer>
-                        <CRow>
-                            <CCol className='d-flex flex-column gap-2'>
+                        <CForm>
+                            <CInputGroup className="mb-3">
+                                <CInputGroupText>
+                                    <CIcon icon={cilBook} />
+                                </CInputGroupText>
+
                                 <CFormInput
-                                    type="text"
-                                    label="Titulo"
-                                    name="title"
-
+                                    type='text'
+                                    name='name'
+                                    value={activity.name}
+                                    onChange={handleEdit}
+                                    autoComplete="On"
+                                    placeholder='Nome da Atividade'
                                 />
+                            </CInputGroup>
+
+                            <CInputGroup className='mb-3'>
+                                <CInputGroupText>
+                                    <CIcon icon={cilColorBorder} />
+                                </CInputGroupText>
                                 <CFormTextarea
-                                    label="Descrição"
-                                    placeholder="Insira aqui sua nota"
-
+                                    placeholder='Descrição da Atividade'
                                     name='description'
-
-                                    rows={5}
+                                    value={activity.description}
+                                    onChange={handleEdit}
                                 />
-                                <p className='mb-0'>Cor</p>
-                            </CCol>
-                        </CRow>
+                            </CInputGroup>
+
+                            <CInputGroup className="mb-3">
+                                <CInputGroupText>
+                                    <CIcon icon={cilCalendar} />
+                                </CInputGroupText>
+
+                                <CFormInput
+                                    type='date'
+                                    name='start_date'
+                                    value={activity.start_date}
+                                    onChange={handleEdit}
+                                />
+
+                                <CFormInput
+                                    type='date'
+                                    name='end_date'
+                                    value={activity.end_date}
+                                    onChange={handleEdit}
+                                />
+                                <CInputGroupText>
+                                    <CIcon icon={cilCalendar} />
+                                </CInputGroupText>
+                            </CInputGroup>
+                        </CForm>
                     </CContainer>
                 </CModalBody>
                 <CModalFooter>
                     <CButton color="secondary" onClick={handleClose}>
-                        Close
+                        Fechar
                     </CButton>
                     <CButton color="primary" onClick={submit}>
                         Salvar

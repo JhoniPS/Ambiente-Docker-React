@@ -69,8 +69,7 @@ export default function Notas() {
                         <h4>FILTROS RÁPIDOS</h4>
                         <section className="d-flex align-items-start gap-2 mb-5">
                             <SubmitButton
-                                text="Mais Recentes"
-                                customClass="button_filtes_bar"
+                                text="Mais Recentes"     
                                 onClick={() => setSortOrder('desc')}
                             />
                             <SubmitButton
@@ -85,10 +84,10 @@ export default function Notas() {
                                     sortDocs().map((nota) => (
                                         <CCard
                                             style={{
-                                                maxWidth: '18rem', width: '100%', backgroundColor: `${((nota.color === 'red') ? '#FD5E53' :
-                                                    (nota.color === 'blue') ? '#38ccf5' :
-                                                        (nota.color === 'green') ? '#a3e645' :
-                                                            (nota.color === 'yellow') ? '#fae332' : null)}`
+                                                maxWidth: '18rem', width: '100%', backgroundColor: `${((nota.color === 'red') ? '#FBCAC6' :
+                                                    (nota.color === 'blue') ? '#BFEEEC' :
+                                                        (nota.color === 'green') ? '#C2FFC4' :
+                                                            (nota.color === 'yellow') ? '#F9F8C8' : null)}`
                                             }}
                                             key={nota.id}
                                         >

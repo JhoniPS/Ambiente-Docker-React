@@ -1,25 +1,36 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { MaterialReactTable } from 'material-react-table';
 import ModalDeleteUser from '../Modals/modal_delete_user/ModalDeleteUser';
 import { CFormSwitch } from '@coreui/react';
 import api from '../../services/api';
 
 const TableUser = ({ data, setData }) => {
-  // const [activeSwitchId, setActiveSwitchId] = useState(null);
-
-
-
-  // const handleSwitchChange = (id) => {
-  //   setActiveSwitchId((prevId) => (prevId === id ? null : id));
-  // };
 
   const setManager = async (id) => {
     try {
       await api.put(`users/set-manager/${id}`);
-      const updatedData = await api.get('users');
-      console.log('updatedData:', updatedData.data);
-      setData(updatedData.data);
 
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const verificationTask = async (userId, type_user) => {
+    try {
+      if (type_user === 'gerente') {
+        alert('xxxxxx')
+      } else {
+        await setManager(userId);
+      }
+
+      const updatedUser = data.map((item) => {
+        if (item.id === userId) {
+          return { ...item, type_user: type_user === 'gerente' ? null : 'gerente' };
+        }
+        return item;
+      });
+
+      setData(updatedUser);
     } catch (error) {
       console.log(error);
     }
@@ -30,7 +41,7 @@ const TableUser = ({ data, setData }) => {
       size="lg"
       checked={row.original.type_user === 'gerente'}
       onChange={() => {
-        setManager(row.original.id);
+        verificationTask(row.original.id, row.original.type_user)
       }}
     />
   );

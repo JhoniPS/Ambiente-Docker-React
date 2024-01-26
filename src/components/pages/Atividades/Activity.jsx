@@ -17,7 +17,6 @@ import {
 } from '@coreui/react';
 import CIcon from '@coreui/icons-react';
 
-import { AiFillEdit } from "react-icons/ai";
 import { AiTwotoneDelete } from "react-icons/ai";
 import { cilBook, cilCalendar, cilColorBorder } from '@coreui/icons';
 

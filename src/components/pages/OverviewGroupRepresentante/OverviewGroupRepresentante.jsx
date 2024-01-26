@@ -50,7 +50,7 @@ const OverviewGroupRepresentante = () => {
     <Fragment>
       <MenuAppBar />
       <div className="d-flex flex-column p-4 gap-2 h-100">
-        <h2>Overview</h2>
+        <h2>Visão Geral</h2>
         <CRow>
           <Card
             icon={cilDescription}

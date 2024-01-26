@@ -54,7 +54,7 @@ const AddDocuments = ({ data, setData }) => {
     return (
         <Fragment>
             <IconContext.Provider value={{ size: 22 }}>
-                <CButton onClick={handleOpen} className="mb-3" color="primary">
+                <CButton onClick={handleOpen} className="mb-3" color="null" style={{ background: '#404E7C', color: 'white' }}>
                     <IoMdAdd /> Adicionar Documento
                 </CButton>
             </IconContext.Provider>
