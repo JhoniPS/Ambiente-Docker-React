@@ -13,7 +13,7 @@ const Card = ({ icon, title, description, to, customClass }) => {
   return (
     <CCol xs={12} sm={6} lg={3} className='mb-3'>
       <CWidgetStatsF
-        color="primary"
+        color="secondary"
         onClick={handleClick}
         footer={
           <CLink
@@ -22,7 +22,7 @@ const Card = ({ icon, title, description, to, customClass }) => {
             target="_self"
           >
             Ver mais
-            <CIcon icon={cilArrowRight} className="float-end" width={16} />
+            <CIcon icon={cilArrowRight} className="float-end" width={16}/>
           </CLink>
         }
         icon={<CIcon icon={icon} height={24} />}

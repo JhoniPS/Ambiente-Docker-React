@@ -5,7 +5,8 @@ import Cookies from 'js-cookie'
 import { MaterialReactTable, } from 'material-react-table';
 import { useNavigate } from 'react-router-dom';
 import { IconContext } from 'react-icons';
-import { BsFolderFill } from "react-icons/bs";
+import { BsFillEyeFill } from "react-icons/bs";
+
 import { CButton } from '@coreui/react';
 
 import ModalDeleteGroup from '../Modals/modal_delete_group/ModalDeleteGroup';
@@ -83,7 +84,7 @@ const TableGroups = ({ rota, data, setData }) => {
                 <div className='d-flex align-items-center'>
                     <IconContext.Provider value={{ color: '#1e212b', size: 25 }}>
                         <CButton onClick={() => handleRowClick(row.original)} color='null'>
-                            <BsFolderFill />
+                            <BsFillEyeFill />
                         </CButton>
                     </IconContext.Provider>
 
