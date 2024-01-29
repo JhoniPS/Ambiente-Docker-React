@@ -20,7 +20,7 @@ import CIcon from '@coreui/icons-react';
 import { AiTwotoneDelete } from "react-icons/ai";
 import { cilBook, cilCalendar, cilColorBorder } from '@coreui/icons';
 
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import EditActivity from '../../Modals/modal_edit_activity/EditActivity';
 
@@ -34,7 +34,9 @@ function Activity() {
         end_date: '',
     });
     const [openCards, setOpenCards] = useState([]);
-
+    
+    const location = useLocation();
+    const backPage = location.pathname.replace("/atividades", '');
     const userRole = Cookies.get('userType');
 
     useEffect(() => {
@@ -140,7 +142,7 @@ function Activity() {
 
     return (
         <Fragment>
-            <MenuAppBar />
+            <MenuAppBar backStep={backPage} />
             <div className="d-flex flex-column p-4 gap-2 h-100">
                 {userRole === 'representante' && (
                     <>

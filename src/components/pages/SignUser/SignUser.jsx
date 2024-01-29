@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import React, { useState } from 'react';
 import api from '../../../services/api';
 
 import {
@@ -20,22 +19,9 @@ import { cilLockLocked, cilUser } from '@coreui/icons'
 import Message from '../../layout/Message/Message';
 
 const SignUser = () => {
-  const location = useLocation();
-  const navigate = useNavigate();
   const [message, setMessage] = useState('');
   const [messageType, setMessageType] = useState('');
   const [showMessage, setShowMessage] = useState(false);
-
-  // useEffect(() => {
-  //   if (location.state) {
-  //     setMessage(location.state.message);
-  //     setMessageType(location.state.messageType);
-  //     setShowMessage(location.state.showMessage);
-  //   }
-
-  //   window.history.replaceState(null, '');
-
-  // }, [location.state]);
 
   const [user, setUser] = useState({
     name: '',
@@ -62,7 +48,7 @@ const SignUser = () => {
         c_password: '',
       });
 
-      await api.post('/register', user).then(() => {  
+      await api.post('/register', user).then(() => {
         setShowMessage(true);
         setMessage('Criado com sucesso!');
         setMessageType('success');

@@ -6,6 +6,7 @@ import api from "../../../services/api";
 import Message from "../../layout/Message/Message";
 import LinkButton from "../../layout/linkbutton/LinkButton";
 import Card from "../../card/Card";
+import { IoMdAdd } from 'react-icons/io';
 
 import { Divider } from 'antd';
 
@@ -48,7 +49,7 @@ const OverviewGroupRepresentante = () => {
 
   return (
     <Fragment>
-      <MenuAppBar />
+      <MenuAppBar backStep="/representante" />
       <div className="d-flex flex-column p-4 gap-2 h-100">
         <h2>Visão Geral</h2>
         <CRow>
@@ -56,25 +57,25 @@ const OverviewGroupRepresentante = () => {
             icon={cilDescription}
             title="Notas"
             description="Gerencia Notas"
-            to={`/detalhes-de-grupos-representante/${id}/notas`}
+            to={`/representante-detalhes-de-grupos/${id}/notas`}
           />
           <Card
             icon={cilNotes}
             title="Documentos"
             description="Gerencia documentos"
-            to={`/detalhes-de-grupos-representante/${id}/documentos`}
+            to={`/representante-detalhes-de-grupos/${id}/documentos`}
           />
           <Card
             icon={cilTask}
             title="Atividades"
             description="Gerencia atividades"
-            to={`/detalhes-de-grupos-representante/${id}/atividades`}
+            to={`/representante-detalhes-de-grupos/${id}/atividades`}
           />
           <Card
             icon={cilList}
             title="Reuniões"
             description="Gerencia reuniões"
-            to={`/detalhes-de-grupos-representante/${id}/historico-de-reunioes`}
+            to={`/representante-detalhes-de-grupos/${id}/historico-de-reunioes`}
           />
         </CRow>
 
@@ -96,7 +97,7 @@ const OverviewGroupRepresentante = () => {
               <LinkButton
                 text="Adicionar Membro"
                 to="adicionar-membro"
-                customClass="primary"
+                icon={<IoMdAdd size={22} />}
               />
             </div>
             <TableMemberGroup members={members} setMembers={setMembers} />

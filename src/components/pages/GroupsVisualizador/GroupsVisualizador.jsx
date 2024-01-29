@@ -59,7 +59,7 @@ const GroupsVisualizador = () => {
                             <SubmitButton text="Grupos Externos" customClass="button_filtes_bar" onClick={() => setGroupType('externo')} />
                             <SubmitButton text="Mostrar Todos" customClass="button_filtes_bar" onClick={() => setGroupType('')} />
                         </Container>
-                        <TableGroups rota="detalhes-de-grupos-visualizador" data={sortUsers()} setData={setData} />
+                        <TableGroups rota="visualizador-detalhes-de-grupos" data={sortUsers()} setData={setData} />
                     </CCardBody>
                 </CCard>
 

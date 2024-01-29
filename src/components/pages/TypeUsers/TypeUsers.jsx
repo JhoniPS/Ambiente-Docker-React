@@ -18,7 +18,7 @@ const TypeUsers = () => {
                     <LinkButton
                         text="Adicionar novo tipo"
                         customClass="primary"
-                        to="/Novo-tipo"
+                        to="/administrador-novo-tipo"
                         icon={
                             <IconContext.Provider value={{ size: 25 }}>
                                 <IoMdAdd />

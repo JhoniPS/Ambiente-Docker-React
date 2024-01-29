@@ -83,7 +83,7 @@ function HistoricoReuniao() {
 
     return (
         <Fragment>
-            <MenuAppBar />
+            <MenuAppBar backStep={backPage} />
             <div className="d-flex flex-column p-4 gap-2 h-100">
                 <CCard>
                     <CCardBody>
@@ -102,27 +102,27 @@ function HistoricoReuniao() {
                         </section>
                         <CCallout className={'overflow-auto'} style={{ maxHeight: '500px' }}>
                             <Container customClass="start">
-                                    {meets.length !== 0 ? (
-                                        sortDocs().map((meet, index) => (
-                                            <CCard key={index} className="p-0" style={{ maxWidth: '24.0rem', width:'100%'}}>
-                                                <CCardHeader className="text-lg" style={{ maxWidth: '24.0rem', width:'100%' }} component="h5">{meet?.content}</CCardHeader>
-                                                <CCardBody className="d-flex flex-column p-2">
-                                                    <CCardSubtitle className="mb-2 text-medium-emphasis text-sm">{formatarData(meet?.date_meet)}</CCardSubtitle>
-                                                    <CCardText className={style.resumoReuniao + ' text-sm'}>{meet?.summary}</CCardText>
-                                                    <CCardLink onClick={() => handleDownload(meet?.id, meet?.ata)}>{meet?.ata}</CCardLink>
-                                                </CCardBody>
-                                                <CCardFooter className="d-flex justify-content-end p-0">
-                                                    <CButtonGroup>
-                                                        {<ModalDeleteMeet idMeet={meet?.id} data={meets} setData={setMeets} />}
-                                                        {<ModalEditMeet data={meets} setData={setMeets} />}
-                                                    </CButtonGroup>
-                                                </CCardFooter>
-                                            </CCard>
-                                        ))
-                                    ) : (
-                                        <p>Sem notas</p>
-                                    )}
-                                
+                                {meets.length !== 0 ? (
+                                    sortDocs().map((meet, index) => (
+                                        <CCard key={index} className="p-0" style={{ maxWidth: '24.0rem', width: '100%' }}>
+                                            <CCardHeader className="text-lg" style={{ maxWidth: '24.0rem', width: '100%' }} component="h5">{meet?.content}</CCardHeader>
+                                            <CCardBody className="d-flex flex-column p-2">
+                                                <CCardSubtitle className="mb-2 text-medium-emphasis text-sm">{formatarData(meet?.date_meet)}</CCardSubtitle>
+                                                <CCardText className={style.resumoReuniao + ' text-sm'}>{meet?.summary}</CCardText>
+                                                <CCardLink onClick={() => handleDownload(meet?.id, meet?.ata)}>{meet?.ata}</CCardLink>
+                                            </CCardBody>
+                                            <CCardFooter className="d-flex justify-content-end p-0">
+                                                <CButtonGroup>
+                                                    {<ModalDeleteMeet idMeet={meet?.id} data={meets} setData={setMeets} />}
+                                                    {<ModalEditMeet data={meets} setData={setMeets} />}
+                                                </CButtonGroup>
+                                            </CCardFooter>
+                                        </CCard>
+                                    ))
+                                ) : (
+                                    <p>Sem notas</p>
+                                )}
+
                             </Container>
                         </CCallout>
                     </CCardBody>

@@ -5,7 +5,7 @@ import GroupsRepresentante from '../GroupsRepresentante/GroupsRepresentante';
 const Home = () => {
     return (
         <Fragment>
-            <MenuAppBar />
+            <MenuAppBar backStep="/representante"/>
             <GroupsRepresentante />
         </Fragment>
     );

@@ -51,33 +51,33 @@ const routes = [
     /* Administrador */
     { path: '/profile', element: <PrivateRoute requiredUserType="administrador"><Profile /></PrivateRoute> },
     { path: '/administrador', element: <PrivateRoute requiredUserType="administrador"><Admin /></PrivateRoute> },
-    { path: '/Novo-tipo', element: <PrivateRoute requiredUserType="administrador"><SignTypeUser /></PrivateRoute> },
+    { path: '/administrador-novo-tipo', element: <PrivateRoute requiredUserType="administrador"><SignTypeUser /></PrivateRoute> },
 
     /* Gerente */
     { path: '/gerente', element: <PrivateRoute requiredUserType="gerente"><Manager /></PrivateRoute> },
-    { path: '/signGroups', element: <PrivateRoute requiredUserType="gerente"><SignGroups /></PrivateRoute> },
-    { path: '/detalhes-de-grupos-gerente/:id', element: <PrivateRoute requiredUserType="gerente"><OverviewGroupGerente /></PrivateRoute> },
-    { path: '/detalhes-de-grupos-gerente/:id/documentos', element: <PrivateRoute requiredUserType="gerente"><Documents /></PrivateRoute> },
-    { path: '/detalhes-de-grupos-gerente/:id/notas', element: <PrivateRoute requiredUserType="gerente"><Notas /></PrivateRoute> },
-    { path: '/detalhes-de-grupos-gerente/:id/historico-de-reunioes', element: <PrivateRoute requiredUserType="gerente"><HistoricoReuniao /></PrivateRoute> },
-    { path: '/detalhes-de-grupos-gerente/:id/atividades', element: <PrivateRoute requiredUserType="gerente"><Activity /></PrivateRoute> },
+    { path: '/gerente-cadastrar-grupo', element: <PrivateRoute requiredUserType="gerente"><SignGroups /></PrivateRoute> },
+    { path: '/gerente-detalhes-de-grupos/:id', element: <PrivateRoute requiredUserType="gerente"><OverviewGroupGerente /></PrivateRoute> },
+    { path: '/gerente-detalhes-de-grupos/:id/documentos', element: <PrivateRoute requiredUserType="gerente"><Documents /></PrivateRoute> },
+    { path: '/gerente-detalhes-de-grupos/:id/notas', element: <PrivateRoute requiredUserType="gerente"><Notas /></PrivateRoute> },
+    { path: '/gerente-detalhes-de-grupos/:id/historico-de-reunioes', element: <PrivateRoute requiredUserType="gerente"><HistoricoReuniao /></PrivateRoute> },
+    { path: '/gerente-detalhes-de-grupos/:id/atividades', element: <PrivateRoute requiredUserType="gerente"><Activity /></PrivateRoute> },
 
     /* Representante */
     { path: '/representante', element: <PrivateRoute requiredUserType="representante"><Representative /></PrivateRoute> },
-    { path: '/detalhes-de-grupos-representante/:id', element: <PrivateRoute requiredUserType="representante"><OverviewGroupRepresentante /></PrivateRoute> },
-    { path: '/detalhes-de-grupos-representante/:id/notas', element: <PrivateRoute requiredUserType="representante"><Notas /></PrivateRoute> },
-    { path: '/detalhes-de-grupos-representante/:id/documentos', element: <PrivateRoute requiredUserType="representante"><Documents /></PrivateRoute> },
-    { path: '/detalhes-de-grupos-representante/:id/adicionar-membro', element: <PrivateRoute requiredUserType="representante"><SignMember /></PrivateRoute> },
-    { path: '/detalhes-de-grupos-representante/:id/historico-de-reunioes', element: <PrivateRoute requiredUserType="representante"><HistoricoReuniao /></PrivateRoute> },
-    { path: '/detalhes-de-grupos-representante/:id/atividades', element: <PrivateRoute requiredUserType="representante"><Activity /></PrivateRoute> },
+    { path: '/representante-detalhes-de-grupos/:id', element: <PrivateRoute requiredUserType="representante"><OverviewGroupRepresentante /></PrivateRoute> },
+    { path: '/representante-detalhes-de-grupos/:id/notas', element: <PrivateRoute requiredUserType="representante"><Notas /></PrivateRoute> },
+    { path: '/representante-detalhes-de-grupos/:id/documentos', element: <PrivateRoute requiredUserType="representante"><Documents /></PrivateRoute> },
+    { path: '/representante-detalhes-de-grupos/:id/adicionar-membro', element: <PrivateRoute requiredUserType="representante"><SignMember /></PrivateRoute> },
+    { path: '/representante-detalhes-de-grupos/:id/historico-de-reunioes', element: <PrivateRoute requiredUserType="representante"><HistoricoReuniao /></PrivateRoute> },
+    { path: '/representante-detalhes-de-grupos/:id/atividades', element: <PrivateRoute requiredUserType="representante"><Activity /></PrivateRoute> },
 
     /* Visualizador */
     { path: '/visualizador', element: <PrivateRoute requiredUserType="visualizador"><GroupsVisualizador /></PrivateRoute> },
-    { path: '/detalhes-de-grupos-visualizador/:id', element: <PrivateRoute requiredUserType="visualizador"><OverviewGroupVisualizador /></PrivateRoute> },
-    { path: '/detalhes-de-grupos-visualizador/:id/notas', element: <PrivateRoute requiredUserType="visualizador"><Notas /></PrivateRoute> },
-    { path: '/detalhes-de-grupos-visualizador/:id/documentos', element: <PrivateRoute requiredUserType="visualizador"><Documents /></PrivateRoute> },
-    { path: '/detalhes-de-grupos-visualizador/:id/historico-de-reunioes', element: <PrivateRoute requiredUserType="visualizador"><HistoricoReuniao /></PrivateRoute> },
-    { path: '/detalhes-de-grupos-visualizador/:id/atividades', element: <PrivateRoute requiredUserType="visualizador"><Activity /></PrivateRoute> },
+    { path: '/visualizador-detalhes-de-grupos/:id', element: <PrivateRoute requiredUserType="visualizador"><OverviewGroupVisualizador /></PrivateRoute> },
+    { path: '/visualizador-detalhes-de-grupos/:id/notas', element: <PrivateRoute requiredUserType="visualizador"><Notas /></PrivateRoute> },
+    { path: '/visualizador-detalhes-de-grupos/:id/documentos', element: <PrivateRoute requiredUserType="visualizador"><Documents /></PrivateRoute> },
+    { path: '/visualizador-detalhes-de-grupos/:id/historico-de-reunioes', element: <PrivateRoute requiredUserType="visualizador"><HistoricoReuniao /></PrivateRoute> },
+    { path: '/visualizador-detalhes-de-grupos/:id/atividades', element: <PrivateRoute requiredUserType="visualizador"><Activity /></PrivateRoute> },
 ];
 
 const RoutesApp = () => {

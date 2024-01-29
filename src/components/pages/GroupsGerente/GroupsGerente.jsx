@@ -74,10 +74,10 @@ const GroupsGerente = () => {
                             <LinkButton
                                 text="Adicionar Grupo"
                                 customClass="primary"
-                                to="/signGroups"
+                                to="/gerente-cadastrar-grupo"
                                 icon={
                                     <IconContext.Provider value={{ size: '1rem' }}>
-                                        <IoMdAdd />
+                                        <IoMdAdd size={20} />
                                     </IconContext.Provider>
                                 }
                             />
@@ -91,7 +91,7 @@ const GroupsGerente = () => {
                             <SubmitButton text="Grupos Externos" customClass="button_filtes_bar" onClick={() => setGroupType('externo')} />
                             <SubmitButton text="Mostrar Todos" customClass="button_filtes_bar" onClick={() => setGroupType('')} />
                         </section>
-                        <TableGroups rota="detalhes-de-grupos-gerente" data={sortUsers()} setData={setData} />
+                        <TableGroups rota="gerente-detalhes-de-grupos" data={sortUsers()} setData={setData} />
                     </CCardBody>
                 </CCard>
                 {showMessage && <Message type={messageType} msg={message} setShowMessage={setShowMessage} />}

@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect, useState } from 'react'
-import {useNavigate, useLocation, useParams } from "react-router-dom";
+import { useNavigate, useLocation, useParams } from "react-router-dom";
 import api from '../../../services/api';
 import Cookies from 'js-cookie'
 
@@ -71,7 +71,7 @@ function Documents() {
 
     return (
         <Fragment>
-            <MenuAppBar />
+            <MenuAppBar backStep={backPage} />
             <div className="d-flex flex-column p-4 gap-2 h-100">
                 <CCard>
                     <CCardBody>

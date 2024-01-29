@@ -56,7 +56,7 @@ const AddNotas = ({ data, setData }) => {
     return (
         <Fragment>
             <IconContext.Provider value={{ size: 22 }}>
-                <CButton onClick={handleOpen} className="mb-3" color="null" style={{ background: '#404E7C', color: 'white' }}>
+                <CButton onClick={handleOpen} className="mb-3" color="null" style={{ background: '#545F66', color: 'white' }}>
                     <IoMdAdd /> Adicionar Notas
                 </CButton>
             </IconContext.Provider>

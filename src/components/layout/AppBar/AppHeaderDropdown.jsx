@@ -1,5 +1,5 @@
 import React from 'react'
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 import { AuthContext } from '../../contexts/Auth';
 
 
@@ -13,7 +13,7 @@ import {
   CDropdownToggle,
 } from '@coreui/react'
 
-import { cilLockLocked, cilSettings, cilUser } from '@coreui/icons'
+import { cilLockLocked, cilUser } from '@coreui/icons'
 import CIcon from '@coreui/icons-react'
 import avatar8 from '../../../img/BrasãoUfopa.png'
 

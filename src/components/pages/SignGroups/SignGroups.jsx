@@ -324,7 +324,7 @@ const SignGroups = () => {
 
   return (
     <Fragment>
-      <MenuAppBar />
+      <MenuAppBar backStep="/gerente"/>
       <div className="bg-light min-vh-100 d-flex flex-row align-items-center">
         <CContainer>
           <CRow className="justify-content-center">

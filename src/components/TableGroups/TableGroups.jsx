@@ -37,13 +37,13 @@ const TableGroups = ({ rota, data, setData }) => {
 
     const columns = [
         {
-            id: 'Tipo do grupo',
-            header: 'Tipo do grupo',
+            id: 'Tipo',
+            header: 'Tipo',
             accessorFn: (row) => row.type_group.type,
         },
         {
-            id: 'situacao',
-            header: 'Situação',
+            id: 'Status',
+            header: 'Status',
             accessorFn: (row) => row.status,
         },
         {

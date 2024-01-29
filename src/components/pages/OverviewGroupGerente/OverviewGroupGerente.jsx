@@ -41,7 +41,7 @@ const OverviewGroupGerente = () => {
 
   return (
     <Fragment>
-      <MenuAppBar />
+      <MenuAppBar backStep="/gerente"/>
       <div className="d-flex flex-column p-4 gap-2 h-100">
         <h2>Visão Geral</h2>
         <CRow>
@@ -49,25 +49,25 @@ const OverviewGroupGerente = () => {
             icon={cilDescription}
             title="Notas"
             description="Gerencia Notas"
-            to={`/detalhes-de-grupos-gerente/${id}/notas`}
+            to={`/gerente-detalhes-de-grupos/${id}/notas`}
           />
           <Card
             icon={cilNotes}
             title="Documentos"
             description="Gerencia Documentos"
-            to={`/detalhes-de-grupos-gerente/${id}/documentos`}
+            to={`/gerente-detalhes-de-grupos/${id}/documentos`}
           />
           <Card
             icon={cilTask}
             title="Atividades"
             description="Gerencia Atividades"
-            to={`/detalhes-de-grupos-gerente/${id}/atividades`}
+            to={`/gerente-detalhes-de-grupos/${id}/atividades`}
           />
           <Card
             icon={cilList}
             title="Reuniões"
             description="Gerencia Reuniões"
-            to={`/detalhes-de-grupos-gerente/${id}/historico-de-reunioes`}
+            to={`/gerente-detalhes-de-grupos/${id}/historico-de-reunioes`}
           />
         </CRow>
 

@@ -68,7 +68,7 @@ const AddMeet = ({ data, setData }) => {
     return (
         <>
             <IconContext.Provider value={{ size: 22 }}>
-                <CButton onClick={handleOpen} className="mb-3" color="null" style={{ background: '#404E7C', color: 'white' }}>
+                <CButton onClick={handleOpen} className="mb-3" color="null" style={{ background: '#545F66', color: 'white' }}>
                     <IoMdAdd /> Adicionar Reunião
                 </CButton>
             </IconContext.Provider>
@@ -117,7 +117,7 @@ const AddMeet = ({ data, setData }) => {
 
                                 <CFormInput
                                     type="file"
-                                    label="Upload de Arquivo"
+                                    label="Upload de Ata"
                                     name='file'
                                     onChange={(e) => setFormulario({ ...formulario, file: e.target.files[0] })}
                                 />

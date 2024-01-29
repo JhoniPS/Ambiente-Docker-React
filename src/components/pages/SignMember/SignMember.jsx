@@ -56,7 +56,7 @@ const SignMember = () => {
 
   return (
     <Fragment>
-      <MenuAppBar />
+      <MenuAppBar backStep={`/representante-detalhes-de-grupos-representante/${id}`} />
       <div className="bg-light min-vh-100 d-flex flex-row align-items-center">
         <CContainer>
           <CRow className="justify-content-center">
@@ -116,7 +116,7 @@ const SignMember = () => {
                           <LinkButton text="Voltar" customClass="secondary" to={`/detalhes-de-grupos-representante/${id}/`} />
                           <CButton color="primary" className="px-4" type="submit">Cadastrar</CButton>
                         </CCol>
-                      </CRow>x
+                      </CRow>
                     </CForm>
                   </CCardBody>
                 </CCard>

@@ -40,7 +40,7 @@ const OverviewGroupVisualizador = () => {
 
   return (
     <Fragment>
-      <MenuAppBar />
+      <MenuAppBar backStep="/visualizador"/>
       <div className="d-flex flex-column p-4 gap-2 h-100">
         <h2>Overview</h2>
         <CRow>
@@ -48,25 +48,25 @@ const OverviewGroupVisualizador = () => {
             icon={cilDescription}
             title="Notas"
             description="Gerencia Notas"
-            to={`/detalhes-de-grupos-visualizador/${id}/notas`}
+            to={`/visualizador-detalhes-de-grupos/${id}/notas`}
           />
           <Card
             icon={cilNotes}
             title="Documentos"
             description="Gerencia documentos"
-            to={`/detalhes-de-grupos-visualizador/${id}/documentos`}
+            to={`/visualizador-detalhes-de-grupos/${id}/documentos`}
           />
           <Card
             icon={cilTask}
             title="Atividades"
             description="Gerencia atividades"
-            to={`/detalhes-de-grupos-visualizador/${id}/atividades`}
+            to={`/visualizador-detalhes-de-grupos/${id}/atividades`}
           />
           <Card
             icon={cilList}
             title="Reuniões"
             description="Gerencia reuniões"
-            to={`/detalhes-de-grupos-visualizador/${id}/historico-de-reunioes`}
+            to={`/visualizador-detalhes-de-grupos/${id}/historico-de-reunioes`}
           />
         </CRow>
 

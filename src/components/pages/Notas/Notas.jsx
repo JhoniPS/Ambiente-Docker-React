@@ -1,6 +1,6 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import useAuthContext from '../../contexts/Auth';
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import api from '../../../services/api';
 
@@ -18,6 +18,9 @@ export default function Notas() {
     const [notas, setNotas] = useState([]);
     const [sortOrder, setSortOrder] = useState('desc');
 
+    const location = useLocation();
+    const backPage = location.pathname.replace('/notas', '');
+    
     const { message, messageType, showMessage, setShowMessage } = useAuthContext();
     const userRole = Cookies.get('userType');
 
@@ -54,7 +57,7 @@ export default function Notas() {
 
     return (
         <Fragment>
-            <MenuAppBar />
+            <MenuAppBar backStep={backPage} />
             <div className="d-flex flex-column p-4 gap-2 h-100">
                 <CCard>
                     <CCardBody>
@@ -69,7 +72,7 @@ export default function Notas() {
                         <h4>FILTROS RÁPIDOS</h4>
                         <section className="d-flex align-items-start gap-2 mb-5">
                             <SubmitButton
-                                text="Mais Recentes"     
+                                text="Mais Recentes"
                                 onClick={() => setSortOrder('desc')}
                             />
                             <SubmitButton

@@ -5,7 +5,7 @@ import GroupsGerente from '../GroupsGerente/GroupsGerente';
 const Home = () => {
     return (
         <Fragment>
-            <MenuAppBar />
+            <MenuAppBar backStep='/gerente' />
             <GroupsGerente />
         </Fragment>
     );

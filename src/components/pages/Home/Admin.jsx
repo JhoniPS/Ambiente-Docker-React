@@ -5,7 +5,7 @@ import Users from '../Users/Users';
 const Home = () => {
   return (
     <Fragment>
-      <MenuAppBar />
+      <MenuAppBar backStep='/administrador' />
       <Users />
     </Fragment>
   );
