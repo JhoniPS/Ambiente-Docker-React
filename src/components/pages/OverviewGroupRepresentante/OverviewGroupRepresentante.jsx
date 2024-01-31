@@ -8,8 +8,6 @@ import LinkButton from "../../layout/linkbutton/LinkButton";
 import Card from "../../card/Card";
 import { IoMdAdd } from 'react-icons/io';
 
-import { Divider } from 'antd';
-
 import TableGroupsDescription from "../../TableGroupsDescription/TableGroupsDescrition";
 import TableDetalhe from "../../TableDetalhes/TableDetalhe";
 import TableMemberGroup from "../../TableMemberGroup/TableMemberGroup";
