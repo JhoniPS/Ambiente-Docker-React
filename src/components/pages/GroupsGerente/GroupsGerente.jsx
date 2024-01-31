@@ -69,7 +69,7 @@ const GroupsGerente = () => {
             <div className="d-flex flex-column p-4 gap-4 h-100">
                 <CCard>
                     <CCardBody className="d-flex flex-column gap-3">
-                        <h2>Grupos</h2>
+                        <h3 className='text-h3 mb-2'>Grupos</h3>
                         <section className='mb-0'>
                             <LinkButton
                                 text="Adicionar Grupo"
@@ -84,7 +84,7 @@ const GroupsGerente = () => {
                         </section>
 
                         <h4 className='mb-0'>FILTROS RÁPIDOS</h4>
-                        <section className="d-flex align-items-start gap-2 mb-5">
+                        <section className="d-flex align-items-start gap-2 mb-3">
                             <SubmitButton text="Mais Recentes" style={{ opacity: '0.9' }} customClass="button_filtes_bar" onClick={() => setSortOrder('desc')} />
                             <SubmitButton text="Mais Antigos" customClass="button_filtes_bar" onClick={() => setSortOrder('asc')} />
                             <SubmitButton text="Grupos Internos" customClass="button_filtes_bar" onClick={() => setGroupType('interno')} />

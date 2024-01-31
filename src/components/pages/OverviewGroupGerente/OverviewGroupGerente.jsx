@@ -1,7 +1,6 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { cilDescription, cilNotes, cilTask, cilList } from '@coreui/icons';
-import { Divider } from 'antd';
 import { CCard, CCardBody, CRow } from "@coreui/react";
 import api from "../../../services/api";
 
@@ -41,8 +40,8 @@ const OverviewGroupGerente = () => {
 
   return (
     <Fragment>
-      <MenuAppBar backStep="/gerente"/>
-      <div className="d-flex flex-column p-4 gap-2 h-100">
+      <MenuAppBar backStep="/gerente" />
+      <div className="d-flex flex-column p-5 gap-5 h-100">
         <h2>Visão Geral</h2>
         <CRow>
           <Card
@@ -73,30 +72,26 @@ const OverviewGroupGerente = () => {
 
         <TableGroupsDescription description={data} />
 
-        <Divider />
-
-        <CCard>
+        <CCard style={{ boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)'}}>
           <CCardBody>
             <h2 style={{ paddingLeft: '15px' }}>Detalhes</h2>
             <TableDetalhe data={data} />
           </CCardBody>
         </CCard>
 
-        <CCard>
+        <CCard style={{ boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)'}}>
           <CCardBody>
             <h2>Membros</h2>
             <TableMemberGroup members={members} setMembres={setMembres} />
           </CCardBody>
         </CCard>
 
-        <div className="d-flex flex-nowrap justify-content-around gap-2">
-          <CCard className="d-flex flex-column gap-2 mb-3 w-100">
-            <CCardBody>
-              <h2>Observações</h2>
-              <Observations data={observacao} />
-            </CCardBody>
-          </CCard>
-        </div>
+        <CCard style={{ boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)'}}>
+          <CCardBody>
+            <h2>Observações</h2>
+            <Observations data={observacao} />
+          </CCardBody>
+        </CCard>
       </div>
     </Fragment >
   );

@@ -18,7 +18,7 @@ import CIcon from '@coreui/icons-react'
 
 const MenuAppBar = ({ backStep }) => {
   return (
-    <CHeader position="fixed">
+    <CHeader position="fixed" style={{background:'transparent', border:'0px'}}>
       <CContainer fluid>
         <CHeaderBrand className="mx-auto d-md-none" to="/">
           <CIcon icon={logo} height={48} alt="Logo" />

@@ -1,6 +1,7 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import Cookies from 'js-cookie'
+import { MRT_Localization_PT_BR } from 'material-react-table/locales/pt-BR';
 
 import ModalDeleteMember from '../Modals/modal_delete_member/ModalDeleteMember';
 import ModalEditMember from '../Modals/modal_edit_member/ModalEditMember';
@@ -72,12 +73,12 @@ const TableMemberGroup = ({ members, setMembers }) => {
       enableColumnOrdering
       enableGlobalFilter
       paginationDisplayMode='pages'
-
+      localization={MRT_Localization_PT_BR}
       muiTablePaperProps={{
         elevation: 0,
         sx: {
           borderRadius: '0',
-          border: '1px solid #e0e0e0',
+          border: 'none',
           boxShadow: 'none',
         },
       }}

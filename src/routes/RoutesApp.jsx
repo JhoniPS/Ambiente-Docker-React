@@ -44,12 +44,12 @@ const PrivateRoute = ({ children, requiredUserType }) => {
 
 const routes = [
     /* Acesso Geral */
-    { path: '/', element: <Login /> },
-    { path: '/Error404', element: <Error404 /> },
-    { path: '/signUser', element: <SignUser /> },
+    { path: '/', name: 'Login', element: <Login /> },
+    { path: '/Error404', name: 'Error404', element: <Error404 /> },
+    { path: '/signUser', name: 'SignUser', element: <SignUser /> },
 
     /* Administrador */
-    { path: '/profile', element: <PrivateRoute requiredUserType="administrador"><Profile /></PrivateRoute> },
+    { path: '/profile', name: 'Profile', element: <PrivateRoute requiredUserType="administrador"><Profile /></PrivateRoute> },
     { path: '/administrador', element: <PrivateRoute requiredUserType="administrador"><Admin /></PrivateRoute> },
     { path: '/administrador-novo-tipo', element: <PrivateRoute requiredUserType="administrador"><SignTypeUser /></PrivateRoute> },
 

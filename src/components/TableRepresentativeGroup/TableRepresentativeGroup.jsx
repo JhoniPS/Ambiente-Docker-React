@@ -1,6 +1,7 @@
 import React from 'react';
 import { MaterialReactTable } from 'material-react-table';
 import Cookies from 'js-cookie'
+import { MRT_Localization_PT_BR } from 'material-react-table/locales/pt-BR';
 
 import ModalDeleteRepresentiveGroup from '../Modals/modal_delete_representive_group/ModalDeleteRepresentiveGroup';
 import ModalEditRepresentativeGroup from '../Modals/modal_edit_representante_group/ModalEditRepresentativeGroup';
@@ -46,7 +47,7 @@ const TableRepresentativeGroup = ({ data, setData }) => {
       enableColumnOrdering
       enableGlobalFilter
       paginationDisplayMode='pages'
-
+      localization={MRT_Localization_PT_BR}
       muiTablePaperProps={{
         elevation: 0,
         sx: {

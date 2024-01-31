@@ -11,7 +11,7 @@ const TableGroupsDescription = ({ description }) => {
     return (
         <CRow>
             <CCol xs="12" sm="6" lg="4">
-                <CCard>
+                <CCard style={{ boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)'}}>
                     <CCardHeader component='h3'>Criado por</CCardHeader>
                     <CCardBody>
                         {description.created_by?.name}
@@ -19,7 +19,7 @@ const TableGroupsDescription = ({ description }) => {
                 </CCard>
             </CCol>
             <CCol xs="12" sm="6" lg="4">
-                <CCard>
+                <CCard style={{ boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)'}}>
                     <CCardHeader component='h3'>Representante</CCardHeader>
                     <CCardBody>
                         {description.representative?.email}
@@ -27,7 +27,7 @@ const TableGroupsDescription = ({ description }) => {
                 </CCard>
             </CCol>
             <CCol xs="12" sm="6" lg="4">
-                <CCard>
+                <CCard style={{ boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)'}}>
                     <CCardHeader component='h3'>Membros do grupo</CCardHeader>
                     <CCardBody>
                         {getMembersCount(description.members)}

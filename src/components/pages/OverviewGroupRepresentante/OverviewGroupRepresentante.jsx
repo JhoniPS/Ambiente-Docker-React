@@ -50,7 +50,7 @@ const OverviewGroupRepresentante = () => {
   return (
     <Fragment>
       <MenuAppBar backStep="/representante" />
-      <div className="d-flex flex-column p-4 gap-2 h-100">
+      <div className="d-flex flex-column p-5 gap-5 h-100">
         <h2>Visão Geral</h2>
         <CRow>
           <Card
@@ -81,16 +81,14 @@ const OverviewGroupRepresentante = () => {
 
         <TableGroupsDescription description={data} />
 
-        <Divider />
-
-        <CCard>
+        <CCard style={{ boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
           <CCardBody>
             <h2 style={{ paddingLeft: '15px' }}>Detalhes</h2>
             <TableDetalhe data={data} />
           </CCardBody>
         </CCard>
 
-        <CCard>
+        <CCard style={{ boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
           <CCardBody>
             <div className="d-flex justify-content-between align-items-center w-100 h-auto">
               <h2>Membros</h2>
@@ -105,14 +103,12 @@ const OverviewGroupRepresentante = () => {
         </CCard>
         {showMessage && <Message type={messageType} msg={message} setShowMessage={setShowMessage} />}
 
-        <div className="d-flex flex-nowrap justify-content-around gap-2">
-          <CCard className="d-flex flex-column gap-2 mb-3 w-100">
-            <CCardBody>
-              <h2>Observações</h2>
-              <Observations data={observacao} />
-            </CCardBody>
-          </CCard>
-        </div>
+        <CCard style={{ boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
+          <CCardBody>
+            <h2>Observações</h2>
+            <Observations data={observacao} />
+          </CCardBody>
+        </CCard>
       </div>
     </Fragment>
   );

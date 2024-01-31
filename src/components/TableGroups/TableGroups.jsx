@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import api from '../../services/api';
 import Cookies from 'js-cookie'
+import { MRT_Localization_PT_BR } from 'material-react-table/locales/pt-BR';
 
 import { MaterialReactTable, } from 'material-react-table';
 import { useNavigate } from 'react-router-dom';
@@ -108,12 +109,12 @@ const TableGroups = ({ rota, data, setData }) => {
             enableColumnOrdering
             enableGlobalFilter
             paginationDisplayMode='pages'
-
+            localization={MRT_Localization_PT_BR}
             muiTablePaperProps={{
                 elevation: 0,
                 sx: {
                     borderRadius: '0',
-                    border: '1px solid #e0e0e0',
+                    border: 'none',
                     boxShadow: 'none',
                 },
             }}
