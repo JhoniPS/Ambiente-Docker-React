@@ -113,8 +113,8 @@ const SignMember = () => {
                       </div>
                       <CRow >
                         <CCol xs={12} className="d-flex mt-4 justify-content-center gap-4">
-                          <LinkButton text="Voltar" customClass="secondary" to={`/detalhes-de-grupos-representante/${id}/`} />
-                          <CButton color="primary" className="px-4" type="submit">Cadastrar</CButton>
+                          <LinkButton text="Voltar" customClass="#6C757D" to={`/representante-detalhes-de-grupos/${id}/`} />
+                          <CButton style={{ background: '#548CA8', color: 'white', paddingInline:'1em' }} color="null" type="submit">Cadastrar</CButton>
                         </CCol>
                       </CRow>
                     </CForm>

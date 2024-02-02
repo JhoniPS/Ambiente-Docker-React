@@ -88,7 +88,7 @@ const AddDocuments = ({ data, setData }) => {
                     <CButton color="secondary" onClick={handleClose}>
                         Fechar
                     </CButton>
-                    <CButton color="primary" onClick={handleUpload} >
+                    <CButton style={{ background: '#548CA8', color: 'white' }} color="null" onClick={handleUpload} >
                         Salvar
                     </CButton>
                 </CModalFooter>

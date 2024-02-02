@@ -134,7 +134,7 @@ const AddNotas = ({ data, setData }) => {
                     <CButton color="secondary" onClick={handleClose}>
                         Close
                     </CButton>
-                    <CButton color="primary" onClick={submit}>
+                    <CButton style={{ background: '#548CA8', color: 'white' }} onClick={submit}>
                         Salvar
                     </CButton>
                 </CModalFooter>

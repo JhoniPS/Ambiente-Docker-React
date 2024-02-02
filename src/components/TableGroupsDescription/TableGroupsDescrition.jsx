@@ -11,25 +11,25 @@ const TableGroupsDescription = ({ description }) => {
     return (
         <CRow>
             <CCol xs="12" sm="6" lg="4">
-                <CCard style={{ boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)'}}>
+                <CCard style={{ boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
                     <CCardHeader component='h3'>Criado por</CCardHeader>
-                    <CCardBody>
+                    <CCardBody style={{ color: '#677970' }}>
                         {description.created_by?.name}
                     </CCardBody>
                 </CCard>
             </CCol>
             <CCol xs="12" sm="6" lg="4">
-                <CCard style={{ boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)'}}>
+                <CCard style={{ boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
                     <CCardHeader component='h3'>Representante</CCardHeader>
-                    <CCardBody>
+                    <CCardBody style={{ color: '#677970' }}>
                         {description.representative?.email}
                     </CCardBody>
                 </CCard>
             </CCol>
             <CCol xs="12" sm="6" lg="4">
-                <CCard style={{ boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)'}}>
+                <CCard style={{ boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
                     <CCardHeader component='h3'>Membros do grupo</CCardHeader>
-                    <CCardBody>
+                    <CCardBody style={{ color: '#677970' }}>
                         {getMembersCount(description.members)}
                     </CCardBody>
                 </CCard>

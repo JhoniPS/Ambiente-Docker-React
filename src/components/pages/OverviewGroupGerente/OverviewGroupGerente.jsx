@@ -41,7 +41,7 @@ const OverviewGroupGerente = () => {
   return (
     <Fragment>
       <MenuAppBar backStep="/gerente" />
-      <div className="d-flex flex-column p-5 gap-5 h-100">
+      <div className="d-flex flex-column p-5 gap-3 h-100">
         <h2>Visão Geral</h2>
         <CRow>
           <Card

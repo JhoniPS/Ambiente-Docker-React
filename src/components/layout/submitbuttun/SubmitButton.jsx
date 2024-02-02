@@ -6,7 +6,7 @@ const SubmitButton = ({ text, onClick, value, onChange, icon }) => {
                 className="btn"
                 onClick={onClick}
                 value={value}
-                style={{ background: '#FEBE98', color:'#522a28'}}
+                style={{ background: '#FEAD34', color:'#080705'}}
                 onChange={onChange}
             >
                 {icon}{text}

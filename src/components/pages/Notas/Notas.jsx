@@ -70,7 +70,7 @@ export default function Notas() {
                         }
 
                         <h4>FILTROS RÁPIDOS</h4>
-                        <section className="d-flex align-items-start gap-2 mb-5">
+                        <section className="d-flex align-items-start gap-2 mb-3">
                             <SubmitButton
                                 text="Mais Recentes"
                                 onClick={() => setSortOrder('desc')}
@@ -81,7 +81,7 @@ export default function Notas() {
                                 onClick={() => setSortOrder('asc')}
                             />
                         </section>
-                        <CCallout>
+                        <CCallout color='success' className='mb-0'>
                             <Container customClass="start">
                                 {notas.length !== 0 ? (
                                     sortDocs().map((nota) => (

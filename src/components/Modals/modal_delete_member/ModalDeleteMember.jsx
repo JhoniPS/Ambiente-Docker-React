@@ -52,7 +52,7 @@ export default function ModalDeleteMember({ memberId, groupId, data, setData }) 
                     <CButton color="secondary" onClick={handleClose}>
                         Fechar  
                     </CButton>
-                    <CButton color="primary" onClick={handlDelete}>Excluir</CButton>
+                    <CButton style={{ background: '#548CA8', color: 'white' }} color="null" onClick={handlDelete}>Excluir</CButton>
                 </CModalFooter>
             </CModal>
         </>

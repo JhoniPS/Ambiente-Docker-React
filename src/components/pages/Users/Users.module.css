@@ -1,22 +1,3 @@
-.users {
-  display: flex;
-  flex-direction: column;
-  padding: 20px 100px 80px 100px;
-  gap: 10px;
-  height: 100%;
-}
-
-.section_search {
-  display: flex;
-  gap: 20px;
-  align-items: center;
-}
-
-.button_filters {
-  display:flex;
-  align-items: flex-start;
-  gap: 16px;
-}
 
 h4 {
   color: rgba(33, 33, 33, 0.50);

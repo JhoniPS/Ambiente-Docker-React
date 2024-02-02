@@ -1,5 +1,6 @@
 import React, { Fragment, useEffect, useState } from 'react'
-import { useNavigate, useLocation, useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
+import useAuthContext from '../../contexts/Auth';
 import api from '../../../services/api';
 import Cookies from 'js-cookie'
 
@@ -14,12 +15,9 @@ import { CCard, CCardBody } from '@coreui/react';
 function Documents() {
     const { id } = useParams();
     const [data, setData] = useState([]);
-    const [message, setMessage] = useState('');
-    const [messageType, setMessageType] = useState('');
-    const [showMessage, setShowMessage] = useState(false);
     const [sortOrder, setSortOrder] = useState("desc");
 
-    const navigate = useNavigate();
+    const { message, messageType, showMessage, setShowMessage } = useAuthContext();
     const location = useLocation();
     const backPage = location.pathname.replace("/documentos", '');
     const userRole = Cookies.get('userType');
@@ -33,29 +31,6 @@ function Documents() {
             }
         });
     };
-
-    useEffect(() => {
-        const handlePopstate = () => {
-            // Use o hook navigate para redirecionar para a rota desejada
-            navigate(`/detalhes-de-grupos-gerente/${id}/`);
-        };
-
-        // Adicione um event listener ao evento popstate
-        window.addEventListener('popstate', handlePopstate);
-
-        return () => {
-            // Remova o event listener ao desmontar o componente
-            window.removeEventListener('popstate', handlePopstate);
-        };
-    }, [id, navigate]);
-
-    useEffect(() => {
-        if (location.state) {
-            setMessage(location.state.message);
-            setMessageType(location.state.messageType);
-            setShowMessage(location.state.showMessage);
-        };
-    }, [location.state]);
 
     useEffect(() => {
         const fetchData = async () => {

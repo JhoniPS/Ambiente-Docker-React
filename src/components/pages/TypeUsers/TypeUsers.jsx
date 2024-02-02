@@ -12,8 +12,8 @@ const TypeUsers = () => {
 
     return (
         <Fragment>
-            <div className="d-flex flex-column gap-4">
-                <h2>Tipos de Usuários</h2>
+            <div className="d-flex flex-column gap-3">
+                <h2 className="mb-0">Tipos de Usuários</h2>
                 <section className="mb-0">
                     <LinkButton
                         text="Adicionar novo tipo"

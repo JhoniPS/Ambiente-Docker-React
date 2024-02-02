@@ -69,11 +69,10 @@ const GroupsGerente = () => {
             <div className="d-flex flex-column p-4 gap-4 h-100">
                 <CCard>
                     <CCardBody className="d-flex flex-column gap-3">
-                        <h3 className='text-h3 mb-2'>Grupos</h3>
+                        <h3 className='text-h3 mb-0'>Grupos</h3>
                         <section className='mb-0'>
                             <LinkButton
                                 text="Adicionar Grupo"
-                                customClass="primary"
                                 to="/gerente-cadastrar-grupo"
                                 icon={
                                     <IconContext.Provider value={{ size: '1rem' }}>

@@ -40,8 +40,8 @@ const OverviewGroupVisualizador = () => {
 
   return (
     <Fragment>
-      <MenuAppBar backStep="/visualizador"/>
-      <div className="d-flex flex-column p-4 gap-2 h-100">
+      <MenuAppBar backStep="/visualizador" />
+      <div className="d-flex flex-column p-5 gap-3 h-100">
         <h2>Overview</h2>
         <CRow>
           <Card
@@ -74,14 +74,14 @@ const OverviewGroupVisualizador = () => {
 
         <Divider />
 
-        <CCard>
+        <CCard style={{ boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
           <CCardBody>
             <h2 style={{ paddingLeft: '15px' }}>Detalhes</h2>
             <TableDetalhe data={data} />
           </CCardBody>
         </CCard>
 
-        <CCard>
+        <CCard style={{ boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
           <CCardBody>
             <div className="d-flex justify-content-between align-items-center w-100 h-auto">
               <h2>Membros</h2>
@@ -90,14 +90,12 @@ const OverviewGroupVisualizador = () => {
           </CCardBody>
         </CCard>
 
-        <div className="d-flex flex-nowrap justify-content-around gap-2">
-          <CCard className="d-flex flex-column gap-2 mb-3 w-100">
-            <CCardBody>
-              <h2>Observações</h2>
-              <Observations data={observacao} />
-            </CCardBody>
-          </CCard>
-        </div>
+        <CCard style={{ boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
+          <CCardBody>
+            <h2>Observações</h2>
+            <Observations data={observacao} />
+          </CCardBody>
+        </CCard>
       </div>
     </Fragment >
   );

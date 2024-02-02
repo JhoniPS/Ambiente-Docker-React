@@ -14,8 +14,6 @@ function ModalDeleteDocument({ docId, data, setData }) {
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
-    const navigate = useNavigate();
-
     const { setMessageType, setShowMessage, setMessage } = useAuthContext();
 
     const { id } = useParams();
@@ -25,13 +23,11 @@ function ModalDeleteDocument({ docId, data, setData }) {
             await api.delete(`/group/${id}/documents/${docId}`).then(() => {
                 const updatedData = data.filter(item => item.id !== docId);
                 setData(updatedData);
-                navigate(`/detalhes-de-grupos-representante/${id}/documentos`);
                 setMessage('Deletado com sucesso!');
                 setMessageType('success');
                 setShowMessage(true);
             })
         } catch (error) {
-            navigate(`/detalhes-de-grupos-representante/${id}/documentos`);
             setMessage('Ops! algo deu errado');
             setMessageType('error');
             setShowMessage(true);
@@ -63,7 +59,7 @@ function ModalDeleteDocument({ docId, data, setData }) {
                     <CButton color="secondary" onClick={handleClose}>
                         Close
                     </CButton>
-                    <CButton color="primary" onClick={handlDelete}>Excluir</CButton>
+                    <CButton style={{ background: '#548CA8', color: 'white' }} color="null" onClick={handlDelete}>Excluir</CButton>
                 </CModalFooter>
             </CModal>
         </>

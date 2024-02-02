@@ -1,5 +1,6 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
+import useAuthContext from '../../contexts/Auth';
 import api from '../../../services/api';
 import Cookies from 'js-cookie';
 
@@ -22,6 +23,7 @@ import AddMeet from '../../Modals/modal_sign_meet/AddMeet';
 import MenuAppBar from '../../layout/AppBar/MenuAppBar';
 import ModalDeleteMeet from '../../Modals/modal_delete_meet/ModalDeleteMeet';
 import ModalEditMeet from '../../Modals/modal_edit_meet/ModalEditMeet';
+import Message from '../../layout/Message/Message';
 
 function HistoricoReuniao() {
     const { id } = useParams();
@@ -31,6 +33,8 @@ function HistoricoReuniao() {
     const location = useLocation();
     const backPage = location.pathname.replace('/historico-de-reunioes', '');
     const userRole = Cookies.get('userType');
+
+    const { message, messageType, showMessage, setShowMessage } = useAuthContext();
 
     const sortDocs = () => {
         return [...meets].sort((a, b) => {
@@ -96,16 +100,18 @@ function HistoricoReuniao() {
                         )}
 
                         <h4>FILTROS RÁPIDOS</h4>
+
                         <section className="d-flex align-items-start gap-2 mb-4">
                             <SubmitButton text="Mais Recentes" customClass="button_filters_bar" onClick={() => setSortOrder('desc')} />
                             <SubmitButton text="Mais Antigos" customClass="button_filters_bar" onClick={() => setSortOrder('asc')} />
                         </section>
-                        <CCallout className={'overflow-auto'} style={{ maxHeight: '500px' }}>
+
+                        <CCallout color='success' className="overflow-auto mb-0" style={{ maxHeight: '500px' }}>
                             <Container customClass="start">
                                 {meets.length !== 0 ? (
                                     sortDocs().map((meet, index) => (
-                                        <CCard key={index} className="p-0" style={{ maxWidth: '24.0rem', width: '100%' }}>
-                                            <CCardHeader className="text-lg" style={{ maxWidth: '24.0rem', width: '100%' }} component="h5">{meet?.content}</CCardHeader>
+                                        <CCard key={index} className="p-0" style={{ maxWidth: '37.5em', width: '100%', height: '100%', maxHeight: '25em' }}>
+                                            <CCardHeader className="text-lg" style={{ maxWidth: '37.5em', width: '100%' }} component="h5">{meet?.content}</CCardHeader>
                                             <CCardBody className="d-flex flex-column p-2">
                                                 <CCardSubtitle className="mb-2 text-medium-emphasis text-sm">{formatarData(meet?.date_meet)}</CCardSubtitle>
                                                 <CCardText className={style.resumoReuniao + ' text-sm'}>{meet?.summary}</CCardText>
@@ -114,7 +120,7 @@ function HistoricoReuniao() {
                                             <CCardFooter className="d-flex justify-content-end p-0">
                                                 <CButtonGroup>
                                                     {<ModalDeleteMeet idMeet={meet?.id} data={meets} setData={setMeets} />}
-                                                    {<ModalEditMeet data={meets} setData={setMeets} />}
+                                                    {<ModalEditMeet idMeet={meet?.id} data={meets} setData={setMeets} />}
                                                 </CButtonGroup>
                                             </CCardFooter>
                                         </CCard>
@@ -122,11 +128,11 @@ function HistoricoReuniao() {
                                 ) : (
                                     <p>Sem notas</p>
                                 )}
-
                             </Container>
                         </CCallout>
                     </CCardBody>
                 </CCard>
+                {showMessage && <Message type={messageType} msg={message} setShowMessage={setShowMessage} />}
             </div>
         </Fragment>
     );

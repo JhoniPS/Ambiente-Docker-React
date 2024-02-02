@@ -24,10 +24,10 @@ const TableDetalhe = ({ data }) => {
             </CTableHead>
             <CTableBody>
                 <CTableRow>
-                    <CTableDataCell style={{ padding: '15px' }}>{data.type_group?.type}</CTableDataCell>
-                    <CTableDataCell style={{ padding: '15px' }}>{data.acronym}</CTableDataCell>
-                    <CTableDataCell style={{ padding: '15px' }}>{data.organ}</CTableDataCell>
-                    <CTableDataCell style={{ padding: '15px' }}>{data.council}</CTableDataCell>
+                    <CTableDataCell style={{ padding: '15px', color: '#677970' }}>{data.type_group?.type}</CTableDataCell>
+                    <CTableDataCell style={{ padding: '15px', color: '#677970' }}>{data.acronym}</CTableDataCell>
+                    <CTableDataCell style={{ padding: '15px', color: '#677970' }}>{data.organ}</CTableDataCell>
+                    <CTableDataCell style={{ padding: '15px', color: '#677970' }}>{data.council}</CTableDataCell>
                 </CTableRow>
             </CTableBody>
 
@@ -41,10 +41,10 @@ const TableDetalhe = ({ data }) => {
             </CTableHead>
             <CTableBody>
                 <CTableRow>
-                    <CTableDataCell style={{ padding: '15px' }}>{data.entity}</CTableDataCell>
-                    <CTableDataCell style={{ padding: '15px' }}>{data.unit}</CTableDataCell>
-                    <CTableDataCell style={{ padding: '15px' }}>{data.team}</CTableDataCell>
-                    <CTableDataCell style={{ padding: '15px' }}>{data.internal_concierge}</CTableDataCell>
+                    <CTableDataCell style={{ padding: '15px', color: '#677970' }}>{data.entity}</CTableDataCell>
+                    <CTableDataCell style={{ padding: '15px', color: '#677970' }}>{data.unit}</CTableDataCell>
+                    <CTableDataCell style={{ padding: '15px', color: '#677970' }}>{data.team}</CTableDataCell>
+                    <CTableDataCell style={{ padding: '15px', color: '#677970' }}>{data.internal_concierge}</CTableDataCell>
                 </CTableRow>
             </CTableBody>
 
@@ -58,10 +58,10 @@ const TableDetalhe = ({ data }) => {
             </CTableHead>
             <CTableBody>
                 <CTableRow>
-                    <CTableDataCell style={{ padding: '15px' }}>{data.office_requested}</CTableDataCell>
-                    <CTableDataCell style={{ padding: '15px' }}>{data.office_indicated}</CTableDataCell>
-                    <CTableDataCell style={{ padding: '15px' }}>{data.email}</CTableDataCell>
-                    <CTableDataCell style={{ padding: '15px' }}>{formatarData(data.created_at)}</CTableDataCell>
+                    <CTableDataCell style={{ padding: '15px', color: '#677970' }}>{data.office_requested}</CTableDataCell>
+                    <CTableDataCell style={{ padding: '15px', color: '#677970' }}>{data.office_indicated}</CTableDataCell>
+                    <CTableDataCell style={{ padding: '15px', color: '#677970' }}>{data.email}</CTableDataCell>
+                    <CTableDataCell style={{ padding: '15px', color: '#677970' }}>{formatarData(data.created_at)}</CTableDataCell>
                 </CTableRow>
             </CTableBody>
         </CTable>

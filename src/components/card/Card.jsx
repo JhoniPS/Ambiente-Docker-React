@@ -13,7 +13,7 @@ const Card = ({ icon, title, description, to, customClass }) => {
   return (
     <CCol xs={12} sm={6} lg={3} className='mb-3'>
       <CWidgetStatsF
-        color="secondary"
+        color="primary"
         style={{ boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', color:'#FEBE98' }}
         onClick={handleClick}
         footer={

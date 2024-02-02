@@ -59,12 +59,7 @@ const SignTypeUser = () => {
                       onChange={(e) => setName(e.target.value)}
                     />
                     <div className="d-flex mt-5 justify-content-between">
-                      <LinkButton
-                        text="Voltar"
-                        to="/administrador"
-                        customClass="secondary"
-                      />
-                      <CButton color="primary" type='submit'>Criar Conta</CButton>
+                      <CButton color="success" type='submit'>Criar Conta</CButton>
                     </div>
                   </CForm>
                 </CCardBody>

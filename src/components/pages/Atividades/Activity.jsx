@@ -1,5 +1,6 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import MenuAppBar from '../../layout/AppBar/MenuAppBar';
+import useAuthContext from '../../contexts/Auth';
 import api from '../../../services/api';
 import {
     CButton,
@@ -23,6 +24,7 @@ import { cilBook, cilCalendar, cilColorBorder } from '@coreui/icons';
 import { useLocation, useParams } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import EditActivity from '../../Modals/modal_edit_activity/EditActivity';
+import Message from '../../layout/Message/Message';
 
 function Activity() {
     const { id } = useParams();
@@ -34,6 +36,8 @@ function Activity() {
         end_date: '',
     });
     const [openCards, setOpenCards] = useState([]);
+
+    const { message, messageType, showMessage, setShowMessage } = useAuthContext();
     
     const location = useLocation();
     const backPage = location.pathname.replace("/atividades", '');
@@ -195,9 +199,6 @@ function Activity() {
                                             value={activity.end_date}
                                             onChange={handleEdit}
                                         />
-                                        <CInputGroupText>
-                                            <CIcon icon={cilCalendar} />
-                                        </CInputGroupText>
                                     </CInputGroup>
 
                                     <CButton className='w-100' type='submit'>
@@ -246,6 +247,7 @@ function Activity() {
                         </CContainer>
                     </CCardBody>
                 </CCard>
+                {showMessage && <Message type={messageType} msg={message} setShowMessage={setShowMessage} />}
             </div>
         </Fragment>
     );

@@ -343,13 +343,13 @@ const SignGroups = () => {
                       )}
 
                       {current < steps.length - 1 && (
-                        <CButton color="primary" onClick={() => next()} >
+                        <CButton style={{ background: '#548CA8', color: 'white' }} color="null" onClick={() => next()} >
                           Próximo
                         </CButton>
                       )}
 
                       {current === steps.length - 1 && (
-                        <CButton color='primary' type='submit'>
+                        <CButton color="success" type='submit'>
                           Feito
                         </CButton>
                       )}

@@ -18,8 +18,9 @@ import {
     CModalTitle,
     CRow
 } from '@coreui/react';
+import { useEffect } from 'react';
 
-const ModalEditMeet = ({ data, setData }) => {
+const ModalEditMeet = ({ idMeet, data, setData }) => {
     const [open, setOpen] = useState(false);
     const [formulario, setFormulario] = useState({
         content: '',
@@ -32,6 +33,27 @@ const ModalEditMeet = ({ data, setData }) => {
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
     const { id } = useParams();
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await api.get(`group/${id}/meeting-history/${idMeet}`);
+                const activityData = response.data;
+
+                setFormulario({
+                    content: activityData.content || '',
+                    summary: activityData.summary || '',
+                    date_meet: activityData.date_meet || '',
+                })
+            } catch (error) {
+                console.error(error);
+            }
+        };
+
+        if (open) {
+            fetchData();
+        }
+    }, [idMeet,id, open]);
 
     const handleUpload = async () => {
         try {
@@ -51,7 +73,7 @@ const ModalEditMeet = ({ data, setData }) => {
                 formData.append('content', formulario.content);
                 formData.append('summary', formulario.summary);
 
-                const response = await api.post(`/group/${id}/meeting-history`, formData, {
+                const response = await api.put(`/group/${id}/meeting-history/${idMeet}`, formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data',
                     },

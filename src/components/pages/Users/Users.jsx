@@ -41,12 +41,13 @@ const Users = () => {
     fetchData();
   }, []);
 
+
   return (
     <Fragment>
       <div className="d-flex flex-column p-4 gap-2 h-100">
         <CCard className="md-2">
           <CCardBody className="d-flex flex-column gap-3">
-            <h2>Usuários</h2>
+            <h2 className="mb-0">Usuários</h2>
             <h4 className={style}>FILTROS RÁPIDOS</h4>
             <section className="d-grid gap-2 d-md-flex justify-content-md-start mb-0">
               <SubmitButton

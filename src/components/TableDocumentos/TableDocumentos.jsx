@@ -43,13 +43,13 @@ const TableDocumentos = ({ data, setData }) => {
       id: 'Nome',
       header: 'Nome',
       accessorKey: 'name',
-      size:200,
+      size: 200,
     },
     {
       id: 'Arquivo',
       header: 'Arquivo',
       accessorKey: 'file',
-      size:250,
+      size: 250,
       Cell: ({ row }) => (
         <div
           style={{ cursor: 'pointer', textDecoration: 'underline', color: '#2C74AC' }}
@@ -63,7 +63,7 @@ const TableDocumentos = ({ data, setData }) => {
       id: 'Tamanho',
       header: 'Tamanho',
       accessorKey: 'file_size',
-      size:100,
+      size: 100,
       Cell: ({ row }) => (
         <>{row.original.file_size}MB</>
       ),
@@ -72,7 +72,7 @@ const TableDocumentos = ({ data, setData }) => {
       id: 'Criado em',
       header: 'Criado em',
       accessorKey: 'created_at',
-      size:100,
+      size: 100,
       Cell: ({ row }) => (
         <>{formatarData(row.original.created_at)}</>
       ),
@@ -86,7 +86,7 @@ const TableDocumentos = ({ data, setData }) => {
       header: null,
       accessorKey: 'id',
       columnDefType: 'display',
-      size:50,
+      size: 50,
       Cell: ({ row }) => (
         <div className="d-flex justify-content-evenly">
           <ModalDeleteDocument docId={row.original.id} data={data} setData={setData} />
@@ -107,11 +107,7 @@ const TableDocumentos = ({ data, setData }) => {
 
       muiTablePaperProps={{
         elevation: 0,
-        sx: {
-          borderRadius: '0',
-          border: 'none',
-          boxShadow: 'none',
-        },
+        sx: { borderRadius: '0', border: '1px solid #e0e0e0', boxShadow: 'none' },
       }}
 
       muiTableProps={{

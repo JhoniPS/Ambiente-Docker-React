@@ -273,7 +273,7 @@ export default function ModalEditGroup({ id, data, setData }) {
                     <CButton color="secondary" onClick={handleClose}>
                         Fechar
                     </CButton>
-                    <CButton color="primary" onClick={handleSubmit}>Editar</CButton>
+                    <CButton style={{ background: '#548CA8', color: 'white' }} color="null" onClick={handleSubmit}>Editar</CButton>
                 </CModalFooter>
             </CModal >
         </>

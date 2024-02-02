@@ -38,7 +38,7 @@ const TableTypeUser = () => {
       header: null,
       accessorKey: 'id',
       columnDefType: 'display',
-  
+
       Cell: ({ row }) => (
         <div className="d-flex justify-content-center">
           <ModalDeleteUser id={row.original.id} data={data} setData={setData} />
@@ -64,11 +64,7 @@ const TableTypeUser = () => {
 
       muiTablePaperProps={{
         elevation: 0,
-        sx: {
-          borderRadius: '0',
-          border: 'none',
-          boxShadow: 'none',
-        },
+        sx: { borderRadius: '0', border: '1px solid #e0e0e0', boxShadow: 'none' },
       }}
       muiTableProps={{
         sx: {

@@ -88,7 +88,7 @@ export default function EditTypeUser({ id, data, setData }) {
                     <CButton color="secondary" onClick={handleClose}>
                         Fechar
                     </CButton>
-                    <CButton color="primary" onClick={handlEdit}>Editar</CButton>
+                    <CButton style={{ background: '#548CA8', color: 'white' }} color="null" onClick={handlEdit}>Editar</CButton>
                 </CModalFooter>
             </CModal>
         </>

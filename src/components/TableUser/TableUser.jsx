@@ -39,6 +39,7 @@ const TableUser = ({ data, setData }) => {
   const renderSwitchCell = ({ row }) => (
     <CFormSwitch
       size="lg"
+      style={{backgroundColor:`${(row.original.type_user === 'gerente') ? '#548CA8':'#FFF'}`}}
       checked={row.original.type_user === 'gerente'}
       onChange={() => {
         verificationTask(row.original.id, row.original.type_user)
@@ -55,7 +56,7 @@ const TableUser = ({ data, setData }) => {
   const columns = [
     { header: 'Nome', accessorKey: 'name', size: 100 },
     { header: 'Tipo de usuario', accessorKey: 'type_user', size: 100 },
-    { header: 'E-mail', accessorKey: 'email', size: 100 },
+    { header: 'E-mail', accessorKey: 'email', size: 90 },
     { header: 'Gerente', size: 20, Cell: renderSwitchCell },
     { header: null, accessorKey: 'id', columnDefType: 'display', size: 20, Cell: renderDeleteUserCell },
   ];
@@ -70,7 +71,7 @@ const TableUser = ({ data, setData }) => {
       paginationDisplayMode="pages"
       muiTablePaperProps={{
         elevation: 0,
-        sx: { borderRadius: '0', border: 'none', boxShadow: 'none' },
+        sx: { borderRadius: '0', border: '1px solid #e0e0e0', boxShadow: 'none' },
       }}
       muiTableProps={{ sx: { tableLayout: 'fixed' } }}
     />

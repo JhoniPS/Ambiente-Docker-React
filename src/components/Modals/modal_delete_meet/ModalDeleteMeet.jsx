@@ -12,8 +12,6 @@ function ModalDeleteMeet({ idMeet, data, setData }) {
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
-    const navigate = useNavigate();
-
     const { setMessageType, setShowMessage, setMessage } = useAuthContext();
 
     const { id } = useParams();
@@ -24,14 +22,11 @@ function ModalDeleteMeet({ idMeet, data, setData }) {
 
             const updatedData = data.filter(item => item.id !== idMeet);
             setData(updatedData);
-            navigate(`/detalhes-de-grupos-representante/${id}/historico-de-reunioes`);
-
             setMessage('Deletado com sucesso!');
             setMessageType('success');
             setShowMessage(true);
             handleClose();
         } catch (error) {
-            navigate(`/detalhes-de-grupos-representante/${id}/historico-de-reunioes`);
             setMessage('Ops! algo deu errado');
             setMessageType('error');
             setShowMessage(true);
@@ -63,7 +58,7 @@ function ModalDeleteMeet({ idMeet, data, setData }) {
                     <CButton color="secondary" onClick={handleClose}>
                         Fechar
                     </CButton>
-                    <CButton color="primary" onClick={handlDelete}>Excluir</CButton>
+                    <CButton style={{ background: '#548CA8', color: 'white' }} color="null" onClick={handlDelete}>Excluir</CButton>
                 </CModalFooter>
             </CModal>
         </>

@@ -111,20 +111,20 @@ const Login = () => {
                                                     Login
                                                 </CButton>
 
-                                                {/* <a href="http://localhost:8001/api/redirect" target="_blank" rel="noopener noreferrer">
+                                                <a href="http://localhost:8001/api/redirect" target="_blank" rel="noopener noreferrer">
                                                     <CButton
                                                         color="secondary"
                                                     > Login SIGAA</CButton>
-                                                </a> */}
+                                                </a>
 
-                                                <CButton
+                                                {/* <CButton
                                                     color="secondary"
                                                     onClick={sigaaLogin}
                                                 >
                                                     <IconContext.Provider value={{ size: 20 }}>
                                                         <BsPersonFillAdd /> SIGAA
                                                     </IconContext.Provider>
-                                                </CButton>
+                                                </CButton> */}
                                             </CCol>
 
                                             <CCol xs={12} className='d-flex mb-4 gap-3 justify-content-center'>

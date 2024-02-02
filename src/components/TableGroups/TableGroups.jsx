@@ -112,11 +112,7 @@ const TableGroups = ({ rota, data, setData }) => {
             localization={MRT_Localization_PT_BR}
             muiTablePaperProps={{
                 elevation: 0,
-                sx: {
-                    borderRadius: '0',
-                    border: 'none',
-                    boxShadow: 'none',
-                },
+                sx: { borderRadius: '0', border: '1px solid #e0e0e0', boxShadow: 'none' },
             }}
 
             muiTableProps={{
