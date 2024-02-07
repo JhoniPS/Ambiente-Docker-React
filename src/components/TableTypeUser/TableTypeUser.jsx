@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { MRT_Localization_PT_BR } from 'material-react-table/locales/pt-BR';
 import api from '../../services/api';
 
 import { MaterialReactTable, } from 'material-react-table';
@@ -61,7 +62,7 @@ const TableTypeUser = () => {
       state={
         loading
       }
-
+      localization={MRT_Localization_PT_BR}
       muiTablePaperProps={{
         elevation: 0,
         sx: { borderRadius: '0', border: '1px solid #e0e0e0', boxShadow: 'none' },

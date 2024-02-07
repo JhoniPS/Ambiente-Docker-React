@@ -52,15 +52,8 @@ function Documents() {
                     <CCardBody>
                         <h2>Documentos</h2>
 
-                        {
-                            userRole === 'representante' &&
-                            <section className="d-flex align-items-start gap-4">
-                                <AddDocuments data={data} setData={setData} />
-                            </section>
-                        }
-
                         <h4>FILTROS RÁPIDOS</h4>
-                        <section className="d-flex align-items-start gap-2 mb-4">
+                        <section className="d-flex align-items-start gap-2 mb-2">
                             <SubmitButton
                                 text="Mais Recentes"
                                 customClass="button_filtes_bar"
@@ -71,6 +64,12 @@ function Documents() {
                                 customClass="button_filtes_bar"
                                 onClick={() => setSortOrder("asc")}
                             />
+                            {
+                                userRole === 'representante' &&
+                                <section className="d-flex align-items-start ms-auto p-0 bd-highligh">
+                                    <AddDocuments data={data} setData={setData} />
+                                </section>
+                            }
                         </section>
                         <TableDocumentos data={sortDocs()} setData={setData} />
                     </CCardBody>

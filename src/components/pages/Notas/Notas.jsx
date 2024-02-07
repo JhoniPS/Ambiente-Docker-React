@@ -11,7 +11,7 @@ import Message from '../../layout/Message/Message';
 import ModalDeleteNota from '../../Modals/modal_delete_notas/ModalDeleteNota';
 import ModalEditNota from '../../Modals/modal_edit_notas/ModalEditNota';
 import MenuAppBar from '../../layout/AppBar/MenuAppBar';
-import { CCallout, CCard, CCardBody, CCardFooter, CCardHeader, CCardText, CCardTitle } from '@coreui/react';
+import { CCallout, CCard, CCardBody, CCardFooter, CCardHeader, CCardText, CCardTitle, CCol, CRow } from '@coreui/react';
 
 export default function Notas() {
     const { id } = useParams();
@@ -20,7 +20,7 @@ export default function Notas() {
 
     const location = useLocation();
     const backPage = location.pathname.replace('/notas', '');
-    
+
     const { message, messageType, showMessage, setShowMessage } = useAuthContext();
     const userRole = Cookies.get('userType');
 
@@ -61,16 +61,10 @@ export default function Notas() {
             <div className="d-flex flex-column p-4 gap-2 h-100">
                 <CCard>
                     <CCardBody>
-                        <h2>Notas do (Nome do tipo do Grupo)</h2>
-                        {
-                            userRole === 'representante' &&
-                            <section className="d-flex align-items-start gap-4">
-                                <AddNotas data={notas} setData={setNotas} />
-                            </section>
-                        }
+                        <h2>Notas</h2>
 
                         <h4>FILTROS RÁPIDOS</h4>
-                        <section className="d-flex align-items-start gap-2 mb-3">
+                        <section className="d-flex align-items-start gap-2 mb-2">
                             <SubmitButton
                                 text="Mais Recentes"
                                 onClick={() => setSortOrder('desc')}
@@ -80,14 +74,58 @@ export default function Notas() {
                                 customClass="button_filtes_bar"
                                 onClick={() => setSortOrder('asc')}
                             />
+
+                            {
+                                userRole === 'representante' &&
+                                <section className="d-flex align-items-start ms-auto p-0 bd-highligh">
+                                    <AddNotas data={notas} setData={setNotas} />
+                                </section>
+                            }
                         </section>
-                        <CCallout color='success' className='mb-0'>
+                        <CCallout color='success' className="overflow-auto mb-0 mt-2" style={{ maxHeight: '650px' }}>
                             <Container customClass="start">
-                                {notas.length !== 0 ? (
+                                <CRow xs={{ cols: 1 }} sm={{ cols: 2 }} md={{ cols: 3 }} lg={{ cols: 3 }} xl={{ cols: 4 }} xxl={{ cols: 5 }}>
+                                    {notas.length !== 0 ? (
+                                        sortDocs().map((nota) => (
+                                            <CCol className='mb-4'>
+                                                <CCard
+                                                    style={{
+                                                        backgroundColor: `${((nota.color === 'red') ? '#FBCAC6' :
+                                                            (nota.color === 'blue') ? '#BFEEEC' :
+                                                                (nota.color === 'green') ? '#BCEBCB' :
+                                                                    (nota.color === 'yellow') ? '#F9F8C8' : null)}`,
+                                                        height: '15rem',
+                                                    }}
+                                                    key={nota.id}
+                                                >
+                                                    <CCardHeader className='fw-bold'>{formatarData(nota.created_at)}</CCardHeader>
+                                                    <CCardBody>
+                                                        <CCardTitle className='text-capitalize'>{nota.title}</CCardTitle>
+                                                        <CCardText>
+                                                            {nota.description}
+                                                        </CCardText>
+                                                    </CCardBody>
+                                                    <CCardFooter className="d-flex justify-content-end align-items-end p-0">
+                                                        {
+                                                            userRole === 'representante' &&
+                                                            <>
+                                                                <ModalDeleteNota idNote={nota.id} data={notas} setData={setNotas} />
+                                                                <ModalEditNota idNota={nota.id} data={notas} setData={setNotas} />
+                                                            </>
+                                                        }
+                                                    </CCardFooter>
+                                                </CCard>
+                                            </CCol>
+                                        ))
+                                    ) : (
+                                        <p>Sem notas</p>
+                                    )}
+                                </CRow>
+                                {/* {notas.length !== 0 ? (
                                     sortDocs().map((nota) => (
                                         <CCard
                                             style={{
-                                                maxWidth: '18rem', width: '100%', backgroundColor: `${((nota.color === 'red') ? '#FBCAC6' :
+                                                maxWidth: '27rem', width: '100%', backgroundColor: `${((nota.color === 'red') ? '#FBCAC6' :
                                                     (nota.color === 'blue') ? '#BFEEEC' :
                                                         (nota.color === 'green') ? '#C2FFC4' :
                                                             (nota.color === 'yellow') ? '#F9F8C8' : null)}`
@@ -100,15 +138,20 @@ export default function Notas() {
                                                 <CCardText className='text-justify text-wrap text-break'>{nota.description}</CCardText>
                                             </CCardBody>
                                             <CCardFooter className="d-flex justify-content-end align-items-end">
-                                                <ModalDeleteNota idNote={nota.id} data={notas} setData={setNotas} />
-                                                <ModalEditNota idNota={nota.id} data={notas} setData={setNotas} />
+                                                {
+                                                    userRole === 'representante' &&
+                                                    <>
+                                                        <ModalDeleteNota idNote={nota.id} data={notas} setData={setNotas} />
+                                                        <ModalEditNota idNota={nota.id} data={notas} setData={setNotas} />
+                                                    </>
+                                                }
                                             </CCardFooter>
                                         </CCard>
                                     ))
 
                                 ) : (
                                     <p>Sem notas</p>
-                                )}
+                                )} */}
                             </Container>
                         </CCallout>
                     </CCardBody>

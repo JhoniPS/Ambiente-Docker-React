@@ -1,8 +1,7 @@
 import { Fragment, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import MenuAppBar from '../../layout/AppBar/MenuAppBar'
+import MenuAppBar from '../../layout/AppBar/MenuAppBar';
 import useAuthContext from '../../contexts/Auth';
-
 import {
   CButton,
   CCard,
@@ -16,7 +15,6 @@ import {
   CFormTextarea,
   CRow
 } from '@coreui/react';
-
 import api from '../../../services/api';
 import { Steps } from 'antd';
 
@@ -40,7 +38,113 @@ const RepresentanteGroup = ({ representative, setRepresentative }) => {
   );
 };
 
-const Observations = ({ observations, setObservations, name, setName, setStatus, setType_group }) => {
+const Content = ({ form, setForm }) => {
+
+  const handleSubmit = (e) => {
+    setForm(prev => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
+  };
+
+  return (
+    <CContainer>
+      <CRow className='d-flex gap-2'>
+        <CCol className='p-0'>
+          <CFormInput
+            type='text'
+            label="Conselho"
+            name='council'
+            placeholder='Digite o conselho'
+            value={form.council}
+            onChange={handleSubmit}
+          />
+          <CFormInput
+            type='text'
+            label="Orgão"
+            name='organ'
+            placeholder='Digite o orgão'
+            value={form.organ}
+            onChange={handleSubmit}
+          />
+          <CFormInput
+            type='text'
+            label="Equipe"
+            name='team'
+            placeholder='Digite a equipe'
+            value={form.team}
+            onChange={handleSubmit}
+          />
+          <CFormInput
+            type='text'
+            label="E-mail"
+            name='email'
+            placeholder='Digite o e-mail'
+            value={form.email}
+            onChange={handleSubmit}
+          />
+          <CFormInput
+            type='text'
+            label="Oficio que indicou"
+            name='office_indicated'
+            placeholder='Digite o oficio indicado'
+            value={form.office_indicated}
+            onChange={handleSubmit}
+          />
+        </CCol>
+
+        <CCol className='p-0'>
+          <CFormInput
+            type='text'
+            label="Entidade"
+            name='entity'
+            placeholder='Digite a entidade'
+            value={form.entity}
+            onChange={handleSubmit}
+          />
+          <CFormInput
+            type='text'
+            label="Sigla"
+            variant="standard"
+            name='acronym'
+            placeholder='Digite a sigla'
+            value={form.acronym}
+            onChange={handleSubmit}
+          />
+          <CFormInput
+            type='text'
+            label="Unidade"
+            variant="standard"
+            name='unit'
+            placeholder='Digite a unidade'
+            value={form.unit}
+            onChange={handleSubmit}
+          />
+          <CFormInput
+            type='text'
+            label="Portaria Interna"
+            variant="standard"
+            name='internal_concierge'
+            placeholder='Digite a portaria'
+            value={form.internal_concierge}
+            onChange={handleSubmit}
+          />
+          <CFormInput
+            type='text'
+            label="Oficio Solicitado"
+            variant="standard"
+            name='office_requested'
+            placeholder='Digite o oficio solicitado'
+            value={form.office_requested}
+            onChange={handleSubmit}
+          />
+        </CCol>
+      </CRow>
+    </CContainer>
+  );
+};
+
+const FormSignGroup = ({ name, setName, status, setStatus, setType_group, type_group, observations, setObservations }) => {
 
   const handleObservations = (e) => {
     setObservations(e.target.value)
@@ -79,7 +183,7 @@ const Observations = ({ observations, setObservations, name, setName, setStatus,
         value="EM ANDAMENTO"
         label="Em andamento"
         onChange={handleChangeStatusGroup}
-        defaultChecked
+        checked={status === "EM ANDAMENTO"}
       />
       <CFormCheck
         inline
@@ -88,9 +192,10 @@ const Observations = ({ observations, setObservations, name, setName, setStatus,
         value="FINALIZADO"
         label="Finalizado"
         onChange={handleChangeStatusGroup}
+        checked={status === "FINALIZADO"}
       />
 
-      <h5 style={{ fontSize: '16px', marginTop:'5px' }}>Tipo de grupo</h5>
+      <h5 style={{ fontSize: '16px', marginTop: '5px' }}>Tipo de grupo</h5>
 
       <CFormCheck
         inline
@@ -99,7 +204,7 @@ const Observations = ({ observations, setObservations, name, setName, setStatus,
         value="interno"
         label="Interno"
         onChange={handleChangeTypeGroup}
-        defaultChecked
+        checked={type_group === "interno"}
       />
       <CFormCheck
         inline
@@ -108,6 +213,7 @@ const Observations = ({ observations, setObservations, name, setName, setStatus,
         value="externo"
         label="Externo"
         onChange={handleChangeTypeGroup}
+        checked={type_group === "externo"}
       />
 
       <br />
@@ -123,131 +229,18 @@ const Observations = ({ observations, setObservations, name, setName, setStatus,
   );
 };
 
-const FormSignGroup = ({ form, setForm }) => {
-
-  const handleSubmit = (e) => {
-    setForm(prev => ({
-      ...prev,
-      [e.target.name]: e.target.value,
-    }));
-  };
-
-  return (
-    <CContainer>
-      <CRow className='d-flex gap-2'>
-        <CCol className='p-0'>
-          <CFormInput
-            type='text'
-            label="Conselho"
-            name='council'
-            placeholder='Digite o conselho'
-            value={form.council}
-            onChange={handleSubmit}
-          />
-          <CFormInput
-            type='text'
-            label="Orgão"
-            name='organ'
-            placeholder='Digite o orgão'
-            value={form.organ}
-            onChange={handleSubmit}
-          />
-
-          <CFormInput
-            type='text'
-            label="Equipe"
-            name='team'
-            placeholder='Digite a equipe'
-            value={form.team}
-            onChange={handleSubmit}
-          />
-
-          <CFormInput
-            type='text'
-            label="E-mail"
-            name='email'
-            placeholder='Digite o e-mail'
-            value={form.email}
-            onChange={handleSubmit}
-          />
-
-          <CFormInput
-            type='text'
-            label="Oficio que indicou"
-            name='office_indicated'
-            placeholder='Digite o oficio indicado'
-            value={form.office_indicated}
-            onChange={handleSubmit}
-          />
-        </CCol>
-
-        <CCol className='p-0'>
-          <CFormInput
-            type='text'
-            label="Entidade"
-            name='entity'
-            placeholder='Digite a entidade'
-            value={form.entity}
-            onChange={handleSubmit}
-          />
-
-          <CFormInput
-            type='text'
-            label="Sigla"
-            variant="standard"
-            name='acronym'
-            placeholder='Digite a sigla'
-            value={form.acronym}
-            onChange={handleSubmit}
-          />
-
-          <CFormInput
-            type='text'
-            label="Unidade"
-            variant="standard"
-            name='unit'
-            placeholder='Digite a unidade'
-            value={form.unit}
-            onChange={handleSubmit}
-          />
-
-          <CFormInput
-            type='text'
-            label="Portaria Interna"
-            variant="standard"
-            name='internal_concierge'
-            placeholder='Digite a portaria'
-            value={form.internal_concierge}
-            onChange={handleSubmit}
-          />
-
-          <CFormInput
-            type='text'
-            label="Oficio Solicitado"
-            variant="standard"
-            name='office_requested'
-            placeholder='Digite o oficio solicitado'
-            value={form.office_requested}
-            onChange={handleSubmit}
-          />
-        </CCol>
-      </CRow>
-    </CContainer>
-  );
-};
-
 const SignGroups = () => {
   const [formulario, setFormulario] = useState({
-    entity: '',
-    organ: '',
-    council: '',
-    acronym: '',
-    internal_concierge: '',
-    team: '',
-    email: '',
-    unit: '',
-    office_requested: '',
-    office_indicated: '',
+    entity: "",
+    organ: "",
+    council: "",
+    acronym: "",
+    internal_concierge: "",
+    team: "",
+    email: "",
+    unit: "",
+    office_requested: "",
+    office_indicated: "",
   });
 
   const [representative, setRepresentative] = useState("");
@@ -264,23 +257,24 @@ const SignGroups = () => {
   const steps = [
     {
       title: 'Grupo',
-      content: <FormSignGroup form={formulario} setForm={setFormulario} />,
+      content: <FormSignGroup
+        name={name}
+        setName={setName}
+        type_group={type_group}
+        setStatus={setStatus}
+        status={status}
+        setType_group={setType_group}
+        observations={observations}
+        setObservations={setObservations}
+      />,
     },
     {
       title: 'Representante',
       content: <RepresentanteGroup representative={representative} setRepresentative={setRepresentative} />,
     },
     {
-      title: 'Observações',
-      content: <Observations
-        observations={observations}
-        setObservations={setObservations}
-        name={name}
-        setName={setName}
-        type_group={type_group}
-        setStatus={setStatus}
-        setType_group={setType_group}
-      />,
+      title: 'Informações do grupo',
+      content: <Content form={formulario} setForm={setFormulario} />,
     },
   ];
 
@@ -324,7 +318,7 @@ const SignGroups = () => {
 
   return (
     <Fragment>
-      <MenuAppBar backStep="/gerente"/>
+      <MenuAppBar backStep="/gerente" />
       <div className="bg-light min-vh-100 d-flex flex-row align-items-center">
         <CContainer>
           <CRow className="justify-content-center">
@@ -362,7 +356,7 @@ const SignGroups = () => {
         </CContainer>
       </div>
     </Fragment>
-  )
+  );
 }
 
 export default SignGroups;

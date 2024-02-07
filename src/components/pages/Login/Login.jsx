@@ -27,6 +27,7 @@ import { BsPersonFillAdd } from "react-icons/bs";
 
 import '@coreui/coreui/dist/css/coreui.min.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
+import Message from '../../layout/Message/Message';
 
 const Login = () => {
     const navigate = useNavigate();
@@ -34,7 +35,7 @@ const Login = () => {
     const [password, setPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
 
-    const { login, logoutSIGAA, sigaaLogin, error, messageErrors } = useAuthContext();
+    const { login, message, messageType, showMessage, setShowMessage } = useAuthContext();
 
     const handleLogin = async (e) => {
         e.preventDefault();
@@ -111,20 +112,11 @@ const Login = () => {
                                                     Login
                                                 </CButton>
 
-                                                <a href="http://localhost:8001/api/redirect" target="_blank" rel="noopener noreferrer">
+                                                <a href="http://localhost:8001/api/redirect" target="_self" rel="noopener noreferrer">
                                                     <CButton
                                                         color="secondary"
                                                     > Login SIGAA</CButton>
                                                 </a>
-
-                                                {/* <CButton
-                                                    color="secondary"
-                                                    onClick={sigaaLogin}
-                                                >
-                                                    <IconContext.Provider value={{ size: 20 }}>
-                                                        <BsPersonFillAdd /> SIGAA
-                                                    </IconContext.Provider>
-                                                </CButton> */}
                                             </CCol>
 
                                             <CCol xs={12} className='d-flex mb-4 gap-3 justify-content-center'>
@@ -137,14 +129,14 @@ const Login = () => {
                                                     </IconContext.Provider>
                                                 </CButton>
 
-                                                <CButton
+                                                {/* <CButton
                                                     color="secondary"
                                                     onClick={logoutSIGAA}
                                                 >
                                                     <IconContext.Provider value={{ size: 20 }}>
                                                         <BsPersonFillAdd /> Logout SIGAA
                                                     </IconContext.Provider>
-                                                </CButton>
+                                                </CButton> */}
                                             </CCol>
 
                                             <CCol xs={12}>
@@ -159,6 +151,7 @@ const Login = () => {
                         </CCardGroup>
                     </CCol>
                 </CRow>
+                {showMessage && <Message type={messageType} msg={message} setShowMessage={setShowMessage} />}
             </CContainer>
         </div>
     );

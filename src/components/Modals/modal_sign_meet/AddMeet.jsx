@@ -68,7 +68,7 @@ const AddMeet = ({ data, setData }) => {
     return (
         <>
             <IconContext.Provider value={{ size: 22 }}>
-                <CButton onClick={handleOpen} className="mb-3" color="null" style={{ background: '#545F66', color: 'white' }}>
+                <CButton onClick={handleOpen} className="mb-3" color="null" style={{ background: '#2978A0', color: 'white' }}>
                     <IoMdAdd /> Adicionar Reunião
                 </CButton>
             </IconContext.Provider>
@@ -80,7 +80,7 @@ const AddMeet = ({ data, setData }) => {
                 aria-labelledby="VerticallyCenteredScrollableExample"
             >
                 <CModalHeader>
-                    <CModalTitle component="h2">Cadastrar Reunião</CModalTitle>
+                    <CModalTitle component="h2">Registrar Reunião</CModalTitle>
                 </CModalHeader>
                 <CModalBody>
                     <CContainer>

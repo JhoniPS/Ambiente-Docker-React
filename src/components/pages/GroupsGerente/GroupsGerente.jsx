@@ -1,7 +1,5 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import useAuthContext from '../../contexts/Auth';
-import { useLocation } from 'react-router-dom';
-
 import Message from '../../layout/Message/Message';
 import SubmitButton from '../../layout/submitbuttun/SubmitButton';
 import LinkButton from '../../layout/linkbutton/LinkButton';
@@ -17,9 +15,7 @@ const GroupsGerente = () => {
     const [sortOrder, setSortOrder] = useState('desc');
     const [groupType, setGroupType] = useState("");
 
-    const { message, messageType, showMessage, setShowMessage, setMessage, setMessageType } = useAuthContext();
-
-    const location = useLocation();
+    const { message, messageType, showMessage, setShowMessage } = useAuthContext();
 
     useEffect(() => {
         const filterGroups = () => {
@@ -36,17 +32,6 @@ const GroupsGerente = () => {
         const filteredGroups = filterGroups();
         setFilteredData(filteredGroups);
     }, [data, groupType]);
-
-    useEffect(() => {
-        if (location.state) {
-            setMessage(location.state.message);
-            setMessageType(location.state.messagetype);
-            setShowMessage(location.state.showMessage);
-        }
-
-        window.history.replaceState(null, '');
-
-    }, [location.state, setMessage, setMessageType, setShowMessage]);
 
     useEffect(() => {
         if (groupType === "") {

@@ -1,5 +1,6 @@
 import React from 'react';
 import { MaterialReactTable } from 'material-react-table';
+import { MRT_Localization_PT_BR } from 'material-react-table/locales/pt-BR';
 import ModalDeleteUser from '../Modals/modal_delete_user/ModalDeleteUser';
 import { CFormSwitch } from '@coreui/react';
 import api from '../../services/api';
@@ -9,7 +10,6 @@ const TableUser = ({ data, setData }) => {
   const setManager = async (id) => {
     try {
       await api.put(`users/set-manager/${id}`);
-
     } catch (error) {
       console.log(error);
     }
@@ -39,7 +39,7 @@ const TableUser = ({ data, setData }) => {
   const renderSwitchCell = ({ row }) => (
     <CFormSwitch
       size="lg"
-      style={{backgroundColor:`${(row.original.type_user === 'gerente') ? '#548CA8':'#FFF'}`}}
+      style={{ backgroundColor: `${(row.original.type_user === 'gerente') ? '#548CA8' : '#FFF'}` }}
       checked={row.original.type_user === 'gerente'}
       onChange={() => {
         verificationTask(row.original.id, row.original.type_user)
@@ -69,6 +69,7 @@ const TableUser = ({ data, setData }) => {
       enableColumnOrdering
       enableGlobalFilter
       paginationDisplayMode="pages"
+      localization={MRT_Localization_PT_BR}
       muiTablePaperProps={{
         elevation: 0,
         sx: { borderRadius: '0', border: '1px solid #e0e0e0', boxShadow: 'none' },

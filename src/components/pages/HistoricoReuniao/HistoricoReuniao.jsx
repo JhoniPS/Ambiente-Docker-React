@@ -5,7 +5,6 @@ import api from '../../../services/api';
 import Cookies from 'js-cookie';
 
 import {
-    CButtonGroup,
     CCallout,
     CCard,
     CCardBody,
@@ -14,6 +13,8 @@ import {
     CCardLink,
     CCardSubtitle,
     CCardText,
+    CCol,
+    CRow,
 } from '@coreui/react';
 
 import Container from '../../layout/container/Container';
@@ -93,41 +94,49 @@ function HistoricoReuniao() {
                     <CCardBody>
                         <h2>Histórico de Reuniões</h2>
 
-                        {userRole === 'representante' && (
-                            <section className="d-flex align-items-start gap-4">
-                                <AddMeet data={meets} setData={setMeets} />
-                            </section>
-                        )}
-
                         <h4>FILTROS RÁPIDOS</h4>
-
-                        <section className="d-flex align-items-start gap-2 mb-4">
+                        <section className="d-flex align-items-start gap-2 mb-0 ">
                             <SubmitButton text="Mais Recentes" customClass="button_filters_bar" onClick={() => setSortOrder('desc')} />
                             <SubmitButton text="Mais Antigos" customClass="button_filters_bar" onClick={() => setSortOrder('asc')} />
+
+                            {userRole === 'representante' && (
+                                <section className="d-flex align-items-start ms-auto p-0 bd-highligh">
+                                    <AddMeet data={meets} setData={setMeets} />
+                                </section>
+                            )}
                         </section>
 
-                        <CCallout color='success' className="overflow-auto mb-0" style={{ maxHeight: '500px' }}>
+                        <CCallout color='success' className="overflow-auto mb-0 mt-2" style={{ maxHeight: '650px' }}>
                             <Container customClass="start">
-                                {meets.length !== 0 ? (
-                                    sortDocs().map((meet, index) => (
-                                        <CCard key={index} className="p-0" style={{ maxWidth: '37.5em', width: '100%', height: '100%', maxHeight: '25em' }}>
-                                            <CCardHeader className="text-lg" style={{ maxWidth: '37.5em', width: '100%' }} component="h5">{meet?.content}</CCardHeader>
-                                            <CCardBody className="d-flex flex-column p-2">
-                                                <CCardSubtitle className="mb-2 text-medium-emphasis text-sm">{formatarData(meet?.date_meet)}</CCardSubtitle>
-                                                <CCardText className={style.resumoReuniao + ' text-sm'}>{meet?.summary}</CCardText>
-                                                <CCardLink onClick={() => handleDownload(meet?.id, meet?.ata)}>{meet?.ata}</CCardLink>
-                                            </CCardBody>
-                                            <CCardFooter className="d-flex justify-content-end p-0">
-                                                <CButtonGroup>
-                                                    {<ModalDeleteMeet idMeet={meet?.id} data={meets} setData={setMeets} />}
-                                                    {<ModalEditMeet idMeet={meet?.id} data={meets} setData={setMeets} />}
-                                                </CButtonGroup>
-                                            </CCardFooter>
-                                        </CCard>
-                                    ))
-                                ) : (
-                                    <p>Sem notas</p>
-                                )}
+                                <CRow xs={{ cols: 1 }} sm={{ cols: 1 }} md={{ cols: 2 }} lg={{ cols: 2 }} xl={{ cols: 2 }} xxl={{ cols: 3 }}>
+                                    {meets.length !== 0 ? (
+                                        sortDocs().map((meet, index) => (
+                                            <CCol className='mb-4'>
+                                                <CCard key={index}>
+                                                    <CCardHeader className="text-lg" component="h5">{meet?.content}</CCardHeader>
+                                                    <CCardBody>
+                                                        <CCardSubtitle className="mb-2 text-medium-emphasis text-sm">{formatarData(meet?.date_meet)}</CCardSubtitle>
+                                                        <CCardText className={style.resumoReuniao + ' text-sm'}>
+                                                            {meet?.summary}
+                                                        </CCardText>
+                                                        <CCardLink onClick={() => handleDownload(meet?.id, meet?.ata)}>{meet?.ata}</CCardLink>
+                                                    </CCardBody>
+                                                    <CCardFooter className="d-flex justify-content-end align-items-end">
+                                                        {
+                                                            userRole === 'representante' &&
+                                                            <>
+                                                                {<ModalDeleteMeet idMeet={meet?.id} data={meets} setData={setMeets} />}
+                                                                {<ModalEditMeet idMeet={meet?.id} data={meets} setData={setMeets} />}
+                                                            </>
+                                                        }
+                                                    </CCardFooter>
+                                                </CCard>
+                                            </CCol>
+                                        ))
+                                    ) : (
+                                        <p>Sem notas</p>
+                                    )}
+                                </CRow>
                             </Container>
                         </CCallout>
                     </CCardBody>

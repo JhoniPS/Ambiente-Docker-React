@@ -8,37 +8,38 @@ import {
     CCardBody,
     CCollapse,
     CContainer,
-    CForm,
+    // CForm,
     CFormCheck,
-    CFormInput,
-    CFormTextarea,
-    CInputGroup,
-    CInputGroupText,
+    // CFormInput,
+    // CFormTextarea,
+    // CInputGroup,
+    // CInputGroupText,
     CRow
 } from '@coreui/react';
-import CIcon from '@coreui/icons-react';
+// import CIcon from '@coreui/icons-react';
 
 import { AiTwotoneDelete } from "react-icons/ai";
-import { cilBook, cilCalendar, cilColorBorder } from '@coreui/icons';
+// import { cilBook, cilCalendar, cilColorBorder } from '@coreui/icons';
 
 import { useLocation, useParams } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import EditActivity from '../../Modals/modal_edit_activity/EditActivity';
 import Message from '../../layout/Message/Message';
+import AddActivity from '../../Modals/modal_sign_activity/AddActivity';
 
 function Activity() {
     const { id } = useParams();
     const [activitys, setActivitys] = useState([]);
-    const [activity, setActivity] = useState({
-        name: '',
-        description: '',
-        start_date: '',
-        end_date: '',
-    });
+    // const [activity, setActivity] = useState({
+    //     name: '',
+    //     description: '',
+    //     start_date: '',
+    //     end_date: '',
+    // });
     const [openCards, setOpenCards] = useState([]);
 
     const { message, messageType, showMessage, setShowMessage } = useAuthContext();
-    
+
     const location = useLocation();
     const backPage = location.pathname.replace("/atividades", '');
     const userRole = Cookies.get('userType');
@@ -63,31 +64,31 @@ function Activity() {
         setOpenCards(updatedOpenCards);
     };
 
-    const submit = async (e) => {
-        e.preventDefault();
+    // const submit = async (e) => {
+    //     e.preventDefault();
 
-        try {
-            const response = await api.post(`group/${id}/activity`, activity);
-            setActivitys([...activitys, response.data]);
-            setActivity({
-                name: '',
-                description: '',
-                start_date: '',
-                end_date: '',
-            });
-        } catch (error) {
-            console.log(error);
-        }
-    };
+    //     try {
+    //         const response = await api.post(`group/${id}/activity`, activity);
+    //         setActivitys([...activitys, response.data]);
+    //         setActivity({
+    //             name: '',
+    //             description: '',
+    //             start_date: '',
+    //             end_date: '',
+    //         });
+    //     } catch (error) {
+    //         console.log(error);
+    //     }
+    // };
 
-    const handleEdit = (event) => {
-        const { name, value } = event.target;
+    // const handleEdit = (event) => {
+    //     const { name, value } = event.target;
 
-        setActivity({
-            ...activity,
-            [name]: value,
-        });
-    };
+    //     setActivity({
+    //         ...activity,
+    //         [name]: value,
+    //     });
+    // };
 
     const taskComplete = async (idTask) => {
         try {
@@ -148,9 +149,9 @@ function Activity() {
         <Fragment>
             <MenuAppBar backStep={backPage} />
             <div className="d-flex flex-column p-4 gap-2 h-100">
-                {userRole === 'representante' && (
+                {/* {userRole === 'representante' && (
                     <>
-                        <h2>Cadastrar Atividade</h2>
+                        <h2 className='mb-0'>Cadastrar Atividade</h2>
                         <CCard className='container-fluid'>
                             <CCardBody>
                                 <CForm onSubmit={submit}>
@@ -208,9 +209,16 @@ function Activity() {
                             </CCardBody>
                         </CCard>
                     </>
-                )}
+                )} */}
 
-                <h2>Lista de Atividades</h2>
+                <div className='d-flex w-100 justify-content-between'>
+                    <h2 className='mb-0'>Lista de Atividades</h2>
+
+                    {userRole === 'representante' && (
+                        <AddActivity activitys={activitys} setActivitys={setActivitys} />
+                    )}
+                </div>
+
                 <CCard className='container-fluid overflow-auto' style={{ maxHeight: '80vh', minHeight: '50vh' }}>
                     <CCardBody className='p-0 mt-3 mb-3'>
                         <CContainer fluid>
@@ -218,8 +226,10 @@ function Activity() {
                                 {activitys.length !== 0 ? (
                                     activitys.map((activity, index) => (
                                         <CCard key={index} onClick={() => toggleCard(index)} className='rounded-0'>
-                                            <CCardBody className={`d-flex justify-content-between align-items-center justify-content-center p-1 text-wrap fw-bold ${activity.done_at ? 'text-decoration-line-through' : ''}`}>
-                                                {activity?.name}
+                                            <CCardBody className={`d-flex justify-content-between align-items-center p-1 text-wrap ${activity.done_at ? 'text-decoration-line-through' : ''}`}>
+                                                <p className='mb-0 fw-bold'>{activity?.name}</p>
+                                                <p className='mb-0 fst-italic'>Data de Início: {activity.start_date}</p>
+                                                <p className='mb-0 fst-italic'>Data de Fim: {activity.end_date}</p>
                                                 {userRole === 'representante' && (
                                                     <div className='gap-3  d-flex justify-content-center align-items-center'>
                                                         <CFormCheck

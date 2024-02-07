@@ -48,22 +48,15 @@ export const AuthProvider = ({ children }) => {
       if (e.response.status === 422) {
         setError(true);
         setMessageErrors(e.response.data.errors)
+        setMessage(`Email ou senha incorretos`);
+        setMessageType('error');
+        setShowMessage(true);
       } else if (e.response.status === 401) {
         setError(true);
         setMessageErrors("E-mail ou senha incorretos.");
       }
     }
   }
-
-  const sigaaLogin = async () => {
-    try {
-      const response = await api.get('redirect');
-
-      console.log(response.data)
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   const logout = async () => {
     try {
@@ -78,7 +71,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   //teste
-  const api_token = '87fbc3f2-a72c-4f11-9ff3-23b15510964c';
+  const api_token = '4c452a5d-4137-4ac5-88e1-128fd19d88e0';
 
   const logoutSIGAA = async () => {
     try {
@@ -101,7 +94,6 @@ export const AuthProvider = ({ children }) => {
           error,
           messageErrors,
           login,
-          sigaaLogin,
           logout,
           logoutSIGAA,
           message,

@@ -3,28 +3,15 @@ import api from "../../../services/api";
 
 import TableUser from "../../TableUser/TableUser";
 import Message from "../../layout/Message/Message";
-import SubmitButton from "../../layout/submitbuttun/SubmitButton"
 import TypeUsers from '../TypeUsers/TypeUsers'
 import useAuthContext from '../../contexts/Auth';
-import style from './Users.module.css'
 
 import { CCard, CCardBody } from "@coreui/react";
 
 const Users = () => {
   const [data, setData] = useState([]);
-  const [sortOrder, setSortOrder] = useState("desc");
 
   const { message, messageType, showMessage, setShowMessage } = useAuthContext();
-
-  const sortUsers = () => {
-    return [...data].sort((a, b) => {
-      if (sortOrder === "desc") {
-        return new Date(b.created_at) - new Date(a.created_at);
-      } else {
-        return new Date(a.created_at) - new Date(b.created_at);
-      }
-    });
-  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -48,20 +35,8 @@ const Users = () => {
         <CCard className="md-2">
           <CCardBody className="d-flex flex-column gap-3">
             <h2 className="mb-0">Usuários</h2>
-            <h4 className={style}>FILTROS RÁPIDOS</h4>
-            <section className="d-grid gap-2 d-md-flex justify-content-md-start mb-0">
-              <SubmitButton
-                text="Mais Recentes"
-                customClass="button_filtes_bar"
-                onClick={() => setSortOrder("desc")}
-              />
-              <SubmitButton
-                text="Mais Antigos"
-                customClass="button_filtes_bar"
-                onClick={() => setSortOrder("asc")}
-              />
-            </section>
-            <TableUser data={sortUsers()} setData={setData} />
+
+            <TableUser data={data} setData={setData} />
           </CCardBody>
         </CCard>
 

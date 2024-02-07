@@ -244,7 +244,7 @@ export default function ModalEditGroup({ id, data, setData }) {
                                     value="EM ANDAMENTO"
                                     label="Em andamento"
                                     onChange={handleEdit}
-                                    defaultChecked
+                                    checked={(form.status === 'EM ANDAMENTO') ? true : false}
                                 />
                                 <CFormCheck
                                     inline
@@ -253,6 +253,7 @@ export default function ModalEditGroup({ id, data, setData }) {
                                     value="FINALIZADO"
                                     label="Finalizado"
                                     onChange={handleEdit}
+                                    checked={(form.status === 'FINALIZADO') ? true : false}
                                 />
                             </CCol>
                         </CRow>

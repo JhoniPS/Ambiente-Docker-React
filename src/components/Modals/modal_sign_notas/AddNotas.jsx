@@ -56,7 +56,7 @@ const AddNotas = ({ data, setData }) => {
     return (
         <Fragment>
             <IconContext.Provider value={{ size: 22 }}>
-                <CButton onClick={handleOpen} className="mb-3" color="null" style={{ background: '#545F66', color: 'white' }}>
+                <CButton onClick={handleOpen} className="mb-3" color="null" style={{ background: '#2978A0', color: 'white' }}>
                     <IoMdAdd /> Adicionar Notas
                 </CButton>
             </IconContext.Provider>
@@ -132,7 +132,7 @@ const AddNotas = ({ data, setData }) => {
                 </CModalBody>
                 <CModalFooter>
                     <CButton color="secondary" onClick={handleClose}>
-                        Close
+                        Fechar
                     </CButton>
                     <CButton style={{ background: '#548CA8', color: 'white' }} onClick={submit}>
                         Salvar
