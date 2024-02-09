@@ -56,9 +56,9 @@ function HistoricoReuniao() {
         return `${dia}/${mes}/${ano}`;
     };
 
-    const handleDownload = async (id, fileName) => {
+    const handleDownload = async (idDoc, fileName) => {
         try {
-            const response = await api.get(`/meeting-history/download/${id}`, { responseType: 'blob' });
+            const response = await api.get(`/groups/${id}/meeting-history/download/${idDoc}`, { responseType: 'blob' });
             const blob = new Blob([response.data], { type: response.headers['content-type'] });
             const url = window.URL.createObjectURL(blob);
             const link = document.createElement('a');
@@ -77,7 +77,7 @@ function HistoricoReuniao() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await api.get(`group/${id}/meeting-history`);
+                const response = await api.get(`groups/${id}/meeting-history`);
                 setMeets(response.data || []);
             } catch (error) {
                 console.log(error);
@@ -93,8 +93,6 @@ function HistoricoReuniao() {
                 <CCard>
                     <CCardBody>
                         <h2>Histórico de Reuniões</h2>
-
-                        <h4>FILTROS RÁPIDOS</h4>
                         <section className="d-flex align-items-start gap-2 mb-0 ">
                             <SubmitButton text="Mais Recentes" customClass="button_filters_bar" onClick={() => setSortOrder('desc')} />
                             <SubmitButton text="Mais Antigos" customClass="button_filters_bar" onClick={() => setSortOrder('asc')} />
@@ -134,7 +132,7 @@ function HistoricoReuniao() {
                                             </CCol>
                                         ))
                                     ) : (
-                                        <p>Sem notas</p>
+                                        <p className='d-flex w-100 mb-0'>Sem notas</p>
                                     )}
                                 </CRow>
                             </Container>

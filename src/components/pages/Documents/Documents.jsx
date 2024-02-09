@@ -35,7 +35,7 @@ function Documents() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const { data } = await api.get(`group/${id}/documents`);
+                const { data } = await api.get(`groups/${id}/documents`);
                 setData(data)
             } catch (error) {
                 console.log(error)
@@ -51,8 +51,6 @@ function Documents() {
                 <CCard>
                     <CCardBody>
                         <h2>Documentos</h2>
-
-                        <h4>FILTROS RÁPIDOS</h4>
                         <section className="d-flex align-items-start gap-2 mb-2">
                             <SubmitButton
                                 text="Mais Recentes"

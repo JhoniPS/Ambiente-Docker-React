@@ -39,7 +39,7 @@ const AddNotas = ({ data, setData }) => {
 
     const submit = async () => {
         try {
-            const response = await api.post(`group/${id}/notes`, nota)
+            const response = await api.post(`groups/${id}/notes`, nota)
             setData([...data, response.data]);
             setMessage('Nota criada com sucesso!')
             setMessageType('success');

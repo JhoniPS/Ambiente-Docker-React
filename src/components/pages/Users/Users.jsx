@@ -1,6 +1,4 @@
-import { Fragment, useState, useEffect } from "react";
-import api from "../../../services/api";
-
+import { Fragment } from "react";
 import TableUser from "../../TableUser/TableUser";
 import Message from "../../layout/Message/Message";
 import TypeUsers from '../TypeUsers/TypeUsers'
@@ -9,25 +7,12 @@ import useAuthContext from '../../contexts/Auth';
 import { CCard, CCardBody } from "@coreui/react";
 
 const Users = () => {
-  const [data, setData] = useState([]);
-
-  const { message, messageType, showMessage, setShowMessage } = useAuthContext();
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        await api.get('users').then((response) => {
-          const users = response.data.data;
-          setData(users);
-        });
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    fetchData();
-  }, []);
-
+  const {
+    message,
+    messageType,
+    showMessage,
+    setShowMessage
+  } = useAuthContext();
 
   return (
     <Fragment>
@@ -35,8 +20,7 @@ const Users = () => {
         <CCard className="md-2">
           <CCardBody className="d-flex flex-column gap-3">
             <h2 className="mb-0">Usuários</h2>
-
-            <TableUser data={data} setData={setData} />
+            <TableUser />
           </CCardBody>
         </CCard>
 

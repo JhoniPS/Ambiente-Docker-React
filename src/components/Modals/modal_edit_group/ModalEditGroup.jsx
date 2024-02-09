@@ -44,7 +44,7 @@ export default function ModalEditGroup({ id, data, setData }) {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await api.get(`/group/${id}`);
+                const response = await api.get(`/groups/${id}`);
                 const groupData = response.data.data;
 
                 setForm({
@@ -87,7 +87,7 @@ export default function ModalEditGroup({ id, data, setData }) {
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
-            await api.put(`/group/${id}`, form);
+            await api.put(`/groups/${id}`, form);
 
             const updatedData = data.map((item) => {
                 if (item.id === id) {

@@ -1,5 +1,4 @@
-import React from 'react';
-import { useParams } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
 import Cookies from 'js-cookie'
 import { MRT_Localization_PT_BR } from 'material-react-table/locales/pt-BR';
 
@@ -7,11 +6,28 @@ import ModalDeleteMember from '../Modals/modal_delete_member/ModalDeleteMember';
 import ModalEditMember from '../Modals/modal_edit_member/ModalEditMember';
 
 import { MaterialReactTable } from 'material-react-table';
+import api from '../../services/api';
+import { useParams } from 'react-router-dom';
 
-const TableMemberGroup = ({ members, setMembers }) => {
+const TableMemberGroup = () => {
   const { id } = useParams();
   const userRole = Cookies.get('userType');
+  const [members, setMembers] = useState([]);
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await api.get(`groups/${id}/members`);
+        setMembers(response.data.data);
+
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchData();
+  }, [id, setMembers]);
+  
   const columns = [
     {
       id: 'E-mail',
@@ -47,8 +63,8 @@ const TableMemberGroup = ({ members, setMembers }) => {
       columnDefType: 'display',
       Cell: ({ row }) => (
         <div className="d-flex">
-          <ModalDeleteMember memberId={row.original.id} groupId={id} data={members} setData={setMembers} />
-          <ModalEditMember memberId={row.original.id} groupId={id} data={members} setData={setMembers} />
+          <ModalDeleteMember memberId={row.original.id} data={members} setData={setMembers} />
+          <ModalEditMember memberId={row.original.id} data={members} setData={setMembers} />
         </div>
       ),
     });

@@ -15,20 +15,16 @@ import Observations from "../../layout/Observations/Observations"
 const OverviewGroupGerente = () => {
   const { id } = useParams();
   const [data, setData] = useState({});
-  const [members, setMembres] = useState([]);
   const [observacao, setObservacao] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const { data } = await api.get(`group/${id}`);
-
+        const { data } = await api.get(`groups/${id}`);
         const group = data.data;
-        const members = data.data.members;
         const observacao = data.data.observations;
 
         setData(group);
-        setMembres(members);
         setObservacao(observacao);
       } catch (error) {
         console.log(error);
@@ -72,21 +68,20 @@ const OverviewGroupGerente = () => {
 
         <TableGroupsDescription description={data} />
 
-        <CCard style={{ boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)'}}>
+        <CCard style={{ boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
           <CCardBody>
             <h2 style={{ paddingLeft: '15px' }}>Detalhes</h2>
             <TableDetalhe data={data} />
           </CCardBody>
         </CCard>
 
-        <CCard style={{ boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)'}}>
+        <CCard style={{ boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
           <CCardBody>
-            <h2>Membros</h2>
-            <TableMemberGroup members={members} setMembres={setMembres} />
+            <TableMemberGroup />
           </CCardBody>
         </CCard>
 
-        <CCard style={{ boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)'}}>
+        <CCard style={{ boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
           <CCardBody>
             <h2>Observações</h2>
             <Observations data={observacao} />

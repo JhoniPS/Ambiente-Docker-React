@@ -1,14 +1,13 @@
 import React, { useState, createContext, useContext } from "react";
-import Cookies from 'js-cookie'
+import Cookies from 'js-cookie';
 import api from "../../services/api";
-
 import { useNavigate } from "react-router-dom";
 
 export const AuthContext = createContext({});
 
 export const AuthProvider = ({ children }) => {
-  const [userType, setUserType] = useState("")
-  const [error, setError] = useState(false)
+  const [userType, setUserType] = useState("");
+  const [error, setError] = useState(false);
   const [messageErrors, setMessageErrors] = useState([]);
 
   const [message, setMessage] = useState('');
@@ -19,9 +18,10 @@ export const AuthProvider = ({ children }) => {
 
   const login = async ({ ...data }) => {
     try {
-      const response = await api.post('login', data)
-      const { token, type_user } = response.data;
-      Cookies.set('authToken', token, { expires: 7, secure: true, sameSite: 'Strict' }); // Armazene o token nos cookies
+      const response = await api.post('login', data);
+
+      const { token, type_user, email } = response.data;
+      Cookies.set('authToken', token, { expires: 7, secure: true, sameSite: 'Strict' });
 
       switch (type_user.name) {
         case 'administrador':
@@ -35,6 +35,7 @@ export const AuthProvider = ({ children }) => {
         case 'representante':
           navigate('/representante');
           Cookies.set('userType', type_user.name);
+          Cookies.set('representante', email)
           break;
         case 'visualizador':
           navigate('/visualizador');
@@ -47,7 +48,7 @@ export const AuthProvider = ({ children }) => {
     } catch (e) {
       if (e.response.status === 422) {
         setError(true);
-        setMessageErrors(e.response.data.errors)
+        setMessageErrors(e.response.data.errors);
         setMessage(`Email ou senha incorretos`);
         setMessageType('error');
         setShowMessage(true);
@@ -56,13 +57,14 @@ export const AuthProvider = ({ children }) => {
         setMessageErrors("E-mail ou senha incorretos.");
       }
     }
-  }
+  };
 
   const logout = async () => {
     try {
       await api.post('users/logout');
       Cookies.remove('authToken', { secure: true, sameSite: 'Strict' });
       Cookies.remove('userType');
+      Cookies.remove('representante');
       setUserType(null);
       navigate("/");
     } catch (error) {
@@ -87,29 +89,26 @@ export const AuthProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider
-      value={
-        {
-          userType,
-          setUserType,
-          error,
-          messageErrors,
-          login,
-          logout,
-          logoutSIGAA,
-          message,
-          messageType,
-          showMessage,
-          setMessage,
-          setMessageType,
-          setShowMessage
-        }
-      }
+      value={{
+        userType,
+        setUserType,
+        error,
+        messageErrors,
+        login,
+        logout,
+        logoutSIGAA,
+        message,
+        messageType,
+        showMessage,
+        setMessage,
+        setMessageType,
+        setShowMessage
+      }}
     >
       {children}
     </AuthContext.Provider>
   );
 };
-
 
 export default function useAuthContext() {
   return useContext(AuthContext);

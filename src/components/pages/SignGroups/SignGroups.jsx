@@ -25,10 +25,19 @@ const RepresentanteGroup = ({ representative, setRepresentative }) => {
   };
 
   return (
-    <section>
+    <section className='d-flex gap-2 flex-column'>
+      {/* <CFormInput
+        type='text'
+        label="Nome do Representante"
+        placeholder='exemplo@email.com'
+        name='representative'
+        value={representative}
+        onChange={handleChange}
+      /> */}
+
       <CFormInput
         type='text'
-        label="Representante"
+        label="Email do representante"
         placeholder='exemplo@email.com'
         name='representative'
         value={representative}
@@ -291,7 +300,7 @@ const SignGroups = () => {
     };
 
     try {
-      await api.post('group', updatedFormulario).then(() => {
+      await api.post('groups', updatedFormulario).then(() => {
         navigate('/gerente');
         setMessage('Grupo criado com sucesso!');
         setMessageType('success');

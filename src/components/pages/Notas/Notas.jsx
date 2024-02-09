@@ -45,7 +45,7 @@ export default function Notas() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await api.get(`group/${id}/notes`);
+                const response = await api.get(`groups/${id}/notes`);
                 setNotas(response.data);
             } catch (error) {
                 console.log(error);
@@ -62,8 +62,6 @@ export default function Notas() {
                 <CCard>
                     <CCardBody>
                         <h2>Notas</h2>
-
-                        <h4>FILTROS RÁPIDOS</h4>
                         <section className="d-flex align-items-start gap-2 mb-2">
                             <SubmitButton
                                 text="Mais Recentes"
@@ -84,10 +82,12 @@ export default function Notas() {
                         </section>
                         <CCallout color='success' className="overflow-auto mb-0 mt-2" style={{ maxHeight: '650px' }}>
                             <Container customClass="start">
-                                <CRow xs={{ cols: 1 }} sm={{ cols: 2 }} md={{ cols: 3 }} lg={{ cols: 3 }} xl={{ cols: 4 }} xxl={{ cols: 5 }}>
+                                <CRow xs={{ cols: 1 }} sm={{ cols: 2 }} md={{ cols: 3 }} lg={{ cols: 3 }} xl={{ cols: 3 }} xxl={{ cols: 5 }} className='w-100'>
                                     {notas.length !== 0 ? (
                                         sortDocs().map((nota) => (
-                                            <CCol className='mb-4'>
+                                            <CCol className='mb-4'
+                                                key={nota.id}
+                                            >
                                                 <CCard
                                                     style={{
                                                         backgroundColor: `${((nota.color === 'red') ? '#FBCAC6' :
@@ -96,7 +96,7 @@ export default function Notas() {
                                                                     (nota.color === 'yellow') ? '#F9F8C8' : null)}`,
                                                         height: '15rem',
                                                     }}
-                                                    key={nota.id}
+                                                    
                                                 >
                                                     <CCardHeader className='fw-bold'>{formatarData(nota.created_at)}</CCardHeader>
                                                     <CCardBody>
@@ -109,7 +109,7 @@ export default function Notas() {
                                                         {
                                                             userRole === 'representante' &&
                                                             <>
-                                                                <ModalDeleteNota idNote={nota.id} data={notas} setData={setNotas} />
+                                                                <ModalDeleteNota idNota={nota.id} data={notas} setData={setNotas} />
                                                                 <ModalEditNota idNota={nota.id} data={notas} setData={setNotas} />
                                                             </>
                                                         }
@@ -118,40 +118,10 @@ export default function Notas() {
                                             </CCol>
                                         ))
                                     ) : (
-                                        <p>Sem notas</p>
+
+                                        <p className='d-flex w-100 mb-0'>Sem notas</p>
                                     )}
                                 </CRow>
-                                {/* {notas.length !== 0 ? (
-                                    sortDocs().map((nota) => (
-                                        <CCard
-                                            style={{
-                                                maxWidth: '27rem', width: '100%', backgroundColor: `${((nota.color === 'red') ? '#FBCAC6' :
-                                                    (nota.color === 'blue') ? '#BFEEEC' :
-                                                        (nota.color === 'green') ? '#C2FFC4' :
-                                                            (nota.color === 'yellow') ? '#F9F8C8' : null)}`
-                                            }}
-                                            key={nota.id}
-                                        >
-                                            <CCardHeader className='fw-bold'>{formatarData(nota.created_at)}</CCardHeader>
-                                            <CCardBody>
-                                                <CCardTitle className='text-capitalize'>{nota.title}</CCardTitle>
-                                                <CCardText className='text-justify text-wrap text-break'>{nota.description}</CCardText>
-                                            </CCardBody>
-                                            <CCardFooter className="d-flex justify-content-end align-items-end">
-                                                {
-                                                    userRole === 'representante' &&
-                                                    <>
-                                                        <ModalDeleteNota idNote={nota.id} data={notas} setData={setNotas} />
-                                                        <ModalEditNota idNota={nota.id} data={notas} setData={setNotas} />
-                                                    </>
-                                                }
-                                            </CCardFooter>
-                                        </CCard>
-                                    ))
-
-                                ) : (
-                                    <p>Sem notas</p>
-                                )} */}
                             </Container>
                         </CCallout>
                     </CCardBody>

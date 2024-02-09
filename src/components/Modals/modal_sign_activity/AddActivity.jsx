@@ -28,7 +28,7 @@ const AddActivity = ({ activitys, setActivitys }) => {
         e.preventDefault();
 
         try {
-            const response = await api.post(`group/${id}/activity`, activity);
+            const response = await api.post(`groups/${id}/activity`, activity);
             setActivitys([...activitys, response.data]);
             setActivity({
                 name: '',

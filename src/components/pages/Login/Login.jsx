@@ -17,6 +17,7 @@ import {
     CInputGroup,
     CInputGroupText,
     CRow,
+    CLink,
 } from '@coreui/react'
 
 import CIcon from '@coreui/icons-react'
@@ -108,41 +109,17 @@ const Login = () => {
 
                                         <CRow>
                                             <CCol xs={12} className='d-flex mb-4 gap-3 justify-content-center'>
-                                                <CButton color="primary" type='submit' style={{ width: '7em' }}>
+                                                <CButton color="primary" type='submit' style={{ width: '10em' }}>
                                                     Login
                                                 </CButton>
-
-                                                <a href="http://localhost:8001/api/redirect" target="_self" rel="noopener noreferrer">
-                                                    <CButton
-                                                        color="secondary"
-                                                    > Login SIGAA</CButton>
-                                                </a>
                                             </CCol>
 
-                                            <CCol xs={12} className='d-flex mb-4 gap-3 justify-content-center'>
-                                                <CButton
-                                                    color="secondary"
-                                                    onClick={(e) => { e.preventDefault(); navigate('/signUser') }}
-                                                >
-                                                    <IconContext.Provider value={{ size: 20 }}>
-                                                        <BsPersonFillAdd /> Cadastrar
-                                                    </IconContext.Provider>
-                                                </CButton>
+                                            
 
-                                                {/* <CButton
-                                                    color="secondary"
-                                                    onClick={logoutSIGAA}
-                                                >
-                                                    <IconContext.Provider value={{ size: 20 }}>
-                                                        <BsPersonFillAdd /> Logout SIGAA
-                                                    </IconContext.Provider>
-                                                </CButton> */}
-                                            </CCol>
-
-                                            <CCol xs={12}>
-                                                <a href="/forget-password" onClick={(e) => { e.preventDefault(); navigate('/forget-password') }} target="_blank" rel="noopener noreferrer">
-                                                    Esqueci minha senha
-                                                </a>
+                                            <CCol xs={12} className='d-flex justify-content-center gap-4'>
+                                                <CLink href='/forget-password'>Esqueci minha senha</CLink>
+                                                <CLink href='http://localhost:8001/api/redirect'>Login SIGAA</CLink>
+                                                <CLink href='/signUser'>Cadastrar</CLink>
                                             </CCol>
                                         </CRow>
                                     </CForm>

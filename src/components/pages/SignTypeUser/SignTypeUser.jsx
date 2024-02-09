@@ -27,7 +27,7 @@ const SignTypeUser = () => {
   const handleSubmit = async (e) => {
     e.preventDefault()
     try {
-      await api.post('/type-user', { name });
+      await api.post('/type-users', { name });
 
       setMessage('Tipo de usuário criado com sucesso!');
       setMessageType('success');

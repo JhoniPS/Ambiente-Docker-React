@@ -1,19 +1,25 @@
 import React, { useState } from 'react';
 import api from '../../../services/api';
 import useAuthContext from '../../contexts/Auth';
-
 import { IconContext } from 'react-icons';
 import { BsFillTrashFill } from 'react-icons/bs';
-import { CButton, CModal, CModalBody, CModalFooter, CModalHeader, CModalTitle } from '@coreui/react';
+import {
+    CButton,
+    CModal,
+    CModalBody,
+    CModalFooter,
+    CModalHeader,
+    CModalTitle
+} from '@coreui/react';
 
 export default function ModalDeleteUser({ id, data, setData }) {
     const [open, setOpen] = useState(false);
+    const { setMessageType, setShowMessage, setMessage } = useAuthContext();
+
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
-    const { setMessageType, setShowMessage, setMessage } = useAuthContext();
-
-    const handlDelete = async () => {
+    const handleDelete = async () => {
         try {
             await api.delete(`users/${id}`);
             const updatedData = data.filter(item => item.id !== id);
@@ -30,7 +36,7 @@ export default function ModalDeleteUser({ id, data, setData }) {
 
     return (
         <>
-            <IconContext.Provider value={{ color: "#93000A", size: 20 }}>
+            <IconContext.Provider value={{ color: '#93000A', size: 20 }}>
                 <CButton onClick={handleOpen} color='null'>
                     <BsFillTrashFill />
                 </CButton>
@@ -52,7 +58,9 @@ export default function ModalDeleteUser({ id, data, setData }) {
                     <CButton color="secondary" onClick={handleClose}>
                         Fechar
                     </CButton>
-                    <CButton style={{ background: '#548CA8', color: 'white' }} color='null' onClick={handlDelete}>Excluir</CButton>
+                    <CButton style={{ background: '#548CA8', color: 'white' }} color='null' onClick={handleDelete}>
+                        Excluir
+                    </CButton>
                 </CModalFooter>
             </CModal>
         </>

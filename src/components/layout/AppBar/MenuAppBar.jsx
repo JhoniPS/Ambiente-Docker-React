@@ -1,9 +1,9 @@
-import React from 'react'
-import { NavLink } from 'react-router-dom'
-import { BsArrowLeft } from "react-icons/bs";
+import React from 'react';
+import { NavLink } from 'react-router-dom';
+import { BsArrowLeft } from 'react-icons/bs';
 
 import AppHeaderDropdown from './AppHeaderDropdown';
-import logo from '../../../img/BrasãoUfopa.png'
+import logo from '../../../img/BrasãoUfopa.png';
 
 import {
   CContainer,
@@ -12,13 +12,12 @@ import {
   CHeaderNav,
   CNavLink,
   CNavItem,
-} from '@coreui/react'
-import CIcon from '@coreui/icons-react'
-
+} from '@coreui/react';
+import CIcon from '@coreui/icons-react';
 
 const MenuAppBar = ({ backStep }) => {
   return (
-    <CHeader position="fixed" style={{background:'transparent', border:'0px'}}>
+    <CHeader position="fixed">
       <CContainer fluid>
         <CHeaderBrand className="mx-auto d-md-none" to="/">
           <CIcon icon={logo} height={48} alt="Logo" />
@@ -36,6 +35,6 @@ const MenuAppBar = ({ backStep }) => {
       </CContainer>
     </CHeader>
   );
-}
+};
 
 export default MenuAppBar;

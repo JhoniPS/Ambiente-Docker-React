@@ -1,24 +1,35 @@
 import React, { useState } from 'react';
 import api from '../../../services/api';
 import useAuthContext from '../../contexts/Auth';
-import { useNavigate, useParams } from 'react-router-dom';
-
+import { useParams } from 'react-router-dom';
 import { IconContext } from 'react-icons';
-import { BsFillTrashFill } from "react-icons/bs";
-import { CButton, CModal, CModalBody, CModalFooter, CModalHeader, CModalTitle } from '@coreui/react';
+import { BsFillTrashFill } from 'react-icons/bs';
+import {
+    CButton,
+    CModal,
+    CModalBody,
+    CModalFooter,
+    CModalHeader,
+    CModalTitle
+} from '@coreui/react';
 
 function ModalDeleteMeet({ idMeet, data, setData }) {
     const [open, setOpen] = useState(false);
-    const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
+
+    const handleOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
 
     const { setMessageType, setShowMessage, setMessage } = useAuthContext();
-
     const { id } = useParams();
 
-    const handlDelete = async () => {
+    const handleDelete = async () => {
         try {
-            await api.delete(`/group/${id}/meeting-history/${idMeet}`);
+            await api.delete(`groups/${id}/meeting-history/${idMeet}`);
 
             const updatedData = data.filter(item => item.id !== idMeet);
             setData(updatedData);
@@ -27,7 +38,7 @@ function ModalDeleteMeet({ idMeet, data, setData }) {
             setShowMessage(true);
             handleClose();
         } catch (error) {
-            setMessage('Ops! algo deu errado');
+            setMessage('Ops! Algo deu errado');
             setMessageType('error');
             setShowMessage(true);
             handleClose();
@@ -36,7 +47,7 @@ function ModalDeleteMeet({ idMeet, data, setData }) {
 
     return (
         <>
-            <IconContext.Provider value={{ color: "#93000A", size: 20 }}>
+            <IconContext.Provider value={{ color: '#93000A', size: 20 }}>
                 <CButton onClick={handleOpen} color='null'>
                     <BsFillTrashFill />
                 </CButton>
@@ -49,7 +60,7 @@ function ModalDeleteMeet({ idMeet, data, setData }) {
                 aria-describedby="modal-modal-description"
             >
                 <CModalHeader onClose={handleClose}>
-                    <CModalTitle id="titulo">Deletar Reuião</CModalTitle>
+                    <CModalTitle id="titulo">Deletar Reunião</CModalTitle>
                 </CModalHeader>
                 <CModalBody>
                     <p>Você tem certeza que deseja excluir esta reunião?</p>
@@ -58,7 +69,9 @@ function ModalDeleteMeet({ idMeet, data, setData }) {
                     <CButton color="secondary" onClick={handleClose}>
                         Fechar
                     </CButton>
-                    <CButton style={{ background: '#548CA8', color: 'white' }} color="null" onClick={handlDelete}>Excluir</CButton>
+                    <CButton style={{ background: '#548CA8', color: 'white' }} color="null" onClick={handleDelete}>
+                        Excluir
+                    </CButton>
                 </CModalFooter>
             </CModal>
         </>

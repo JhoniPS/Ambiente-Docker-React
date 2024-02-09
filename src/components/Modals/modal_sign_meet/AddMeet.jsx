@@ -42,7 +42,7 @@ const AddMeet = ({ data, setData }) => {
         formData.append('date_meet', formulario.date_meet);
 
         try {
-            const response = await api.post(`/group/${id}/meeting-history`, formData, {
+            const response = await api.post(`/groups/${id}/meeting-history`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },

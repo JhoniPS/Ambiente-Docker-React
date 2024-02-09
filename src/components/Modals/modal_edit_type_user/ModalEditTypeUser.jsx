@@ -17,7 +17,7 @@ export default function EditTypeUser({ id, data, setData }) {
     const handlEdit = async (e) => {
         e.preventDefault()
         try {
-            await api.put(`/type-user/${id}`, { name });
+            await api.put(`/type-users/${id}`, { name });
 
             const updatedData = data.map(item => {
                 if (item.id === id) {
@@ -32,7 +32,7 @@ export default function EditTypeUser({ id, data, setData }) {
             handleClose();
         } catch (error) {
             setMessage('Ops!!! Algo deu errado.');
-            setMessageType('success');
+            setMessageType('error');
             setShowMessage(true);
         }
     }
@@ -40,7 +40,7 @@ export default function EditTypeUser({ id, data, setData }) {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await api.get(`/type-user/${id}`);
+                const response = await api.get(`/type-users/${id}`);
                 setName(response.data.name);
             } catch (error) {
                 console.error(error);

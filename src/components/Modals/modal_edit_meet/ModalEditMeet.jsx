@@ -37,7 +37,7 @@ const ModalEditMeet = ({ idMeet, data, setData }) => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await api.get(`group/${id}/meeting-history/${idMeet}`);
+                const response = await api.get(`groups/${id}/meeting-history/${idMeet}`);
                 const activityData = response.data;
 
                 setFormulario({
@@ -73,7 +73,7 @@ const ModalEditMeet = ({ idMeet, data, setData }) => {
                 formData.append('content', formulario.content);
                 formData.append('summary', formulario.summary);
 
-                const response = await api.put(`/group/${id}/meeting-history/${idMeet}`, formData, {
+                const response = await api.put(`groups/${id}/meeting-history/${idMeet}`, formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data',
                     },

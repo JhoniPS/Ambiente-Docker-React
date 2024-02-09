@@ -5,9 +5,12 @@ import { MRT_Localization_PT_BR } from 'material-react-table/locales/pt-BR';
 
 import ModalDeleteDocument from '../Modals/modal_delete_document/ModalDeleteDocument';
 import { MaterialReactTable } from 'material-react-table';
+import { useParams } from 'react-router-dom';
 
 const TableDocumentos = ({ data, setData }) => {
   const userRole = Cookies.get('userType');
+  const { id } = useParams();
+  
 
   function formatarData(dt) {
     const dataObj = new Date(dt);
@@ -18,9 +21,9 @@ const TableDocumentos = ({ data, setData }) => {
     return `${dia}/${mes}/${ano}`;
   }
 
-  const handleDownload = async (id, fileName) => {
+  const handleDownload = async (idDoc, fileName) => {
     try {
-      const response = await api.get(`documents/download/${id}`, { responseType: 'blob' });
+      const response = await api.get(`groups/${id}/documents/download/${idDoc}`, { responseType: 'blob' });
 
       const blob = new Blob([response.data], { type: response.headers['content-type'] });
       const url = window.URL.createObjectURL(blob);

@@ -26,10 +26,11 @@ const OverviewGroupRepresentante = () => {
 
   const { message, messageType, showMessage, setShowMessage } = useAuthContext();
 
+
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const { data } = await api.get(`group/${id}`);
+        const { data } = await api.get(`groups/${id}`);
         const group = data.data;
         const members = data.data.members;
         const observacao = data.data.observations;

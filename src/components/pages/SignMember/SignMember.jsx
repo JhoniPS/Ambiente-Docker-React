@@ -42,7 +42,7 @@ const SignMember = () => {
     e.preventDefault();
 
     try {
-      await api.post(`group/${id}/members`, { member });
+      await api.post(`groups/${id}/members`, { member });
       setMessage('Adicionado com sucesso!')
       setMessageType('success')
       setShowMessage(true);

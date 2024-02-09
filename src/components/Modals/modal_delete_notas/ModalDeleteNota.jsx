@@ -1,31 +1,36 @@
 import React, { useState } from 'react';
 import api from '../../../services/api';
 import useAuthContext from '../../contexts/Auth';
-
 import { useParams } from 'react-router-dom';
 import { IconContext } from 'react-icons';
 import { BsFillTrashFill } from 'react-icons/bs';
-import { CButton, CModal, CModalBody, CModalFooter, CModalHeader, CModalTitle } from '@coreui/react';
+import {
+    CButton,
+    CModal,
+    CModalBody,
+    CModalFooter,
+    CModalHeader,
+    CModalTitle
+} from '@coreui/react';
 
-
-function ModalDeleteNota({ idNote, data, setData }) {
+function ModalDeleteNota({ idNota, data, setData }) {
     const [open, setOpen] = useState(false);
-    const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
+    const { setMessageType, setShowMessage, setMessage } = useAuthContext();
     const { id } = useParams();
 
-    const { setMessageType, setShowMessage, setMessage } = useAuthContext();
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
 
-    const handlDelete = async () => {
+    const handleDelete = async () => {
         try {
-            await api.delete(`/group/${id}/notes/${idNote}`);
-            const updatedData = data.filter(item => item.id !== idNote);
+            await api.delete(`/groups/${id}/notes/${idNota}`);
+            const updatedData = data.filter(item => item.id !== idNota);
             setData(updatedData);
             setMessage('Deletado com sucesso!');
             setMessageType('success');
             setShowMessage(true);
         } catch (error) {
-            setMessage('Ops! algo deu errado');
+            setMessage('Ops! Algo deu errado');
             setMessageType('error');
             setShowMessage(true);
         }
@@ -33,7 +38,7 @@ function ModalDeleteNota({ idNote, data, setData }) {
 
     return (
         <>
-            <IconContext.Provider value={{ color: "#93000A", size: 20 }}>
+            <IconContext.Provider value={{ color: '#93000A', size: 20 }}>
                 <CButton onClick={handleOpen} color='null'>
                     <BsFillTrashFill />
                 </CButton>
@@ -49,13 +54,15 @@ function ModalDeleteNota({ idNote, data, setData }) {
                     <CModalTitle id="titulo">Deletar Nota</CModalTitle>
                 </CModalHeader>
                 <CModalBody>
-                    <p>Você tem certeza que deseja excluir está nota?</p>
+                    <p>Você tem certeza que deseja excluir esta nota?</p>
                 </CModalBody>
                 <CModalFooter>
                     <CButton color="secondary" onClick={handleClose}>
                         Close
                     </CButton>
-                    <CButton style={{ background: '#548CA8', color: 'white' }} color="null" onClick={handlDelete}>Excluir</CButton>
+                    <CButton style={{ background: '#548CA8', color: 'white' }} color="null" onClick={handleDelete}>
+                        Excluir
+                    </CButton>
                 </CModalFooter>
             </CModal>
         </>

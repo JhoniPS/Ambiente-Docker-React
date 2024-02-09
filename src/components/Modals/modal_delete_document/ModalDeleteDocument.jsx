@@ -1,13 +1,17 @@
 import React, { useState } from 'react';
 import api from '../../../services/api';
 import useAuthContext from '../../contexts/Auth';
-
-import { useNavigate, useParams } from 'react-router-dom';
-
+import { useParams } from 'react-router-dom';
 import { IconContext } from 'react-icons';
 import { BsFillTrashFill } from "react-icons/bs";
-import { CButton, CModal, CModalBody, CModalFooter, CModalHeader, CModalTitle } from '@coreui/react';
-
+import {
+    CButton,
+    CModal,
+    CModalBody,
+    CModalFooter,
+    CModalHeader,
+    CModalTitle
+} from '@coreui/react';
 
 function ModalDeleteDocument({ docId, data, setData }) {
     const [open, setOpen] = useState(false);
@@ -15,18 +19,17 @@ function ModalDeleteDocument({ docId, data, setData }) {
     const handleClose = () => setOpen(false);
 
     const { setMessageType, setShowMessage, setMessage } = useAuthContext();
-
     const { id } = useParams();
 
     const handlDelete = async () => {
         try {
-            await api.delete(`/group/${id}/documents/${docId}`).then(() => {
+            await api.delete(`/groups/${id}/documents/${docId}`).then(() => {
                 const updatedData = data.filter(item => item.id !== docId);
                 setData(updatedData);
                 setMessage('Deletado com sucesso!');
                 setMessageType('success');
                 setShowMessage(true);
-            })
+            });
         } catch (error) {
             setMessage('Ops! algo deu errado');
             setMessageType('error');
@@ -53,13 +56,15 @@ function ModalDeleteDocument({ docId, data, setData }) {
                     <CModalTitle id="titulo">Deletar Documento</CModalTitle>
                 </CModalHeader>
                 <CModalBody>
-                    <p>Você tem certeza que deseja excluir este documentp?</p>
+                    <p>Você tem certeza que deseja excluir este documento?</p>
                 </CModalBody>
                 <CModalFooter>
                     <CButton color="secondary" onClick={handleClose}>
                         Close
                     </CButton>
-                    <CButton style={{ background: '#548CA8', color: 'white' }} color="null" onClick={handlDelete}>Excluir</CButton>
+                    <CButton style={{ background: '#548CA8', color: 'white' }} color="null" onClick={handlDelete}>
+                        Excluir
+                    </CButton>
                 </CModalFooter>
             </CModal>
         </>

@@ -15,22 +15,28 @@ import ModalEditGroup from '../Modals/modal_edit_group/ModalEditGroup';
 
 const TableGroups = ({ rota, data, setData }) => {
     const userRole = Cookies.get('userType');
+    const representante = Cookies.get('representante');
 
     const navigate = useNavigate();
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const { data } = await api.get('group');
-                const groups = data.data;
-                setData(groups);
+                const response = await api.get('groups');
+                const groups = response.data.data;
+                if (representante) {
+                    setData(groups.filter(group => group.representative.email === representante))
+                } else {
+                    setData(groups);
+                }
+                
             } catch (error) {
-                console.log(error);
+                console.error(error);
             }
         };
 
         fetchData();
-    }, [setData]);
+    }, [setData, representante]);
 
     const handleRowClick = (record) => {
         navigate(`/${rota}/${record.id}`);

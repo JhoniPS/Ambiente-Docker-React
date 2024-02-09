@@ -22,10 +22,7 @@ import CIcon from '@coreui/icons-react';
 import { cilBook, cilCalendar, cilColorBorder } from '@coreui/icons';
 
 
-
-
-
-const EditActivity = ({ id, data, setData }) => {
+const EditActivity = ({ idActivity, idGroup, data, setData }) => {
     const [open, setOpen] = useState(false);
     const [activity, setActivity] = useState({
         name: '',
@@ -42,8 +39,8 @@ const EditActivity = ({ id, data, setData }) => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await api.get(`activity/${id}`);
-                const activityData = response.data;
+                const response = await api.get(`groups/${idGroup}/activity/${idActivity}`);
+                const activityData = response.data.data;
 
                 setActivity({
                     name: activityData.name || '',
@@ -59,14 +56,14 @@ const EditActivity = ({ id, data, setData }) => {
         if (open) {
             fetchData();
         }
-    }, [id, open]);
+    }, [idGroup, open, idActivity]);
 
     const submit = async () => {
         try {
-            await api.put(`activity/${id}`, activity)
+            await api.put(`groups/${idGroup}/activity/${idActivity}`, activity)
 
             const updatedData = data.map((item) => {
-                if (item.id === id) {
+                if (item.id === idActivity) {
                     return { ...item, ...activity };
                 }
                 return item;
@@ -113,7 +110,7 @@ const EditActivity = ({ id, data, setData }) => {
                 aria-labelledby="VerticallyCenteredScrollableExample"
             >
                 <CModalHeader>
-                    <CModalTitle id="editarNota">Editar Reunião</CModalTitle>
+                    <CModalTitle id="editarNota">Editar Atividade</CModalTitle>
                 </CModalHeader>
                 <CModalBody>
                     <CContainer>

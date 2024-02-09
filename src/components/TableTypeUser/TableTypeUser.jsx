@@ -10,15 +10,12 @@ import ModalDeleteUser from '../Modals/modal_delete_type-user/ModalDeleteTypeUse
 
 const TableTypeUser = () => {
   const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        setLoading(true);
-        const response = await api.get('type-user');
+        const response = await api.get('type-users');
         setData(response.data);
-        setLoading(false);
       } catch (error) {
         console.log(error);
       }
@@ -59,9 +56,6 @@ const TableTypeUser = () => {
       enableColumnOrdering
       enableGlobalFilter
       paginationDisplayMode='pages'
-      state={
-        loading
-      }
       localization={MRT_Localization_PT_BR}
       muiTablePaperProps={{
         elevation: 0,

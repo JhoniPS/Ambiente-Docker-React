@@ -33,7 +33,7 @@ const AddDocuments = ({ data, setData }) => {
         formData.append('file', file);
 
         try {
-            const response = await api.post(`group/${id}/documents`, formData, {
+            const response = await api.post(`groups/${id}/documents`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },

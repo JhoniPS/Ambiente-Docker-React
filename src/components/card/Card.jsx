@@ -1,3 +1,4 @@
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { CCol, CLink, CWidgetStatsF } from '@coreui/react';
 import CIcon from '@coreui/icons-react';
@@ -14,7 +15,10 @@ const Card = ({ icon, title, description, to, customClass }) => {
     <CCol xs={12} sm={6} lg={3} className='mb-3'>
       <CWidgetStatsF
         color="primary"
-        style={{ boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', color:'#FEBE98' }}
+        style={{
+          boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+          color: '#FEBE98'
+        }}
         onClick={handleClick}
         footer={
           <CLink
