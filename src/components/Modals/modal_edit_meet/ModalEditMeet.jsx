@@ -53,7 +53,7 @@ const ModalEditMeet = ({ idMeet, data, setData }) => {
         if (open) {
             fetchData();
         }
-    }, [idMeet,id, open]);
+    }, [idMeet, id, open]);
 
     const handleUpload = async () => {
         try {
@@ -87,13 +87,12 @@ const ModalEditMeet = ({ idMeet, data, setData }) => {
                 });
 
                 setData([...data, response.data]);
-                message.success('Reunião criada/atualizada com sucesso.');
+                message.success('Atualizada com sucesso.');
             } else {
                 message.error('Por favor, selecione um único arquivo para enviar.');
             }
         } catch (error) {
-            console.error('Erro ao criar/atualizar reunião:', error);
-            message.error('Falha ao criar/atualizar reunião.');
+            message.error('Falha ao atualizar reunião.', error);
         } finally {
             handleClose();
         }

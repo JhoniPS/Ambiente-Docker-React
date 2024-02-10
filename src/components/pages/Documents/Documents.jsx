@@ -22,16 +22,6 @@ function Documents() {
     const backPage = location.pathname.replace("/documentos", '');
     const userRole = Cookies.get('userType');
 
-    const sortDocs = () => {
-        return [...data].sort((a, b) => {
-            if (sortOrder === "desc") {
-                return new Date(b.created_at) - new Date(a.created_at);
-            } else {
-                return new Date(a.created_at) - new Date(b.created_at);
-            }
-        });
-    };
-
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -50,18 +40,8 @@ function Documents() {
             <div className="d-flex flex-column p-4 gap-2 h-100">
                 <CCard>
                     <CCardBody>
-                        <h2>Documentos</h2>
                         <section className="d-flex align-items-start gap-2 mb-2">
-                            <SubmitButton
-                                text="Mais Recentes"
-                                customClass="button_filtes_bar"
-                                onClick={() => setSortOrder("desc")}
-                            />
-                            <SubmitButton
-                                text="Mais Antigos"
-                                customClass="button_filtes_bar"
-                                onClick={() => setSortOrder("asc")}
-                            />
+                            <h2>Documentos</h2>
                             {
                                 userRole === 'representante' &&
                                 <section className="d-flex align-items-start ms-auto p-0 bd-highligh">
@@ -69,7 +49,7 @@ function Documents() {
                                 </section>
                             }
                         </section>
-                        <TableDocumentos data={sortDocs()} setData={setData} />
+                        <TableDocumentos data={data} setData={setData} />
                     </CCardBody>
                 </CCard>
                 {showMessage && <Message type={messageType} msg={message} setShowMessage={setShowMessage} />}

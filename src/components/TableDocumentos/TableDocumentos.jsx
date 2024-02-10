@@ -23,7 +23,7 @@ const TableDocumentos = ({ data, setData }) => {
 
   const handleDownload = async (idDoc, fileName) => {
     try {
-      const response = await api.get(`groups/${id}/documents/download/${idDoc}`, { responseType: 'blob' });
+      const response = await api.get(`groups/${id}/documents/${idDoc}/download`, { responseType: 'blob' });
 
       const blob = new Blob([response.data], { type: response.headers['content-type'] });
       const url = window.URL.createObjectURL(blob);

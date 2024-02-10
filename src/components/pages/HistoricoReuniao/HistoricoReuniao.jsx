@@ -58,7 +58,7 @@ function HistoricoReuniao() {
 
     const handleDownload = async (idDoc, fileName) => {
         try {
-            const response = await api.get(`/groups/${id}/meeting-history/download/${idDoc}`, { responseType: 'blob' });
+            const response = await api.get(`/groups/${id}/meeting-history/${idDoc}/download`, { responseType: 'blob' });
             const blob = new Blob([response.data], { type: response.headers['content-type'] });
             const url = window.URL.createObjectURL(blob);
             const link = document.createElement('a');
@@ -78,13 +78,13 @@ function HistoricoReuniao() {
         const fetchData = async () => {
             try {
                 const response = await api.get(`groups/${id}/meeting-history`);
-                setMeets(response.data || []);
+                setMeets(response.data);
             } catch (error) {
                 console.log(error);
             }
         };
         fetchData();
-    }, [id]);
+    }, [id, setMeets]);
 
     return (
         <Fragment>
@@ -106,7 +106,7 @@ function HistoricoReuniao() {
 
                         <CCallout color='success' className="overflow-auto mb-0 mt-2" style={{ maxHeight: '650px' }}>
                             <Container customClass="start">
-                                <CRow xs={{ cols: 1 }} sm={{ cols: 1 }} md={{ cols: 2 }} lg={{ cols: 2 }} xl={{ cols: 2 }} xxl={{ cols: 3 }}>
+                                <CRow xs={{ cols: 1 }} sm={{ cols: 1 }} md={{ cols: 2 }} lg={{ cols: 2 }} xl={{ cols: 2 }} xxl={{ cols: 3 }} className='w-100'>
                                     {meets.length !== 0 ? (
                                         sortDocs().map((meet, index) => (
                                             <CCol className='mb-4'>
@@ -123,8 +123,8 @@ function HistoricoReuniao() {
                                                         {
                                                             userRole === 'representante' &&
                                                             <>
-                                                                {<ModalDeleteMeet idMeet={meet?.id} data={meets} setData={setMeets} />}
-                                                                {<ModalEditMeet idMeet={meet?.id} data={meets} setData={setMeets} />}
+                                                                {<ModalDeleteMeet idMeet={meet.id} data={meets} setData={setMeets} />}
+                                                                {<ModalEditMeet idMeet={meet.id} data={meets} setData={setMeets} />}
                                                             </>
                                                         }
                                                     </CCardFooter>

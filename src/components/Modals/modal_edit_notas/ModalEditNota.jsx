@@ -17,8 +17,10 @@ import {
     CModalTitle,
     CRow
 } from '@coreui/react';
+import { useParams } from 'react-router-dom';
 
 const ModalEditNota = ({ idNota, data, setData }) => {
+    const { id } = useParams();
     const [open, setOpen] = useState(false);
     const [selectedColor, setSelectedColor] = useState('');
     const [nota, setNota] = useState({
@@ -36,7 +38,7 @@ const ModalEditNota = ({ idNota, data, setData }) => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await api.get(`notes/${idNota}`);
+                const response = await api.get(`groups/${id}/notes/${idNota}`);
                 const noteData = response.data;
 
                 setNota({
@@ -52,7 +54,7 @@ const ModalEditNota = ({ idNota, data, setData }) => {
         if (open) {
             fetchData();
         }
-    }, [idNota, open]);
+    }, [idNota, open, id]);
 
     const handleColorButtonClick = (event) => {
         const color = event.target.value;
@@ -70,7 +72,7 @@ const ModalEditNota = ({ idNota, data, setData }) => {
 
     const submit = async () => {
         try {
-            await api.put(`notes/${idNota}`, nota)
+            await api.put(`groups/${id}/notes/${idNota}`, nota)
 
             const updatedData = data.map((item) => {
                 if (item.id === idNota) {

@@ -20,9 +20,11 @@ import {
 import { AiFillEdit } from 'react-icons/ai';
 import CIcon from '@coreui/icons-react';
 import { cilBook, cilCalendar, cilColorBorder } from '@coreui/icons';
+import { useParams } from 'react-router-dom';
 
 
-const EditActivity = ({ idActivity, idGroup, data, setData }) => {
+const EditActivity = ({ idActivity, data, setData }) => {
+    const { id } = useParams();
     const [open, setOpen] = useState(false);
     const [activity, setActivity] = useState({
         name: '',
@@ -39,8 +41,8 @@ const EditActivity = ({ idActivity, idGroup, data, setData }) => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await api.get(`groups/${idGroup}/activity/${idActivity}`);
-                const activityData = response.data.data;
+                const response = await api.get(`groups/${id}/activity/${idActivity}`);
+                const activityData = response.data;
 
                 setActivity({
                     name: activityData.name || '',
@@ -56,11 +58,11 @@ const EditActivity = ({ idActivity, idGroup, data, setData }) => {
         if (open) {
             fetchData();
         }
-    }, [idGroup, open, idActivity]);
+    }, [id, open, idActivity]);
 
     const submit = async () => {
         try {
-            await api.put(`groups/${idGroup}/activity/${idActivity}`, activity)
+            await api.put(`groups/${id}/activity/${idActivity}`, activity)
 
             const updatedData = data.map((item) => {
                 if (item.id === idActivity) {

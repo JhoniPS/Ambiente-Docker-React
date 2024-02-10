@@ -52,7 +52,7 @@ function Activity() {
 
     const taskComplete = async (idTask) => {
         try {
-            await api.put(`groups/${id}/activity/complete${idTask}`);
+            await api.put(`groups/${id}/activity/${idTask}/complete`);
         } catch (error) {
             console.log(error);
         }
@@ -60,7 +60,7 @@ function Activity() {
 
     const taskRestore = async (idTask) => {
         try {
-            const response = await api.put(`groups/${id}/activity/restore/${idTask}`);
+            const response = await api.put(`groups/${id}/activity/${idTask}/restore`);
             const updatedTaskList = activitys.map((item) => {
                 if (item.id === idTask) {
                     return response.data;
@@ -134,7 +134,7 @@ function Activity() {
                                                             checked={activity.done_at}
                                                             onClick={(e) => { e.stopPropagation(); verificationTask(activity.id, activity.done_at) }}
                                                         />
-                                                        <EditActivity id={activity.id} idGroup={id} data={activitys} setData={setActivitys} />
+                                                        <EditActivity idActivity={activity.id} data={activitys} setData={setActivitys} />
                                                         <CButton color='transparent' style={{ cursor: 'pointer' }} onClick={(e) => { e.stopPropagation(); deleteTask(activity?.id) }}>
                                                             <AiTwotoneDelete size={20} color='red' />
                                                         </CButton>

@@ -80,9 +80,9 @@ export default function Notas() {
                                 </section>
                             }
                         </section>
-                        <CCallout color='success' className="overflow-auto mb-0 mt-2" style={{ maxHeight: '650px' }}>
+                        <CCallout color='success' className="overflow-auto mb-0 mt-2 pb-0" style={{ maxHeight: '650px' }}>
                             <Container customClass="start">
-                                <CRow xs={{ cols: 1 }} sm={{ cols: 2 }} md={{ cols: 3 }} lg={{ cols: 3 }} xl={{ cols: 3 }} xxl={{ cols: 5 }} className='w-100'>
+                                <CRow xs={{ cols: 1 }} sm={{ cols: 2 }} md={{ cols: 2 }} lg={{ cols: 3 }} xl={{ cols: 3 }} xxl={{ cols: 5 }} className='w-100'>
                                     {notas.length !== 0 ? (
                                         sortDocs().map((nota) => (
                                             <CCol className='mb-4'
@@ -94,14 +94,14 @@ export default function Notas() {
                                                             (nota.color === 'blue') ? '#BFEEEC' :
                                                                 (nota.color === 'green') ? '#BCEBCB' :
                                                                     (nota.color === 'yellow') ? '#F9F8C8' : null)}`,
-                                                        height: '15rem',
+                                                        height: '18rem',
                                                     }}
-                                                    
+
                                                 >
                                                     <CCardHeader className='fw-bold'>{formatarData(nota.created_at)}</CCardHeader>
                                                     <CCardBody>
                                                         <CCardTitle className='text-capitalize'>{nota.title}</CCardTitle>
-                                                        <CCardText>
+                                                        <CCardText className="overflow-auto mb-0 mt-2" style={{ maxHeight: '9rem' }}>
                                                             {nota.description}
                                                         </CCardText>
                                                     </CCardBody>

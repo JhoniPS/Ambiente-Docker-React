@@ -16,8 +16,10 @@ import {
     CModalTitle,
     CRow
 } from '@coreui/react';
+import { useParams } from 'react-router-dom';
 
-export default function ModalEditMember({ groupId, memberId, data, setData }) {
+export default function ModalEditMember({ memberId, data, setData }) {
+    const { id } = useParams();
     const [open, setOpen] = useState(false);
     const [member, setMember] = useState({
         role: '',
@@ -36,11 +38,12 @@ export default function ModalEditMember({ groupId, memberId, data, setData }) {
         e.preventDefault();
 
         try {
-            await api.put(`group/${groupId}/members/${memberId}`, member);
+            await api.put(`groups/${id}/members/${memberId}`, member);
 
             const updatedData = data.map((item) =>
                 item.id === memberId ? member : item
             );
+
             setData(updatedData);
             setMessage('Membro editado com sucesso!');
             setMessageType('success');
@@ -58,7 +61,7 @@ export default function ModalEditMember({ groupId, memberId, data, setData }) {
         const fetchMember = async () => {
             try {
                 if (open) {
-                    const response = await api.get(`members/${memberId}`);
+                    const response = await api.get(`groups/${id}/members/${memberId}`);
                     const memberData = response.data.data;
 
                     if (memberData) {
