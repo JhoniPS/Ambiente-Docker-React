@@ -5,7 +5,9 @@ import { CCard, CCardBody, CRow } from "@coreui/react";
 import api from "../../../services/api";
 
 import MenuAppBar from "../../layout/AppBar/MenuAppBar";
+import LinkButton from "../../layout/linkbutton/LinkButton";
 import Card from "../../card/Card";
+import { IoMdAdd } from 'react-icons/io';
 
 import TableGroupsDescription from "../../TableGroupsDescription/TableGroupsDescrition";
 import TableDetalhe from "../../TableDetalhes/TableDetalhe";
@@ -77,6 +79,14 @@ const OverviewGroupGerente = () => {
 
         <CCard style={{ boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
           <CCardBody>
+            <div className="d-flex justify-content-between align-items-center w-100 h-auto">
+              <h2>Membros</h2>
+              <LinkButton
+                text="Adicionar Membro"
+                to="adicionar-membro"
+                icon={<IoMdAdd size={22} />}
+              />
+            </div>
             <TableMemberGroup />
           </CCardBody>
         </CCard>

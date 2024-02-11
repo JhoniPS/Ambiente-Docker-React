@@ -1,5 +1,5 @@
 import { Fragment, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import useAuthContext from '../../contexts/Auth';
 import MenuAppBar from "../../layout/AppBar/MenuAppBar"
 import LinkButton from "../../layout/linkbutton/LinkButton";
@@ -29,6 +29,9 @@ const SignMember = () => {
     departure_date: '',
   });
 
+  const location = useLocation();
+  const backPage = location.pathname.replace("/adicionar-membro", '');
+
   const { message, messageType, showMessage, setShowMessage, setMessage, setMessageType } = useAuthContext();
 
   const handleSubmit = (e) => {
@@ -56,7 +59,7 @@ const SignMember = () => {
 
   return (
     <Fragment>
-      <MenuAppBar backStep={`/representante-detalhes-de-grupos-representante/${id}`} />
+      <MenuAppBar backStep={backPage} />
       <div className="bg-light min-vh-100 d-flex flex-row align-items-center">
         <CContainer>
           <CRow className="justify-content-center">
@@ -113,8 +116,8 @@ const SignMember = () => {
                       </div>
                       <CRow >
                         <CCol xs={12} className="d-flex mt-4 justify-content-center gap-4">
-                          <LinkButton text="Voltar" customClass="#6C757D" to={`/representante-detalhes-de-grupos/${id}/`} />
-                          <CButton style={{ background: '#548CA8', color: 'white', paddingInline:'1em' }} color="null" type="submit">Cadastrar</CButton>
+                          <LinkButton text="Voltar" customClass="#6C757D" to={backPage} />
+                          <CButton style={{ background: '#548CA8', color: 'white', paddingInline: '1em' }} color="null" type="submit">Cadastrar</CButton>
                         </CCol>
                       </CRow>
                     </CForm>

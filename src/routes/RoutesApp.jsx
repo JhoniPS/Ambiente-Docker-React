@@ -57,6 +57,7 @@ const routes = [
     { path: '/gerente', element: <PrivateRoute requiredUserType="gerente"><Manager /></PrivateRoute> },
     { path: '/gerente-cadastrar-grupo', element: <PrivateRoute requiredUserType="gerente"><SignGroups /></PrivateRoute> },
     { path: '/gerente-detalhes-de-grupos/:id', element: <PrivateRoute requiredUserType="gerente"><OverviewGroupGerente /></PrivateRoute> },
+    { path: '/gerente-detalhes-de-grupos/:id/adicionar-membro', element: <PrivateRoute requiredUserType="gerente"><SignMember /></PrivateRoute> },
     { path: '/gerente-detalhes-de-grupos/:id/documentos', element: <PrivateRoute requiredUserType="gerente"><Documents /></PrivateRoute> },
     { path: '/gerente-detalhes-de-grupos/:id/notas', element: <PrivateRoute requiredUserType="gerente"><Notas /></PrivateRoute> },
     { path: '/gerente-detalhes-de-grupos/:id/historico-de-reunioes', element: <PrivateRoute requiredUserType="gerente"><HistoricoReuniao /></PrivateRoute> },

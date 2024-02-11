@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import { BsArrowLeft } from 'react-icons/bs';
 
 import AppHeaderDropdown from './AppHeaderDropdown';
@@ -16,6 +16,10 @@ import {
 import CIcon from '@coreui/icons-react';
 
 const MenuAppBar = ({ backStep }) => {
+
+  const location = useLocation();
+  const page = location.pathname;
+
   return (
     <CHeader position="fixed">
       <CContainer fluid>
@@ -24,9 +28,11 @@ const MenuAppBar = ({ backStep }) => {
         </CHeaderBrand>
         <CHeaderNav className="d-none d-md-flex me-auto">
           <CNavItem>
-            <CNavLink to={backStep} component={NavLink}>
-              <BsArrowLeft size={30} />
-            </CNavLink>
+            {!(page === '/gerente' || page === '/representante' || page === '/administrador' || page === '/visualizador') ?
+              <CNavLink to={backStep} component={NavLink}>
+                <BsArrowLeft size={30} />
+              </CNavLink> : null
+            }
           </CNavItem>
         </CHeaderNav>
         <CHeaderNav className="ms-3">
