@@ -18,7 +18,9 @@ import {
 import api from '../../../services/api';
 import { Steps } from 'antd';
 
+
 const RepresentanteGroup = ({ representative, setRepresentative }) => {
+  const { error, messageErrors } = useAuthContext()
 
   const handleChange = (e) => {
     setRepresentative(e.target.value);
@@ -42,12 +44,16 @@ const RepresentanteGroup = ({ representative, setRepresentative }) => {
         name='representative'
         value={representative}
         onChange={handleChange}
+        feedbackInvalid={messageErrors.representative}
+        invalid={error}
       />
     </section>
   );
 };
 
 const Content = ({ form, setForm }) => {
+
+  const { error, messageErrors, } = useAuthContext()
 
   const handleSubmit = (e) => {
     setForm(prev => ({
@@ -57,9 +63,9 @@ const Content = ({ form, setForm }) => {
   };
 
   return (
-    <CContainer>
-      <CRow className='d-flex gap-2'>
-        <CCol className='p-0'>
+    <CContainer fluid>
+      <CRow className='w-100' xs={{ cols: 1 }} sm={{ cols: 1 }} md={{ cols: 1 }} lg={{ cols: 2 }} xl={{ cols: 2 }} xxl={{ cols: 2 }}>
+        <CCol>
           <CFormInput
             type='text'
             label="Conselho"
@@ -67,6 +73,8 @@ const Content = ({ form, setForm }) => {
             placeholder='Digite o conselho'
             value={form.council}
             onChange={handleSubmit}
+            feedbackInvalid={messageErrors.council}
+            invalid={error}
           />
           <CFormInput
             type='text'
@@ -75,6 +83,8 @@ const Content = ({ form, setForm }) => {
             placeholder='Digite o orgão'
             value={form.organ}
             onChange={handleSubmit}
+            feedbackInvalid={messageErrors.organ}
+            invalid={error}
           />
           <CFormInput
             type='text'
@@ -83,52 +93,10 @@ const Content = ({ form, setForm }) => {
             placeholder='Digite a equipe'
             value={form.team}
             onChange={handleSubmit}
+            feedbackInvalid={messageErrors.team}
+            invalid={error}
           />
-          <CFormInput
-            type='text'
-            label="E-mail"
-            name='email'
-            placeholder='Digite o e-mail'
-            value={form.email}
-            onChange={handleSubmit}
-          />
-          <CFormInput
-            type='text'
-            label="Oficio que indicou"
-            name='office_indicated'
-            placeholder='Digite o oficio indicado'
-            value={form.office_indicated}
-            onChange={handleSubmit}
-          />
-        </CCol>
 
-        <CCol className='p-0'>
-          <CFormInput
-            type='text'
-            label="Entidade"
-            name='entity'
-            placeholder='Digite a entidade'
-            value={form.entity}
-            onChange={handleSubmit}
-          />
-          <CFormInput
-            type='text'
-            label="Sigla"
-            variant="standard"
-            name='acronym'
-            placeholder='Digite a sigla'
-            value={form.acronym}
-            onChange={handleSubmit}
-          />
-          <CFormInput
-            type='text'
-            label="Unidade"
-            variant="standard"
-            name='unit'
-            placeholder='Digite a unidade'
-            value={form.unit}
-            onChange={handleSubmit}
-          />
           <CFormInput
             type='text'
             label="Portaria Interna"
@@ -137,6 +105,65 @@ const Content = ({ form, setForm }) => {
             placeholder='Digite a portaria'
             value={form.internal_concierge}
             onChange={handleSubmit}
+            feedbackInvalid={messageErrors.internal_concierge}
+            invalid={error}
+          />
+
+          <CFormInput
+            type='text'
+            label="Sigla"
+            variant="standard"
+            name='acronym'
+            placeholder='Digite a sigla'
+            value={form.acronym}
+            onChange={handleSubmit}
+            feedbackInvalid={messageErrors.acronym}
+            invalid={error}
+          />
+        </CCol>
+
+        <CCol>
+          <CFormInput
+            type='text'
+            label="E-mail"
+            name='email'
+            placeholder='Digite o e-mail'
+            value={form.email}
+            onChange={handleSubmit}
+            feedbackInvalid={messageErrors.email}
+            invalid={error}
+          />
+          <CFormInput
+            type='text'
+            label="Oficio que indicou"
+            name='office_indicated'
+            placeholder='Digite o oficio indicado'
+            value={form.office_indicated}
+            onChange={handleSubmit}
+            feedbackInvalid={messageErrors.office_indicated}
+            invalid={error}
+          />
+          <CFormInput
+            type='text'
+            label="Entidade"
+            name='entity'
+            placeholder='Digite a entidade'
+            value={form.entity}
+            onChange={handleSubmit}
+            feedbackInvalid={messageErrors.entity}
+            invalid={error}
+          />
+
+          <CFormInput
+            type='text'
+            label="Unidade"
+            variant="standard"
+            name='unit'
+            placeholder='Digite a unidade'
+            value={form.unit}
+            onChange={handleSubmit}
+            feedbackInvalid={messageErrors.unit}
+            invalid={error}
           />
           <CFormInput
             type='text'
@@ -146,6 +173,8 @@ const Content = ({ form, setForm }) => {
             placeholder='Digite o oficio solicitado'
             value={form.office_requested}
             onChange={handleSubmit}
+            feedbackInvalid={messageErrors.office_requested}
+            invalid={error}
           />
         </CCol>
       </CRow>
@@ -154,6 +183,8 @@ const Content = ({ form, setForm }) => {
 };
 
 const FormSignGroup = ({ name, setName, status, setStatus, setType_group, type_group, observations, setObservations }) => {
+
+  const { error, messageErrors, } = useAuthContext()
 
   const handleObservations = (e) => {
     setObservations(e.target.value)
@@ -181,6 +212,8 @@ const FormSignGroup = ({ name, setName, status, setStatus, setType_group, type_g
         value={name}
         onChange={handleChange}
         className='mb-3'
+        feedbackInvalid={messageErrors.name}
+        invalid={error}
       />
 
       <h5 style={{ fontSize: '16px' }}>Status do Grupo</h5>
@@ -233,6 +266,8 @@ const FormSignGroup = ({ name, setName, status, setStatus, setType_group, type_g
         value={observations}
         rows={5}
         onChange={handleObservations}
+        feedbackInvalid={messageErrors.observations}
+        invalid={error}
       />
     </section>
   );
@@ -261,7 +296,13 @@ const SignGroups = () => {
 
   const navigate = useNavigate();
 
-  const { setMessageType, setShowMessage, setMessage } = useAuthContext();
+  const {
+    setMessageType,
+    setShowMessage,
+    setMessage,
+    setError,
+    setMessageErrors
+  } = useAuthContext()
 
   const steps = [
     {
@@ -308,7 +349,8 @@ const SignGroups = () => {
       });
 
     } catch (error) {
-      console.error('Erro ao enviar formulário:', error.response.data);
+      setError(true);
+      setMessageErrors(error.response.data.errors)
     }
   };
 
@@ -330,9 +372,9 @@ const SignGroups = () => {
       <MenuAppBar backStep="/gerente" />
       <div className="bg-light min-vh-100 d-flex flex-row align-items-center">
         <CContainer>
-          <CRow className="justify-content-center">
-            <CCol md={9} lg={8} xl={10}>
-              <CCard className="mx-4">
+          <CRow className="justify-content-center p-4">
+            <CCol  sm={8} md={10} lg={12} xl={12} xxl={12}>
+              <CCard className='w-100'>
                 <CCardHeader className='p-2' style={{ backgroundColor: 'transparent' }}>
                   <Steps current={current} items={items} type="navigation" />
                 </CCardHeader>

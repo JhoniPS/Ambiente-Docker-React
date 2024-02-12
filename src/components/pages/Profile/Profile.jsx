@@ -6,23 +6,21 @@ import MenuAppBar from '../../layout/AppBar/MenuAppBar';
 import { Avatar } from '@mui/material';
 import styles from './Profile.module.css'
 import LinkButton from '../../layout/linkbutton/LinkButton';
+import { useLocation } from 'react-router-dom';
 
 const Perfil = () => {
-    const { token } = useAuthContext();
-    const [user, setUser] = useState({});
+    const [user, setUser] = useState({
+        foto: "foto.png",
+        name: "nome exemplo",
+        email: "teste@teste.com"
+    });
 
-    useEffect(() => {
-        const fetchData = async () => {
-            const response = await api.get(`users/${2}`);
-            setUser(response.data.data);
-        }
-
-        fetchData();
-    }, [token])
+    const location = useLocation();
+    const backPage = location.pathname.replace("/profile", '');
 
     return (
         <Fragment>
-            <MenuAppBar />
+            <MenuAppBar backStep={backPage} />
             <div className={styles.profile}>
                 <Avatar
                     alt="Remy Sharp"

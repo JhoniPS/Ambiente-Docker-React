@@ -16,13 +16,26 @@ import {
   CRow
 } from '@coreui/react';
 import Message from '../../layout/Message/Message';
+import { useLocation } from 'react-router-dom';
 
 const SignTypeUser = () => {
   const [name, setName] = useState("");
-  const [error, setError] = useState(false);
-  const [messageErrors, setMessageErrors] = useState({});
 
-  const { showMessage, messageType, message, setMessageType, setShowMessage, setMessage } = useAuthContext();
+  const location = useLocation();
+  const backPage = location.pathname.replace("/novo-tipo", '');
+
+  const {
+    showMessage,
+    messageType,
+    message,
+    setMessageType,
+    setShowMessage,
+    setMessage,
+    error,
+    setError,
+    messageErrors,
+    setMessageErrors
+  } = useAuthContext()
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -33,9 +46,8 @@ const SignTypeUser = () => {
       setMessageType('success');
       setShowMessage(true);
     } catch (error) {
-      setError(true);
-      setMessageErrors(error.response?.data);
-
+      setError(true)
+      setMessageErrors(error.response.data.name);
     }
   }
 
@@ -57,8 +69,11 @@ const SignTypeUser = () => {
                       placeholder='Novo tipo de usuário'
                       value={name}
                       onChange={(e) => setName(e.target.value)}
+                      feedbackInvalid={messageErrors}
+                      invalid={error}
                     />
                     <div className="d-flex mt-5 justify-content-between">
+                      <LinkButton text="Voltar" customClass="#6C757D" to={backPage} />
                       <CButton color="success" type='submit'>Criar Conta</CButton>
                     </div>
                   </CForm>

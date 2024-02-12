@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import useAuthContext from '../../contexts/Auth';
 import api from '../../../services/api';
 
 import {
@@ -17,20 +18,27 @@ import CIcon from '@coreui/icons-react'
 import { cilLockLocked, cilUser } from '@coreui/icons'
 
 import Message from '../../layout/Message/Message';
+import LinkButton from '../../layout/linkbutton/LinkButton';
+import { useLocation } from 'react-router-dom';
 
 const SignUser = () => {
-  const [message, setMessage] = useState('');
-  const [messageType, setMessageType] = useState('');
-  const [showMessage, setShowMessage] = useState(false);
+  const location = useLocation();
+  const backPage = location.pathname.replace("/signUser", '/');
+
+  const {
+    showMessage,
+    messageType,
+    message,
+    setMessageType,
+    setShowMessage,
+    setMessage,
+    error,
+    setError,
+    messageErrors,
+    setMessageErrors
+  } = useAuthContext();
 
   const [user, setUser] = useState({
-    name: '',
-    email: '',
-    password: '',
-    c_password: '',
-  });
-
-  const [errors, setErrors] = useState({
     name: '',
     email: '',
     password: '',
@@ -41,23 +49,19 @@ const SignUser = () => {
     e.preventDefault();
 
     try {
-      setErrors({
-        name: '',
-        email: '',
-        password: '',
-        c_password: '',
-      });
-
-      await api.post('/register', user).then(() => {
-        setShowMessage(true);
-        setMessage('Criado com sucesso!');
-        setMessageType('success');
-      });
+      await api.post('/register', user);
+      setShowMessage(true);
+      setMessage('Criado com sucesso!');
+      setMessageType('success');
 
     } catch (error) {
-      if (error.response && error.response.data && error.response.data.errors) {
-        setErrors(error.response.data.errors);
+      if (error.response.request.status === 400) {
+        setShowMessage(true);
+        setMessage(`ERROR: ${error.response.data.errors}`);
+        setMessageType('error');
       }
+      setError(true);
+      setMessageErrors(error.response.data.errors);
     }
   }
 
@@ -88,6 +92,8 @@ const SignUser = () => {
                       name='name'
                       value={user.name}
                       onChange={handlChange}
+                      feedbackInvalid={messageErrors.name}
+                      invalid={error}
                     />
                   </CInputGroup>
                   <CInputGroup className="mb-3">
@@ -99,6 +105,8 @@ const SignUser = () => {
                       name='email'
                       value={user.email}
                       onChange={handlChange}
+                      feedbackInvalid={messageErrors.email}
+                      invalid={error}
                     />
                   </CInputGroup>
                   <CInputGroup className="mb-3">
@@ -112,6 +120,8 @@ const SignUser = () => {
                       name='password'
                       value={user.password}
                       onChange={handlChange}
+                      feedbackInvalid={messageErrors.password}
+                      invalid={error}
                     />
                   </CInputGroup>
                   <CInputGroup className="mb-4">
@@ -125,10 +135,13 @@ const SignUser = () => {
                       name='c_password'
                       value={user.c_password}
                       onChange={handlChange}
+                      feedbackInvalid={messageErrors.c_password}
+                      invalid={error}
                     />
                   </CInputGroup>
-                  <div className="d-grid">
+                  <div className="d-grid gap-2">
                     <CButton color="success" type='submit'>Criar Conta</CButton>
+                    <LinkButton text="Voltar" customClass="#6C757D" to={backPage} />
                   </div>
                 </CForm>
               </CCardBody>

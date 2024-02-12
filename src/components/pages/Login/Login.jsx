@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import useAuthContext from '../../contexts/Auth';
 import logoImg from '../../../img/BrasãoUfopa.png';
-import { IconContext } from "react-icons";
 
 import {
     CButton,
@@ -22,21 +20,19 @@ import {
 
 import CIcon from '@coreui/icons-react'
 
-import { cilLockLocked, cilUser } from '@coreui/icons'
+import { cilUser } from '@coreui/icons'
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
-import { BsPersonFillAdd } from "react-icons/bs";
 
 import '@coreui/coreui/dist/css/coreui.min.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import Message from '../../layout/Message/Message';
 
 const Login = () => {
-    const navigate = useNavigate();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
 
-    const { login, message, messageType, showMessage, setShowMessage } = useAuthContext();
+    const { login, error, messageErrors, showMessage, messageType, message, setShowMessage } = useAuthContext();
 
     const handleLogin = async (e) => {
         e.preventDefault();
@@ -63,7 +59,7 @@ const Login = () => {
                                         <CImage src={logoImg} width={80} />
                                         <h1>Login</h1>
 
-                                        <CInputGroup className="mb-3">
+                                        <CInputGroup className="mb-3" style={{ textAlign: 'left' }}>
                                             <CInputGroupText>
                                                 <CIcon icon={cilUser} />
                                             </CInputGroupText>
@@ -76,25 +72,12 @@ const Login = () => {
                                                 value={email}
                                                 onChange={(e) => setEmail(e.target.value)}
                                                 onKeyDown={handleKeyDown}
+                                                feedbackInvalid={messageErrors.email}
+                                                invalid={error}
                                             />
                                         </CInputGroup>
 
-                                        <CInputGroup className="mb-4">
-                                            <CInputGroupText>
-                                                <CIcon icon={cilLockLocked} />
-                                            </CInputGroupText>
-
-                                            <CFormInput
-                                                type={showPassword ? "text" : "password"}
-                                                name='password'
-                                                placeholder="Password"
-                                                autoComplete="current-password"
-                                                value={password}
-                                                onChange={(e) => setPassword(e.target.value)}
-                                                autoFocus={true}
-                                                onKeyDown={handleKeyDown}
-                                            />
-
+                                        <CInputGroup className="mb-4" style={{ textAlign: 'left' }}>
                                             <CButton
                                                 color="light"
                                                 onClick={handleClickShowPassword}
@@ -105,6 +88,19 @@ const Login = () => {
                                             >
                                                 {showPassword ? <FaEyeSlash /> : <FaEye />} {/* Alterna entre ícones de olho aberto e fechado */}
                                             </CButton>
+
+                                            <CFormInput
+                                                type={showPassword ? "text" : "password"}
+                                                name='password'
+                                                placeholder="Password"
+                                                autoComplete="current-password"
+                                                value={password}
+                                                onChange={(e) => setPassword(e.target.value)}
+                                                autoFocus={true}
+                                                onKeyDown={handleKeyDown}
+                                                feedbackInvalid={messageErrors.password}
+                                                invalid={error}
+                                            />
                                         </CInputGroup>
 
                                         <CRow>
@@ -114,7 +110,7 @@ const Login = () => {
                                                 </CButton>
                                             </CCol>
 
-                                            
+
 
                                             <CCol xs={12} className='d-flex justify-content-center gap-4'>
                                                 <CLink href='/forget-password'>Esqueci minha senha</CLink>

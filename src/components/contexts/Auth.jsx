@@ -7,6 +7,7 @@ export const AuthContext = createContext({});
 
 export const AuthProvider = ({ children }) => {
   const [userType, setUserType] = useState("");
+  
   const [error, setError] = useState(false);
   const [messageErrors, setMessageErrors] = useState([]);
 
@@ -49,12 +50,11 @@ export const AuthProvider = ({ children }) => {
       if (e.response.status === 422) {
         setError(true);
         setMessageErrors(e.response.data.errors);
-        setMessage(`Email ou senha incorretos`);
-        setMessageType('error');
-        setShowMessage(true);
       } else if (e.response.status === 401) {
         setError(true);
-        setMessageErrors("E-mail ou senha incorretos.");
+        setMessage(`${e.response.data.errors}`);
+        setMessageType('error');
+        setShowMessage(true);
       }
     }
   };
@@ -93,7 +93,9 @@ export const AuthProvider = ({ children }) => {
         userType,
         setUserType,
         error,
+        setError,
         messageErrors,
+        setMessageErrors,
         login,
         logout,
         logoutSIGAA,

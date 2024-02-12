@@ -49,12 +49,13 @@ const routes = [
     { path: '/signUser', name: 'SignUser', element: <SignUser /> },
 
     /* Administrador */
-    { path: '/profile', name: 'Profile', element: <PrivateRoute requiredUserType="administrador"><Profile /></PrivateRoute> },
     { path: '/administrador', element: <PrivateRoute requiredUserType="administrador"><Admin /></PrivateRoute> },
-    { path: '/administrador-novo-tipo', element: <PrivateRoute requiredUserType="administrador"><SignTypeUser /></PrivateRoute> },
+    { path: '/administrador/profile', element: <PrivateRoute requiredUserType="administrador"><Profile /></PrivateRoute> },
+    { path: '/administrador/novo-tipo', element: <PrivateRoute requiredUserType="administrador"><SignTypeUser /></PrivateRoute> },
 
     /* Gerente */
     { path: '/gerente', element: <PrivateRoute requiredUserType="gerente"><Manager /></PrivateRoute> },
+    { path: '/gerente/profile', element: <PrivateRoute requiredUserType="gerente"><Profile /></PrivateRoute> },
     { path: '/gerente-cadastrar-grupo', element: <PrivateRoute requiredUserType="gerente"><SignGroups /></PrivateRoute> },
     { path: '/gerente-detalhes-de-grupos/:id', element: <PrivateRoute requiredUserType="gerente"><OverviewGroupGerente /></PrivateRoute> },
     { path: '/gerente-detalhes-de-grupos/:id/adicionar-membro', element: <PrivateRoute requiredUserType="gerente"><SignMember /></PrivateRoute> },
@@ -65,6 +66,7 @@ const routes = [
 
     /* Representante */
     { path: '/representante', element: <PrivateRoute requiredUserType="representante"><Representative /></PrivateRoute> },
+    { path: '/representante/profile', element: <PrivateRoute requiredUserType="representante"><Profile /></PrivateRoute> },
     { path: '/representante-detalhes-de-grupos/:id', element: <PrivateRoute requiredUserType="representante"><OverviewGroupRepresentante /></PrivateRoute> },
     { path: '/representante-detalhes-de-grupos/:id/notas', element: <PrivateRoute requiredUserType="representante"><Notas /></PrivateRoute> },
     { path: '/representante-detalhes-de-grupos/:id/documentos', element: <PrivateRoute requiredUserType="representante"><Documents /></PrivateRoute> },
@@ -74,6 +76,7 @@ const routes = [
 
     /* Visualizador */
     { path: '/visualizador', element: <PrivateRoute requiredUserType="visualizador"><GroupsVisualizador /></PrivateRoute> },
+    { path: '/visualizador/profile', element: <PrivateRoute requiredUserType="visualizador"><Profile /></PrivateRoute> },
     { path: '/visualizador-detalhes-de-grupos/:id', element: <PrivateRoute requiredUserType="visualizador"><OverviewGroupVisualizador /></PrivateRoute> },
     { path: '/visualizador-detalhes-de-grupos/:id/notas', element: <PrivateRoute requiredUserType="visualizador"><Notas /></PrivateRoute> },
     { path: '/visualizador-detalhes-de-grupos/:id/documentos', element: <PrivateRoute requiredUserType="visualizador"><Documents /></PrivateRoute> },
