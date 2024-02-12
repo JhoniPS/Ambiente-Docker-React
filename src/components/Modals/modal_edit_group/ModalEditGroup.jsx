@@ -39,7 +39,15 @@ export default function ModalEditGroup({ id, data, setData }) {
         office_indicated: '',
     });
 
-    const { setMessageType, setShowMessage, setMessage } = useAuthContext();
+    const {
+        setMessageType,
+        setShowMessage,
+        setMessage,
+        setError,
+        error,
+        setMessageErrors,
+        messageErrors,
+    } = useAuthContext();
 
     useEffect(() => {
         const fetchData = async () => {
@@ -64,17 +72,19 @@ export default function ModalEditGroup({ id, data, setData }) {
                     office_indicated: groupData.office_indicated || '',
                 });
             } catch (error) {
-                console.error(error);
+                setMessage(error.response.data.errors);
+                setMessageType('error');
+                setShowMessage(true);
             }
         };
 
         if (open) {
             fetchData();
         }
-    }, [id, open]);
+    }, [id, open, setError, setMessageType, setShowMessage, setMessage]);
 
     const handleOpen = () => { setOpen(true) };
-    const handleClose = () => { setOpen(false) };
+    const handleClose = () => { setOpen(false); setError(null); };
 
     const handleEdit = (event) => {
         const { name, value } = event.target;
@@ -102,10 +112,8 @@ export default function ModalEditGroup({ id, data, setData }) {
             setShowMessage(true);
             handleClose();
         } catch (error) {
-            console.error(error);
-            setMessage('Grupo Editado com sucesso!');
-            setMessageType('error');
-            setShowMessage(true);
+            setError(true);
+            setMessageErrors(error.response.data.errors)
         }
     };
 
@@ -129,7 +137,7 @@ export default function ModalEditGroup({ id, data, setData }) {
                 <CModalBody>
                     <CContainer>
                         <CRow>
-                            <CCol md={3}>
+                            <CCol md={6}>
                                 <CFormInput
                                     type='text'
                                     label='Nome'
@@ -137,6 +145,8 @@ export default function ModalEditGroup({ id, data, setData }) {
                                     name='name'
                                     value={form.name}
                                     onChange={handleEdit}
+                                    feedbackInvalid={messageErrors.name}
+                                    invalid={error}
                                 />
                                 <CFormInput
                                     type='text'
@@ -145,6 +155,8 @@ export default function ModalEditGroup({ id, data, setData }) {
                                     name='acronym'
                                     value={form.acronym}
                                     onChange={handleEdit}
+                                    feedbackInvalid={messageErrors.acronym}
+                                    invalid={error}
                                 />
                                 <CFormInput
                                     type='text'
@@ -153,9 +165,11 @@ export default function ModalEditGroup({ id, data, setData }) {
                                     variant='standard'
                                     value={form.unit}
                                     onChange={handleEdit}
+                                    feedbackInvalid={messageErrors.unit}
+                                    invalid={error}
                                 />
                             </CCol>
-                            <CCol md={3}>
+                            <CCol md={6}>
                                 <CFormInput
                                     type='text'
                                     label='Orgão'
@@ -163,6 +177,8 @@ export default function ModalEditGroup({ id, data, setData }) {
                                     name='organ'
                                     value={form.organ}
                                     onChange={handleEdit}
+                                    feedbackInvalid={messageErrors.organ}
+                                    invalid={error}
                                 />
                                 <CFormInput
                                     type='text'
@@ -171,6 +187,8 @@ export default function ModalEditGroup({ id, data, setData }) {
                                     name='team'
                                     value={form.team}
                                     onChange={handleEdit}
+                                    feedbackInvalid={messageErrors.team}
+                                    invalid={error}
                                 />
                                 <CFormInput
                                     type='text'
@@ -179,9 +197,11 @@ export default function ModalEditGroup({ id, data, setData }) {
                                     name='internal_concierge'
                                     value={form.internal_concierge}
                                     onChange={handleEdit}
+                                    feedbackInvalid={messageErrors.internal_concierge}
+                                    invalid={error}
                                 />
                             </CCol>
-                            <CCol md={3}>
+                            <CCol md={6}>
                                 <CFormInput
                                     type='text'
                                     label='Entidade'
@@ -189,6 +209,8 @@ export default function ModalEditGroup({ id, data, setData }) {
                                     name='entity'
                                     value={form.entity}
                                     onChange={handleEdit}
+                                    feedbackInvalid={messageErrors.entity}
+                                    invalid={error}
                                 />
                                 <CFormInput
                                     type='text'
@@ -197,6 +219,8 @@ export default function ModalEditGroup({ id, data, setData }) {
                                     name='email'
                                     value={form.email}
                                     onChange={handleEdit}
+                                    feedbackInvalid={messageErrors.email}
+                                    invalid={error}
                                 />
                                 <CFormInput
                                     type='text'
@@ -205,9 +229,11 @@ export default function ModalEditGroup({ id, data, setData }) {
                                     variant='standard'
                                     value={form.office_requested}
                                     onChange={handleEdit}
+                                    feedbackInvalid={messageErrors.office_requested}
+                                    invalid={error}
                                 />
                             </CCol>
-                            <CCol md={3}>
+                            <CCol md={6}>
                                 <CFormInput
                                     type='text'
                                     label='Conselho'
@@ -215,6 +241,8 @@ export default function ModalEditGroup({ id, data, setData }) {
                                     name='council'
                                     value={form.council}
                                     onChange={handleEdit}
+                                    feedbackInvalid={messageErrors.council}
+                                    invalid={error}
                                 />
                                 <CFormInput
                                     type='text'
@@ -223,6 +251,8 @@ export default function ModalEditGroup({ id, data, setData }) {
                                     name='type'
                                     value={form.type}
                                     onChange={handleEdit}
+                                    feedbackInvalid={messageErrors.type}
+                                    invalid={error}
                                 />
                                 <CFormInput
                                     type='text'
@@ -230,6 +260,8 @@ export default function ModalEditGroup({ id, data, setData }) {
                                     name='office_indicated'
                                     value={form.office_indicated}
                                     onChange={handleEdit}
+                                    feedbackInvalid={messageErrors.office_indicated}
+                                    invalid={error}
                                 />
                             </CCol>
                         </CRow>
@@ -265,6 +297,8 @@ export default function ModalEditGroup({ id, data, setData }) {
                                     value={form.observations}
                                     onChange={handleEdit}
                                     rows={5}
+                                    feedbackInvalid={messageErrors.observations}
+                                    invalid={error}
                                 />
                             </CCol>
                         </CRow>

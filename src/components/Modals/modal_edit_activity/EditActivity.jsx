@@ -33,10 +33,18 @@ const EditActivity = ({ idActivity, data, setData }) => {
         end_date: '',
     });
 
-    const { setMessageType, setShowMessage, setMessage } = useAuthContext();
+    const {
+        setMessageType,
+        setShowMessage,
+        setMessage,
+        error,
+        setError,
+        messageErrors,
+        setMessageErrors,
+    } = useAuthContext();
 
     const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
+    const handleClose = () => { setOpen(false); setError(null); };
 
     useEffect(() => {
         const fetchData = async () => {
@@ -83,10 +91,8 @@ const EditActivity = ({ idActivity, data, setData }) => {
             setShowMessage(true);
             handleClose();
         } catch (error) {
-            setMessage(`Ops! algo deu errado ${error.response.data.errors}`)
-            setMessageType('error');
-            setShowMessage(true);
-            handleClose();
+            setError(true);
+            setMessageErrors(error.response.data.errors)
         }
     };
 
@@ -107,7 +113,7 @@ const EditActivity = ({ idActivity, data, setData }) => {
             <CModal
                 alignment="center"
                 visible={open}
-                size='lg'
+                size='xl'
                 onClose={handleClose}
                 aria-labelledby="VerticallyCenteredScrollableExample"
             >
@@ -129,6 +135,8 @@ const EditActivity = ({ idActivity, data, setData }) => {
                                     onChange={handleEdit}
                                     autoComplete="On"
                                     placeholder='Nome da Atividade'
+                                    feedbackInvalid={messageErrors.name}
+                                    invalid={error}
                                 />
                             </CInputGroup>
 
@@ -141,6 +149,8 @@ const EditActivity = ({ idActivity, data, setData }) => {
                                     name='description'
                                     value={activity.description}
                                     onChange={handleEdit}
+                                    feedbackInvalid={messageErrors.description}
+                                    invalid={error}
                                 />
                             </CInputGroup>
 
@@ -154,6 +164,8 @@ const EditActivity = ({ idActivity, data, setData }) => {
                                     name='start_date'
                                     value={activity.start_date}
                                     onChange={handleEdit}
+                                    feedbackInvalid={messageErrors.start_date}
+                                    invalid={error}
                                 />
 
                                 <CFormInput
@@ -161,6 +173,8 @@ const EditActivity = ({ idActivity, data, setData }) => {
                                     name='end_date'
                                     value={activity.end_date}
                                     onChange={handleEdit}
+                                    feedbackInvalid={messageErrors.end_date}
+                                    invalid={error}
                                 />
                                 <CInputGroupText>
                                     <CIcon icon={cilCalendar} />

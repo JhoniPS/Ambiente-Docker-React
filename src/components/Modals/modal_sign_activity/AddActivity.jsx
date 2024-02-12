@@ -18,11 +18,20 @@ const AddActivity = ({ activitys, setActivitys }) => {
         end_date: '',
     });
 
-    const { setMessageType, setShowMessage, setMessage } = useAuthContext();
+    const {
+        setMessageType,
+        setShowMessage,
+        setMessage,
+        error,
+        setError,
+        messageErrors,
+        setMessageErrors,
+    } = useAuthContext();
+
     const { id } = useParams();
 
     const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
+    const handleClose = () => { setOpen(false); setError(null) };
 
     const submit = async (e) => {
         e.preventDefault();
@@ -36,14 +45,12 @@ const AddActivity = ({ activitys, setActivitys }) => {
                 start_date: '',
                 end_date: '',
             });
-            setMessage('Atividade criada com sucesso!')
+            setMessage('Atividade criada com sucesso!');
             setMessageType('success');
             setShowMessage(true);
         } catch (error) {
-            setMessage(`Ops! algo deu errado ${error.response.data.errors}`)
-            setMessageType('error');
-            setShowMessage(true);
-            handleClose();
+            setError(true);
+            setMessageErrors(error.response.data.errors);
         }
     };
 
@@ -66,7 +73,7 @@ const AddActivity = ({ activitys, setActivitys }) => {
             <CModal
                 alignment="center"
                 visible={open}
-                size='lg'
+                size='xl'
                 onClose={handleClose}
                 aria-labelledby="VerticallyCenteredScrollableExample"
             >
@@ -90,6 +97,8 @@ const AddActivity = ({ activitys, setActivitys }) => {
                                             onChange={handleEdit}
                                             autoComplete="On"
                                             placeholder='Nome da Atividade'
+                                            feedbackInvalid={messageErrors.name}
+                                            invalid={error}
                                         />
                                     </CInputGroup>
 
@@ -102,6 +111,8 @@ const AddActivity = ({ activitys, setActivitys }) => {
                                             name='description'
                                             value={activity.description}
                                             onChange={handleEdit}
+                                            feedbackInvalid={messageErrors.description}
+                                            invalid={error}
                                         />
                                     </CInputGroup>
 
@@ -115,6 +126,8 @@ const AddActivity = ({ activitys, setActivitys }) => {
                                             name='start_date'
                                             value={activity.start_date}
                                             onChange={handleEdit}
+                                            feedbackInvalid={messageErrors.start_date}
+                                            invalid={error}
                                         />
 
                                         <CFormInput
@@ -122,6 +135,8 @@ const AddActivity = ({ activitys, setActivitys }) => {
                                             name='end_date'
                                             value={activity.end_date}
                                             onChange={handleEdit}
+                                            feedbackInvalid={messageErrors.end_date}
+                                            invalid={error}
                                         />
                                     </CInputGroup>
                                 </>

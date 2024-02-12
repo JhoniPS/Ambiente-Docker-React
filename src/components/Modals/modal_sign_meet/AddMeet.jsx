@@ -1,5 +1,6 @@
 import React, { Fragment, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import useAuthContext from '../../contexts/Auth';
 import api from '../../../services/api';
 
 import { message } from 'antd';
@@ -29,8 +30,15 @@ const AddMeet = ({ data, setData }) => {
         file: null,
     });
 
+    const {
+        error,
+        setError,
+        messageErrors,
+        setMessageErrors,
+    } = useAuthContext();
+
     const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
+    const handleClose = () => { setOpen(false); setError(null); };
     const { id } = useParams();
 
     const handleUpload = async () => {
@@ -58,10 +66,9 @@ const AddMeet = ({ data, setData }) => {
             message.success('Reunião criada com sucesso.');
             setData([...data, response.data]);
         } catch (error) {
-            console.error('Erro ao criar reunião:', error);
             message.error('Falha ao criar reunião.');
-        } finally {
-            handleClose();
+            setError(true);
+            setMessageErrors(error.response.data.errors);
         }
     };
 
@@ -74,7 +81,7 @@ const AddMeet = ({ data, setData }) => {
             </IconContext.Provider>
             <CModal
                 alignment="center"
-                size="lg"
+                size="xl"
                 visible={open}
                 onClose={handleClose}
                 aria-labelledby="VerticallyCenteredScrollableExample"
@@ -92,6 +99,8 @@ const AddMeet = ({ data, setData }) => {
                                     name="content"
                                     value={formulario.content}
                                     onChange={(e) => setFormulario({ ...formulario, content: e.target.value })}
+                                    feedbackInvalid={messageErrors.content}
+                                    invalid={error}
                                 />
 
                                 <CFormTextarea
@@ -104,7 +113,8 @@ const AddMeet = ({ data, setData }) => {
                                         const inputText = e.target.value;
                                         (inputText.length <= 255) ? setFormulario({ ...formulario, summary: inputText }) : alert("Limite de caracteres atingido");
                                     }}
-
+                                    feedbackInvalid={messageErrors.summary}
+                                    invalid={error}
                                 />
 
                                 <CFormInput
@@ -113,6 +123,8 @@ const AddMeet = ({ data, setData }) => {
                                     name="date_meet"
                                     value={formulario ? formulario.date_meet : ''}
                                     onChange={(e) => setFormulario({ ...formulario, date_meet: e.target.value })}
+                                    feedbackInvalid={messageErrors.date_meet}
+                                    invalid={error}
                                 />
 
                                 <CFormInput
@@ -120,6 +132,8 @@ const AddMeet = ({ data, setData }) => {
                                     label="Upload de Ata"
                                     name='file'
                                     onChange={(e) => setFormulario({ ...formulario, file: e.target.files[0] })}
+                                    feedbackInvalid={messageErrors.ata}
+                                    invalid={error}
                                 />
                             </CCol>
                         </CRow>

@@ -184,7 +184,7 @@ const Content = ({ form, setForm }) => {
 
 const FormSignGroup = ({ name, setName, status, setStatus, setType_group, type_group, observations, setObservations }) => {
 
-  const { error, messageErrors, } = useAuthContext()
+  const { error, messageErrors, } = useAuthContext();
 
   const handleObservations = (e) => {
     setObservations(e.target.value)
@@ -302,7 +302,7 @@ const SignGroups = () => {
     setMessage,
     setError,
     setMessageErrors
-  } = useAuthContext()
+  } = useAuthContext();
 
   const steps = [
     {

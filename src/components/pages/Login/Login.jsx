@@ -57,7 +57,7 @@ const Login = () => {
                                 <CCardBody>
                                     <CForm style={{ textAlign: 'center' }} onSubmit={handleLogin}>
                                         <CImage src={logoImg} width={80} />
-                                        <h1>Login</h1>
+                                        <h1>{process.env.REACT_APP_TITLE}</h1>
 
                                         <CInputGroup className="mb-3" style={{ textAlign: 'left' }}>
                                             <CInputGroupText>

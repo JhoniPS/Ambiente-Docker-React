@@ -1,5 +1,6 @@
 import React, { Fragment, useState } from 'react';
 import api from '../../../services/api';
+import useAuthContext from '../../contexts/Auth';
 import { useParams } from 'react-router-dom';
 
 import { message } from 'antd';
@@ -25,8 +26,15 @@ const AddDocuments = ({ data, setData }) => {
     const [open, setOpen] = useState(false);
     const [file, setFile] = useState(null);
 
+    const {
+        error,
+        setError,
+        messageErrors,
+        setMessageErrors,
+    } = useAuthContext();
+
     const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
+    const handleClose = () => { setOpen(false); setError(null); };
 
     const handleUpload = async () => {
         const formData = new FormData();
@@ -44,10 +52,9 @@ const AddDocuments = ({ data, setData }) => {
             message.success('Upload feito com sucesso.');
             setData([...data, response.data]);
         } catch (error) {
-            console.error('Erro no envio de arquivos:', error);
             message.error('Falha no upload de arquivo.');
-        } finally {
-            handleClose();
+            setError(true);
+            setMessageErrors(error.response.data.errors)
         }
     };
 
@@ -79,6 +86,8 @@ const AddDocuments = ({ data, setData }) => {
                                     name='file'
                                     multiple
                                     onChange={(e) => setFile(e.target.files[0])}
+                                    feedbackInvalid={messageErrors.file}
+                                    invalid={error}
                                 />
                             </CCol>
                         </CRow>

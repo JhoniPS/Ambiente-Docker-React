@@ -32,7 +32,18 @@ const SignMember = () => {
   const location = useLocation();
   const backPage = location.pathname.replace("/adicionar-membro", '');
 
-  const { message, messageType, showMessage, setShowMessage, setMessage, setMessageType } = useAuthContext();
+  const {
+    message,
+    messageType,
+    showMessage,
+    setShowMessage,
+    setMessage,
+    setMessageType,
+    error,
+    setError,
+    messageErrors,
+    setMessageErrors,
+  } = useAuthContext();
 
   const handleSubmit = (e) => {
     setMember(prev => ({
@@ -50,10 +61,10 @@ const SignMember = () => {
       setMessageType('success')
       setShowMessage(true);
     } catch (error) {
-      console.error('Erro ao enviar formulário:', error.response.data);
-      setMessage('Ops! hover um error')
-      setMessageType('error')
-      setShowMessage(true);
+      console.log(error);
+      setError(true);
+      setMessageErrors(error.response.data.errors)
+
     }
   };
 
@@ -76,6 +87,8 @@ const SignMember = () => {
                         placeholder="name@example.com"
                         value={member.email}
                         onChange={handleSubmit}
+                        feedbackInvalid={messageErrors}
+                        invalid={error}
                       />
                       <CFormInput
                         type='tel'
@@ -84,6 +97,8 @@ const SignMember = () => {
                         placeholder="Digite o numero de telefone"
                         value={member.phone}
                         onChange={handleSubmit}
+                        feedbackInvalid={messageErrors}
+                        invalid={error}
                       />
                       <CFormInput
                         type='text'
@@ -92,8 +107,10 @@ const SignMember = () => {
                         placeholder=' Exemplo Professor'
                         value={member.role}
                         onChange={handleSubmit}
+                        feedbackInvalid={messageErrors}
+                        invalid={error}
                       />
-                      <div className="d-flex gap-2">
+                      <CRow className="d-flex gap-2">
                         <CCol>
                           <CFormInput
                             type="date"
@@ -101,7 +118,8 @@ const SignMember = () => {
                             name="entry_date"
                             value={member.entry_date}
                             onChange={handleSubmit}
-
+                            feedbackInvalid={messageErrors}
+                            invalid={error}
                           />
                         </CCol>
                         <CCol>
@@ -111,12 +129,16 @@ const SignMember = () => {
                             name="departure_date"
                             value={member.departure_date}
                             onChange={handleSubmit}
+                            feedbackInvalid={messageErrors}
+                            invalid={error}
                           />
                         </CCol>
-                      </div>
-                      <CRow >
-                        <CCol xs={12} className="d-flex mt-4 justify-content-center gap-4">
+                      </CRow>
+                      <CRow className="d-flex gap-2 mt-3">
+                        <CCol>
                           <LinkButton text="Voltar" customClass="#6C757D" to={backPage} />
+                        </CCol>
+                        <CCol className="d-flex justify-content-end">
                           <CButton style={{ background: '#548CA8', color: 'white', paddingInline: '1em' }} color="null" type="submit">Cadastrar</CButton>
                         </CCol>
                       </CRow>

@@ -29,10 +29,18 @@ const ModalEditNota = ({ idNota, data, setData }) => {
         color: '',
     })
 
-    const { setMessageType, setShowMessage, setMessage } = useAuthContext();
+    const {
+        setMessageType,
+        setShowMessage,
+        setMessage,
+        error,
+        setError,
+        messageErrors,
+        setMessageErrors,
+    } = useAuthContext();
 
     const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
+    const handleClose = () => { setOpen(false); setError(null) };
 
 
     useEffect(() => {
@@ -47,14 +55,16 @@ const ModalEditNota = ({ idNota, data, setData }) => {
                     color: noteData.color || '',
                 });
             } catch (error) {
-                console.error(error);
+                setMessage(`Ops! algo deu errado ${error.response.data}`)
+                setMessageType('error');
+                setShowMessage(true);
             }
         };
 
         if (open) {
             fetchData();
         }
-    }, [idNota, open, id]);
+    }, [idNota, open, id, setMessage, setMessageType, setShowMessage]);
 
     const handleColorButtonClick = (event) => {
         const color = event.target.value;
@@ -87,10 +97,8 @@ const ModalEditNota = ({ idNota, data, setData }) => {
             setShowMessage(true);
             handleClose();
         } catch (error) {
-            setMessage(`Ops! algo deu errado ${error.response.data.errors}`)
-            setMessageType('error');
-            setShowMessage(true);
-            handleClose();
+            setError(true);
+            setMessageErrors(error.response.data)
         }
     }
 
@@ -120,6 +128,8 @@ const ModalEditNota = ({ idNota, data, setData }) => {
                                     name="title"
                                     value={nota.title}
                                     onChange={handleEdit}
+                                    feedbackInvalid={messageErrors.title}
+                                    invalid={error}
                                 />
                                 <CFormTextarea
                                     label="Descrição"
@@ -128,6 +138,8 @@ const ModalEditNota = ({ idNota, data, setData }) => {
                                     name='description'
                                     onChange={handleEdit}
                                     rows={5}
+                                    feedbackInvalid={messageErrors.description}
+                                    invalid={error}
                                 />
                                 <p className='mb-0'>Cor</p>
                                 <div className='d-flex gap-3'>
@@ -138,6 +150,8 @@ const ModalEditNota = ({ idNota, data, setData }) => {
                                         value='green'
                                         checked={selectedColor === 'green'}
                                         onChange={handleColorButtonClick}
+                                        feedbackInvalid={messageErrors.color}
+                                        invalid={error}
                                     />
 
                                     <CFormCheck
@@ -147,6 +161,8 @@ const ModalEditNota = ({ idNota, data, setData }) => {
                                         value='yellow'
                                         checked={selectedColor === 'yellow'}
                                         onChange={handleColorButtonClick}
+                                        feedbackInvalid={messageErrors.color}
+                                        invalid={error}
                                     />
 
                                     <CFormCheck
@@ -156,6 +172,8 @@ const ModalEditNota = ({ idNota, data, setData }) => {
                                         value='blue'
                                         checked={selectedColor === 'blue'}
                                         onChange={handleColorButtonClick}
+                                        feedbackInvalid={messageErrors.color}
+                                        invalid={error}
                                     />
 
                                     <CFormCheck
@@ -165,6 +183,8 @@ const ModalEditNota = ({ idNota, data, setData }) => {
                                         value='red'
                                         checked={selectedColor === 'red'}
                                         onChange={handleColorButtonClick}
+                                        feedbackInvalid={messageErrors.color}
+                                        invalid={error}
                                     />
                                 </div>
                             </CCol>

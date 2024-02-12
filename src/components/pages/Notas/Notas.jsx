@@ -118,8 +118,7 @@ export default function Notas() {
                                             </CCol>
                                         ))
                                     ) : (
-
-                                        <p className='d-flex w-100 mb-0'>Sem notas</p>
+                                        <p className='d-flex w-100 mb-2'>Sem notas</p>
                                     )}
                                 </CRow>
                             </Container>
