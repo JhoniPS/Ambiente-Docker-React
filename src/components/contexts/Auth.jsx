@@ -1,4 +1,4 @@
-import React, { useState, createContext, useContext } from "react";
+import React, { useState, createContext, useContext, useEffect } from "react";
 import Cookies from 'js-cookie';
 import api from "../../services/api";
 import { useNavigate } from "react-router-dom";
@@ -7,21 +7,60 @@ export const AuthContext = createContext({});
 
 export const AuthProvider = ({ children }) => {
   const [userType, setUserType] = useState("");
-  
+  const [codeCallback, setCodeCallback] = useState(null);
   const [error, setError] = useState(false);
-  const [messageErrors, setMessageErrors] = useState([]);
 
+  const [messageErrors, setMessageErrors] = useState([]);
   const [message, setMessage] = useState('');
   const [messageType, setMessageType] = useState('');
   const [showMessage, setShowMessage] = useState(false);
 
   const navigate = useNavigate();
 
+  useEffect(() => {
+    if (codeCallback !== null) {
+      const loginSigaa = async () => {
+        try {
+          const response = await api.get(`callback?code=${codeCallback}`);
+          const { api_token, type_user, email } = response.data;
+
+          Cookies.set('authToken', api_token.api_token, { expires: 7, secure: true, sameSite: 'Strict' });
+
+          switch (type_user.name) {
+            case 'administrador':
+              navigate('/administrador');
+              Cookies.set('userType', type_user.name);
+              break;
+            case 'gerente':
+              navigate('/gerente');
+              Cookies.set('userType', type_user.name);
+              break;
+            case 'representante':
+              navigate('/representante');
+              Cookies.set('userType', type_user.name);
+              Cookies.set('representante', email)
+              break;
+            case 'visualizador':
+              navigate('/visualizador');
+              Cookies.set('userType', type_user.name);
+              break;
+            default:
+              logout(api_token);
+          }
+        } catch (error) {
+          console.log(error);
+        }
+      };
+
+      loginSigaa();
+    }
+  }, [codeCallback]);
+
   const login = async ({ ...data }) => {
     try {
       const response = await api.post('login', data);
-
       const { token, type_user, email } = response.data;
+
       Cookies.set('authToken', token, { expires: 7, secure: true, sameSite: 'Strict' });
 
       switch (type_user.name) {
@@ -73,15 +112,21 @@ export const AuthProvider = ({ children }) => {
   };
 
   //teste
-  const api_token = '4c452a5d-4137-4ac5-88e1-128fd19d88e0';
+  const api_token = '571e99cc-f68b-492f-ad12-507ef4b4e112';
 
   const logoutSIGAA = async () => {
     try {
       await api.post('users/logout-ufopa', {}, {
         headers: {
-          'token': api_token
+          'Token': api_token
         }
       });
+
+      Cookies.remove('authToken', { secure: true, sameSite: 'Strict' });
+      Cookies.remove('userType');
+      Cookies.remove('representante');
+      setUserType(null);
+      navigate("/");
     } catch (error) {
       console.log(error.response);
     }
@@ -92,19 +137,23 @@ export const AuthProvider = ({ children }) => {
       value={{
         userType,
         setUserType,
+
         error,
         setError,
         messageErrors,
         setMessageErrors,
+
         login,
         logout,
         logoutSIGAA,
+
         message,
         messageType,
         showMessage,
         setMessage,
         setMessageType,
-        setShowMessage
+        setShowMessage,
+        setCodeCallback,
       }}
     >
       {children}

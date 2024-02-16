@@ -4,6 +4,8 @@ import { CCard, CCardBody, CCardHeader, CCol, CRow } from '@coreui/react';
 
 const TableGroupsDescription = ({ description }) => {
 
+    console.log(description)
+
     const getMembersCount = (members) => {
         return members ? members.length : null;
     };

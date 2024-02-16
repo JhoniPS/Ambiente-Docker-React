@@ -49,7 +49,6 @@ const GroupsRepresentante = () => {
                 <CCard>
                     <CCardBody className="d-flex flex-column gap-3">
                         <h2>Grupos</h2>
-                        <h4>FILTROS RÁPIDOS</h4>
                         <Container customClass="start">
                             <SubmitButton text="Mais Recentes" customClass="button_filtes_bar" onClick={() => setSortOrder('desc')} />
                             <SubmitButton text="Mais Antigos" customClass="button_filtes_bar" onClick={() => setSortOrder('asc')} />

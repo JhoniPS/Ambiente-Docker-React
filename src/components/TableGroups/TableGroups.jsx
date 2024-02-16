@@ -22,14 +22,14 @@ const TableGroups = ({ rota, data, setData }) => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await api.get('groups');
+                const response = (await api.get('groups'));
                 const groups = response.data.data;
                 if (representante) {
                     setData(groups.filter(group => group.representative.email === representante))
                 } else {
                     setData(groups);
                 }
-                
+
             } catch (error) {
                 console.error(error);
             }

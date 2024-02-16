@@ -59,7 +59,7 @@ const SignTypeUser = () => {
           <CRow className="justify-content-center">
             <CCol md={9} lg={7} xl={9}>
               <CCard className="mx-4">
-                <CCardHeader component="h2">Cadastrar Novo Tipo de Usuário</CCardHeader>
+                <CCardHeader component="h2">Novo Tipo de Usuário</CCardHeader>
                 <CCardBody className="p-4">
                   <CForm onSubmit={handleSubmit}>
                     <CFormInput

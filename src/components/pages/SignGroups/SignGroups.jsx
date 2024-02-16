@@ -13,7 +13,8 @@ import {
   CFormCheck,
   CFormInput,
   CFormTextarea,
-  CRow
+  CRow,
+  CSpinner
 } from '@coreui/react';
 import api from '../../../services/api';
 import { Steps } from 'antd';
@@ -28,15 +29,6 @@ const RepresentanteGroup = ({ representative, setRepresentative }) => {
 
   return (
     <section className='d-flex gap-2 flex-column'>
-      {/* <CFormInput
-        type='text'
-        label="Nome do Representante"
-        placeholder='exemplo@email.com'
-        name='representative'
-        value={representative}
-        onChange={handleChange}
-      /> */}
-
       <CFormInput
         type='text'
         label="Email do representante"
@@ -293,6 +285,7 @@ const SignGroups = () => {
   const [type_group, setType_group] = useState('interno');
   const [status, setStatus] = useState('EM ANDAMENTO');
   const [current, setCurrent] = useState(0);
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
 
@@ -341,7 +334,9 @@ const SignGroups = () => {
     };
 
     try {
+      setLoading(true);
       await api.post('groups', updatedFormulario).then(() => {
+        setLoading(false);
         navigate('/gerente');
         setMessage('Grupo criado com sucesso!');
         setMessageType('success');
@@ -373,7 +368,7 @@ const SignGroups = () => {
       <div className="bg-light min-vh-100 d-flex flex-row align-items-center">
         <CContainer>
           <CRow className="justify-content-center p-4">
-            <CCol  sm={8} md={10} lg={12} xl={12} xxl={12}>
+            <CCol sm={8} md={10} lg={12} xl={12} xxl={12}>
               <CCard className='w-100'>
                 <CCardHeader className='p-2' style={{ backgroundColor: 'transparent' }}>
                   <Steps current={current} items={items} type="navigation" />
@@ -395,7 +390,7 @@ const SignGroups = () => {
 
                       {current === steps.length - 1 && (
                         <CButton color="success" type='submit'>
-                          Feito
+                          {loading ? <><CSpinner component="span" size="sm" aria-hidden="true" /> Loading...</> : <>Feito</>}
                         </CButton>
                       )}
                     </div>

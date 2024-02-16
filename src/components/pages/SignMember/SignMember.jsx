@@ -1,5 +1,6 @@
 import { Fragment, useState } from "react";
-import { useLocation, useParams } from "react-router-dom";
+import { NavLink, useLocation, useParams } from "react-router-dom";
+import { AiOutlineClose } from "react-icons/ai";
 import useAuthContext from '../../contexts/Auth';
 import MenuAppBar from "../../layout/AppBar/MenuAppBar"
 import LinkButton from "../../layout/linkbutton/LinkButton";
@@ -15,13 +16,17 @@ import {
   CContainer,
   CForm,
   CFormInput,
-  CRow
+  CNavLink,
+  CRow,
+  CSpinner
 } from "@coreui/react";
 import Message from "../../layout/Message/Message";
 
 const SignMember = () => {
   const { id } = useParams();
+  const [loading, setLoading] = useState(false);
   const [member, setMember] = useState({
+    name: '',
     email: '',
     role: '',
     phone: '',
@@ -56,15 +61,18 @@ const SignMember = () => {
     e.preventDefault();
 
     try {
+      setLoading(true);
       await api.post(`groups/${id}/members`, { member });
-      setMessage('Adicionado com sucesso!')
-      setMessageType('success')
+      setLoading(false);
+
+      setMessage('Adicionado com sucesso!');
+      setMessageType('success');
       setShowMessage(true);
     } catch (error) {
       console.log(error);
+      setLoading(false);
       setError(true);
-      setMessageErrors(error.response.data.errors)
-
+      setMessageErrors(error.response.data.errors);
     }
   };
 
@@ -77,9 +85,19 @@ const SignMember = () => {
             <CCol md={10} sm={4} xl={12}>
               <CCardGroup>
                 <CCard>
-                  <CCardHeader component="h2">Cadastrar Membros</CCardHeader>
+                  <CCardHeader component="h2" className="d-flex justify-content-between">Cadastrar Membros <CNavLink to={backPage} component={NavLink}>
+                    <AiOutlineClose size={30} />
+                  </CNavLink></CCardHeader>
                   <CCardBody>
                     <CForm className="d-flex flex-column gap-2" onSubmit={Submit}>
+                      <CFormInput
+                        type="text"
+                        name="name"
+                        label="Nome"
+                        placeholder="Ex. Luiza"
+                        value={member.name}
+                        onChange={handleSubmit}
+                      />
                       <CFormInput
                         type="email"
                         name="email"
@@ -87,8 +105,6 @@ const SignMember = () => {
                         placeholder="name@example.com"
                         value={member.email}
                         onChange={handleSubmit}
-                        feedbackInvalid={messageErrors}
-                        invalid={error}
                       />
                       <CFormInput
                         type='tel'
@@ -97,8 +113,6 @@ const SignMember = () => {
                         placeholder="Digite o numero de telefone"
                         value={member.phone}
                         onChange={handleSubmit}
-                        feedbackInvalid={messageErrors}
-                        invalid={error}
                       />
                       <CFormInput
                         type='text'
@@ -107,8 +121,6 @@ const SignMember = () => {
                         placeholder=' Exemplo Professor'
                         value={member.role}
                         onChange={handleSubmit}
-                        feedbackInvalid={messageErrors}
-                        invalid={error}
                       />
                       <CRow className="d-flex gap-2">
                         <CCol>
@@ -118,8 +130,6 @@ const SignMember = () => {
                             name="entry_date"
                             value={member.entry_date}
                             onChange={handleSubmit}
-                            feedbackInvalid={messageErrors}
-                            invalid={error}
                           />
                         </CCol>
                         <CCol>
@@ -129,8 +139,6 @@ const SignMember = () => {
                             name="departure_date"
                             value={member.departure_date}
                             onChange={handleSubmit}
-                            feedbackInvalid={messageErrors}
-                            invalid={error}
                           />
                         </CCol>
                       </CRow>
@@ -139,7 +147,9 @@ const SignMember = () => {
                           <LinkButton text="Voltar" customClass="#6C757D" to={backPage} />
                         </CCol>
                         <CCol className="d-flex justify-content-end">
-                          <CButton style={{ background: '#548CA8', color: 'white', paddingInline: '1em' }} color="null" type="submit">Cadastrar</CButton>
+                          <CButton color="success" style={{ color: 'white', paddingInline: '1em' }} type="submit">
+                            {loading ? <><CSpinner component="span" size="sm" aria-hidden="true" /> Loading...</> : <>Cadastrar</>}
+                          </CButton>
                         </CCol>
                       </CRow>
                     </CForm>

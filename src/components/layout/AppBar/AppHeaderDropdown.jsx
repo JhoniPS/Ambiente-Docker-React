@@ -18,7 +18,7 @@ import avatar8 from '../../../img/BrasãoUfopa.png'
 import { useLocation } from 'react-router-dom';
 
 const AppHeaderDropdown = () => {
-  const { logout } = useContext(AuthContext);
+  const { logout, logoutSIGAA } = useContext(AuthContext);
 
   const location = useLocation();
   const userProfile = location.pathname.concat('', '/profile');
@@ -38,6 +38,10 @@ const AppHeaderDropdown = () => {
         <CDropdownItem href="#" onClick={logout}>
           <CIcon icon={cilLockLocked} className="me-2" />
           Logout
+        </CDropdownItem>
+        <CDropdownItem href="#" onClick={logoutSIGAA}>
+          <CIcon icon={cilLockLocked} className="me-2" />
+          Logout Sigaa
         </CDropdownItem>
       </CDropdownMenu>
     </CDropdown>

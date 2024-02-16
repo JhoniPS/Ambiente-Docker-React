@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import useAuthContext from '../../contexts/Auth';
 import logoImg from '../../../img/BrasãoUfopa.png';
 
@@ -26,13 +26,21 @@ import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import '@coreui/coreui/dist/css/coreui.min.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import Message from '../../layout/Message/Message';
+import { useLocation } from 'react-router-dom';
 
 const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
+    const location = useLocation();
 
-    const { login, error, messageErrors, showMessage, messageType, message, setShowMessage } = useAuthContext();
+    const { login, error, messageErrors, showMessage, messageType, message, setShowMessage, setCodeCallback } = useAuthContext();
+
+    useEffect(() => {
+        const codeSIGGA = new URLSearchParams(location.search).get('code');
+        setCodeCallback(codeSIGGA);
+    }, [location.search, setCodeCallback]);
+    
 
     const handleLogin = async (e) => {
         e.preventDefault();
@@ -86,7 +94,7 @@ const Login = () => {
                                                     border: '1px solid var(--cui-input-group-addon-border-color, #b1b7c1)'
                                                 }}
                                             >
-                                                {showPassword ? <FaEyeSlash /> : <FaEye />} {/* Alterna entre ícones de olho aberto e fechado */}
+                                                {showPassword ? <FaEyeSlash /> : <FaEye />}
                                             </CButton>
 
                                             <CFormInput
@@ -114,7 +122,7 @@ const Login = () => {
 
                                             <CCol xs={12} className='d-flex justify-content-center gap-4'>
                                                 <CLink href='/forget-password'>Esqueci minha senha</CLink>
-                                                <CLink href='http://localhost:8001/api/redirect'>Login SIGAA</CLink>
+                                                <CLink href='https://autenticacao.dev.ufopa.edu.br/authz-server/oauth//authorize?client_id=piape-vania-id&response_type=code&redirect_uri=http://localhost:3000'>Login SIGAA</CLink>
                                                 <CLink href='/signUser'>Cadastrar</CLink>
                                             </CCol>
                                         </CRow>

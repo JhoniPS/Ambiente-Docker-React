@@ -27,8 +27,15 @@ const TableMemberGroup = () => {
 
     fetchData();
   }, [id, setMembers]);
-  
+
+  console.log(members);
+
   const columns = [
+    {
+      id: 'Name',
+      header: 'Name',
+      accessorKey: 'user',
+    },
     {
       id: 'E-mail',
       header: 'E-mail',
