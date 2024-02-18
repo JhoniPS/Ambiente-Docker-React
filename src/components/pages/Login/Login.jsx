@@ -40,7 +40,7 @@ const Login = () => {
         const codeSIGGA = new URLSearchParams(location.search).get('code');
         setCodeCallback(codeSIGGA);
     }, [location.search, setCodeCallback]);
-    
+
 
     const handleLogin = async (e) => {
         e.preventDefault();
@@ -61,7 +61,7 @@ const Login = () => {
                 <CRow className="justify-content-center">
                     <CCol md={8}>
                         <CCardGroup>
-                            <CCard className="p-4">
+                            <CCard className="p-2">
                                 <CCardBody>
                                     <CForm style={{ textAlign: 'center' }} onSubmit={handleLogin}>
                                         <CImage src={logoImg} width={80} />
@@ -112,18 +112,17 @@ const Login = () => {
                                         </CInputGroup>
 
                                         <CRow>
-                                            <CCol xs={12} className='d-flex mb-4 gap-3 justify-content-center'>
-                                                <CButton color="primary" type='submit' style={{ width: '10em' }}>
+                                            <CCol xs={12} className='d-flex justify-content-between mb-2'>
+                                                <CLink href='/nova-senha'>Esqueceu a senha?</CLink>
+                                                <CLink href='/cadastrar-conta'>Criar nova conta</CLink>
+                                            </CCol>
+                                            <CCol xs={12} className='d-grid gap-3 '>
+                                                <CButton color="primary" type='submit'>
                                                     Login
                                                 </CButton>
-                                            </CCol>
-
-
-
-                                            <CCol xs={12} className='d-flex justify-content-center gap-4'>
-                                                <CLink href='/forget-password'>Esqueci minha senha</CLink>
-                                                <CLink href='https://autenticacao.dev.ufopa.edu.br/authz-server/oauth//authorize?client_id=piape-vania-id&response_type=code&redirect_uri=http://localhost:3000'>Login SIGAA</CLink>
-                                                <CLink href='/signUser'>Cadastrar</CLink>
+                                                <CButton color="success" href='https://autenticacao.dev.ufopa.edu.br/authz-server/oauth//authorize?client_id=piape-vania-id&response_type=code&redirect_uri=http://localhost:3000'>
+                                                    Login conta SIGAA
+                                                </CButton>
                                             </CCol>
                                         </CRow>
                                     </CForm>

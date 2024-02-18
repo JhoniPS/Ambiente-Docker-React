@@ -23,7 +23,7 @@ import { useLocation } from 'react-router-dom';
 
 const SignUser = () => {
   const location = useLocation();
-  const backPage = location.pathname.replace("/signUser", '/');
+  const backPage = location.pathname.replace("/cadastrar-conta", '/');
 
   const {
     showMessage,
@@ -76,7 +76,7 @@ const SignUser = () => {
     <div className="bg-light min-vh-100 d-flex flex-row align-items-center">
       <CContainer>
         <CRow className="justify-content-center">
-          <CCol md={9} lg={7} xl={6}>
+          <CCol md={9} lg={9} xl={10}>
             <CCard className="mx-4">
               <CCardBody className="p-4">
                 <CForm onSubmit={handleSubmit}>

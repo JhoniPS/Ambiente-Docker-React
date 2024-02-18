@@ -25,6 +25,7 @@ import Documents from "../components/pages/Documents/Documents";
 import HistoricoReuniao from "../components/pages/HistoricoReuniao/HistoricoReuniao";
 import Notas from "../components/pages/Notas/Notas";
 import Activity from "../components/pages/Atividades/Activity";
+import NewPassword from "../components/pages/NewPassword/NewPassword";
 
 const PrivateRoute = ({ children, requiredUserType }) => {
     const isAuthenticated = Cookies.get('authToken');
@@ -44,9 +45,10 @@ const PrivateRoute = ({ children, requiredUserType }) => {
 
 const routes = [
     /* Acesso Geral */
-    { path: '/', name: 'Login', element: <Login /> },
-    { path: '/Error404', name: 'Error404', element: <Error404 /> },
-    { path: '/signUser', name: 'SignUser', element: <SignUser /> },
+    { path: '/', element: <Login /> },
+    { path: '/Error404', element: <Error404 /> },
+    { path: '/cadastrar-conta', element: <SignUser /> },
+    { path: '/nova-senha', element: <NewPassword /> },
 
     /* Administrador */
     { path: '/administrador', element: <PrivateRoute requiredUserType="administrador"><Admin /></PrivateRoute> },

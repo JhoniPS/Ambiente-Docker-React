@@ -97,6 +97,8 @@ const SignMember = () => {
                         placeholder="Ex. Luiza"
                         value={member.name}
                         onChange={handleSubmit}
+                        feedbackInvalid={messageErrors.name}
+                        invalid={error}
                       />
                       <CFormInput
                         type="email"
@@ -105,6 +107,8 @@ const SignMember = () => {
                         placeholder="name@example.com"
                         value={member.email}
                         onChange={handleSubmit}
+                        feedbackInvalid={messageErrors.email}
+                        invalid={error}
                       />
                       <CFormInput
                         type='tel'
@@ -113,6 +117,8 @@ const SignMember = () => {
                         placeholder="Digite o numero de telefone"
                         value={member.phone}
                         onChange={handleSubmit}
+                        feedbackInvalid={messageErrors.phone}
+                        invalid={error}
                       />
                       <CFormInput
                         type='text'
@@ -121,6 +127,8 @@ const SignMember = () => {
                         placeholder=' Exemplo Professor'
                         value={member.role}
                         onChange={handleSubmit}
+                        feedbackInvalid={messageErrors.role}
+                        invalid={error}
                       />
                       <CRow className="d-flex gap-2">
                         <CCol>
@@ -130,6 +138,8 @@ const SignMember = () => {
                             name="entry_date"
                             value={member.entry_date}
                             onChange={handleSubmit}
+                            feedbackInvalid={messageErrors.entry_date}
+                            invalid={error}
                           />
                         </CCol>
                         <CCol>
@@ -139,6 +149,8 @@ const SignMember = () => {
                             name="departure_date"
                             value={member.departure_date}
                             onChange={handleSubmit}
+                            feedbackInvalid={messageErrors.departure_date}
+                            invalid={error}
                           />
                         </CCol>
                       </CRow>
