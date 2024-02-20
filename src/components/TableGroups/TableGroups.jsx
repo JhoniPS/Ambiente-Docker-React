@@ -1,100 +1,132 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import api from '../../services/api';
-import useAuthContext from '../contexts/Auth';
+import Cookies from 'js-cookie'
+import { MRT_Localization_PT_BR } from 'material-react-table/locales/pt-BR';
 
+import { MaterialReactTable, } from 'material-react-table';
 import { useNavigate } from 'react-router-dom';
-import { Table } from 'antd';
-import style from './TableGroups.module.css'
+import { IconContext } from 'react-icons';
+import { BsFillEyeFill } from "react-icons/bs";
+
+import { CButton } from '@coreui/react';
+
 import ModalDeleteGroup from '../Modals/modal_delete_group/ModalDeleteGroup';
 import ModalEditGroup from '../Modals/modal_edit_group/ModalEditGroup';
 
-const TableGroups = ({ rota }) => {
-    const { token } = useAuthContext();
-    const [data, setData] = useState([]);
-    const [loading, setLoading] = useState(false);
-    const [page, setPage] = useState(1);
-    const [pageSize, setPageSize] = useState(10);
+const TableGroups = ({ rota, data, setData }) => {
+    const userRole = Cookies.get('userType');
+    const representante = Cookies.get('representante');
+
     const navigate = useNavigate();
 
     useEffect(() => {
         const fetchData = async () => {
-            if (token) {
-                try {
-                    setLoading(true);
-                    const { data } = await api.get('group');
-                    const groups = data.data;
+            try {
+                const response = (await api.get('groups'));
+                const groups = response.data.data;
+                if (representante) {
+                    setData(groups.filter(group => group.representative.email === representante))
+                } else {
                     setData(groups);
-                    setLoading(false);
-                } catch (error) {
-                    console.log(error);
                 }
+
+            } catch (error) {
+                console.error(error);
             }
         };
 
         fetchData();
-    }, [token]);
-
-    const columns = [
-        {
-            title: 'Tipo do grupo',
-            dataIndex: 'type_group',
-            render: (type_group) => type_group.type
-        },
-        {
-            title: 'Nome',
-            dataIndex: 'type_group',
-            render: (type_group) => type_group.name
-        },
-        {
-            title: 'Equipe',
-            dataIndex: 'team',
-        },
-        {
-            title: 'Orgão',
-            dataIndex: 'organ',
-        },
-        {
-            title: 'Conselho',
-            dataIndex: 'council',
-        },
-        {
-            title: 'E-mail',
-            dataIndex: 'email',
-        },
-        {
-            title: 'Operações',
-            dataIndex: 'id',
-            align: 'center',
-            width: '0.1%',
-            render: (id) => (
-                <div className={style.operation}>
-                    <ModalDeleteGroup id={id} data={data} setData={setData} />
-                    <ModalEditGroup id={id} data={data} setData={setData} />
-                </div>
-            ),
-        },
-    ];
+    }, [setData, representante]);
 
     const handleRowClick = (record) => {
         navigate(`/${rota}/${record.id}`);
     };
 
+    const columns = [
+        {
+            id: 'Tipo',
+            header: 'Tipo',
+            accessorFn: (row) => row.type_group.type,
+        },
+        {
+            id: 'Status',
+            header: 'Status',
+            accessorFn: (row) => row.status,
+        },
+        {
+            id: 'Nome',
+            header: 'Nome',
+            accessorFn: (row) => row.type_group.name,
+        },
+        {
+            id: 'Equipe',
+            header: 'Equipe',
+            accessorKey: 'team',
+        },
+        {
+            id: 'Orgão',
+            header: 'Orgão',
+            accessorKey: 'organ',
+        },
+        {
+            id: 'Unidade',
+            header: 'Unidade',
+            accessorKey: 'unit',
+        },
+        {
+            id: 'Conselho',
+            header: 'Conselho',
+            accessorKey: 'council',
+        },
+        {
+            id: 'E-mail',
+            header: 'E-mail',
+            accessorKey: 'email',
+        },
+        {
+            header: null,
+            accessorKey: 'id',
+            columnDefType: 'display',
+            Cell: ({ row }) => (
+                <div className='d-flex align-items-center'>
+                    <IconContext.Provider value={{ color: '#1e212b', size: 25 }}>
+                        <CButton onClick={() => handleRowClick(row.original)} color='null'>
+                            <BsFillEyeFill />
+                        </CButton>
+                    </IconContext.Provider>
+
+                    {userRole === 'gerente' && (
+                        <div className="d-flex">
+                            <ModalDeleteGroup id={row.original.id} data={data} setData={setData} />
+                            <ModalEditGroup id={row.original.id} data={data} setData={setData} />
+                        </div>
+                    )}
+                </div>
+            ),
+        },
+    ];
+
     return (
-        <Table
-            bordered={true}
+        <MaterialReactTable
             rowKey={(record) => record.id}
             columns={columns}
-            dataSource={data}
-            responsive={true}
-            loading={loading}
-            pagination={{
-                current: page,
-                pageSize: pageSize,
-                onChange: (page, pageSize) => {
-                    setPage(page);
-                    setPageSize(pageSize)
-                }
+            data={data}
+            enableColumnFilterModes
+            enableColumnOrdering
+            enableGlobalFilter
+            paginationDisplayMode='pages'
+            localization={MRT_Localization_PT_BR}
+            muiTablePaperProps={{
+                elevation: 0,
+                sx: { borderRadius: '0', border: '1px solid #e0e0e0', boxShadow: 'none' },
             }}
+
+            muiTableProps={{
+                sx: {
+                    tableLayout: 'fixed',
+                },
+            }}
+
             onRow={(record) => {
                 return {
                     onClick: () => handleRowClick(record),

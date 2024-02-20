@@ -1,77 +1,87 @@
-import React, { Fragment, useState } from 'react'
-import { IconContext } from "react-icons";
-import { useLocation } from "react-router-dom";
-
-import Message from "../../layout/Message/Message";
-import HeaderBar from '../../layout/header/HeaderBar';
-import Container from '../../layout/container/Container'
+import React, { Fragment, useState, useEffect } from 'react';
+import useAuthContext from '../../contexts/Auth';
+import Message from '../../layout/Message/Message';
 import SubmitButton from '../../layout/submitbuttun/SubmitButton';
 import LinkButton from '../../layout/linkbutton/LinkButton';
+import TableGroups from '../../TableGroups/TableGroups';
 
-import { ImArrowLeft2 } from "react-icons/im";
-import { IoIosFunnel } from "react-icons/io";
-import { IoMdAdd } from "react-icons/io";
-
-import style from './Groups.module.css'
-import Modal from '../../Modals/modal_filter_groups/Modal';
-import TableGroups from '../../TableGroups/TableGroups'
+import { IconContext } from 'react-icons';
+import { IoMdAdd } from 'react-icons/io';
+import { CCard, CCardBody } from '@coreui/react';
 
 const GroupsGerente = () => {
-    const [openModal, setOpenModal] = useState(false);
+    const [data, setData] = useState([]);
+    const [filteredData, setFilteredData] = useState([]);
+    const [sortOrder, setSortOrder] = useState('desc');
+    const [groupType, setGroupType] = useState("");
 
-    const location = useLocation();
-    let message = '';
-    let messagetype = '';
+    const { message, messageType, showMessage, setShowMessage } = useAuthContext();
 
-    if (location.state) {
-        message = location.state.message;
-        messagetype = location.state.messagetype;
-    }
+    useEffect(() => {
+        const filterGroups = () => {
+            return [...data].filter((group) => {
+                if (groupType === 'interno') {
+                    return group.type_group.type === 'interno';
+                } else if (groupType === 'externo') {
+                    return group.type_group.type === 'externo';
+                } else {
+                    return true;
+                }
+            });
+        };
+        const filteredGroups = filterGroups();
+        setFilteredData(filteredGroups);
+    }, [data, groupType]);
+
+    useEffect(() => {
+        if (groupType === "") {
+            setFilteredData([...data]);
+        }
+    }, [data, groupType]);
+
+    const sortUsers = () => {
+        return [...filteredData].sort((a, b) => {
+            if (sortOrder === 'desc') {
+                return new Date(b.created_at) - new Date(a.created_at);
+            } else {
+                return new Date(a.created_at) - new Date(b.created_at);
+            }
+        });
+    };
 
     return (
         <Fragment>
-            <HeaderBar text="PAINEL DE CONTROLE" backPageIcon={<ImArrowLeft2 size={25} />} backPage="/gerente" />
-            <div className={style.groups}>
-                <h2>Grupos</h2>
-                <section className={style.section_search}>
-                    <LinkButton
-                        text="Adicionar Grupo"
-                        customClass="add"
-                        to="/signGroups"
-                        icon={
-                            <IconContext.Provider value={{ size: '2rem' }}>
-                                <IoMdAdd />
-                            </IconContext.Provider>
-                        }
-                    />
+            <div className="d-flex flex-column p-4 gap-4 h-100">
+                <CCard>
+                    <CCardBody className="d-flex flex-column gap-3">
+                        <h3 className='text-h3 mb-0'>Grupos</h3>
+                        <section className='mb-0'>
+                            <LinkButton
+                                text="Adicionar Grupo"
+                                to="/gerente-cadastrar-grupo"
+                                icon={
+                                    <IconContext.Provider value={{ size: '1rem' }}>
+                                        <IoMdAdd size={20} />
+                                    </IconContext.Provider>
+                                }
+                            />
+                        </section>
 
-                    <SubmitButton
-                        text="Filtro"
-                        customClass="button_filter"
-                        onClick={() => setOpenModal(true)}
-                        icon={
-                            <IconContext.Provider value={{ size: '1.6rem' }}>
-                                <IoIosFunnel />
-                            </IconContext.Provider>
-                        }
-                    />
-                </section>
-
-                <Modal
-                    openModal={openModal}
-                    setOpenModal={() => setOpenModal(!openModal)}
-                />
-
-                <h4>FILTROS RÁPIDOS</h4>
-                <Container customClass='start'>
-                    <SubmitButton text="Mais Recentes" customClass="button_filtes_bar" />
-                    <SubmitButton text="Mais Antigos" customClass="button_filtes_bar" />
-                </Container>
-                <TableGroups rota="detalhes-de-grupos-gerente" />
-                {message && <Message type={messagetype} msg={message} />}
+                        <h4 className='mb-0'>FILTROS RÁPIDOS</h4>
+                        <section className="d-flex align-items-start gap-2 mb-3">
+                            <SubmitButton text="Mais Recentes" style={{ opacity: '0.9' }} customClass="button_filtes_bar" onClick={() => setSortOrder('desc')} />
+                            <SubmitButton text="Mais Antigos" customClass="button_filtes_bar" onClick={() => setSortOrder('asc')} />
+                            <SubmitButton text="Grupos Internos" customClass="button_filtes_bar" onClick={() => setGroupType('interno')} />
+                            <SubmitButton text="Grupos Externos" customClass="button_filtes_bar" onClick={() => setGroupType('externo')} />
+                            <SubmitButton text="Mostrar Todos" customClass="button_filtes_bar" onClick={() => setGroupType('')} />
+                        </section>
+                        <TableGroups rota="gerente-detalhes-de-grupos" data={sortUsers()} setData={setData} />
+                    </CCardBody>
+                </CCard>
+                {showMessage && <Message type={messageType} msg={message} setShowMessage={setShowMessage} />}
             </div>
         </Fragment>
     );
-}
+};
 
 export default GroupsGerente;

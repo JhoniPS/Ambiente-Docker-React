@@ -1,7 +1,7 @@
 .btn {
     display: flex;
-    width: 146px;
-    height: 38px;
+    width: 170px;
+    height: 40px;
     background-color: #2C74AC;
     color: #FFF;
     border: none;
@@ -13,19 +13,9 @@
     cursor: pointer;
     justify-content: center;
     align-items: center;
+    outline: none;
     border-radius: 10px;
     gap: 8px;
-}
-
-.button_editar_perfil {
-    width: 146px;
-    height: 38px;
-    justify-content: center;
-    align-items: center;
-    border-radius: 10px;
-    border: 1px solid #2C74AC;
-    gap: 8px;
-    color: #FFF;
 }
 
 .button_back {
@@ -59,6 +49,21 @@
     display: flex;
     width: 168px;
     height: 48px;
+    padding: 10px 24px 10px 16px;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    border-radius: 8px;
+    border: 1px solid #2C74AC;
+    color: #FFF;
+    background: #2C74AC;
+}
+
+
+.salvar {
+    display: flex;
+    width: 146px;
+    height: 38px;
     padding: 10px 24px 10px 16px;
     justify-content: center;
     align-items: center;

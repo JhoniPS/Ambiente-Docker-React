@@ -7,7 +7,7 @@ import Modal from '@mui/material/Modal';
 import Button from '@mui/material/Button';
 import { IconContext } from 'react-icons';
 import { TextField } from '@mui/material';
-import { IoPencilSharp } from "react-icons/io5";
+import { AiFillEdit } from 'react-icons/ai';
 import styles from './EditUser.module.css'
 
 
@@ -44,7 +44,7 @@ const EditUser = ({ id, data, setData }) => {
             }
 
             setData(data.map(item => (item.id === id ? updatedUser : item)));
-            navigate('/users', {
+            navigate('/administrador', {
                 state: {
                     message: 'Atualizado com sucesso!',
                     messageType: 'success',
@@ -60,7 +60,7 @@ const EditUser = ({ id, data, setData }) => {
                 password: apiErrors.password ? apiErrors.password[0] : null,
             });
 
-            navigate('/users', { state: { message: 'Ops algo deu errado!', messagetype: 'error' } });
+            navigate('/administrador', { state: { message: 'Ops algo deu errado!', messagetype: 'error' } });
         }
     }
 
@@ -74,14 +74,17 @@ const EditUser = ({ id, data, setData }) => {
                 console.error(error);
             }
         };
-        fetchData();
-    }, [id]);
+
+        if (open) {
+            fetchData();
+        }
+    }, [open, id]);
 
     return (
         <Fragment>
             <IconContext.Provider value={{ color: "#2C74AC", size: 20 }}>
                 <Button onClick={handleOpen}>
-                    <IoPencilSharp />
+                    <AiFillEdit />
                 </Button>
             </IconContext.Provider>
             <Modal
@@ -128,23 +131,7 @@ const EditUser = ({ id, data, setData }) => {
                                 />
                             </div>
 
-                            <div className={styles.inputField}>
-                                <TextField
-                                    type='password'
-                                    label="Senha"
-                                    name='password'
-                                    placeholder='Digite uma nova senha'
-                                    value={password}
-                                    onChange={(e) => setPassword(e.target.value)}
-                                    focused
-                                    error={errorMessages.password !== null}
-                                    helperText={errorMessages.password}
-                                    sx={{
-                                        width: '100%',
-                                    }}
-                                />
-                            </div>
-
+                           
                             <div>
                                 <SubmitButton text="Voltar" customClass="button_back" onClick={handleClose} />
                                 <SubmitButton text="Editar" customClass="button_editar_perfil" />

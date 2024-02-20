@@ -1,75 +1,104 @@
-import React, { Fragment } from "react";
-import HeaderBar from "../../layout/header/HeaderBar";
-import { ImArrowLeft2 } from "react-icons/im";
-import style from "./OverviewGroupGerente.module.css"
-import Container from "../../layout/container/Container";
-import Card from "../../card/Card";
-import { Divider } from 'antd';
+import React, { Fragment, useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { cilDescription, cilNotes, cilTask, cilList } from '@coreui/icons';
+import { CCard, CCardBody, CRow } from "@coreui/react";
+import api from "../../../services/api";
 
-import img from '../../../img/icon _group.svg'
-import img2 from '../../../img/icon _work.svg'
-import img3 from '../../../img/verificacao-de-lista.svg'
+import MenuAppBar from "../../layout/AppBar/MenuAppBar";
+import LinkButton from "../../layout/linkbutton/LinkButton";
+import Card from "../../card/Card";
+import { IoMdAdd } from 'react-icons/io';
+
 import TableGroupsDescription from "../../TableGroupsDescription/TableGroupsDescrition";
 import TableDetalhe from "../../TableDetalhes/TableDetalhe";
-import TableRepresentativeGroup from "../../TableRepresentativeGroup/TableRepresentativeGroup";
-import TableMemberGroupGerente from "../../TableMemberGroupGerente/TableMemberGroupGerente";
+import TableMemberGroup from "../../TableMemberGroup/TableMemberGroup";
 import Observations from "../../layout/Observations/Observations"
 
 const OverviewGroupGerente = () => {
+  const { id } = useParams();
+  const [data, setData] = useState({});
+  const [observacao, setObservacao] = useState("");
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const { data } = await api.get(`groups/${id}`);
+        const group = data.data;
+        const observacao = data.data.observations;
+
+        setData(group);
+        setObservacao(observacao);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchData();
+  }, [id]);
+
   return (
     <Fragment>
-      <HeaderBar text="PAINEL DE CONTROLE" backPageIcon={<ImArrowLeft2 size={25} />} backPage="/groups-gerente" />
-      <div className={style.representatives}>
-        <h2>Overview</h2>
-        <Container customClass='start'>
+      <MenuAppBar backStep="/gerente" />
+      <div className="d-flex flex-column p-5 gap-3 h-100">
+        <h2>Visão Geral</h2>
+        <CRow>
           <Card
-            icon={img}
-            customClass={'overViewCard'}
+            icon={cilDescription}
             title="Notas"
-            description="Gerenciar presentante do sistema"
+            description="Gerencia Notas"
+            to={`/gerente-detalhes-de-grupos/${id}/notas`}
           />
           <Card
-            icon={img2}
-            customClass={'overViewCard'}
-            title="Atividades"
-            description="Gerenciar grupos do sistema"
-          />
-          <Card
-            icon={img3}
-            customClass={'overViewCard'}
-            title="Histórico de reuniões"
-            description="Gerencie suas tarefas"
-          />
-          <Card
-            icon={img3}
-            customClass={'overViewCard'}
+            icon={cilNotes}
             title="Documentos"
-            description="Gerencie suas tarefas"
+            description="Gerencia Documentos"
+            to={`/gerente-detalhes-de-grupos/${id}/documentos`}
           />
-        </Container>
+          <Card
+            icon={cilTask}
+            title="Atividades"
+            description="Gerencia Atividades"
+            to={`/gerente-detalhes-de-grupos/${id}/atividades`}
+          />
+          <Card
+            icon={cilList}
+            title="Reuniões"
+            description="Gerencia Reuniões"
+            to={`/gerente-detalhes-de-grupos/${id}/historico-de-reunioes`}
+          />
+        </CRow>
 
-        <TableGroupsDescription />
+        <TableGroupsDescription description={data} />
 
-        <Divider />
+        <CCard style={{ boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
+          <CCardBody>
+            <h2 style={{ paddingLeft: '15px' }}>Detalhes</h2>
+            <TableDetalhe data={data} />
+          </CCardBody>
+        </CCard>
 
-        <h2>Detalhes</h2>
-        <TableDetalhe />
+        <CCard style={{ boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
+          <CCardBody>
+            <div className="d-flex justify-content-between align-items-center w-100 h-auto">
+              <h2>Membros</h2>
+              <LinkButton
+                text="Adicionar Membro"
+                to="adicionar-membro"
+                icon={<IoMdAdd size={22} />}
+              />
+            </div>
+            <TableMemberGroup />
+          </CCardBody>
+        </CCard>
 
-        <h2>Membros</h2>
-        <TableMemberGroupGerente />
-
-        <div className={style.container_representantes_observacoes}>
-          <section>
-            <h2>Representantes</h2>
-            <TableRepresentativeGroup />
-          </section>
-          <section className={style.observacoes}>
+        <CCard style={{ boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
+          <CCardBody>
             <h2>Observações</h2>
-            <Observations />
-          </section>
-        </div>
+            <Observations data={observacao} />
+          </CCardBody>
+        </CCard>
       </div>
-    </Fragment>
+    </Fragment >
   );
 };
 

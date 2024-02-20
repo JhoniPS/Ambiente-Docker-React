@@ -1,72 +1,34 @@
-import { Fragment, useState, useEffect } from "react";
-import HeaderBar from "../../layout/header/HeaderBar";
-import SubmitButton from "../../layout/submitbuttun/SubmitButton"
-
-import { ImArrowLeft2 } from "react-icons/im";
-import { IoIosFunnel } from "react-icons/io";
-import { IoMdAdd } from "react-icons/io";
-import style from "./Users.module.css"
-
+import { Fragment } from "react";
 import TableUser from "../../TableUser/TableUser";
-import Modal from "../../Modals/modal_filter_user/Modal";
-import { IconContext } from "react-icons";
-import LinkButton from "../../layout/linkbutton/LinkButton";
-import { useLocation } from "react-router-dom";
 import Message from "../../layout/Message/Message";
+import TypeUsers from '../TypeUsers/TypeUsers'
+import useAuthContext from '../../contexts/Auth';
+
+import { CCard, CCardBody } from "@coreui/react";
 
 const Users = () => {
-  const [openModal, setOpenModal] = useState(false);
-  const location = useLocation();
-
-  const [message, setMessage] = useState('');
-  const [messageType, setMessageType] = useState('');
-  const [showMessage, setShowMessage] = useState(false);
-
-  useEffect(() => {
-    if (location.state) {
-      setMessage(location.state.message);
-      setMessageType(location.state.messageType);
-      setShowMessage(location.state.showMessage);
-    }
-
-  }, [location.state]);
+  const {
+    message,
+    messageType,
+    showMessage,
+    setShowMessage
+  } = useAuthContext();
 
   return (
     <Fragment>
-      <HeaderBar text="PAINEL DE CONTROLE" backPageIcon={<ImArrowLeft2 size={25} />} backPage="/administrador" />
-      <div className={style.users}>
-        <h2>Usuários</h2>
-        <section className={style.section_search}>
-          <SubmitButton
-            text="Filtro"
-            customClass="button_filter"
-            onClick={() => setOpenModal(true)}
-            icon={
-              <IconContext.Provider value={{ size: 20 }}>
-                <IoIosFunnel />
-              </IconContext.Provider>
-            }
-          />
-          <LinkButton
-            text="Adicionar Usuário"
-            customClass="add"
-            to="/signUser"
-            icon={
-              <IconContext.Provider value={{ size: 25 }}>
-                <IoMdAdd />
-              </IconContext.Provider>
-            }
-          />
-        </section>
+      <div className="d-flex flex-column p-4 gap-2 h-100">
+        <CCard className="md-2">
+          <CCardBody className="d-flex flex-column gap-3">
+            <h2 className="mb-0">Usuários</h2>
+            <TableUser />
+          </CCardBody>
+        </CCard>
 
-        <Modal openModal={openModal} setOpenModal={() => setOpenModal(!openModal)} />
-
-        <h4>FILTROS RÁPIDOS</h4>
-        <section className={style.button_filters}>
-          <SubmitButton text="Mais Recentes" customClass="button_filtes_bar" />
-          <SubmitButton text="Mais Antigos" customClass="button_filtes_bar" />
-        </section>
-        <TableUser />
+        <CCard className="md-2">
+          <CCardBody>
+            <TypeUsers />
+          </CCardBody>
+        </CCard>
         {showMessage && <Message type={messageType} msg={message} setShowMessage={setShowMessage} />}
       </div>
     </Fragment>

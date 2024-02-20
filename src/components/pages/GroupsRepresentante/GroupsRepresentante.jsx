@@ -1,56 +1,64 @@
-import React, { Fragment, useState } from 'react'
-import HeaderBar from '../../layout/header/HeaderBar';
+import React, { Fragment, useState, useEffect } from 'react'
 import SubmitButton from '../../layout/submitbuttun/SubmitButton';
 
-import { ImArrowLeft2 } from "react-icons/im";
-import style from './Groups.module.css'
-
-import Modal from '../../Modals/modal_filter_groups/Modal';
 import TableGroups from '../../TableGroups/TableGroups'
+import Container from '../../layout/container/Container';
+import { CCard, CCardBody } from '@coreui/react';
 
 const GroupsRepresentante = () => {
-    const [openModal, setOpenModal] = useState(false);
+    const [data, setData] = useState([]);
+    const [filteredData, setFilteredData] = useState([]);
+    const [sortOrder, setSortOrder] = useState("desc");
+    const [groupType, setGroupType] = useState("");
+
+    useEffect(() => {
+        const filterGroups = () => {
+            return [...data].filter((group) => {
+                if (groupType === 'interno') {
+                    return group.type_group.type === 'interno';
+                } else if (groupType === 'externo') {
+                    return group.type_group.type === 'externo';
+                } else {
+                    return true;
+                }
+            });
+        };
+        const filteredGroups = filterGroups();
+        setFilteredData(filteredGroups);
+    }, [data, groupType]);
+
+    const sortUsers = () => {
+        return [...filteredData].sort((a, b) => {
+            if (sortOrder === 'desc') {
+                return new Date(b.created_at) - new Date(a.created_at);
+            } else {
+                return new Date(a.created_at) - new Date(b.created_at);
+            }
+        });
+    };
+
+    useEffect(() => {
+        if (groupType === "") {
+            setFilteredData([...data]);
+        }
+    }, [data, groupType]);
 
     return (
         <Fragment>
-            <HeaderBar text="PAINEL DE CONTROLE" backPageIcon={<ImArrowLeft2 size={25} />} backPage="/representante" />
-            <div className={style.groups}>
-                <h2>Grupos</h2>
-                {/* <section className={style.section_search}>
-                    <LinkButton
-                        text="Adicionar Grupo"
-                        customClass="add"
-                        to="/signGroups"
-                        icon={
-                            <IconContext.Provider value={{ size: 25 }}>
-                                <IoMdAdd />
-                            </IconContext.Provider>
-                        }
-                    />
-
-                    <SubmitButton
-                        text="Filtro"
-                        customClass="button_filter"
-                        onClick={() => setOpenModal(true)}
-                        icon={
-                            <IconContext.Provider value={{ size: 20 }}>
-                                <IoIosFunnel />
-                            </IconContext.Provider>
-                        }
-                    />
-                </section> */}
-
-                <Modal
-                    openModal={openModal}
-                    setOpenModal={() => setOpenModal(!openModal)}
-                />
-
-                <h4>FILTROS RÁPIDOS</h4>
-                <section className={style.button_filters}>
-                    <SubmitButton text="Mais Recentes" customClass="button_filtes_bar" />
-                    <SubmitButton text="Mais Antigos" customClass="button_filtes_bar" />
-                </section>
-                <TableGroups rota="detalhes-de-grupos-representante" />
+            <div className="d-flex flex-column p-4 gap-4 h-100">
+                <CCard>
+                    <CCardBody className="d-flex flex-column gap-3">
+                        <h2>Grupos</h2>
+                        <Container customClass="start">
+                            <SubmitButton text="Mais Recentes" customClass="button_filtes_bar" onClick={() => setSortOrder('desc')} />
+                            <SubmitButton text="Mais Antigos" customClass="button_filtes_bar" onClick={() => setSortOrder('asc')} />
+                            <SubmitButton text="Grupos Internos" customClass="button_filtes_bar" onClick={() => setGroupType('interno')} />
+                            <SubmitButton text="Grupos Externos" customClass="button_filtes_bar" onClick={() => setGroupType('externo')} />
+                            <SubmitButton text="Mostrar Todos" customClass="button_filtes_bar" onClick={() => setGroupType('')} />
+                        </Container>
+                        <TableGroups rota="representante-detalhes-de-grupos" data={sortUsers()} setData={setData} />
+                    </CCardBody>
+                </CCard>
             </div>
         </Fragment>
     );

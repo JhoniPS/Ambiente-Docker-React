@@ -1,20 +1,42 @@
-import React, { useEffect, useState, Fragment } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from 'react';
 import useAuthContext from '../../contexts/Auth';
 import api from '../../../services/api';
 
-import styles from './SignUser.module.css'
-import LinkButton from '../../layout/linkbutton/LinkButton';
-import SubmitButton from '../../layout/submitbuttun/SubmitButton';
-import HeaderBar from '../../layout/header/HeaderBar';
+import {
+  CButton,
+  CCard,
+  CCardBody,
+  CCol,
+  CContainer,
+  CForm,
+  CFormInput,
+  CInputGroup,
+  CInputGroupText,
+  CRow,
+} from '@coreui/react'
+import CIcon from '@coreui/icons-react'
+import { cilLockLocked, cilUser } from '@coreui/icons'
 
-import { Select, ConfigProvider } from 'antd';
-import { TextField } from '@mui/material';
-import { ImArrowLeft2 } from "react-icons/im";
+import Message from '../../layout/Message/Message';
+import LinkButton from '../../layout/linkbutton/LinkButton';
+import { useLocation } from 'react-router-dom';
 
 const SignUser = () => {
-  const { token } = useAuthContext();
-  const navigate = useNavigate();
+  const location = useLocation();
+  const backPage = location.pathname.replace("/cadastrar-conta", '/');
+
+  const {
+    showMessage,
+    messageType,
+    message,
+    setMessageType,
+    setShowMessage,
+    setMessage,
+    error,
+    setError,
+    messageErrors,
+    setMessageErrors
+  } = useAuthContext();
 
   const [user, setUser] = useState({
     name: '',
@@ -23,48 +45,23 @@ const SignUser = () => {
     c_password: '',
   });
 
-  const [errors, setErrors] = useState({
-    name: '',
-    email: '',
-    password: '',
-    c_password: '',
-    type_user_id: '',
-  });
-
-  const [type_user, setType_user] = useState(0);
-  const [option, setOption] = useState([]);
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const updateUser = {
-      ...user,
-      type_user_id: type_user.id
-    }
-
     try {
-      setErrors({
-        name: '',
-        email: '',
-        password: '',
-        c_password: '',
-        type_user_id: '',
-      });
-
-      await api.post('/register', updateUser).then(() => {
-        navigate('/users', {
-          state: {
-            message: 'Criado com sucesso!',
-            messageType: 'success',
-            showMessage: true,
-          }
-        });
-      });
+      await api.post('/register', user);
+      setShowMessage(true);
+      setMessage('Criado com sucesso!');
+      setMessageType('success');
 
     } catch (error) {
-      if (error.response && error.response.data && error.response.data.errors) {
-        setErrors(error.response.data.errors);
+      if (error.response.request.status === 400) {
+        setShowMessage(true);
+        setMessage(`ERROR: ${error.response.data.errors}`);
+        setMessageType('error');
       }
+      setError(true);
+      setMessageErrors(error.response.data.errors);
     }
   }
 
@@ -75,148 +72,85 @@ const SignUser = () => {
     }));
   };
 
-  const onChange = (value, option) => {
-    setType_user({
-      id: value,
-      name: option?.label
-    });
-  }
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        if (token) {
-          const apiResponse = await api.get('type-user');
-          const options = apiResponse.data.map(type => ({
-            value: type.id,
-            label: type.name,
-          }));
-          setOption(options);
-        }
-      } catch (error) {
-        if (error.response.status === 401) {
-          console.log(error)
-        }
-      }
-    }
-
-    fetchData();
-  }, [token]);
-
-
   return (
-    <Fragment>
-      <HeaderBar text="PAINEL DE CONTROLE" backPageIcon={<ImArrowLeft2 size={25} />} backPage="/users" />
-      <div className={styles.sign_user}>
-        <section>
-          <h4>Cadastrar Usuário</h4>
-          <div>
-            <form className={styles.Form} onSubmit={handleSubmit}>
-              <div className={styles.containerInput}>
-                <TextField
-                  type='text'
-                  label="Nome"
-                  name='name'
-                  placeholder='Jhonicley P. Silva'
-                  value={user.name}
-                  onChange={handlChange}
-                  focused
-                  sx={{
-                    width: '100%',
-                  }}
-                  helperText={errors.name}
-                  error={Boolean(errors.name)}
-                />
-              </div>
-              <div className={styles.containerInput}>
-                <TextField
-                  type='e-mail'
-                  label="E-mail"
-                  name='email'
-                  placeholder='Digite uma nova senha'
-                  value={user.email}
-                  onChange={handlChange}
-                  focused
-                  sx={{
-                    width: '100%',
-                  }}
-                  helperText={errors.email}
-                  error={Boolean(errors.email)}
-                />
-              </div>
-
-              <div className={styles.containerInput}>
-                <TextField
-                  type='password'
-                  label="Senha"
-                  name='password'
-                  placeholder='Digite uma nova senha'
-                  value={user.password}
-                  onChange={handlChange}
-                  focused
-                  sx={{
-                    width: '100%',
-                  }}
-                  helperText={errors.password}
-                  error={Boolean(errors.password)}
-                />
-              </div>
-
-              <div className={styles.containerInput}>
-                <TextField
-                  type='password'
-                  label="Confirmação de senha"
-                  name='c_password'
-                  placeholder='Digite a senha novamente'
-                  value={user.c_password}
-                  onChange={handlChange}
-                  focused
-                  sx={{
-                    width: '100%',
-                  }}
-                  helperText={errors.c_password}
-                  error={Boolean(errors.c_password)}
-                />
-              </div>
-
-              <ConfigProvider
-                theme={{
-                  token: {
-                    colorBorder: '#2C74AC',
-                    lineWidth: 2,
-                    controlHeight: 45,
-                  },
-                }}
-              >
-                <Select
-                  showSearch
-                  getPopupContainer={(trigger) => {
-                    return trigger;
-                  }}
-                  style={{
-                    width: '100%',
-                  }}
-                  size='large'
-                  label="Tipo de Usuário"
-                  placeholder="Selecione um tipo de usuário"
-                  onChange={onChange}
-                  optionFilterProp='children'
-                  filterOption={(input, option) =>
-                    (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
-                  }
-                  options={option}
-                />
-              </ConfigProvider>
-
-              <div>
-                <LinkButton text="Voltar" to="/users" customClass="button_back" />
-                <SubmitButton text="Cadastrar" customClass="button_editar_perfil" />
-              </div>
-            </form>
-          </div >
-        </section>
-      </div>
-    </Fragment>
+    <div className="bg-light min-vh-100 d-flex flex-row align-items-center">
+      <CContainer>
+        <CRow className="justify-content-center">
+          <CCol md={9} lg={9} xl={10}>
+            <CCard className="mx-4">
+              <CCardBody className="p-4">
+                <CForm onSubmit={handleSubmit}>
+                  <h1>Cadastrar</h1>
+                  <p className="text-medium-emphasis">Crie sua conta</p>
+                  <CInputGroup className="mb-3">
+                    <CInputGroupText>
+                      <CIcon icon={cilUser} />
+                    </CInputGroupText>
+                    <CFormInput
+                      placeholder="Nome de usuário"
+                      type='text'
+                      name='name'
+                      value={user.name}
+                      onChange={handlChange}
+                      feedbackInvalid={messageErrors.name}
+                      invalid={error}
+                    />
+                  </CInputGroup>
+                  <CInputGroup className="mb-3">
+                    <CInputGroupText>@</CInputGroupText>
+                    <CFormInput
+                      placeholder="Email"
+                      autoComplete="email"
+                      type='e-mail'
+                      name='email'
+                      value={user.email}
+                      onChange={handlChange}
+                      feedbackInvalid={messageErrors.email}
+                      invalid={error}
+                    />
+                  </CInputGroup>
+                  <CInputGroup className="mb-3">
+                    <CInputGroupText>
+                      <CIcon icon={cilLockLocked} />
+                    </CInputGroupText>
+                    <CFormInput
+                      type="password"
+                      placeholder="Senha"
+                      autoComplete="Senha"
+                      name='password'
+                      value={user.password}
+                      onChange={handlChange}
+                      feedbackInvalid={messageErrors.password}
+                      invalid={error}
+                    />
+                  </CInputGroup>
+                  <CInputGroup className="mb-4">
+                    <CInputGroupText>
+                      <CIcon icon={cilLockLocked} />
+                    </CInputGroupText>
+                    <CFormInput
+                      type="password"
+                      placeholder="Repetir senha"
+                      autoComplete="new-password"
+                      name='c_password'
+                      value={user.c_password}
+                      onChange={handlChange}
+                      feedbackInvalid={messageErrors.c_password}
+                      invalid={error}
+                    />
+                  </CInputGroup>
+                  <div className="d-grid gap-2">
+                    <CButton color="success" type='submit'>Criar Conta</CButton>
+                    <LinkButton text="Voltar" customClass="#6C757D" to={backPage} />
+                  </div>
+                </CForm>
+              </CCardBody>
+            </CCard>
+          </CCol>
+        </CRow>
+      </CContainer>
+      {showMessage && <Message type={messageType} msg={message} setShowMessage={setShowMessage} />}
+    </div>
   )
 }
 

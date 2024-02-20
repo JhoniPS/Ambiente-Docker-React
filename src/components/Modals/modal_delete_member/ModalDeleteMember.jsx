@@ -1,101 +1,71 @@
 import React, { useState } from 'react';
-import api from '../../../services/api'
-import styleButton from './modal_delete_member.module.css'
+import useAuthContext from '../../contexts/Auth';
+import api from '../../../services/api';
 
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Modal from '@mui/material/Modal';
 import { IconContext } from 'react-icons';
-import { IoTrash } from "react-icons/io5";
-import { Typography } from '@mui/material';
+import { BsFillTrashFill } from 'react-icons/bs';
+import {
+    CButton,
+    CModal,
+    CModalBody,
+    CModalFooter,
+    CModalHeader,
+    CModalTitle
+} from '@coreui/react';
+import { useParams } from 'react-router-dom';
 
-const style = {
-    position: 'fixed',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-    textAlign: 'justify',
-    gap: '2em',
-    backgroundColor: '#FFDAD6',
-    width: '400px',
-    height: '200px',
-    padding: '2.5rem',
-    outline: 'none',
-    borderRadius: '15px',
-    boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)',
-};
-
-const styleDescrition = {
-    color: '#1D1B20',
-    alignSelf: 'stretch',
-    fontFeatureSettings: "'clig' off, 'liga' off",
-    fontFamily: 'Roboto',
-    fontSize: '19px',
-    fontStyle: 'normal',
-    fontWeight: 400,
-    lineHeight: '20px',
-    letterSpacing: '0.20px'
-};
-
-const styleTitle = {
-    color: '#1D1B20',
-    alignSelf: 'stretch',
-    fontFeatureSettings: "'clig' off, 'liga' off",
-    fontFamily: 'Roboto',
-    fontSize: '30px',
-    fontStyle: 'normal',
-    fontWeight: 400,
-    lineHeight: '20px',
-    letterSpacing: '0.25px'
-};
-
-export default function ModalDeleteMember({ memberId, groupId, data, setData }) {
+export default function ModalDeleteMember({ memberId, data, setData }) {
+    const { id } = useParams();
     const [open, setOpen] = useState(false);
+    const { setShowMessage, setMessage, setMessageType } = useAuthContext();
 
-    const handleOpen = () => {
-        setOpen(true);
-    }
-    const handleClose = () => {
-        setOpen(false);
-    }
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
 
-    const handlDelete = async () => {
+    const handleDelete = async () => {
         try {
-            await api.delete(`/group/${groupId}/members/${memberId}`);
+            await api.delete(`/groups/${id}/members/${memberId}`);
             const updatedData = data.filter(item => item.id !== memberId);
             setData(updatedData);
+            setMessage('Membro deletado com sucesso!');
+            setMessageType('success');
+            setShowMessage(true);
         } catch (error) {
-            console.error(error);
+            setMessage('Ops!!! Houve algum problema');
+            setMessageType('error');
+            setShowMessage(true);
         }
     };
 
     return (
-        <div>
-            <IconContext.Provider value={{ color: "#93000A", size: 20 }}>
-                <Button onClick={handleOpen}>
-                    <IoTrash />
-                </Button>
+        <>
+            <IconContext.Provider value={{ color: '#93000A', size: 20 }}>
+                <CButton onClick={handleOpen} color='null'>
+                    <BsFillTrashFill />
+                </CButton>
             </IconContext.Provider>
-
-            <Modal
-                open={open}
+            <CModal
+                alignment="center"
+                visible={open}
                 onClose={handleClose}
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
             >
-                <Box sx={style} onClick={(event) => event.stopPropagation()}>
-                    <Typography sx={styleTitle}>Deletar membro</Typography>
-                    <Typography sx={styleDescrition}>Você tem certeza que deseja excluir este membro?</Typography>
-                    <div className={styleButton.button_container}>
-                        <button onClick={handleClose} className={styleButton.cancelar}>Cancelar</button>
-                        <button onClick={handlDelete} className={styleButton.excluir}>Excluir</button>
-                    </div>
-                </Box>
-            </Modal>
-        </div>
+                <CModalHeader onClose={handleClose}>
+                    <CModalTitle id="titulo">Deletar Membro</CModalTitle>
+                </CModalHeader>
+                <CModalBody>
+                    <p>Você tem certeza que deseja excluir este membro?</p>
+                </CModalBody>
+                <CModalFooter>
+                    <CButton color="secondary" onClick={handleClose}>
+                        Fechar
+                    </CButton>
+                    <CButton style={{ background: '#548CA8', color: 'white' }} color="null" onClick={handleDelete}>
+                        Excluir
+                    </CButton>
+                </CModalFooter>
+            </CModal>
+        </>
     );
 }

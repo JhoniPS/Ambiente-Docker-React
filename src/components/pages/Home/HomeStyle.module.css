@@ -1,9 +1,0 @@
-.admin {
-  display: flex;
-  flex-direction: column;
-  padding: 4% 0 0 4%; /* Utilizando porcentagens para o padding responsivo */
-  gap: 50px;
-  height: 100vh;
-  width: 100%;
-  background-color: inherit;
-}

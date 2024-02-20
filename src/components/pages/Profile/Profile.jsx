@@ -1,39 +1,31 @@
-import React, { Fragment, useEffect, useState } from 'react';
-import api from '../../../services/api';
+import React, { Fragment,useState } from 'react';
 import useAuthContext from '../../contexts/Auth';
 import MenuAppBar from '../../layout/AppBar/MenuAppBar';
-import { Avatar } from '@mui/material';
-import styles from './Profile.module.css'
-import LinkButton from '../../layout/linkbutton/LinkButton';
+import { useLocation } from 'react-router-dom';
+import { CAvatar, CCard, CCardBody } from '@coreui/react';
+import img from '../../../img/BrasãoUfopa.png'
 
 const Perfil = () => {
-    const { token } = useAuthContext();
-    const [user, setUser] = useState({});
+    const [user, setUser] = useState({
+        foto: "foto.png",
+        name: "nome exemplo",
+        email: "teste@teste.com"
+    });
 
-    useEffect(() => {
-        const fetchData = async () => {
-            const response = await api.get(`users/${2}`);
-            setUser(response.data.data);
-        }
-
-        fetchData();
-    }, [token])
+    const location = useLocation();
+    const backPage = location.pathname.replace("/profile", '');
 
     return (
         <Fragment>
-            <MenuAppBar />
-            <div className={styles.profile}>
-                <Avatar
-                    alt="Remy Sharp"
-                    src="/static/images/avatar/1.jpg"
-                    sx={{ width: 200, height: 200 }}
-                />
-                <h5>{user.name}</h5>
-                <p>{user.email}</p>
-                <section>
-                    <LinkButton text="Editar Perfil" customClass="perfil" to="/editorProfile" />
-                    <LinkButton text="Alterar Senha" customClass="editar_senha" to="/updatePassword" />
-                </section>
+            <MenuAppBar backStep={backPage} />
+            <div className="d-flex flex-column p-4 gap-4 h-100">
+                <CCard className='min-vh-50'>
+                    <CCardBody>
+                        <CAvatar color="secondary" size="xl" src={img} />
+                        <h5>{user.name}</h5>
+                        <p>{user.email}</p>
+                    </CCardBody>
+                </CCard>
             </div>
         </Fragment>
     );

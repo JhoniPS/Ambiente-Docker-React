@@ -1,24 +1,46 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import useAuthContext from '../../contexts/Auth';
+import logoImg from '../../../img/BrasãoUfopa.png';
 
-import { FormControl, FormHelperText, IconButton } from '@mui/material';
-import Visibility from '@mui/icons-material/Visibility';
-import VisibilityOff from '@mui/icons-material/VisibilityOff';
-import InputAdornment from '@mui/material/InputAdornment';
-import OutlinedInput from '@mui/material/OutlinedInput';
-import InputLabel from '@mui/material/InputLabel';
+import {
+    CButton,
+    CCard,
+    CCardBody,
+    CCardGroup,
+    CCol,
+    CContainer,
+    CForm,
+    CImage,
+    CFormInput,
+    CInputGroup,
+    CInputGroupText,
+    CRow,
+    CLink,
+} from '@coreui/react'
 
-import SubmitButton from '../../layout/submitbuttun/SubmitButton';
-import styles from './Login.module.css'
-import img from '../../../img/BrasãoUfopa.png'
+import CIcon from '@coreui/icons-react'
 
+import { cilUser } from '@coreui/icons'
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
+
+import '@coreui/coreui/dist/css/coreui.min.css'
+import 'bootstrap/dist/css/bootstrap.min.css'
+import Message from '../../layout/Message/Message';
+import { useLocation } from 'react-router-dom';
 
 const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
+    const location = useLocation();
 
-    const { login, error, messageErrors } = useAuthContext();
+    const { login, error, messageErrors, showMessage, messageType, message, setShowMessage, setCodeCallback } = useAuthContext();
+
+    useEffect(() => {
+        const codeSIGGA = new URLSearchParams(location.search).get('code');
+        setCodeCallback(codeSIGGA);
+    }, [location.search, setCodeCallback]);
+
 
     const handleLogin = async (e) => {
         e.preventDefault();
@@ -33,70 +55,85 @@ const Login = () => {
 
     const handleClickShowPassword = () => setShowPassword((show) => !show);
 
-    const handleMouseDownPassword = (event) => {
-        event.preventDefault();
-    };
-
     return (
-        <div className={styles.login}>
-            <section>
-                <img src={img} alt='Logo da UFOPA' />
-                <h3>DEC</h3>
-                <h5>Seja bem vindo(a)!</h5>
-                <p>Digite seu e-mail institucional e a senha para realizar o login.</p>
-                <form className={styles.Form} onSubmit={handleLogin}>
-                    <FormControl focused sx={{ width: 350 }}>
-                        <InputLabel htmlFor="outlined-adornment-password">E-mail</InputLabel>
-                        <OutlinedInput
-                            type='e-mail'
-                            label="E-mail"
-                            name='email'
-                            autoComplete="On"
-                            placeholder='Digite seu e-mail'
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            onKeyDown={handleKeyDown}
-                        />
-                        <FormHelperText error={error}>
-                            {(messageErrors.email && <span>{messageErrors.email}</span>) || < span > {messageErrors}</span>}
-                        </FormHelperText>
-                    </FormControl>
+        <div className="bg-light min-vh-100 d-flex flex-row align-items-center">
+            <CContainer>
+                <CRow className="justify-content-center">
+                    <CCol md={8}>
+                        <CCardGroup>
+                            <CCard className="p-2">
+                                <CCardBody>
+                                    <CForm style={{ textAlign: 'center' }} onSubmit={handleLogin}>
+                                        <CImage src={logoImg} width={80} />
+                                        <h1>{process.env.REACT_APP_TITLE}</h1>
 
-                    <FormControl focused sx={{ width: 350 }} >
-                        <InputLabel htmlFor="outlined-adornment-password">Senha</InputLabel>
-                        <OutlinedInput
-                            type={showPassword ? 'text' : 'password'}
-                            label="Senha"
-                            name='password'
-                            autoComplete="On"
-                            placeholder='Digite sua senha'
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                            endAdornment={
-                                <InputAdornment position="end">
-                                    <IconButton
-                                        aria-label="toggle password visibility"
-                                        onClick={handleClickShowPassword}
-                                        onMouseDown={handleMouseDownPassword}
-                                        edge="end"
-                                    >
-                                        {showPassword ? <VisibilityOff /> : <Visibility />}
-                                    </IconButton>
-                                </InputAdornment>
-                            }
-                            autoFocus
-                            margin='dense'
-                            onKeyDown={handleKeyDown}
-                        />
-                        <FormHelperText error={error}>
-                            {(messageErrors.password && <span>{messageErrors.password}</span>) || <span>{messageErrors}</span>}
-                        </FormHelperText>
-                    </FormControl>
+                                        <CInputGroup className="mb-3" style={{ textAlign: 'left' }}>
+                                            <CInputGroupText>
+                                                <CIcon icon={cilUser} />
+                                            </CInputGroupText>
 
-                    <SubmitButton text="Entrar" to="/home" />
-                </form>
-            </section>
-        </div >
+                                            <CFormInput
+                                                type='e-mail'
+                                                name='email'
+                                                autoComplete="On"
+                                                placeholder='Digite seu e-mail'
+                                                value={email}
+                                                onChange={(e) => setEmail(e.target.value)}
+                                                onKeyDown={handleKeyDown}
+                                                feedbackInvalid={messageErrors.email}
+                                                invalid={error}
+                                            />
+                                        </CInputGroup>
+
+                                        <CInputGroup className="mb-4" style={{ textAlign: 'left' }}>
+                                            <CButton
+                                                color="light"
+                                                onClick={handleClickShowPassword}
+                                                style={{
+                                                    backgroundColor: 'var(--cui-input-group-addon-bg, #d8dbe0)',
+                                                    border: '1px solid var(--cui-input-group-addon-border-color, #b1b7c1)'
+                                                }}
+                                            >
+                                                {showPassword ? <FaEyeSlash /> : <FaEye />}
+                                            </CButton>
+
+                                            <CFormInput
+                                                type={showPassword ? "text" : "password"}
+                                                name='password'
+                                                placeholder="Password"
+                                                autoComplete="current-password"
+                                                value={password}
+                                                onChange={(e) => setPassword(e.target.value)}
+                                                autoFocus={true}
+                                                onKeyDown={handleKeyDown}
+                                                feedbackInvalid={messageErrors.password}
+                                                invalid={error}
+                                            />
+                                        </CInputGroup>
+
+                                        <CRow>
+                                            <CCol xs={12} className='d-flex justify-content-between mb-2'>
+                                                <CLink href='/nova-senha'>Esqueceu a senha?</CLink>
+                                                <CLink href='/cadastrar-conta'>Criar nova conta</CLink>
+                                            </CCol>
+                                            <CCol xs={12} className='d-grid gap-3 '>
+                                                <CButton color="primary" type='submit'>
+                                                    Login
+                                                </CButton>
+                                                <CButton color="success" href='https://autenticacao.dev.ufopa.edu.br/authz-server/oauth//authorize?client_id=piape-vania-id&response_type=code&redirect_uri=http://localhost:3000'>
+                                                    Login conta SIGAA
+                                                </CButton>
+                                            </CCol>
+                                        </CRow>
+                                    </CForm>
+                                </CCardBody>
+                            </CCard>
+                        </CCardGroup>
+                    </CCol>
+                </CRow>
+                {showMessage && <Message type={messageType} msg={message} setShowMessage={setShowMessage} />}
+            </CContainer>
+        </div>
     );
 };
 

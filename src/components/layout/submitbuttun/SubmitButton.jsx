@@ -1,13 +1,12 @@
 
-import styles from './SubmitButton.module.css'
-
-const SubmitButton = ({ text, customClass, onClick, value, onChange, icon }) => {
+const SubmitButton = ({ text, onClick, value, onChange, icon }) => {
     return (
         <div>
             <button
-                className={`${styles.btn} ${styles[customClass]}`}
+                className="btn"
                 onClick={onClick}
                 value={value}
+                style={{ background: '#F2E29F', color:'#080705'}}
                 onChange={onChange}
             >
                 {icon}{text}

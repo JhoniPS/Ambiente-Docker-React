@@ -1,100 +1,72 @@
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import api from '../../services/api';
-import { Divider } from 'antd';
-import useAuthContext from '../contexts/Auth';
-import style from './TableDetalhes.module.css';
+import React from "react";
+import { CTable, CTableBody, CTableDataCell, CTableHead, CTableHeaderCell, CTableRow } from "@coreui/react";
 
-const TableDetalhe = () => {
-    const { token } = useAuthContext();
-    const { id } = useParams();
-    const [data, setData] = useState({});
+const TableDetalhe = ({ data }) => {
 
-    useEffect(() => {
-        const fetchData = async () => {
-            if (token) {
-                try {
-                    const response = await api.get(`group/${id}`);
-                    const group = response.data.data;
-                    setData(group);
-                } catch (error) {
-                    console.log(error);
-                }
-            }
-        };
+    function formatarData(dt) {
+        const dataObj = new Date(dt);
+        const ano = dataObj.getFullYear();
+        const mes = String(dataObj.getMonth() + 1).padStart(2, '0');
+        const dia = String(dataObj.getDate()).padStart(2, '0');
 
-        fetchData();
-    }, [token, id]);
-
-    function formatarData() {
-        const dt = new Date(data.created_at);
-        const ano = dt.getFullYear();
-        const mes = String(dt.getMonth() + 1).padStart(2, '0');
-        const dia = String(dt.getDate()).padStart(2, '0');
-
-        return `${ano}-${mes}-${dia}`;
+        return `${dia}/${mes}/${ano}`;
     }
 
     return (
-        <div className={style.detalhes}>
-            <table className={style.detalhes_tabela}>
-                <thead>
-                    <tr>
-                        <th>Portaria Interna</th>
-                        <th>Conselho</th>
-                        <th>Orgão</th>
-                        <th>Unidade</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>{data.internal_concierge}</td>
-                        <td>{data.council}</td>
-                        <td>{data.organ}</td>
-                        <td>{data.unit}</td>
-                    </tr>
-                </tbody>
-            </table>
-            <Divider />
-            <table className={style.detalhes_tabela}>
-                <thead>
-                    <tr>
-                        <th>Entidade</th>
-                        <th>Sigla</th>
-                        <th>Time</th>
-                        <th>Tipo de Grupo</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>{data.entity}</td>
-                        <td>{data.acronym}</td>
-                        <td>{data.team}</td>
-                        <td>{data.type_group?.type}</td>
-                    </tr>
-                </tbody>
-            </table>
-            <Divider />
-            <table className={style.detalhes_tabela}>
-                <thead>
-                    <tr>
-                        <th>Oficio Solicitado</th>
-                        <th>Oficio Indicado</th>
-                        <th>Email</th>
-                        <th>Data de criação</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>{data.office_requested}</td>
-                        <td>{data.office_indicated}</td>
-                        <td>{data.email}</td>
-                        <td>{formatarData(data)}</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+        <CTable responsive>
+            <CTableHead>
+                <CTableRow>
+                    <CTableHeaderCell scope="col" style={{ padding: '15px', fontSize: 20 }}>Tipo de Grupo</CTableHeaderCell>
+                    <CTableHeaderCell scope="col" style={{ padding: '15px', fontSize: 20 }}>Sigla</CTableHeaderCell>
+                    <CTableHeaderCell scope="col" style={{ padding: '15px', fontSize: 20 }}>Orgão</CTableHeaderCell>
+                    <CTableHeaderCell scope="col" style={{ padding: '15px', fontSize: 20 }}>Conselho</CTableHeaderCell>
+                </CTableRow>
+            </CTableHead>
+            <CTableBody>
+                <CTableRow>
+                    <CTableDataCell style={{ padding: '15px', color: '#677970' }}>{data.type_group?.type}</CTableDataCell>
+                    <CTableDataCell style={{ padding: '15px', color: '#677970' }}>{data.acronym}</CTableDataCell>
+                    <CTableDataCell style={{ padding: '15px', color: '#677970' }}>{data.organ}</CTableDataCell>
+                    <CTableDataCell style={{ padding: '15px', color: '#677970' }}>{data.council}</CTableDataCell>
+                </CTableRow>
+            </CTableBody>
+
+            <CTableHead>
+                <CTableRow>
+                    <CTableHeaderCell scope="col" style={{ padding: '15px', fontSize: 20 }}>Entidade</CTableHeaderCell>
+                    <CTableHeaderCell scope="col" style={{ padding: '15px', fontSize: 20 }}>Unidade</CTableHeaderCell>
+                    <CTableHeaderCell scope="col" style={{ padding: '15px', fontSize: 20 }}>Time</CTableHeaderCell>
+                    <CTableHeaderCell scope="col" style={{ padding: '15px', fontSize: 20 }}>Portaria Interna</CTableHeaderCell>
+                </CTableRow>
+            </CTableHead>
+            <CTableBody>
+                <CTableRow>
+                    <CTableDataCell style={{ padding: '15px', color: '#677970' }}>{data.entity}</CTableDataCell>
+                    <CTableDataCell style={{ padding: '15px', color: '#677970' }}>{data.unit}</CTableDataCell>
+                    <CTableDataCell style={{ padding: '15px', color: '#677970' }}>{data.team}</CTableDataCell>
+                    <CTableDataCell style={{ padding: '15px', color: '#677970' }}>{data.internal_concierge}</CTableDataCell>
+                </CTableRow>
+            </CTableBody>
+
+            <CTableHead>
+                <CTableRow>
+                    <CTableHeaderCell scope="col" style={{ padding: '15px', fontSize: 20 }}>Oficio Solicitado</CTableHeaderCell>
+                    <CTableHeaderCell scope="col" style={{ padding: '15px', fontSize: 20 }}>Oficio Indicado</CTableHeaderCell>
+                    <CTableHeaderCell scope="col" style={{ padding: '15px', fontSize: 20 }}>Email</CTableHeaderCell>
+                    <CTableHeaderCell scope="col" style={{ padding: '15px', fontSize: 20 }}>Data de criação</CTableHeaderCell>
+                </CTableRow>
+            </CTableHead>
+            <CTableBody>
+                <CTableRow>
+                    <CTableDataCell style={{ padding: '15px', color: '#677970' }}>{data.office_requested}</CTableDataCell>
+                    <CTableDataCell style={{ padding: '15px', color: '#677970' }}>{data.office_indicated}</CTableDataCell>
+                    <CTableDataCell style={{ padding: '15px', color: '#677970' }}>{data.email}</CTableDataCell>
+                    <CTableDataCell style={{ padding: '15px', color: '#677970' }}>{formatarData(data.created_at)}</CTableDataCell>
+                </CTableRow>
+            </CTableBody>
+        </CTable>
     );
+
 }
 
 export default TableDetalhe;

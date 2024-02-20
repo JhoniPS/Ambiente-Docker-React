@@ -1,101 +1,92 @@
 import React, { useState, useEffect } from 'react';
-import SubmitButton from '../../layout/submitbuttun/SubmitButton';
-import api from '../../../services/api'
+import api from '../../../services/api';
+import useAuthContext from '../../contexts/Auth';
 
-import styles from './modal_edit_group.module.css'
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Modal from '@mui/material/Modal';
-import { TextField, Typography } from '@mui/material';
 import { IconContext } from 'react-icons';
-import { IoPencilSharp } from "react-icons/io5";
-
-const style = {
-    position: 'fixed',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-    textAlign: 'justify',
-    gap: '2em',
-    backgroundColor: '#FFF',
-    minwidth: '700px',
-    minheight: '700px',
-    padding: '2.5rem',
-    outline: 'none',
-    borderRadius: '15px',
-    boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)',
-};
-
-const styleTitle = {
-    color: '#2C74AC',
-    textAlign: 'center',
-    fontFeatureSettings: "'clig' off, 'liga' off",
-    fontFamily: 'Roboto',
-    fontSize: '30px',
-    fontStyle: 'normal',
-    padding: '2px',
-    fontWeight: 500,
-    lineHeight: '36px',
-};
+import { IoPencilSharp } from 'react-icons/io5';
+import {
+    CButton,
+    CCol,
+    CContainer,
+    CFormCheck,
+    CFormInput,
+    CFormTextarea,
+    CModal,
+    CModalBody,
+    CModalFooter,
+    CModalHeader,
+    CModalTitle,
+    CRow
+} from '@coreui/react';
 
 export default function ModalEditGroup({ id, data, setData }) {
     const [open, setOpen] = useState(false);
 
     const [form, setForm] = useState({
-        entity: "",
-        organ: "",
-        council: "",
-        internal_concierge: "",
-        acronym: "",
-        team: "",
-        email: "",
-        observations: "",
-        unit: "",
-        office_requested: "",
-        office_indicated: "",
+        entity: '',
+        organ: '',
+        council: '',
+        internal_concierge: '',
+        acronym: '',
+        team: '',
+        status: '',
+        name: '',
+        type: '',
+        email: '',
+        observations: '',
+        unit: '',
+        office_requested: '',
+        office_indicated: '',
     });
+
+    const {
+        setMessageType,
+        setShowMessage,
+        setMessage,
+        setError,
+        error,
+        setMessageErrors,
+        messageErrors,
+    } = useAuthContext();
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await api.get(`/group/${id}`);
+                const response = await api.get(`/groups/${id}`);
                 const groupData = response.data.data;
 
                 setForm({
-                    entity: groupData.entity || "",
-                    organ: groupData.organ || "",
-                    council: groupData.council || "",
-                    internal_concierge: groupData.internal_concierge || "",
-                    acronym: groupData.acronym || "",
-                    team: groupData.team || "",
-                    email: groupData.email || "",
-                    observations: groupData.observations || "",
-                    unit: groupData.unit || "",
-                    office_requested: groupData.office_requested || "",
-                    office_indicated: groupData.office_indicated || "",
+                    entity: groupData.entity || '',
+                    organ: groupData.organ || '',
+                    council: groupData.council || '',
+                    internal_concierge: groupData.internal_concierge || '',
+                    acronym: groupData.acronym || '',
+                    team: groupData.team || '',
+                    name: groupData.type_group.name || '',
+                    status: groupData.status || '',
+                    type: groupData.type_group.type || '',
+                    email: groupData.email || '',
+                    observations: groupData.observations || '',
+                    unit: groupData.unit || '',
+                    office_requested: groupData.office_requested || '',
+                    office_indicated: groupData.office_indicated || '',
                 });
             } catch (error) {
-                console.error(error);
+                setMessage(error.response.data.errors);
+                setMessageType('error');
+                setShowMessage(true);
             }
         };
-        fetchData();
-    }, [id]);
 
+        if (open) {
+            fetchData();
+        }
+    }, [id, open, setError, setMessageType, setShowMessage, setMessage]);
 
-    const handleOpen = (event) => {
-        event.stopPropagation();
-        setOpen(true);
-    }
-    const handleClose = (event) => {
-        event.stopPropagation();
-        setOpen(false);
-    }
+    const handleOpen = () => { setOpen(true) };
+    const handleClose = () => { setOpen(false); setError(null); };
 
-    const handlEdit = async (event) => {
+    const handleEdit = (event) => {
         const { name, value } = event.target;
         setForm({
             ...form,
@@ -103,12 +94,12 @@ export default function ModalEditGroup({ id, data, setData }) {
         });
     };
 
-    const Submit = async (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
         try {
-            await api.put(`/group/${id}`, form)
+            await api.put(`/groups/${id}`, form);
 
-            const updatedData = data.map(item => {
+            const updatedData = data.map((item) => {
                 if (item.id === id) {
                     return { ...item, ...form };
                 }
@@ -116,200 +107,210 @@ export default function ModalEditGroup({ id, data, setData }) {
             });
 
             setData(updatedData);
+            setMessage('Grupo Editado com sucesso!');
+            setMessageType('success');
+            setShowMessage(true);
             handleClose();
         } catch (error) {
-            console.log(error)
+            setError(true);
+            setMessageErrors(error.response.data.errors)
         }
     };
 
     return (
-        <div>
-            <IconContext.Provider value={{ color: "#2C74AC", size: 20 }}>
-                <Button onClick={handleOpen}>
+        <>
+            <IconContext.Provider value={{ color: '#2C74AC', size: 25 }}>
+                <CButton onClick={handleOpen} color='null'>
                     <IoPencilSharp />
-                </Button>
+                </CButton>
             </IconContext.Provider>
-
-            <Modal
-                open={open}
+            <CModal
+                alignment="center"
+                size="xl"
+                visible={open}
                 onClose={handleClose}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
+                aria-labelledby="VerticallyCenteredScrollableExample"
             >
-                <Box sx={style} onClick={(event) => event.stopPropagation()}>
-                    <Typography sx={styleTitle}>Editar tipo de usuário</Typography>
-                    <div>
-                        <form className={styles.form} onSubmit={Submit}>
-                            <div className={styles.container_form}>
-                                <div className={styles.container_text1}>
-                                    <TextField
-                                        type='text'
-                                        label="Entidade"
-                                        variant="standard"
-                                        name='entity'
-                                        value={form.entity}
-                                        onChange={handlEdit}
-                                        focused
-                                        margin='normal'
-                                        sx={{
-                                            width: '100%',
-                                        }}
-                                    />
-                                    <TextField
-                                        type='text'
-                                        label="Orgão"
-                                        variant="standard"
-                                        name='organ'
-                                        value={form.organ}
-                                        onChange={handlEdit}
-                                        focused
-                                        margin='normal'
-                                        sx={{
-                                            width: '100%',
-                                        }}
-                                    />
-                                    <TextField
-                                        type='text'
-                                        label="Conselho"
-                                        variant="standard"
-                                        name='council'
-                                        value={form.council}
-                                        onChange={handlEdit}
-                                        focused
-                                        margin='normal'
-                                        sx={{
-                                            width: '100%',
-                                        }}
-                                    />
+                <CModalHeader>
+                    <CModalTitle id="editarGrupo">Editar Grupo</CModalTitle>
+                </CModalHeader>
+                <CModalBody>
+                    <CContainer>
+                        <CRow>
+                            <CCol md={6}>
+                                <CFormInput
+                                    type='text'
+                                    label='Nome'
+                                    variant='standard'
+                                    name='name'
+                                    value={form.name}
+                                    onChange={handleEdit}
+                                    feedbackInvalid={messageErrors.name}
+                                    invalid={error}
+                                />
+                                <CFormInput
+                                    type='text'
+                                    label='Sigla'
+                                    variant='standard'
+                                    name='acronym'
+                                    value={form.acronym}
+                                    onChange={handleEdit}
+                                    feedbackInvalid={messageErrors.acronym}
+                                    invalid={error}
+                                />
+                                <CFormInput
+                                    type='text'
+                                    label='Unidade'
+                                    name='unit'
+                                    variant='standard'
+                                    value={form.unit}
+                                    onChange={handleEdit}
+                                    feedbackInvalid={messageErrors.unit}
+                                    invalid={error}
+                                />
+                            </CCol>
+                            <CCol md={6}>
+                                <CFormInput
+                                    type='text'
+                                    label='Orgão'
+                                    variant='standard'
+                                    name='organ'
+                                    value={form.organ}
+                                    onChange={handleEdit}
+                                    feedbackInvalid={messageErrors.organ}
+                                    invalid={error}
+                                />
+                                <CFormInput
+                                    type='text'
+                                    label='Equipe'
+                                    variant='standard'
+                                    name='team'
+                                    value={form.team}
+                                    onChange={handleEdit}
+                                    feedbackInvalid={messageErrors.team}
+                                    invalid={error}
+                                />
+                                <CFormInput
+                                    type='text'
+                                    label='Portaria'
+                                    variant='standard'
+                                    name='internal_concierge'
+                                    value={form.internal_concierge}
+                                    onChange={handleEdit}
+                                    feedbackInvalid={messageErrors.internal_concierge}
+                                    invalid={error}
+                                />
+                            </CCol>
+                            <CCol md={6}>
+                                <CFormInput
+                                    type='text'
+                                    label='Entidade'
+                                    variant='standard'
+                                    name='entity'
+                                    value={form.entity}
+                                    onChange={handleEdit}
+                                    feedbackInvalid={messageErrors.entity}
+                                    invalid={error}
+                                />
+                                <CFormInput
+                                    type='text'
+                                    label='E-mail'
+                                    variant='standard'
+                                    name='email'
+                                    value={form.email}
+                                    onChange={handleEdit}
+                                    feedbackInvalid={messageErrors.email}
+                                    invalid={error}
+                                />
+                                <CFormInput
+                                    type='text'
+                                    label='Oficio que solicitou'
+                                    name='office_requested'
+                                    variant='standard'
+                                    value={form.office_requested}
+                                    onChange={handleEdit}
+                                    feedbackInvalid={messageErrors.office_requested}
+                                    invalid={error}
+                                />
+                            </CCol>
+                            <CCol md={6}>
+                                <CFormInput
+                                    type='text'
+                                    label='Conselho'
+                                    variant='standard'
+                                    name='council'
+                                    value={form.council}
+                                    onChange={handleEdit}
+                                    feedbackInvalid={messageErrors.council}
+                                    invalid={error}
+                                />
+                                <CFormInput
+                                    type='text'
+                                    label='Tipo'
+                                    variant='standard'
+                                    name='type'
+                                    value={form.type}
+                                    onChange={handleEdit}
+                                    feedbackInvalid={messageErrors.type}
+                                    invalid={error}
+                                />
+                                <CFormInput
+                                    type='text'
+                                    label='Oficio que indicou'
+                                    name='office_indicated'
+                                    value={form.office_indicated}
+                                    onChange={handleEdit}
+                                    feedbackInvalid={messageErrors.office_indicated}
+                                    invalid={error}
+                                />
+                            </CCol>
+                        </CRow>
+                        <CRow>
+                            <CCol>
+                                <h5 style={{ fontSize: '16px', marginTop: '10px', marginBottom: '5px' }}>Status do Grupo</h5>
 
-                                    <TextField
-                                        type='text'
-                                        label="Oficio que solicitou"
-                                        name='office_requested'
-                                        variant="standard"
-                                        value={form.office_requested}
-                                        onChange={handlEdit}
-                                        focused
-                                        margin='normal'
-                                        sx={{
-                                            width: '100%',
-                                        }}
-                                    />
-                                </div>
-
-                                <div className={styles.container_text1}>
-                                    <TextField
-                                        type='text'
-                                        label="Sigla"
-                                        variant="standard"
-                                        name='acronym'
-                                        value={form.acronym}
-                                        onChange={handlEdit}
-                                        focused
-                                        margin='normal'
-                                        sx={{
-                                            width: '100%',
-                                        }}
-                                    />
-                                    <TextField
-                                        type='text'
-                                        label="Equipe"
-                                        variant="standard"
-                                        name='team'
-                                        value={form.team}
-                                        onChange={handlEdit}
-                                        focused
-                                        margin='normal'
-                                        sx={{
-                                            width: '100%',
-                                        }}
-                                    />
-                                    <TextField
-                                        type='text'
-                                        label="E-mail"
-                                        variant="standard"
-                                        name='email'
-                                        value={form.email}
-                                        onChange={handlEdit}
-                                        focused
-                                        margin='normal'
-                                        sx={{
-                                            width: '100%',
-                                        }}
-                                    />
-
-                                    <TextField
-                                        type='text'
-                                        label="Oficio que indicou"
-                                        name='office_indicated'
-                                        variant="standard"
-                                        value={form.office_indicated}
-                                        onChange={handlEdit}
-                                        focused
-                                        margin='normal'
-                                        sx={{
-                                            width: '100%',
-                                        }}
-                                    />
-                                </div>
-
-                                <div className={styles.container_text1}>
-                                    <TextField
-                                        type='text'
-                                        label="Unidade"
-                                        name='unit'
-                                        variant="standard"
-                                        value={form.unit}
-                                        onChange={handlEdit}
-                                        focused
-                                        margin='normal'
-                                        sx={{
-                                            width: '100%',
-                                        }}
-                                    />
-
-                                    <TextField
-                                        type='text'
-                                        label="Portaria"
-                                        variant="standard"
-                                        name='internal_concierge'
-                                        value={form.internal_concierge}
-                                        onChange={handlEdit}
-                                        focused
-                                        margin='normal'
-                                        sx={{
-                                            width: '100%',
-                                        }}
-                                    />
-                                </div>
-
-                                <div className={styles.container_text1}>
-                                    <TextField
-                                        type='text'
-                                        label="Observações"
-                                        name='comments'
-                                        variant="standard"
-                                        value={form.observations}
-                                        onChange={handlEdit}
-                                        focused
-                                        margin='normal'
-                                        multiline
-                                        rows={10}
-                                        sx={{
-                                            width: '100%',
-                                        }}
-                                    />
-                                </div>
-                            </div>
-
-                            <div className={styles.button}>
-                                <SubmitButton text="Voltar" customClass="button_back" onClick={handleClose} />
-                                <SubmitButton text="Editar" customClass="button_editar_perfil" />
-                            </div>
-                        </form>
-                    </div >
-                </Box>
-            </Modal>
-        </div >
+                                <CFormCheck
+                                    inline
+                                    type="radio"
+                                    name="status"
+                                    value="EM ANDAMENTO"
+                                    label="Em andamento"
+                                    onChange={handleEdit}
+                                    checked={(form.status === 'EM ANDAMENTO') ? true : false}
+                                />
+                                <CFormCheck
+                                    inline
+                                    type="radio"
+                                    name="status"
+                                    value="FINALIZADO"
+                                    label="Finalizado"
+                                    onChange={handleEdit}
+                                    checked={(form.status === 'FINALIZADO') ? true : false}
+                                />
+                            </CCol>
+                        </CRow>
+                        <CRow>
+                            <CCol>
+                                <CFormTextarea
+                                    label='Observações'
+                                    name='observations'
+                                    value={form.observations}
+                                    onChange={handleEdit}
+                                    rows={5}
+                                    feedbackInvalid={messageErrors.observations}
+                                    invalid={error}
+                                />
+                            </CCol>
+                        </CRow>
+                    </CContainer>
+                </CModalBody>
+                <CModalFooter>
+                    <CButton color="secondary" onClick={handleClose}>
+                        Fechar
+                    </CButton>
+                    <CButton style={{ background: '#548CA8', color: 'white' }} color="null" onClick={handleSubmit}>Editar</CButton>
+                </CModalFooter>
+            </CModal >
+        </>
     );
 }
