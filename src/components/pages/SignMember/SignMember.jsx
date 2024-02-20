@@ -2,9 +2,9 @@ import { Fragment, useState } from "react";
 import { NavLink, useLocation, useParams } from "react-router-dom";
 import { AiOutlineClose } from "react-icons/ai";
 import useAuthContext from '../../contexts/Auth';
-import MenuAppBar from "../../layout/AppBar/MenuAppBar"
+import MenuAppBar from "../../layout/AppBar/MenuAppBar";
 import LinkButton from "../../layout/linkbutton/LinkButton";
-import api from '../../../services/api'
+import api from '../../../services/api';
 
 import {
   CButton,
@@ -18,7 +18,7 @@ import {
   CFormInput,
   CNavLink,
   CRow,
-  CSpinner
+  CSpinner,
 } from "@coreui/react";
 import Message from "../../layout/Message/Message";
 
@@ -33,6 +33,7 @@ const SignMember = () => {
     entry_date: '',
     departure_date: '',
   });
+  const [membersList, setMembersList] = useState([]);
 
   const location = useLocation();
   const backPage = location.pathname.replace("/adicionar-membro", '');
@@ -51,7 +52,7 @@ const SignMember = () => {
   } = useAuthContext();
 
   const handleSubmit = (e) => {
-    setMember(prev => ({
+    setMember((prev) => ({
       ...prev,
       [e.target.name]: e.target.value,
     }));
@@ -62,10 +63,10 @@ const SignMember = () => {
 
     try {
       setLoading(true);
-      await api.post(`groups/${id}/members`, { member });
+      await api.post(`groups/${id}/members`, membersList);
       setLoading(false);
 
-      setMessage('Adicionado com sucesso!');
+      setMessage('Membro adicionado com sucesso!');
       setMessageType('success');
       setShowMessage(true);
     } catch (error) {
@@ -74,6 +75,19 @@ const SignMember = () => {
       setError(true);
       setMessageErrors(error.response.data.errors);
     }
+  };
+
+  const handleAddMembers = () => {
+    setMembersList((prevList) => [...prevList, member]);
+
+    setMember({
+      name: '',
+      email: '',
+      role: '',
+      phone: '',
+      entry_date: '',
+      departure_date: '',
+    });
   };
 
   return (
@@ -85,9 +99,12 @@ const SignMember = () => {
             <CCol md={10} sm={4} xl={12}>
               <CCardGroup>
                 <CCard>
-                  <CCardHeader component="h2" className="d-flex justify-content-between">Cadastrar Membros <CNavLink to={backPage} component={NavLink}>
-                    <AiOutlineClose size={30} />
-                  </CNavLink></CCardHeader>
+                  <CCardHeader component="h2" className="d-flex justify-content-between">
+                    Cadastrar Membros{" "}
+                    <CNavLink to={backPage} component={NavLink}>
+                      <AiOutlineClose size={30} />
+                    </CNavLink>
+                  </CCardHeader>
                   <CCardBody>
                     <CForm className="d-flex flex-column gap-2" onSubmit={Submit}>
                       <CFormInput
@@ -97,8 +114,6 @@ const SignMember = () => {
                         placeholder="Ex. Luiza"
                         value={member.name}
                         onChange={handleSubmit}
-                        feedbackInvalid={messageErrors.name}
-                        invalid={error}
                       />
                       <CFormInput
                         type="email"
@@ -107,28 +122,22 @@ const SignMember = () => {
                         placeholder="name@example.com"
                         value={member.email}
                         onChange={handleSubmit}
-                        feedbackInvalid={messageErrors.email}
-                        invalid={error}
                       />
                       <CFormInput
-                        type='tel'
+                        type="tel"
                         label="Telefone"
-                        name='phone'
+                        name="phone"
                         placeholder="Digite o numero de telefone"
                         value={member.phone}
                         onChange={handleSubmit}
-                        feedbackInvalid={messageErrors.phone}
-                        invalid={error}
                       />
                       <CFormInput
-                        type='text'
+                        type="text"
                         label="Cargo"
-                        name='role'
-                        placeholder=' Exemplo Professor'
+                        name="role"
+                        placeholder="Exemplo Professor"
                         value={member.role}
                         onChange={handleSubmit}
-                        feedbackInvalid={messageErrors.role}
-                        invalid={error}
                       />
                       <CRow className="d-flex gap-2">
                         <CCol>
@@ -138,29 +147,49 @@ const SignMember = () => {
                             name="entry_date"
                             value={member.entry_date}
                             onChange={handleSubmit}
-                            feedbackInvalid={messageErrors.entry_date}
-                            invalid={error}
                           />
                         </CCol>
                         <CCol>
                           <CFormInput
-                            type='date'
+                            type="date"
                             label="Data de saida"
                             name="departure_date"
                             value={member.departure_date}
                             onChange={handleSubmit}
-                            feedbackInvalid={messageErrors.departure_date}
-                            invalid={error}
                           />
                         </CCol>
                       </CRow>
-                      <CRow className="d-flex gap-2 mt-3">
+
+                      <CRow className="d-flex justify-content-around mt-3">
                         <CCol>
                           <LinkButton text="Voltar" customClass="#6C757D" to={backPage} />
                         </CCol>
+
+                        <CCol className="d-flex justify-content-center">
+                          <CButton
+                            color="primary"
+                            style={{ color: 'white', paddingInline: '1em' }}
+                            type="button"
+                            onClick={handleAddMembers}
+                          >
+                            Adicionar Membros
+                          </CButton>
+                        </CCol>
+
                         <CCol className="d-flex justify-content-end">
-                          <CButton color="success" style={{ color: 'white', paddingInline: '1em' }} type="submit">
-                            {loading ? <><CSpinner component="span" size="sm" aria-hidden="true" /> Loading...</> : <>Cadastrar</>}
+                          <CButton
+                            color="success"
+                            style={{ color: 'white', paddingInline: '1em', marginRight: '1em' }}
+                            type="button"
+                            onClick={Submit}
+                          >
+                            {loading ? (
+                              <>
+                                <CSpinner component="span" size="sm" aria-hidden="true" /> Loading...
+                              </>
+                            ) : (
+                              <>Enviar</>
+                            )}
                           </CButton>
                         </CCol>
                       </CRow>
@@ -174,7 +203,7 @@ const SignMember = () => {
         {showMessage && <Message type={messageType} msg={message} setShowMessage={setShowMessage} />}
       </div>
     </Fragment>
-  )
-}
+  );
+};
 
 export default SignMember;

@@ -1,11 +1,24 @@
-import CIcon from '@coreui/icons-react'
-import { CButton, CCard, CCardBody, CCol, CContainer, CForm, CFormInput, CInputGroup, CInputGroupText, CRow } from '@coreui/react'
 import React, { useState } from 'react'
-import LinkButton from '../../layout/linkbutton/LinkButton'
-import { useLocation } from 'react-router-dom';
-import useAuthContext from '../../contexts/Auth';
 import api from '../../../services/api';
+import useAuthContext from '../../contexts/Auth';
+import {
+    CButton,
+    CCard,
+    CCardBody,
+    CCol,
+    CContainer,
+    CForm,
+    CFormInput,
+    CInputGroup,
+    CInputGroupText,
+    CRow,
+    CSpinner
+} from '@coreui/react'
+
+import CIcon from '@coreui/icons-react'
+import { useLocation } from 'react-router-dom';
 import { cilLockLocked, cilShieldAlt } from '@coreui/icons';
+import LinkButton from '../../layout/linkbutton/LinkButton'
 import Message from '../../layout/Message/Message';
 
 function NewPassword() {
@@ -33,13 +46,32 @@ function NewPassword() {
         password_confirmation: '',
     });
 
+    const [emailRecovery, setEmailRecovery] = useState("");
+    const [loading, setLoading] = useState(false);
+
+    const handlSubmitToken = async (e) => {
+        e.preventDefault();
+        try {
+            setLoading(true);
+            await api.post('/forgot-password', { email: emailRecovery });
+            setLoading(false);
+            setShowMessage(true);
+            setMessage('E-mail com sucesso!');
+            setMessageType('success');
+        } catch (error) {
+            setShowMessage(true);
+            setMessage('E-mail não enviado!');
+            setMessageType('error');
+        }
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         try {
-            await api.post('/register', password);
+            await api.post('/reset-password', password);
             setShowMessage(true);
-            setMessage('Criado com sucesso!');
+            setMessage('Nova senha criada com sucesso!');
             setMessageType('success');
 
         } catch (error) {
@@ -67,8 +99,30 @@ function NewPassword() {
                     <CCol md={9} lg={9} xl={10}>
                         <CCard className="mx-4">
                             <CCardBody className="p-4">
+                                <h1>Criar nova senha</h1>
+
+                                <p className="text-medium-emphasis">E-mail para obter o token</p>
+                                <CForm onSubmit={handlSubmitToken}>
+                                    <CInputGroup className="mb-3">
+                                        <CInputGroupText>@</CInputGroupText>
+                                        <CFormInput
+                                            placeholder="E-mail do usuário"
+                                            autoComplete="email"
+                                            type='e-mail'
+                                            name='emailRecovery'
+                                            value={emailRecovery}
+                                            onChange={(e) => setEmailRecovery(e.target.value)}
+                                            feedbackInvalid={messageErrors.email}
+                                            invalid={error}
+                                        />
+
+                                        <CButton color="success" type='submit'>
+                                            {loading ? <><CSpinner component="span" size="sm" aria-hidden="true" /> Loading...</> : <>Feito</>}
+                                        </CButton>
+                                    </CInputGroup>
+                                </CForm>
+
                                 <CForm onSubmit={handleSubmit}>
-                                    <h1>Criar nova senha</h1>
                                     <p className="text-medium-emphasis">Crie uma nova senha</p>
 
                                     <CInputGroup className="mb-3">
