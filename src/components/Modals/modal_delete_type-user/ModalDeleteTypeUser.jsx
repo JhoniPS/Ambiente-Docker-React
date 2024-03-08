@@ -28,7 +28,7 @@ export default function ModalDeleteUser({ id, data, setData }) {
       setMessageType('success');
       setShowMessage(true);
     } catch (error) {
-      setMessage('Ops!!! Algo deu errado');
+      setMessage(`${error.response.data.errors}`);
       setMessageType('error');
       setShowMessage(true);
     }

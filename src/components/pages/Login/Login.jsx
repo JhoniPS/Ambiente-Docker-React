@@ -32,6 +32,7 @@ const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
+
     const location = useLocation();
 
     const { login, error, messageErrors, showMessage, messageType, message, setShowMessage, setCodeCallback } = useAuthContext();
@@ -120,6 +121,7 @@ const Login = () => {
                                                 <CButton color="primary" type='submit'>
                                                     Login
                                                 </CButton>
+
                                                 <CButton color="success" href='https://autenticacao.dev.ufopa.edu.br/authz-server/oauth//authorize?client_id=piape-vania-id&response_type=code&redirect_uri=http://localhost:3000'>
                                                     Login conta SIGAA
                                                 </CButton>

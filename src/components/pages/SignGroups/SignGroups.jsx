@@ -18,6 +18,7 @@ import {
 } from '@coreui/react';
 import api from '../../../services/api';
 import { Steps } from 'antd';
+import Message from '../../layout/Message/Message';
 
 
 const RepresentanteGroup = ({ representative, setRepresentative }) => {
@@ -291,8 +292,11 @@ const SignGroups = () => {
 
   const {
     setMessageType,
+    messageType,
     setShowMessage,
+    showMessage,
     setMessage,
+    message,
     setError,
     setMessageErrors
   } = useAuthContext();
@@ -345,6 +349,10 @@ const SignGroups = () => {
 
     } catch (error) {
       setError(true);
+      setLoading(false);
+      setMessage(error.response.data.errors)
+      setMessageType('error');
+      setShowMessage(true);
       setMessageErrors(error.response.data.errors)
     }
   };
@@ -400,6 +408,7 @@ const SignGroups = () => {
             </CCol>
           </CRow>
         </CContainer>
+        {showMessage && <Message type={messageType} msg={message} setShowMessage={setShowMessage} />}
       </div>
     </Fragment>
   );

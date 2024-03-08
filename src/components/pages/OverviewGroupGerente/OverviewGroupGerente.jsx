@@ -13,10 +13,11 @@ import TableGroupsDescription from "../../TableGroupsDescription/TableGroupsDesc
 import TableDetalhe from "../../TableDetalhes/TableDetalhe";
 import TableMemberGroup from "../../TableMemberGroup/TableMemberGroup";
 import Observations from "../../layout/Observations/Observations"
+import ReportGroup from "../../report/ReportGroup";
 
 const OverviewGroupGerente = () => {
   const { id } = useParams();
-  const [data, setData] = useState({});
+  const [data, setData] = useState([]);
   const [observacao, setObservacao] = useState("");
 
   useEffect(() => {
@@ -45,25 +46,25 @@ const OverviewGroupGerente = () => {
           <Card
             icon={cilDescription}
             title="Notas"
-            description="Gerencia Notas"
+            description="Gerenciar Notas"
             to={`/gerente-detalhes-de-grupos/${id}/notas`}
           />
           <Card
             icon={cilNotes}
             title="Documentos"
-            description="Gerencia Documentos"
+            description="Gerenciar Arquivos"
             to={`/gerente-detalhes-de-grupos/${id}/documentos`}
           />
           <Card
             icon={cilTask}
             title="Atividades"
-            description="Gerencia Atividades"
+            description="Gerenciar Tarefas"
             to={`/gerente-detalhes-de-grupos/${id}/atividades`}
           />
           <Card
             icon={cilList}
             title="Reuniões"
-            description="Gerencia Reuniões"
+            description="Gerenciar Reuniões"
             to={`/gerente-detalhes-de-grupos/${id}/historico-de-reunioes`}
           />
         </CRow>
@@ -74,6 +75,7 @@ const OverviewGroupGerente = () => {
           <CCardBody>
             <h2 style={{ paddingLeft: '15px' }}>Detalhes</h2>
             <TableDetalhe data={data} />
+            <ReportGroup />
           </CCardBody>
         </CCard>
 

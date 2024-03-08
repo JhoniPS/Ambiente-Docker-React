@@ -12,6 +12,7 @@ import TableMemberGroup from "../../TableMemberGroup/TableMemberGroup";
 import Observations from "../../layout/Observations/Observations";
 import MenuAppBar from "../../layout/AppBar/MenuAppBar";
 import { CCard, CCardBody, CRow } from "@coreui/react";
+import ReportGroup from "../../report/ReportGroup";
 
 const OverviewGroupVisualizador = () => {
   const { id } = useParams();
@@ -53,13 +54,13 @@ const OverviewGroupVisualizador = () => {
           <Card
             icon={cilNotes}
             title="Documentos"
-            description="Gerencia documentos"
+            description="Gerenciar Arquivos"
             to={`/visualizador-detalhes-de-grupos/${id}/documentos`}
           />
           <Card
             icon={cilTask}
             title="Atividades"
-            description="Gerencia atividades"
+            description="Gerencia Tarefas"
             to={`/visualizador-detalhes-de-grupos/${id}/atividades`}
           />
           <Card
@@ -78,6 +79,7 @@ const OverviewGroupVisualizador = () => {
           <CCardBody>
             <h2 style={{ paddingLeft: '15px' }}>Detalhes</h2>
             <TableDetalhe data={data} />
+            <ReportGroup />
           </CCardBody>
         </CCard>
 

@@ -1,6 +1,7 @@
 import React from 'react'
 import { useContext } from 'react';
 import { AuthContext } from '../../contexts/Auth';
+import Cookies from 'js-cookie'
 
 import {
   CAvatar,
@@ -35,14 +36,21 @@ const AppHeaderDropdown = () => {
           Profile
         </CDropdownItem>
         <CDropdownDivider />
-        <CDropdownItem href="#" onClick={logout}>
-          <CIcon icon={cilLockLocked} className="me-2" />
-          Logout
-        </CDropdownItem>
-        <CDropdownItem href="#" onClick={logoutSIGAA}>
-          <CIcon icon={cilLockLocked} className="me-2" />
-          Logout Sigaa
-        </CDropdownItem>
+
+        {Cookies.get('authToken') &&
+          <CDropdownItem href="#" onClick={logout}>
+            <CIcon icon={cilLockLocked} className="me-2" />
+            Logout
+          </CDropdownItem>
+        }
+
+        {Cookies.get('sigaa_token') &&
+          <CDropdownItem href="#" onClick={logoutSIGAA}>
+            <CIcon icon={cilLockLocked} className="me-2" />
+            Logout Sigaa
+          </CDropdownItem>
+        }
+
       </CDropdownMenu>
     </CDropdown>
   )

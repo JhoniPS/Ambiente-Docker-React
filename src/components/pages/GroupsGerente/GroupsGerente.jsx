@@ -8,6 +8,7 @@ import TableGroups from '../../TableGroups/TableGroups';
 import { IconContext } from 'react-icons';
 import { IoMdAdd } from 'react-icons/io';
 import { CCard, CCardBody } from '@coreui/react';
+import ReportGroups from '../../report/ReportGroups';
 
 const GroupsGerente = () => {
     const [data, setData] = useState([]);
@@ -67,15 +68,17 @@ const GroupsGerente = () => {
                             />
                         </section>
 
-                        <h4 className='mb-0'>FILTROS RÁPIDOS</h4>
-                        <section className="d-flex align-items-start gap-2 mb-3">
+                        <h5 className='mb-0'>FILTROS RÁPIDOS</h5>
+                        <section className="d-flex flex-wrap align-items-start gap-2 mb-3">
                             <SubmitButton text="Mais Recentes" style={{ opacity: '0.9' }} customClass="button_filtes_bar" onClick={() => setSortOrder('desc')} />
                             <SubmitButton text="Mais Antigos" customClass="button_filtes_bar" onClick={() => setSortOrder('asc')} />
                             <SubmitButton text="Grupos Internos" customClass="button_filtes_bar" onClick={() => setGroupType('interno')} />
                             <SubmitButton text="Grupos Externos" customClass="button_filtes_bar" onClick={() => setGroupType('externo')} />
                             <SubmitButton text="Mostrar Todos" customClass="button_filtes_bar" onClick={() => setGroupType('')} />
                         </section>
+
                         <TableGroups rota="gerente-detalhes-de-grupos" data={sortUsers()} setData={setData} />
+                        <ReportGroups />
                     </CCardBody>
                 </CCard>
                 {showMessage && <Message type={messageType} msg={message} setShowMessage={setShowMessage} />}

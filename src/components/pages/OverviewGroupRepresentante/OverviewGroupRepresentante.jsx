@@ -16,6 +16,7 @@ import MenuAppBar from "../../layout/AppBar/MenuAppBar";
 
 import { CCard, CCardBody, CRow } from "@coreui/react";
 import { cilDescription, cilNotes, cilTask, cilList } from '@coreui/icons';
+import ReportGroup from "../../report/ReportGroup";
 
 const OverviewGroupRepresentante = () => {
   const { id } = useParams();
@@ -61,13 +62,13 @@ const OverviewGroupRepresentante = () => {
           <Card
             icon={cilNotes}
             title="Documentos"
-            description="Gerencia documentos"
+            description="Gerencia Arquivos"
             to={`/representante-detalhes-de-grupos/${id}/documentos`}
           />
           <Card
             icon={cilTask}
             title="Atividades"
-            description="Gerencia atividades"
+            description="Gerencia Tarefas"
             to={`/representante-detalhes-de-grupos/${id}/atividades`}
           />
           <Card
@@ -84,6 +85,7 @@ const OverviewGroupRepresentante = () => {
           <CCardBody>
             <h2 style={{ paddingLeft: '15px' }}>Detalhes</h2>
             <TableDetalhe data={data} />
+            <ReportGroup />
           </CCardBody>
         </CCard>
 
@@ -100,6 +102,7 @@ const OverviewGroupRepresentante = () => {
             <TableMemberGroup members={members} setMembers={setMembers} />
           </CCardBody>
         </CCard>
+
         {showMessage && <Message type={messageType} msg={message} setShowMessage={setShowMessage} />}
 
         <CCard style={{ boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>

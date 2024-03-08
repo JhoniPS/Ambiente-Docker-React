@@ -4,6 +4,7 @@ import SubmitButton from '../../layout/submitbuttun/SubmitButton';
 import TableGroups from '../../TableGroups/TableGroups'
 import Container from '../../layout/container/Container';
 import { CCard, CCardBody } from '@coreui/react';
+import ReportGroups from '../../report/ReportGroups';
 
 const GroupsRepresentante = () => {
     const [data, setData] = useState([]);
@@ -49,6 +50,7 @@ const GroupsRepresentante = () => {
                 <CCard>
                     <CCardBody className="d-flex flex-column gap-3">
                         <h2>Grupos</h2>
+                        <h5 className='mb-0'>FILTROS RÁPIDOS</h5>
                         <Container customClass="start">
                             <SubmitButton text="Mais Recentes" customClass="button_filtes_bar" onClick={() => setSortOrder('desc')} />
                             <SubmitButton text="Mais Antigos" customClass="button_filtes_bar" onClick={() => setSortOrder('asc')} />
@@ -56,7 +58,9 @@ const GroupsRepresentante = () => {
                             <SubmitButton text="Grupos Externos" customClass="button_filtes_bar" onClick={() => setGroupType('externo')} />
                             <SubmitButton text="Mostrar Todos" customClass="button_filtes_bar" onClick={() => setGroupType('')} />
                         </Container>
+
                         <TableGroups rota="representante-detalhes-de-grupos" data={sortUsers()} setData={setData} />
+                        <ReportGroups />
                     </CCardBody>
                 </CCard>
             </div>

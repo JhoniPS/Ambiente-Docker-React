@@ -6,147 +6,138 @@ import { useNavigate } from "react-router-dom";
 export const AuthContext = createContext({});
 
 export const AuthProvider = ({ children }) => {
-  const [userType, setUserType] = useState("");
+  const navigate = useNavigate();
   const [codeCallback, setCodeCallback] = useState(null);
-  const [error, setError] = useState(false);
 
+  const [user, setUser] = useState(() => {
+    // Tentar obter o usuário armazenado no localStorage
+    const storedUser = localStorage.getItem('user');
+    return storedUser ? JSON.parse(storedUser) : null;
+  });
+
+  const [error, setError] = useState(false);
   const [messageErrors, setMessageErrors] = useState([]);
   const [message, setMessage] = useState('');
   const [messageType, setMessageType] = useState('');
   const [showMessage, setShowMessage] = useState(false);
 
-  const navigate = useNavigate();
-
   useEffect(() => {
-    if (codeCallback !== null) {
-      const loginSigaa = async () => {
+    const loginSigaa = async () => {
+      if (codeCallback !== null) {
         try {
           const response = await api.get(`callback?code=${codeCallback}`);
-          const { api_token, type_user, email } = response.data;
+          const { api_token, name, type_user, email, url_photo } = response.data;
 
-          Cookies.set('authToken', api_token.api_token, { expires: 7, secure: true, sameSite: 'Strict' });
+          Cookies.set('sigaa_token', api_token.api_token, { expires: 7, secure: true, sameSite: 'Strict' });
 
-          switch (type_user.name) {
-            case 'administrador':
-              navigate('/administrador');
-              Cookies.set('userType', type_user.name);
-              break;
-            case 'gerente':
-              navigate('/gerente');
-              Cookies.set('userType', type_user.name);
-              break;
-            case 'representante':
-              navigate('/representante');
-              Cookies.set('userType', type_user.name);
-              Cookies.set('representante', email)
-              break;
-            case 'visualizador':
-              navigate('/visualizador');
-              Cookies.set('userType', type_user.name);
-              break;
-            default:
-              logout(api_token);
-          }
+          const newUser = { name, email, type_user: type_user.name, photo: url_photo };
+          setUser(newUser);
+
+          localStorage.setItem('user', JSON.stringify(newUser));
+
+          handleUserTypeNavigation(type_user.name, email);
         } catch (error) {
           console.log(error);
         }
-      };
+      }
+    };
 
-      loginSigaa();
+    loginSigaa();
+  }, [codeCallback, navigate]);
+
+  const handleUserTypeNavigation = (userType, email) => {
+    const routes = {
+      administrador: '/administrador',
+      gerente: '/gerente',
+      representante: '/representante',
+      visualizador: '/visualizador',
+    };
+
+    const route = routes[userType];
+    if (route) {
+      navigate(route);
+      Cookies.set('userType', userType);
+      if (userType === 'representante') {
+        Cookies.set('representante', email);
+      }
+    } else {
+      logout();
     }
-  }, [codeCallback]);
+  };
 
-  const login = async ({ ...data }) => {
+  const login = async (data) => {
     try {
       const response = await api.post('login', data);
-      const { token, type_user, email } = response.data;
+      const { token, name, type_user, email, url_photo } = response.data;
 
       Cookies.set('authToken', token, { expires: 7, secure: true, sameSite: 'Strict' });
 
-      switch (type_user.name) {
-        case 'administrador':
-          navigate('/administrador');
-          Cookies.set('userType', type_user.name);
-          break;
-        case 'gerente':
-          navigate('/gerente');
-          Cookies.set('userType', type_user.name);
-          break;
-        case 'representante':
-          navigate('/representante');
-          Cookies.set('userType', type_user.name);
-          Cookies.set('representante', email)
-          break;
-        case 'visualizador':
-          navigate('/visualizador');
-          Cookies.set('userType', type_user.name);
-          break;
-        default:
-          logout();
-      }
+      // Atualizar o estado do usuário
+      const newUser = { name, email, type_user: type_user.name, photo: url_photo };
+      setUser(newUser);
 
+      // Salvar o usuário no localStorage
+      localStorage.setItem('user', JSON.stringify(newUser));
+
+      handleUserTypeNavigation(type_user.name, email);
     } catch (e) {
-      if (e.response.status === 422) {
-        setError(true);
-        setMessageErrors(e.response.data.errors);
-      } else if (e.response.status === 401) {
-        setError(true);
-        setMessage(`${e.response.data.errors}`);
-        setMessageType('error');
-        setShowMessage(true);
-      }
+      handleLoginError(e);
+    }
+  };
+
+  const handleLoginError = (e) => {
+    if (e.response.status === 422) {
+      setError(true);
+      setMessageErrors(e.response.data.errors);
+    } else if (e.response.status === 401) {
+      setError(true);
+      setMessage(`${e.response.data.errors}`);
+      setMessageType('error');
+      setShowMessage(true);
     }
   };
 
   const logout = async () => {
     try {
       await api.post('users/logout');
-      Cookies.remove('authToken', { secure: true, sameSite: 'Strict' });
-      Cookies.remove('userType');
-      Cookies.remove('representante');
-      setUserType(null);
-      navigate("/");
+      handleLogoutCleanup();
     } catch (error) {
       console.log(error.response);
     }
   };
 
-  //teste
-  const api_token = '571e99cc-f68b-492f-ad12-507ef4b4e112';
-
   const logoutSIGAA = async () => {
     try {
-      await api.post('users/logout-ufopa', {}, {
-        headers: {
-          'Token': api_token
-        }
-      });
-
-      Cookies.remove('authToken', { secure: true, sameSite: 'Strict' });
-      Cookies.remove('userType');
-      Cookies.remove('representante');
-      setUserType(null);
-      navigate("/");
+      await api.post('users/logout-ufopa');
+      handleLogoutCleanup();
     } catch (error) {
       console.log(error.response);
     }
+  };
+
+  const handleLogoutCleanup = () => {
+    Cookies.remove('authToken', { secure: true, sameSite: 'Strict' });
+    Cookies.remove('sigaa_token', { secure: true, sameSite: 'Strict' });
+    Cookies.remove('userType');
+    Cookies.remove('representante');
+
+    setUser(null);
+    localStorage.removeItem('user');
+
+    navigate("/");
   };
 
   return (
     <AuthContext.Provider
       value={{
-        userType,
-        setUserType,
-
+        user,
         error,
         setError,
         messageErrors,
         setMessageErrors,
-
         login,
         logout,
         logoutSIGAA,
-
         message,
         messageType,
         showMessage,

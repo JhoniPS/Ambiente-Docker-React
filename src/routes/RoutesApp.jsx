@@ -29,14 +29,15 @@ import NewPassword from "../components/pages/NewPassword/NewPassword";
 
 const PrivateRoute = ({ children, requiredUserType }) => {
     const isAuthenticated = Cookies.get('authToken');
+    const isAuthenticatedSigaa = Cookies.get('sigaa_token');
     const userType = Cookies.get('userType');
     const { pathname } = useLocation();
 
     if (pathname === '/profile') {
-        return isAuthenticated ? children : <Navigate to="/Error404" />;
+        return (isAuthenticated || isAuthenticatedSigaa) ? children : <Navigate to="/Error404" />;
     }
 
-    return isAuthenticated && userType === requiredUserType ? (
+    return (isAuthenticated || isAuthenticatedSigaa) && userType === requiredUserType ? (
         children
     ) : (
         <Navigate to="/Error404" />
