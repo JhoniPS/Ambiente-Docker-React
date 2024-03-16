@@ -43,7 +43,11 @@ const OverviewGroupVisualizador = () => {
     <Fragment>
       <MenuAppBar backStep="/visualizador" />
       <div className="d-flex flex-column p-5 gap-3 h-100">
-        <h2>Overview</h2>
+        <div className="d-flex justify-content-between align-items-center">
+          <h2>Visão Geral</h2>
+          <ReportGroup />
+        </div>
+
         <CRow>
           <Card
             icon={cilDescription}
@@ -79,7 +83,6 @@ const OverviewGroupVisualizador = () => {
           <CCardBody>
             <h2 style={{ paddingLeft: '15px' }}>Detalhes</h2>
             <TableDetalhe data={data} />
-            <ReportGroup />
           </CCardBody>
         </CCard>
 

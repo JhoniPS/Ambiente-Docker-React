@@ -1,65 +1,127 @@
-import { CButton, CCol, CFormCheck, CFormInput, CFormSelect, CRow } from '@coreui/react'
-import React from 'react'
+import { CButton, CCol, CFormInput, CFormSelect, CModal, CModalBody, CModalFooter, CModalHeader, CModalTitle, CRow } from '@coreui/react';
+import React, { useState } from 'react';
+import { BsFileEarmarkArrowDownFill } from "react-icons/bs";
 import api from '../../services/api';
 
-function ReportGroups() {
+function ReportGroup() {
+    const [visible, setVisible] = useState(false);
 
-    const reportGroups = async () => {
+    const [filters, setFilters] = useState({
+        status: '',
+        start_date: '',
+        end_date: '',
+        withFiles: 0,
+    });
+
+    console.log(filters.withFiles);
+
+    const downloadFile = async (data, fileType, fileExtension) => {
+        const blob = new Blob([new Uint8Array(data)], { type: fileType });
+        const url = window.URL.createObjectURL(blob);
+
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', `relatorio.${fileExtension}`);
+        document.body.appendChild(link);
+        link.click();
+
+        window.URL.revokeObjectURL(url);
+        document.body.removeChild(link);
+    };
+
+    const reportGroup = async () => {
         try {
-            const response = await api.get('groups/download/', {
-                filters: {
-                    status: 'EM ANDAMENTO',
-                    start_date: '2024-03-06',
-                    end_date: '2024-03-10',
-                    withFiles: false
-                }
+            const response = await api.get(`groups/download/`, {
+                params: {
+                    filters: {
+                        status: filters.status,
+                        start_date: filters.start_date,
+                        end_date: filters.end_date,
+                        withFiles: filters.withFiles,
+                    },
+                },
+                responseType: 'arraybuffer',
             });
 
-            console.log('Resposta da API:', response.data);
+            if (response.data && response.data.byteLength > 0) {
+                const fileType = filters.withFiles ? 'application/zip' : 'application/pdf';
+                const fileExtension = filters.withFiles ? 'zip' : 'pdf';
+
+                await downloadFile(response.data, fileType, fileExtension);
+            } else {
+                console.error('A resposta da API não contém dados do arquivo solicitado.');
+            }
         } catch (error) {
             console.error('Erro na solicitação:', error.response.errors);
         }
-    }
+    };
 
     return (
-        <div className='border p-2'>
-            <CRow className='d-flex justify-content-between w-auto gap-4 p-0' xs={{ cols: 1 }} sm={{ cols: 1 }} md={{ cols: 1 }} lg={{ cols: 4 }} xl={{ cols: 4 }} xxl={{ cols: 4 }}>
-                <CCol>
-                    <CFormInput
-                        type='date'
-                        label="Data de inicio:"
-                        size="sm"
-                    />
-                </CCol>
+        <>
+            <CButton color="primary" className='d-flex justify-content-center align-items-center gap-2' onClick={() => setVisible(!visible)}>
+                <BsFileEarmarkArrowDownFill size={20}/>
+                Relatório
+            </CButton>
+            <CModal
+                visible={visible}
+                onClose={() => setVisible(false)}
+                aria-labelledby="LiveDemoExampleLabel"
+            >
+                <CModalHeader onClose={() => setVisible(false)}>
+                    <CModalTitle id="LiveDemoExampleLabel">Relatório de Grupos</CModalTitle>
+                </CModalHeader>
+                <CModalBody>
+                    <CRow
+                        className='d-flex justify-content-between w-auto gap-4 p-0'
+                        xs={{ cols: 1 }}
+                        sm={{ cols: 1 }}
+                        md={{ cols: 1 }}
+                        lg={{ cols: 1 }}
+                        xl={{ cols: 1 }}
+                        xxl={{ cols: 1 }}
+                    >
+                        <CCol>
+                            <CFormSelect
+                                aria-label='Status'
+                                value={filters.status}
+                                onChange={(e) => setFilters({ ...filters, status: e.target.value })}
+                            >
+                                <option value=''>-- selecione o status --</option>
+                                <option value='EM ANDAMENTO'>EM ANDAMENTO</option>
+                                <option value='FINALIZADO'>FINALIZADO</option>
+                            </CFormSelect>
+                        </CCol>
 
-                <CCol>
-                    <CFormInput
-                        type='date'
-                        label="Data de encerramento:"
-                        size="sm"
-                    />
-                </CCol>
+                        <CCol>
+                            <CFormInput
+                                type='date'
+                                id='start_date'
+                                placeholder='Data de Início'
+                                value={filters.start_date}
+                                onChange={(e) => setFilters({ ...filters, start_date: e.target.value })}
+                            />
+                        </CCol>
 
-                <CCol>
-                    <CFormSelect size="sm" label="Status:">
-                        <option>-- selecione --</option>
-                        <option value="EM ANDAMENTO">EM ANDAMENTO</option>
-                        <option value="FINALIZADO">FINALIZADO</option>
-                    </CFormSelect>
-                </CCol>
-
-                <CRow className='d-flex justify-content-center w-100' xs={{ cols: 1 }} sm={{ cols: 1 }} md={{ cols: 2 }} lg={{ cols: 2 }} xl={{ cols: 2 }} xxl={{ cols: 2 }}>
-                    <CCol>
-                        <CFormCheck id="checkRelatorio" label="Obter relatório com arquivos dos grupos?" />
-                    </CCol>
-
-                    <CCol className='w-auto'>
-                        <CButton size="sm" onClick={async () => await reportGroups()}>Baixar Relatório</CButton>
-                    </CCol>
-                </CRow>
-            </CRow>
-        </div>
-    )
+                        <CCol>
+                            <CFormInput
+                                type='date'
+                                id='end_date'
+                                placeholder='Data de Fim'
+                                value={filters.end_date}
+                                onChange={(e) => setFilters({ ...filters, end_date: e.target.value })}
+                            />
+                        </CCol>
+                    </CRow>
+                </CModalBody>
+                <CModalFooter>
+                    <CButton color="secondary" onClick={() => setVisible(false)}>
+                        Fechar
+                    </CButton>
+                    <CButton onClick={async () => await reportGroup()}>Baixar Relatório</CButton>
+                </CModalFooter>
+            </CModal>
+        </>
+    );
 }
 
-export default ReportGroups
+export default ReportGroup;

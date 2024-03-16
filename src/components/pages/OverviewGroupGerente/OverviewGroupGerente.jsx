@@ -41,7 +41,11 @@ const OverviewGroupGerente = () => {
     <Fragment>
       <MenuAppBar backStep="/gerente" />
       <div className="d-flex flex-column p-5 gap-3 h-100">
-        <h2>Visão Geral</h2>
+        <div className="d-flex justify-content-between align-items-center">
+          <h2>Visão Geral</h2>
+          <ReportGroup />
+        </div>
+
         <CRow>
           <Card
             icon={cilDescription}
@@ -74,8 +78,8 @@ const OverviewGroupGerente = () => {
         <CCard style={{ boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
           <CCardBody>
             <h2 style={{ paddingLeft: '15px' }}>Detalhes</h2>
+
             <TableDetalhe data={data} />
-            <ReportGroup />
           </CCardBody>
         </CCard>
 

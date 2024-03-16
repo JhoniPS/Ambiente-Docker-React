@@ -51,7 +51,11 @@ const OverviewGroupRepresentante = () => {
     <Fragment>
       <MenuAppBar backStep="/representante" />
       <div className="d-flex flex-column p-5 gap-3 h-100">
-        <h2>Visão Geral</h2>
+        <div className="d-flex justify-content-between align-items-center">
+          <h2>Visão Geral</h2>
+          <ReportGroup />
+        </div>
+
         <CRow>
           <Card
             icon={cilDescription}

@@ -56,7 +56,7 @@ const GroupsGerente = () => {
                 <CCard>
                     <CCardBody className="d-flex flex-column gap-3">
                         <h3 className='text-h3 mb-0'>Grupos</h3>
-                        <section className='mb-0'>
+                        <section className='d-flex justify-content-between align-items-center'>
                             <LinkButton
                                 text="Adicionar Grupo"
                                 to="/gerente-cadastrar-grupo"
@@ -66,6 +66,8 @@ const GroupsGerente = () => {
                                     </IconContext.Provider>
                                 }
                             />
+
+                            <ReportGroups />
                         </section>
 
                         <h5 className='mb-0'>FILTROS RÁPIDOS</h5>
@@ -78,7 +80,7 @@ const GroupsGerente = () => {
                         </section>
 
                         <TableGroups rota="gerente-detalhes-de-grupos" data={sortUsers()} setData={setData} />
-                        <ReportGroups />
+
                     </CCardBody>
                 </CCard>
                 {showMessage && <Message type={messageType} msg={message} setShowMessage={setShowMessage} />}

@@ -17,7 +17,7 @@ import {
 
 import CIcon from '@coreui/icons-react'
 import { useLocation } from 'react-router-dom';
-import { cilLockLocked, cilShieldAlt } from '@coreui/icons';
+import { cilLockLocked } from '@coreui/icons';
 import LinkButton from '../../layout/linkbutton/LinkButton'
 import Message from '../../layout/Message/Message';
 
@@ -141,7 +141,7 @@ function NewPassword() {
 
                                 {renderForm && <CForm onSubmit={handleSubmit}>
                                     <p className="text-medium-emphasis">Crie uma nova senha</p>
-                                    
+
                                     <CInputGroup className="mb-3">
                                         <CInputGroupText>
                                             <CIcon icon={cilLockLocked} />
