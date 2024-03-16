@@ -58,8 +58,8 @@ function ReportGroup() {
 
     return (
         <>
-            <CButton color="primary" className='d-flex justify-content-center align-items-center gap-2' onClick={() => setVisible(!visible)}>
-                <BsFileEarmarkArrowDownFill size={20}/>
+            <CButton color='null' style={{ background: '#2978A0', color: 'white' }} className='d-flex justify-content-center align-items-center gap-2 px-5' onClick={() => setVisible(!visible)}>
+                <BsFileEarmarkArrowDownFill size={20} />
                 Relatório
             </CButton>
             <CModal
@@ -117,7 +117,7 @@ function ReportGroup() {
                     <CButton color="secondary" onClick={() => setVisible(false)}>
                         Fechar
                     </CButton>
-                    <CButton onClick={async () => await reportGroup()}>Baixar Relatório</CButton>
+                    <CButton onClick={async () => await reportGroup()}>Baixar</CButton>
                 </CModalFooter>
             </CModal>
         </>

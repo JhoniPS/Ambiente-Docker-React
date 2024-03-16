@@ -70,7 +70,7 @@ function ReportGroup() {
                 </CCol>
 
                 <CCol className='w-auto'>
-                    <CButton size='sm' onClick={reportGroup}>
+                    <CButton size='sm' color='null' style={{ background: '#2978A0', color: 'white' }} onClick={reportGroup}>
                         Baixar Relatório
                     </CButton>
                 </CCol>

@@ -55,19 +55,23 @@ const GroupsGerente = () => {
             <div className="d-flex flex-column p-4 gap-4 h-100">
                 <CCard>
                     <CCardBody className="d-flex flex-column gap-3">
-                        <h3 className='text-h3 mb-0'>Grupos</h3>
-                        <section className='d-flex justify-content-between align-items-center'>
-                            <LinkButton
-                                text="Adicionar Grupo"
-                                to="/gerente-cadastrar-grupo"
-                                icon={
-                                    <IconContext.Provider value={{ size: '1rem' }}>
-                                        <IoMdAdd size={20} />
-                                    </IconContext.Provider>
-                                }
-                            />
+                        <section className='d-flex flex-wrap justify-content-between align-items-center gap-2'>
+                            <h3 className='text-h3 mb-0'>Grupos</h3>
 
-                            <ReportGroups />
+                            <div className='d-flex flex-wrap gap-2'>
+                                <ReportGroups />
+
+                                <LinkButton
+                                    text="Adicionar Grupo"
+                                    to="/gerente-cadastrar-grupo"
+                                    icon={
+                                        <IconContext.Provider value={{ size: '1rem' }}>
+                                            <IoMdAdd size={20} />
+                                        </IconContext.Provider>
+                                    }
+                                />
+                            </div>
+
                         </section>
 
                         <h5 className='mb-0'>FILTROS RÁPIDOS</h5>
