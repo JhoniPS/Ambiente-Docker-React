@@ -5,6 +5,7 @@ import MenuAppBar from '../../layout/AppBar/MenuAppBar';
 import TableGroups from '../../TableGroups/TableGroups';
 import Container from '../../layout/container/Container';
 import { CCard, CCardBody } from '@coreui/react';
+import ReportGroups from '../../report/ReportGroups';
 
 const GroupsVisualizador = () => {
     const [data, setData] = useState([]);
@@ -50,8 +51,11 @@ const GroupsVisualizador = () => {
             <div className="d-flex flex-column p-4 gap-4 h-100">
                 <CCard>
                     <CCardBody className="d-flex flex-column gap-3">
-                        <h2>Grupos</h2>
-                        <h4>FILTROS RÁPIDOS</h4>
+                        <div className='d-flex justify-content-between align-items-center'>
+                            <h2>Grupos</h2>
+                            <ReportGroups />
+                        </div>
+                        <h5 className='mb-0'>FILTROS RÁPIDOS</h5>
                         <Container customClass="start">
                             <SubmitButton text="Mais Recentes" customClass="button_filtes_bar" onClick={() => setSortOrder('desc')} />
                             <SubmitButton text="Mais Antigos" customClass="button_filtes_bar" onClick={() => setSortOrder('asc')} />
@@ -59,6 +63,7 @@ const GroupsVisualizador = () => {
                             <SubmitButton text="Grupos Externos" customClass="button_filtes_bar" onClick={() => setGroupType('externo')} />
                             <SubmitButton text="Mostrar Todos" customClass="button_filtes_bar" onClick={() => setGroupType('')} />
                         </Container>
+
                         <TableGroups rota="visualizador-detalhes-de-grupos" data={sortUsers()} setData={setData} />
                     </CCardBody>
                 </CCard>

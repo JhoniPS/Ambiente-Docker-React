@@ -13,10 +13,11 @@ import TableGroupsDescription from "../../TableGroupsDescription/TableGroupsDesc
 import TableDetalhe from "../../TableDetalhes/TableDetalhe";
 import TableMemberGroup from "../../TableMemberGroup/TableMemberGroup";
 import Observations from "../../layout/Observations/Observations"
+import ReportGroup from "../../report/ReportGroup";
 
 const OverviewGroupGerente = () => {
   const { id } = useParams();
-  const [data, setData] = useState({});
+  const [data, setData] = useState([]);
   const [observacao, setObservacao] = useState("");
 
   useEffect(() => {
@@ -40,30 +41,34 @@ const OverviewGroupGerente = () => {
     <Fragment>
       <MenuAppBar backStep="/gerente" />
       <div className="d-flex flex-column p-5 gap-3 h-100">
-        <h2>Visão Geral</h2>
+        <div className="d-flex justify-content-between align-items-center">
+          <h2>Visão Geral</h2>
+          <ReportGroup />
+        </div>
+
         <CRow>
           <Card
             icon={cilDescription}
             title="Notas"
-            description="Gerencia Notas"
+            description="Gerenciar Notas"
             to={`/gerente-detalhes-de-grupos/${id}/notas`}
           />
           <Card
             icon={cilNotes}
             title="Documentos"
-            description="Gerencia Documentos"
+            description="Gerenciar Arquivos"
             to={`/gerente-detalhes-de-grupos/${id}/documentos`}
           />
           <Card
             icon={cilTask}
             title="Atividades"
-            description="Gerencia Atividades"
+            description="Gerenciar Tarefas"
             to={`/gerente-detalhes-de-grupos/${id}/atividades`}
           />
           <Card
             icon={cilList}
             title="Reuniões"
-            description="Gerencia Reuniões"
+            description="Gerenciar Reuniões"
             to={`/gerente-detalhes-de-grupos/${id}/historico-de-reunioes`}
           />
         </CRow>
@@ -73,6 +78,7 @@ const OverviewGroupGerente = () => {
         <CCard style={{ boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
           <CCardBody>
             <h2 style={{ paddingLeft: '15px' }}>Detalhes</h2>
+
             <TableDetalhe data={data} />
           </CCardBody>
         </CCard>

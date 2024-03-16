@@ -12,6 +12,7 @@ import TableMemberGroup from "../../TableMemberGroup/TableMemberGroup";
 import Observations from "../../layout/Observations/Observations";
 import MenuAppBar from "../../layout/AppBar/MenuAppBar";
 import { CCard, CCardBody, CRow } from "@coreui/react";
+import ReportGroup from "../../report/ReportGroup";
 
 const OverviewGroupVisualizador = () => {
   const { id } = useParams();
@@ -42,7 +43,11 @@ const OverviewGroupVisualizador = () => {
     <Fragment>
       <MenuAppBar backStep="/visualizador" />
       <div className="d-flex flex-column p-5 gap-3 h-100">
-        <h2>Overview</h2>
+        <div className="d-flex justify-content-between align-items-center">
+          <h2>Visão Geral</h2>
+          <ReportGroup />
+        </div>
+
         <CRow>
           <Card
             icon={cilDescription}
@@ -53,13 +58,13 @@ const OverviewGroupVisualizador = () => {
           <Card
             icon={cilNotes}
             title="Documentos"
-            description="Gerencia documentos"
+            description="Gerenciar Arquivos"
             to={`/visualizador-detalhes-de-grupos/${id}/documentos`}
           />
           <Card
             icon={cilTask}
             title="Atividades"
-            description="Gerencia atividades"
+            description="Gerencia Tarefas"
             to={`/visualizador-detalhes-de-grupos/${id}/atividades`}
           />
           <Card

@@ -18,12 +18,16 @@ import {
 } from '@coreui/react';
 import api from '../../../services/api';
 import { Steps } from 'antd';
+import Message from '../../layout/Message/Message';
 
-
-const RepresentanteGroup = ({ representative, setRepresentative }) => {
+const RepresentanteGroup = ({ representative, setRepresentative, name_representative, setName_representative }) => {
   const { error, messageErrors } = useAuthContext()
 
-  const handleChange = (e) => {
+  const handleChangeNameRepresentative = (e) => {
+    setName_representative(e.target.value);
+  };
+
+  const handleChangeRepresentative = (e) => {
     setRepresentative(e.target.value);
   };
 
@@ -31,11 +35,20 @@ const RepresentanteGroup = ({ representative, setRepresentative }) => {
     <section className='d-flex gap-2 flex-column'>
       <CFormInput
         type='text'
+        label="Nome do representante"
+        placeholder='Ex: Matheus Ramos'
+        value={name_representative}
+        onChange={handleChangeNameRepresentative}
+        feedbackInvalid={messageErrors.representative}
+        invalid={error}
+      />
+
+      <CFormInput
+        type='text'
         label="Email do representante"
         placeholder='exemplo@email.com'
-        name='representative'
         value={representative}
-        onChange={handleChange}
+        onChange={handleChangeRepresentative}
         feedbackInvalid={messageErrors.representative}
         invalid={error}
       />
@@ -44,10 +57,9 @@ const RepresentanteGroup = ({ representative, setRepresentative }) => {
 };
 
 const Content = ({ form, setForm }) => {
+  const { error, messageErrors } = useAuthContext()
 
-  const { error, messageErrors, } = useAuthContext()
-
-  const handleSubmit = (e) => {
+  const handleChange = (e) => {
     setForm(prev => ({
       ...prev,
       [e.target.name]: e.target.value,
@@ -64,7 +76,7 @@ const Content = ({ form, setForm }) => {
             name='council'
             placeholder='Digite o conselho'
             value={form.council}
-            onChange={handleSubmit}
+            onChange={handleChange}
             feedbackInvalid={messageErrors.council}
             invalid={error}
           />
@@ -74,7 +86,7 @@ const Content = ({ form, setForm }) => {
             name='organ'
             placeholder='Digite o orgão'
             value={form.organ}
-            onChange={handleSubmit}
+            onChange={handleChange}
             feedbackInvalid={messageErrors.organ}
             invalid={error}
           />
@@ -84,7 +96,7 @@ const Content = ({ form, setForm }) => {
             name='team'
             placeholder='Digite a equipe'
             value={form.team}
-            onChange={handleSubmit}
+            onChange={handleChange}
             feedbackInvalid={messageErrors.team}
             invalid={error}
           />
@@ -96,7 +108,7 @@ const Content = ({ form, setForm }) => {
             name='internal_concierge'
             placeholder='Digite a portaria'
             value={form.internal_concierge}
-            onChange={handleSubmit}
+            onChange={handleChange}
             feedbackInvalid={messageErrors.internal_concierge}
             invalid={error}
           />
@@ -108,7 +120,7 @@ const Content = ({ form, setForm }) => {
             name='acronym'
             placeholder='Digite a sigla'
             value={form.acronym}
-            onChange={handleSubmit}
+            onChange={handleChange}
             feedbackInvalid={messageErrors.acronym}
             invalid={error}
           />
@@ -121,7 +133,7 @@ const Content = ({ form, setForm }) => {
             name='email'
             placeholder='Digite o e-mail'
             value={form.email}
-            onChange={handleSubmit}
+            onChange={handleChange}
             feedbackInvalid={messageErrors.email}
             invalid={error}
           />
@@ -131,7 +143,7 @@ const Content = ({ form, setForm }) => {
             name='office_indicated'
             placeholder='Digite o oficio indicado'
             value={form.office_indicated}
-            onChange={handleSubmit}
+            onChange={handleChange}
             feedbackInvalid={messageErrors.office_indicated}
             invalid={error}
           />
@@ -141,7 +153,7 @@ const Content = ({ form, setForm }) => {
             name='entity'
             placeholder='Digite a entidade'
             value={form.entity}
-            onChange={handleSubmit}
+            onChange={handleChange}
             feedbackInvalid={messageErrors.entity}
             invalid={error}
           />
@@ -153,7 +165,7 @@ const Content = ({ form, setForm }) => {
             name='unit'
             placeholder='Digite a unidade'
             value={form.unit}
-            onChange={handleSubmit}
+            onChange={handleChange}
             feedbackInvalid={messageErrors.unit}
             invalid={error}
           />
@@ -164,7 +176,7 @@ const Content = ({ form, setForm }) => {
             name='office_requested'
             placeholder='Digite o oficio solicitado'
             value={form.office_requested}
-            onChange={handleSubmit}
+            onChange={handleChange}
             feedbackInvalid={messageErrors.office_requested}
             invalid={error}
           />
@@ -266,7 +278,7 @@ const FormSignGroup = ({ name, setName, status, setStatus, setType_group, type_g
 };
 
 const SignGroups = () => {
-  const [formulario, setFormulario] = useState({
+  const [formulario, setFormulario] = useState([{
     entity: "",
     organ: "",
     council: "",
@@ -277,10 +289,12 @@ const SignGroups = () => {
     unit: "",
     office_requested: "",
     office_indicated: "",
-  });
+  }]);
 
   const [representative, setRepresentative] = useState("");
-  const [observations, setObservations] = useState([]);
+  const [name_representative, setName_Representative] = useState("");
+
+  const [observations, setObservations] = useState('');
   const [name, setName] = useState("");
   const [type_group, setType_group] = useState('interno');
   const [status, setStatus] = useState('EM ANDAMENTO');
@@ -291,8 +305,11 @@ const SignGroups = () => {
 
   const {
     setMessageType,
+    messageType,
     setShowMessage,
+    showMessage,
     setMessage,
+    message,
     setError,
     setMessageErrors
   } = useAuthContext();
@@ -313,7 +330,12 @@ const SignGroups = () => {
     },
     {
       title: 'Representante',
-      content: <RepresentanteGroup representative={representative} setRepresentative={setRepresentative} />,
+      content: <RepresentanteGroup
+        representative={representative}
+        setRepresentative={setRepresentative}
+        name_representative={name_representative}
+        setName_representative={setName_Representative}
+      />,
     },
     {
       title: 'Informações do grupo',
@@ -330,6 +352,7 @@ const SignGroups = () => {
       type_group,
       status,
       observations,
+      name_representative,
       representative
     };
 
@@ -345,6 +368,10 @@ const SignGroups = () => {
 
     } catch (error) {
       setError(true);
+      setLoading(false);
+      setMessage(error.response.data.errors)
+      setMessageType('error');
+      setShowMessage(true);
       setMessageErrors(error.response.data.errors)
     }
   };
@@ -400,6 +427,7 @@ const SignGroups = () => {
             </CCol>
           </CRow>
         </CContainer>
+        {showMessage && <Message type={messageType} msg={message} setShowMessage={setShowMessage} />}
       </div>
     </Fragment>
   );

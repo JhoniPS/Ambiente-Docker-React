@@ -10,7 +10,11 @@ const api = axios.create({
 });
 
 api.interceptors.request.use(function (config) {
-    config.headers.Authorization = `Bearer ${Cookies.get('authToken')}`;
+    if (Cookies.get('authToken'))
+        config.headers.Authorization = `Bearer ${Cookies.get('authToken')}`;
+    else
+        config.headers.Authorization = `${Cookies.get('sigaa_token')}`;
+
     config.headers.Accept = 'application/json';
     config.withCredentials = true;
 

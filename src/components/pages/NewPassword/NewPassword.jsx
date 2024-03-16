@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import api from '../../../services/api';
 import useAuthContext from '../../contexts/Auth';
 import {
@@ -17,7 +17,7 @@ import {
 
 import CIcon from '@coreui/icons-react'
 import { useLocation } from 'react-router-dom';
-import { cilLockLocked, cilShieldAlt } from '@coreui/icons';
+import { cilLockLocked } from '@coreui/icons';
 import LinkButton from '../../layout/linkbutton/LinkButton'
 import Message from '../../layout/Message/Message';
 
@@ -47,7 +47,21 @@ function NewPassword() {
     });
 
     const [emailRecovery, setEmailRecovery] = useState("");
+    const [renderForm, setRenderForm] = useState(false);
     const [loading, setLoading] = useState(false);
+
+    useEffect(() => {
+        const params = new URLSearchParams(window.location.search);
+        if (params.get('email') && params.get('token')) {
+            setRenderForm(true);
+
+            setPassword(prev => ({
+                ...prev,
+                email: params.get('email'),
+                token: params.get('token')
+            }));
+        }
+    }, [location.search])
 
     const handlSubmitToken = async (e) => {
         e.preventDefault();
@@ -55,10 +69,12 @@ function NewPassword() {
             setLoading(true);
             await api.post('/forgot-password', { email: emailRecovery });
             setLoading(false);
+            setRenderForm(true);
             setShowMessage(true);
             setMessage('E-mail com sucesso!');
             setMessageType('success');
         } catch (error) {
+            setLoading(false);
             setShowMessage(true);
             setMessage('E-mail não enviado!');
             setMessageType('error');
@@ -70,6 +86,7 @@ function NewPassword() {
 
         try {
             await api.post('/reset-password', password);
+            setRenderForm(false);
             setShowMessage(true);
             setMessage('Nova senha criada com sucesso!');
             setMessageType('success');
@@ -101,8 +118,8 @@ function NewPassword() {
                             <CCardBody className="p-4">
                                 <h1>Criar nova senha</h1>
 
-                                <p className="text-medium-emphasis">E-mail para obter o token</p>
-                                <CForm onSubmit={handlSubmitToken}>
+                                {!renderForm && <CForm onSubmit={handlSubmitToken}>
+                                    <p className="text-medium-emphasis">E-mail para obter o token</p>
                                     <CInputGroup className="mb-3">
                                         <CInputGroupText>@</CInputGroupText>
                                         <CFormInput
@@ -120,39 +137,10 @@ function NewPassword() {
                                             {loading ? <><CSpinner component="span" size="sm" aria-hidden="true" /> Loading...</> : <>Feito</>}
                                         </CButton>
                                     </CInputGroup>
-                                </CForm>
+                                </CForm>}
 
-                                <CForm onSubmit={handleSubmit}>
+                                {renderForm && <CForm onSubmit={handleSubmit}>
                                     <p className="text-medium-emphasis">Crie uma nova senha</p>
-
-                                    <CInputGroup className="mb-3">
-                                        <CInputGroupText>@</CInputGroupText>
-                                        <CFormInput
-                                            placeholder="E-mail do usuário"
-                                            autoComplete="email"
-                                            type='e-mail'
-                                            name='email'
-                                            value={password.email}
-                                            onChange={handlChange}
-                                            feedbackInvalid={messageErrors.email}
-                                            invalid={error}
-                                        />
-                                    </CInputGroup>
-
-                                    <CInputGroup className="mb-3">
-                                        <CInputGroupText>
-                                            <CIcon icon={cilShieldAlt} />
-                                        </CInputGroupText>
-                                        <CFormInput
-                                            placeholder="Token enviado por e-mail"
-                                            type='text'
-                                            name='email'
-                                            value={password.token}
-                                            onChange={handlChange}
-                                            feedbackInvalid={messageErrors.token}
-                                            invalid={error}
-                                        />
-                                    </CInputGroup>
 
                                     <CInputGroup className="mb-3">
                                         <CInputGroupText>
@@ -176,7 +164,7 @@ function NewPassword() {
                                         <CFormInput
                                             type="password"
                                             placeholder="Confirmar a nova senha"
-                                            name='c_password'
+                                            name='password_confirmation'
                                             value={password.password_confirmation}
                                             onChange={handlChange}
                                             feedbackInvalid={messageErrors.password_confirmation}
@@ -184,10 +172,12 @@ function NewPassword() {
                                         />
                                     </CInputGroup>
                                     <div className="d-grid gap-2">
-                                        <CButton color="success" type='submit'>Nova senha</CButton>
-                                        <LinkButton text="Voltar" customClass="#6C757D" to={backPage} />
+                                        <CButton color="success" type='submit'>Redefinir senha</CButton>
                                     </div>
-                                </CForm>
+                                </CForm>}
+                                <div className="d-grid gap-2 mt-2">
+                                    <LinkButton text="Voltar" customClass="#6C757D" to={backPage} />
+                                </div>
                             </CCardBody>
                         </CCard>
                     </CCol>
