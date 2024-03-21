@@ -19,16 +19,14 @@ const Perfil = () => {
 
                 <CCard className='min-vh-50'>
                     <CCardBody className='d-flex align-items-center gap-4'>
-                        <CAvatar color="secondary" size="xl" src={(user.photo === null) ? img : user.photo} />
-
+                        <CAvatar color="secondary" size="xl" src={img} />
                         <div>
                             <h4 className="mb-3">{user.name}</h4>
-                            <p className="mb-1"><strong>E-mail:</strong>{user.email}</p>
-                            <p className="mb-1"><strong>Tipo de usuário:</strong>{user.type_user}</p>
+                            <p className="mb-1"><strong>E-mail: </strong>{user.email}</p>
+                            <p className="mb-1"><strong>Tipo de usuário: </strong>{user.type_user}</p>
                         </div>
                     </CCardBody>
                 </CCard>
-
             </div>
         </Fragment>
     );

@@ -89,7 +89,6 @@ const OverviewGroupRepresentante = () => {
           <CCardBody>
             <h2 style={{ paddingLeft: '15px' }}>Detalhes</h2>
             <TableDetalhe data={data} />
-            <ReportGroup />
           </CCardBody>
         </CCard>
 
