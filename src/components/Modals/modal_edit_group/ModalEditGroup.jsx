@@ -23,20 +23,20 @@ export default function ModalEditGroup({ id, data, setData }) {
     const [open, setOpen] = useState(false);
 
     const [form, setForm] = useState({
-        entity: '',
-        organ: '',
-        council: '',
-        internal_concierge: '',
-        acronym: '',
-        team: '',
-        status: '',
-        name: '',
-        type: '',
-        email: '',
-        observations: '',
-        unit: '',
-        office_requested: '',
-        office_indicated: '',
+        entity: "",
+        organ: "",
+        council: "",
+        internal_concierge: "",
+        acronym: "",
+        team: "",
+        status: "",
+        name: "",
+        type: "",
+        email: "",
+        observations: "",
+        unit: "",
+        office_requested: "",
+        office_indicated: "",
     });
 
     const {
@@ -56,20 +56,20 @@ export default function ModalEditGroup({ id, data, setData }) {
                 const groupData = response.data.data;
 
                 setForm({
-                    entity: groupData.entity || '',
-                    organ: groupData.organ || '',
-                    council: groupData.council || '',
-                    internal_concierge: groupData.internal_concierge || '',
-                    acronym: groupData.acronym || '',
-                    team: groupData.team || '',
-                    name: groupData.type_group.name || '',
-                    status: groupData.status || '',
-                    type: groupData.type_group.type || '',
-                    email: groupData.email || '',
-                    observations: groupData.observations || '',
-                    unit: groupData.unit || '',
-                    office_requested: groupData.office_requested || '',
-                    office_indicated: groupData.office_indicated || '',
+                    entity: groupData.entity ? groupData.entity : "",
+                    organ: groupData.organ || "",
+                    council: groupData.council ? groupData.council : "",
+                    internal_concierge: groupData.internal_concierge || "",
+                    acronym: groupData.acronym || "",
+                    team: groupData.team || "",
+                    name: groupData.type_group.name || "",
+                    status: groupData.status || "",
+                    type: groupData.type_group.type || "",
+                    email: groupData.email ? groupData.email : "",
+                    observations: groupData.observations || "",
+                    unit: groupData.unit || "",
+                    office_requested: groupData.office_requested ? groupData.office_requested : "",
+                    office_indicated: groupData.office_indicated ? groupData.office_indicated : "",
                 });
             } catch (error) {
                 setMessage(error.response.data.errors);

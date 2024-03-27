@@ -4,9 +4,17 @@ import { MRT_Localization_PT_BR } from 'material-react-table/locales/pt-BR';
 import ModalDeleteUser from '../Modals/modal_delete_user/ModalDeleteUser';
 import { CFormSwitch } from '@coreui/react';
 import api from '../../services/api';
+import useAuthContext from '../contexts/Auth';
 
 const TableUser = () => {
   const [data, setData] = useState([]);
+
+  const {
+    setShowMessage,
+    setError,
+    setMessage,
+    setMessageType
+  } = useAuthContext();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -14,19 +22,25 @@ const TableUser = () => {
         const response = await api.get('users');
         setData(response.data.data);
       } catch (error) {
-        console.log(error);
+        setError(true);
+        setMessage(`${error.response.data.errors}`);
+        setMessageType('error');
+        setShowMessage(true);
       }
     };
 
     fetchData();
-  }, [setData]);
+  }, [setData, setError, setMessage, setMessageType, setShowMessage]);
 
   const setManager = async (id) => {
     try {
       await api.put(`users/set-user/${id}`, { isManager: true });
       updateTable(id, 'gerente');
     } catch (error) {
-      console.log("teste");
+      setError(true);
+      setMessage(`${error.response.data.errors}`);
+      setMessageType('error');
+      setShowMessage(true);
     }
   };
 
@@ -35,7 +49,10 @@ const TableUser = () => {
       await api.put(`users/set-user/${id}`, { isManager: false });
       updateTable(id, 'visualizador');
     } catch (error) {
-      console.log("teste2");
+      setError(true);
+      setMessage(`${error.response.data.errors}`);
+      setMessageType('error');
+      setShowMessage(true);
     }
   }
 
@@ -58,7 +75,10 @@ const TableUser = () => {
         await setManager(userId);
       }
     } catch (error) {
-      console.log(error);
+      setError(true);
+      setMessage(`${error.response.data.errors}`);
+      setMessageType('error');
+      setShowMessage(true);
     }
   };
 

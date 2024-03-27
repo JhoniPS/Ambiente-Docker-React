@@ -4,7 +4,6 @@ import useAuthContext from '../../contexts/Auth';
 import api from '../../../services/api';
 import Cookies from 'js-cookie'
 
-import SubmitButton from '../../layout/submitbuttun/SubmitButton';
 import Message from '../../layout/Message/Message';
 import TableDocumentos from '../../TableDocumentos/TableDocumentos';
 import AddDocuments from '../../Modals/modal_sign_document/AddDocuments';
@@ -15,9 +14,16 @@ import { CCard, CCardBody } from '@coreui/react';
 function Documents() {
     const { id } = useParams();
     const [data, setData] = useState([]);
-    const [sortOrder, setSortOrder] = useState("desc");
 
-    const { message, messageType, showMessage, setShowMessage } = useAuthContext();
+    const {
+        message,
+        messageType,
+        showMessage,
+        setShowMessage,
+        setError,
+        setMessage,
+        setMessageType
+    } = useAuthContext();
     const location = useLocation();
     const backPage = location.pathname.replace("/documentos", '');
     const userRole = Cookies.get('userType');
@@ -28,11 +34,14 @@ function Documents() {
                 const { data } = await api.get(`groups/${id}/documents`);
                 setData(data)
             } catch (error) {
-                console.log(error)
+                setError(true);
+                setMessage(`${error.response.data.errors}`);
+                setMessageType('error');
+                setShowMessage(true);
             }
         }
         fetchData();
-    }, [id]);
+    }, [id, setError, setMessageType, setMessage, setShowMessage]);
 
     return (
         <Fragment>

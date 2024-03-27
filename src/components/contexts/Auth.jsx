@@ -37,7 +37,10 @@ export const AuthProvider = ({ children }) => {
 
           handleUserTypeNavigation(type_user.name, email);
         } catch (error) {
-          console.log(error);
+          setError(true);
+          setMessage(`${error.response.data.errors.error_description}`);
+          setMessageType('error');
+          setShowMessage(true);
         }
       }
     };
@@ -102,7 +105,10 @@ export const AuthProvider = ({ children }) => {
       await api.post('users/logout');
       handleLogoutCleanup();
     } catch (error) {
-      console.log(error.response);
+      setError(true);
+      setMessage(`${error.response.data.message}`);
+      setMessageType('error');
+      setShowMessage(true);
     }
   };
 
@@ -111,7 +117,10 @@ export const AuthProvider = ({ children }) => {
       await api.post('users/logout-ufopa');
       handleLogoutCleanup();
     } catch (error) {
-      console.log(error.response);
+      setError(true);
+      setMessage(`${error.response.data.message}`);
+      setMessageType('error');
+      setShowMessage(true);
     }
   };
 

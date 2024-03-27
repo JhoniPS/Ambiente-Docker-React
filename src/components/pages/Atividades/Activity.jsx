@@ -24,7 +24,15 @@ function Activity() {
     const [activitys, setActivitys] = useState([]);
     const [openCards, setOpenCards] = useState([]);
 
-    const { message, messageType, showMessage, setShowMessage } = useAuthContext();
+    const {
+        message,
+        messageType,
+        showMessage,
+        setShowMessage,
+        setError,
+        setMessage,
+        setMessageType,
+    } = useAuthContext();
 
     const location = useLocation();
     const backPage = location.pathname.replace("/atividades", '');
@@ -37,12 +45,15 @@ function Activity() {
                 setActivitys(response.data);
                 setOpenCards(new Array(response.data.length).fill(false));
             } catch (error) {
-                console.log(error);
+                setError(true);
+                setMessage(`${error.response.data.errors}`);
+                setMessageType('error');
+                setShowMessage(true);
             }
         };
 
         fetchData();
-    }, [id]);
+    }, [id, setError, setMessage, setMessageType, setShowMessage]);
 
     const toggleCard = (index) => {
         const updatedOpenCards = [...openCards];
@@ -54,7 +65,10 @@ function Activity() {
         try {
             await api.put(`groups/${id}/activity/${idTask}/complete`);
         } catch (error) {
-            console.log(error);
+            setError(true);
+            setMessage(`${error.response.data.errors}`);
+            setMessageType('error');
+            setShowMessage(true);
         }
     };
 
@@ -70,7 +84,10 @@ function Activity() {
 
             setActivitys(updatedTaskList);
         } catch (error) {
-            console.log(error);
+            setError(true);
+            setMessage(`${error.response.data.errors}`);
+            setMessageType('error');
+            setShowMessage(true);
         }
     };
 
@@ -80,7 +97,10 @@ function Activity() {
             const updateTaskList = activitys.filter(item => item.id !== activityId);
             setActivitys(updateTaskList);
         } catch (error) {
-            console.log(error);
+            setError(true);
+            setMessage(`${error.response.data.errors}`);
+            setMessageType('error');
+            setShowMessage(true);
         }
     };
 
@@ -101,7 +121,10 @@ function Activity() {
 
             setActivitys(updatedTaskList);
         } catch (error) {
-            console.log(error);
+            setError(true);
+            setMessage(`${error.response.data.errors}`);
+            setMessageType('error');
+            setShowMessage(true);
         }
     };
 

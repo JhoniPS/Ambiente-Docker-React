@@ -21,7 +21,16 @@ export default function Notas() {
     const location = useLocation();
     const backPage = location.pathname.replace('/notas', '');
 
-    const { message, messageType, showMessage, setShowMessage } = useAuthContext();
+    const {
+        message,
+        messageType,
+        showMessage,
+        setShowMessage,
+        setError,
+        setMessage,
+        setMessageType
+    } = useAuthContext();
+
     const userRole = Cookies.get('userType');
 
     const sortDocs = () => {
@@ -48,12 +57,15 @@ export default function Notas() {
                 const response = await api.get(`groups/${id}/notes`);
                 setNotas(response.data);
             } catch (error) {
-                console.log(error);
+                setError(true);
+                setMessage(`${error.response.data.errors}`);
+                setMessageType('error');
+                setShowMessage(true);
             }
         }
 
         fetchData();
-    }, [id]);
+    }, [id, setError, setMessage, setMessageType, setShowMessage]);
 
     return (
         <Fragment>
@@ -125,7 +137,6 @@ export default function Notas() {
                         </CCallout>
                     </CCardBody>
                 </CCard>
-
                 {showMessage && <Message type={messageType} msg={message} setShowMessage={setShowMessage} />}
             </div>
         </Fragment>

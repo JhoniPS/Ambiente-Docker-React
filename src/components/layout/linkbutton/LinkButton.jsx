@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom';
 const LinkButton = ({ to, text, icon, customClass }) => {
     return (
         <NavLink
-            className={`btn px-4`}
+            className='btn px-4'
             style={{ background: `${((customClass === '#6C757D') ? '#6C757D' : '#2978A0')}`, color: 'white' }}
             to={to}
         >
