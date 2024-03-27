@@ -1,5 +1,6 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import useAuthContext from '../../contexts/Auth';
 import { cilDescription, cilNotes, cilTask, cilList } from '@coreui/icons';
 import { CCard, CCardBody, CRow } from "@coreui/react";
 import api from "../../../services/api";
@@ -11,6 +12,7 @@ import { IoMdAdd } from 'react-icons/io';
 
 import TableGroupsDescription from "../../TableGroupsDescription/TableGroupsDescrition";
 import TableDetalhe from "../../TableDetalhes/TableDetalhe";
+import Message from '../../layout/Message/Message';
 import TableMemberGroup from "../../TableMemberGroup/TableMemberGroup";
 import Observations from "../../layout/Observations/Observations"
 import ReportGroup from "../../report/ReportGroup";
@@ -19,6 +21,16 @@ const OverviewGroupGerente = () => {
   const { id } = useParams();
   const [data, setData] = useState([]);
   const [observacao, setObservacao] = useState("");
+
+  const {
+    message,
+    messageType,
+    showMessage,
+    setShowMessage,
+    setError,
+    setMessage,
+    setMessageType
+  } = useAuthContext();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -30,12 +42,15 @@ const OverviewGroupGerente = () => {
         setData(group);
         setObservacao(observacao);
       } catch (error) {
-        console.log(error);
+        setError(true);
+        setMessage(`${error.response.data.errors}`);
+        setMessageType('error');
+        setShowMessage(true);
       }
     };
 
     fetchData();
-  }, [id]);
+  }, [id, setError, setMessage, setMessageType, setShowMessage]);
 
   return (
     <Fragment>
@@ -104,6 +119,7 @@ const OverviewGroupGerente = () => {
           </CCardBody>
         </CCard>
       </div>
+      {showMessage && <Message type={messageType} msg={message} setShowMessage={setShowMessage} />}
     </Fragment >
   );
 };

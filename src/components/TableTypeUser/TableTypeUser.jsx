@@ -7,9 +7,17 @@ import { IconContext } from 'react-icons';
 
 import ModalEditTypeUser from '../Modals/modal_edit_type_user/ModalEditTypeUser';
 import ModalDeleteUser from '../Modals/modal_delete_type-user/ModalDeleteTypeUser';
+import useAuthContext from '../contexts/Auth';
 
 const TableTypeUser = () => {
   const [data, setData] = useState([]);
+
+  const {
+    setShowMessage,
+    setError,
+    setMessage,
+    setMessageType
+  } = useAuthContext();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -17,12 +25,15 @@ const TableTypeUser = () => {
         const response = await api.get('type-users');
         setData(response.data);
       } catch (error) {
-        console.log(error);
+        setError(true);
+        setMessage(`${error.response ? error.response.errors : error.message}`);
+        setMessageType('error');
+        setShowMessage(true);
       }
     };
 
     fetchData();
-  }, []);
+  }, [setError, setMessage, setMessageType, setShowMessage]);
 
 
   const columns = [

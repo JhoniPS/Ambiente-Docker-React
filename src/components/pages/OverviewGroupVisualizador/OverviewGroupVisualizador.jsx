@@ -1,6 +1,7 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { cilDescription, cilNotes, cilTask, cilList } from '@coreui/icons';
 import { useParams } from "react-router-dom";
+import useAuthContext from '../../contexts/Auth';
 import api from "../../../services/api";
 
 import Card from "../../card/Card";
@@ -13,12 +14,23 @@ import Observations from "../../layout/Observations/Observations";
 import MenuAppBar from "../../layout/AppBar/MenuAppBar";
 import { CCard, CCardBody, CRow } from "@coreui/react";
 import ReportGroup from "../../report/ReportGroup";
+import Message from "../../layout/Message/Message";
 
 const OverviewGroupVisualizador = () => {
   const { id } = useParams();
   const [data, setData] = useState({});
   const [members, setMembers] = useState([]);
   const [observacao, setObservacao] = useState("");
+
+  const {
+    message,
+    messageType,
+    showMessage,
+    setShowMessage,
+    setError,
+    setMessage,
+    setMessageType
+  } = useAuthContext();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -32,12 +44,15 @@ const OverviewGroupVisualizador = () => {
         setMembers(members);
         setObservacao(observacao);
       } catch (error) {
-        console.log(error);
+        setError(true);
+        setMessage(`${error.response.data.errors}`);
+        setMessageType('error');
+        setShowMessage(true);
       }
     };
 
     fetchData();
-  }, [id]);
+  }, [id, setError, setMessage, setMessageType, setShowMessage]);
 
   return (
     <Fragment>
@@ -102,6 +117,7 @@ const OverviewGroupVisualizador = () => {
           </CCardBody>
         </CCard>
       </div>
+      {showMessage && <Message type={messageType} msg={message} setShowMessage={setShowMessage} />}
     </Fragment >
   );
 };

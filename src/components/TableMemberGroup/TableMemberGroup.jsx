@@ -1,18 +1,25 @@
 import React, { useEffect, useState } from 'react';
+import useAuthContext from '../contexts/Auth';
+import { useParams } from 'react-router-dom';
 import Cookies from 'js-cookie'
-import { MRT_Localization_PT_BR } from 'material-react-table/locales/pt-BR';
+import api from '../../services/api';
 
+import { MRT_Localization_PT_BR } from 'material-react-table/locales/pt-BR';
 import ModalDeleteMember from '../Modals/modal_delete_member/ModalDeleteMember';
 import ModalEditMember from '../Modals/modal_edit_member/ModalEditMember';
-
 import { MaterialReactTable } from 'material-react-table';
-import api from '../../services/api';
-import { useParams } from 'react-router-dom';
 
 const TableMemberGroup = () => {
   const { id } = useParams();
   const userRole = Cookies.get('userType');
   const [members, setMembers] = useState([]);
+
+  const {
+    setShowMessage,
+    setError,
+    setMessage,
+    setMessageType
+  } = useAuthContext();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -21,14 +28,15 @@ const TableMemberGroup = () => {
         setMembers(response.data.data);
 
       } catch (error) {
-        console.log(error);
+        setError(true);
+        setMessage(`${error.response ? error.response.errors : error.message}`);
+        setMessageType('error');
+        setShowMessage(true);
       }
     };
 
     fetchData();
-  }, [id, setMembers]);
-
-  console.log(members);
+  }, [id, setMembers, setError, setMessage, setShowMessage, setMessageType]);
 
   const columns = [
     {

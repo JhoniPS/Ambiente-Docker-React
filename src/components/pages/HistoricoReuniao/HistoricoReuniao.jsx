@@ -35,7 +35,15 @@ function HistoricoReuniao() {
     const backPage = location.pathname.replace('/historico-de-reunioes', '');
     const userRole = Cookies.get('userType');
 
-    const { message, messageType, showMessage, setShowMessage } = useAuthContext();
+    const {
+        message,
+        messageType,
+        showMessage,
+        setShowMessage,
+        setError,
+        setMessage,
+        setMessageType
+    } = useAuthContext();
 
     const sortDocs = () => {
         return [...meets].sort((a, b) => {
@@ -70,7 +78,10 @@ function HistoricoReuniao() {
 
             return response;
         } catch (error) {
-            console.error(error);
+            setError(true);
+            setMessage(`${error.response.data.errors}`);
+            setMessageType('error');
+            setShowMessage(true);
         }
     };
 
@@ -80,11 +91,14 @@ function HistoricoReuniao() {
                 const response = await api.get(`groups/${id}/meeting-history`);
                 setMeets(response.data);
             } catch (error) {
-                console.log(error);
+                setError(true);
+                setMessage(`${error.response.data.errors}`);
+                setMessageType('error');
+                setShowMessage(true);
             }
         };
         fetchData();
-    }, [id, setMeets]);
+    }, [id, setMeets, setError, setMessage, setMessageType, setShowMessage]);
 
     return (
         <Fragment>

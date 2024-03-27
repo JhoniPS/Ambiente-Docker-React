@@ -1,7 +1,23 @@
-import { CButton, CCol, CFormInput, CFormSelect, CModal, CModalBody, CModalFooter, CModalHeader, CModalTitle, CRow } from '@coreui/react';
 import React, { useState } from 'react';
-import { BsFileEarmarkArrowDownFill } from "react-icons/bs";
 import api from '../../services/api';
+import useAuthContext from '../contexts/Auth';
+
+import {
+    CButton,
+    CCol,
+    CFormInput,
+    CFormSelect,
+    CModal,
+    CModalBody,
+    CModalFooter,
+    CModalHeader,
+    CModalTitle,
+    CRow
+} from '@coreui/react';
+
+import { BsFileEarmarkArrowDownFill } from "react-icons/bs";
+import Message from '../layout/Message/Message';
+
 
 function ReportGroup() {
     const [visible, setVisible] = useState(false);
@@ -13,7 +29,15 @@ function ReportGroup() {
         withFiles: 0,
     });
 
-    console.log(filters.withFiles);
+    const {
+        message,
+        messageType,
+        showMessage,
+        setShowMessage,
+        setError,
+        setMessage,
+        setMessageType
+    } = useAuthContext();
 
     const downloadFile = async (data, fileType, fileExtension) => {
         const blob = new Blob([new Uint8Array(data)], { type: fileType });
@@ -49,10 +73,16 @@ function ReportGroup() {
 
                 await downloadFile(response.data, fileType, fileExtension);
             } else {
-                console.error('A resposta da API não contém dados do arquivo solicitado.');
+                setError(true);
+                setMessage('A resposta da API não contém dados do arquivo solicitado.');
+                setMessageType('error');
+                setShowMessage(true);
             }
         } catch (error) {
-            console.error('Erro na solicitação:', error.response.errors);
+            setError(true);
+            setMessage(`${error.response.errors}`);
+            setMessageType('error');
+            setShowMessage(true);
         }
     };
 
@@ -120,6 +150,7 @@ function ReportGroup() {
                     <CButton onClick={async () => await reportGroup()}>Baixar</CButton>
                 </CModalFooter>
             </CModal>
+            {showMessage && <Message type={messageType} msg={message} setShowMessage={setShowMessage} />}
         </>
     );
 }

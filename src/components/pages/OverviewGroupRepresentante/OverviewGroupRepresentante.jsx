@@ -25,7 +25,15 @@ const OverviewGroupRepresentante = () => {
   const [members, setMembers] = useState([]);
   const [observacao, setObservacao] = useState("");
 
-  const { message, messageType, showMessage, setShowMessage } = useAuthContext();
+  const {
+    message,
+    messageType,
+    showMessage,
+    setShowMessage,
+    setError,
+    setMessage,
+    setMessageType
+  } = useAuthContext();
 
 
   useEffect(() => {
@@ -40,12 +48,15 @@ const OverviewGroupRepresentante = () => {
         setMembers(members);
         setObservacao(observacao);
       } catch (error) {
-        console.log(error);
+        setError(true);
+        setMessage(`${error.response.data.errors}`);
+        setMessageType('error');
+        setShowMessage(true);
       }
     };
 
     fetchData();
-  }, [id]);
+  }, [id, setError, setMessage, setMessageType, setShowMessage]);
 
   return (
     <Fragment>

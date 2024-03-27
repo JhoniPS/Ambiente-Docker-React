@@ -1,10 +1,22 @@
 import { CButton, CCol, CRow, CFormSwitch } from '@coreui/react';
 import React, { useState } from 'react';
+import useAuthContext from '../contexts/Auth';
 import api from '../../services/api';
 import { useParams } from 'react-router-dom';
+import Message from '../layout/Message/Message';
 
 function ReportGroup() {
     const { id } = useParams();
+
+    const {
+        message,
+        messageType,
+        showMessage,
+        setShowMessage,
+        setError,
+        setMessage,
+        setMessageType
+    } = useAuthContext();
 
     const [withFiles, setWithFiles] = useState(true); // Inicializa com true
 
@@ -39,10 +51,16 @@ function ReportGroup() {
                 window.URL.revokeObjectURL(url);
                 document.body.removeChild(link);
             } else {
-                console.error('A resposta da API não contém dados do arquivo.');
+                setError(true);
+                setMessage('A resposta da API não contém dados do arquivo.');
+                setMessageType('error');
+                setShowMessage(true);
             }
         } catch (error) {
-            console.error('Erro na solicitação:', error.response ? error.response.errors : error.message);
+            setError(true);
+            setMessage(`${error.response ? error.response.errors : error.message}`);
+            setMessageType('error');
+            setShowMessage(true);
         }
     };
 
@@ -75,6 +93,7 @@ function ReportGroup() {
                     </CButton>
                 </CCol>
             </CRow>
+            {showMessage && <Message type={messageType} msg={message} setShowMessage={setShowMessage} />}
         </div>
     );
 }

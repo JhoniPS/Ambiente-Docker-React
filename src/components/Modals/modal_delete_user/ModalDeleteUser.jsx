@@ -30,7 +30,6 @@ export default function ModalDeleteUser({ id, data, setData }) {
             setShowMessage(true);
             handleClose();
         } catch (error) {
-            console.log(error)
             handleClose();
             setMessage(`${error.response.data.errors}`);
             setMessageType('error');
